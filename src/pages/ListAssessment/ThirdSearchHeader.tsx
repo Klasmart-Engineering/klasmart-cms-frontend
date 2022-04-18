@@ -5,10 +5,10 @@ import produce from "immer";
 import React from "react";
 import { HomeFunAssessmentStatus, OrderByAssessmentList } from "../../api/type";
 import { ReactComponent as StatusIcon } from "../../assets/icons/assessments-status.svg";
-import { AssessmentTypeValues } from "../../components/AssessmentType";
+import { assessmentTypes, AssessmentTypeValues } from "../../components/AssessmentType";
 import LayoutBox from "../../components/LayoutBox";
 import { d } from "../../locale/LocaleManager";
-import { assessmentTypes, DropdownList, options } from "./SecondSearchHeader";
+import { DropdownList, options } from "./SecondSearchHeader";
 import { AssessmentQueryCondition, AssessmentQueryConditionBaseProps, AssessmentStatus } from "./types";
 
 const useStyles = makeStyles((theme) => ({
@@ -35,7 +35,11 @@ const sortOptions = (assessment_type: AssessmentQueryCondition["assessment_type"
       { label: d("Class End Time (Old -New)").t("assess_class_end_time_old_new"), value: OrderByAssessmentList.class_end_time },
     ];
   }
-  if (assessment_type === AssessmentTypeValues.study || assessment_type === AssessmentTypeValues.review || assessment_type === AssessmentTypeValues.homeFun) {
+  if (
+    assessment_type === AssessmentTypeValues.study ||
+    assessment_type === AssessmentTypeValues.review ||
+    assessment_type === AssessmentTypeValues.homeFun
+  ) {
     changeingOptions = [
       { label: d("Created On (New-Old)").t("assess_label_created_on_newtoold"), value: OrderByAssessmentList._create_at },
       { label: d("Created On (Old-New)").t("assess_label_created_on_oldtonew"), value: OrderByAssessmentList.create_at },

@@ -49,7 +49,7 @@ import {
   EntityScheduleDetailsView,
   EntityScheduleShortInfo,
 } from "../../api/api.auto";
-import { MockOptionsItem, MockOptionsOptionsItem } from "../../api/extra";
+import { enableReviewClass, MockOptionsItem, MockOptionsOptionsItem } from "../../api/extra";
 import PermissionType from "../../api/PermissionType";
 import { usePermission } from "../../hooks/usePermission";
 import { initialState, useRepeatSchedule } from "../../hooks/useRepeatSchedule";
@@ -1030,9 +1030,9 @@ function EditBox(props: CalendarStateProps) {
         "all_day_end"
       );
       addData["due_at"] = dueDateTimestamp;
-      addData["title"] = `${d("Review").t("schedule_lable_class_type_review")}: ${classItem?.name ?? ""} ${timestampToTimeReviewTitle(
+      addData["title"] = `${d("Auto Review").t("schedule_label_class_type_review")}: ${classItem?.name ?? ""} ${timestampToTimeReviewTitle(
         addData["content_start_at"] as number
-      )} ~ ${timestampToTimeReviewTitle(addData["content_end_at"] as number)} ${d("Material").t("library_label_material")}`;
+      )} - ${timestampToTimeReviewTitle(addData["content_end_at"] as number)} ${d("Material").t("library_label_material")}`;
     }
 
     if (scheduleList.class_type === "Homework") {
@@ -1071,7 +1071,7 @@ function EditBox(props: CalendarStateProps) {
       return;
     }
     if (!participantSaveStatus && !participantsIsEmpty) {
-      dispatch(actError(d("Please confirm the fileld of ‘Add Participants’ by clicking OK").t("schedule_msg_participants_no_ok")));
+      dispatch(actError(d("Please confirm the field of ‘Add Participants’ by clicking OK").t("schedule_msg_participants_no_ok")));
       return;
     }
     addData["class_roster_student_ids"] = classRosterIds?.student.map((item: ClassOptionsItem) => {
@@ -1134,7 +1134,7 @@ function EditBox(props: CalendarStateProps) {
         changeModalDate({
           title: "",
           text: d(
-            "The schedule will appear on the calendar once the system completes publishing a personalized Lesson Plan for each student."
+            "Publishing your auto review\n\nA new ‘Auto review’ lesson will appear on students’ calendar once our platform has finished an analysis for each student."
           ).t("schedule_review_pop_up_all_success"),
           openStatus: true,
           enableCustomization: false,
@@ -1520,7 +1520,7 @@ function EditBox(props: CalendarStateProps) {
       })
     );
     if (res.payload === "OK") {
-      dispatch(actSuccess(d("Deleted sucessfully").t("schedule_msg_delete_success")));
+      dispatch(actSuccess(d("Deleted successfully").t("schedule_msg_delete_success")));
       dispatch(
         getScheduleTimeViewData({
           view_type: modelView,
@@ -2134,11 +2134,11 @@ function EditBox(props: CalendarStateProps) {
                 control={<Checkbox name="homeFunCheck" color="primary" checked={checkedStatus.homeFunCheck} onChange={handleCheck} />}
                 label={d("Home Fun").t("schedule_checkbox_home_fun")}
               />
-              {!scheduleId && process.env.REACT_APP_BASE_DOMAIN === "https://cms.alpha.kidsloop.net" && (
+              {!scheduleId && enableReviewClass && (
                 <FormControlLabel
                   disabled={isScheduleExpired() || isLimit()}
                   control={<Checkbox name="reviewCheck" color="primary" checked={checkedStatus.reviewCheck} onChange={handleCheck} />}
-                  label={d("Review").t("schedule_lable_class_type_review")}
+                  label={d("Auto Review").t("schedule_label_class_type_review")}
                 />
               )}
             </FormGroup>

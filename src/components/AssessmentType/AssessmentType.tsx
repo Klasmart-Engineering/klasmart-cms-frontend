@@ -1,3 +1,4 @@
+import { enableReviewClass } from "@api/extra";
 import { MenuItem, TextField } from "@material-ui/core";
 import React, { ChangeEvent } from "react";
 import { d } from "../../locale/LocaleManager";
@@ -13,23 +14,22 @@ export interface options {
   value?: string;
 }
 export const assessmentTypes = () => {
-  if(process.env.REACT_APP_BASE_DOMAIN === "https://cms.alpha.kidsloop.net") {
+  if (enableReviewClass) {
     return [
       { label: d("Class").t("schedule_detail_offline_class"), value: AssessmentTypeValues.class },
       { label: d("Live").t("schedule_detail_online_class"), value: AssessmentTypeValues.live },
       { label: d("Study").t("assess_study_list_study"), value: AssessmentTypeValues.study },
       { label: d("Study / Home Fun").t("assess_class_type_homefun"), value: AssessmentTypeValues.homeFun },
-      { label: d("Study / Review").t("assessment_list_study_review"), value: AssessmentTypeValues.review },
+      { label: d("Study / Auto Review").t("assessment_list_study_review"), value: AssessmentTypeValues.review },
     ];
   } else {
-  return [
-    { label: d("Class").t("schedule_detail_offline_class"), value: AssessmentTypeValues.class },
-    { label: d("Live").t("schedule_detail_online_class"), value: AssessmentTypeValues.live },
-    { label: d("Study").t("assess_study_list_study"), value: AssessmentTypeValues.study },
-    { label: d("Study / Home Fun").t("assess_class_type_homefun"), value: AssessmentTypeValues.homeFun },
-  ];
-}
-
+    return [
+      { label: d("Class").t("schedule_detail_offline_class"), value: AssessmentTypeValues.class },
+      { label: d("Live").t("schedule_detail_online_class"), value: AssessmentTypeValues.live },
+      { label: d("Study").t("assess_study_list_study"), value: AssessmentTypeValues.study },
+      { label: d("Study / Home Fun").t("assess_class_type_homefun"), value: AssessmentTypeValues.homeFun },
+    ];
+  }
 };
 const menuItemList = (list: options[]) =>
   list.map((item) => (

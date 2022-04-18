@@ -448,7 +448,7 @@ type LangRecord =
     }
   | { id: "assess_approved_successfully"; description: `Approved Successfully`; values: undefined }
   | { id: "schedule_tab_schedule"; description: `Schedule`; values: undefined }
-  | { id: "schedue_button_schedule_class"; description: `Schedule Class`; values: undefined }
+  | { id: "schedule_button_schedule_class"; description: `Schedule Class`; values: undefined }
   | { id: "schedule_button_search"; description: `Search`; values: undefined }
   | { id: "schedule_text_search_teacher"; description: `Search teacher`; values: undefined }
   | { id: "schedule_button_today"; description: `Today`; values: undefined }
@@ -554,7 +554,7 @@ type LangRecord =
   | { id: "schedule_frequency_sunday"; description: `Sunday`; values: undefined }
   | { id: "schedule_yearly_every"; description: `Every`; values: undefined }
   | { id: "schedule_yearly_of_jan"; description: `of January`; values: undefined }
-  | { id: "schedule_yearly_of_feb"; description: `of Febuary`; values: undefined }
+  | { id: "schedule_yearly_of_feb"; description: `of February`; values: undefined }
   | { id: "schedule_yearly_of_mar"; description: `of March`; values: undefined }
   | { id: "schedule_yearly_of_apr"; description: `of April`; values: undefined }
   | { id: "schedule_yearly_of_may"; description: `of May`; values: undefined }
@@ -591,7 +591,7 @@ type LangRecord =
       description: `This is an event in a series. Are you sure you want to edit this and following events?`;
       values: undefined;
     }
-  | { id: "schedule_msg_delete_success"; description: `Deleted sucessfully`; values: undefined }
+  | { id: "schedule_msg_delete_success"; description: `Deleted successfully`; values: undefined }
   | { id: "schedule_msg_upload_format"; description: `Please upload the file in the correct format`; values: undefined }
   | { id: "schedule_label_teacher_name"; description: `Teacher Name`; values: undefined }
   | { id: "schedule_msg_start_current"; description: `Start time cannot be earlier than current time`; values: undefined }
@@ -641,7 +641,7 @@ type LangRecord =
   | { id: "schedule_detail_class_roster"; description: `Class Roster`; values: undefined }
   | { id: "schedule_detail_select_all"; description: `Select All`; values: undefined }
   | { id: "schedule_detail_unselect_all"; description: `Unselect All`; values: undefined }
-  | { id: "schedule_time_conflict_msg"; description: `Time conflicts occured, please specify`; values: undefined }
+  | { id: "schedule_time_conflict_msg"; description: `Time conflicts occurred, please specify`; values: undefined }
   | { id: "schedule_time_conflict_option_1"; description: `Not schedule`; values: undefined }
   | { id: "schedule_time_conflict_option_2"; description: `Schedule anyway`; values: undefined }
   | { id: "schedule_time_conflict_student"; description: `Student`; values: undefined }
@@ -670,7 +670,7 @@ type LangRecord =
     }
   | {
       id: "schedule_msg_participants_no_ok";
-      description: `Please confirm the fileld of ‘Add Participants’ by clicking OK`;
+      description: `Please confirm the field of ‘Add Participants’ by clicking OK`;
       values: undefined;
     }
   | { id: "schedule_msg_edit_due_date"; description: `You cannot edit this event after the due date.`; values: undefined }
@@ -726,7 +726,7 @@ type LangRecord =
     }
   | {
       id: "schedule_msg_cannot_delete_study";
-      description: `This event cannot be deleted because some students already made progress for Study activities.`;
+      description: `This event cannot be deleted because some students already made progress for this activity.`;
       values: undefined;
     }
   | { id: "report_label_student_achievement"; description: `Learning Outcome Report`; values: undefined }
@@ -1712,7 +1712,7 @@ type LangRecord =
   | { id: "app2web_badanamu_activities"; description: `Badanamu Activities`; values: undefined }
   | { id: "app2web_please_enter_the_link"; description: `Please enter the link`; values: undefined }
   | { id: "app2web_badanamu_activities_link"; description: `Badanamu Activities Link`; values: undefined }
-  | { id: "schedule_lable_class_type_review"; description: `Review`; values: undefined }
+  | { id: "schedule_label_class_type_review"; description: `Auto Review`; values: undefined }
   | {
       id: "schedule_due_date_info";
       description: `Due Date can only be set after +1 days from today to allow time for students to complete.`;
@@ -1725,21 +1725,23 @@ type LangRecord =
   | { id: "schedule_review_review_area"; description: `Review Area`; values: undefined }
   | {
       id: "schedule_review_pop_up_all_success";
-      description: `The schedule will appear on the calendar once the system completes publishing a personalized Lesson Plan for each student.`;
+      description: `Publishing your auto review
+
+A new ‘Auto review’ lesson will appear on students’ calendar once our platform has finished an analysis for each student.`;
       values: undefined;
     }
   | {
-      id: "schedule_review_popup_partical_success";
-      description: `The following students will receive a random Lesson Plan as they have no enough data during the time range selected. To avoid this, let your student working on at least 10 activities before setting a review session:`;
+      id: "schedule_review_popup_partial_success";
+      description: `Please note that we do not have enough data for the following students during the time range selected – they will each be given a random lesson. To avoid this in future, please ensure that students have worked on at least 10 activities before setting an Auto review.`;
       values: undefined;
     }
-  | { id: "learning_outcome_lable_threshold"; description: `Score Threshold`; values: undefined }
+  | { id: "learning_outcome_label_threshold"; description: `Score Threshold`; values: undefined }
   | { id: "assessment_summary_label_attendance_unknown"; description: `Unknown`; values: undefined }
   | { id: "learning_outcome_threshold_blank_alert"; description: `A score threshold must be entered`; values: undefined }
   | { id: "learning_outcome_threshold_error_toast"; description: `Please input an integer from 1 to 100`; values: undefined }
   | {
       id: "schedule_review_group_fail_no_data";
-      description: `There was not enough content covered for this group of students during the date range specified to create a review session. Please try again with a different date range or student group.`;
+      description: `There was not enough content covered for this group of students during the date range specified to create an auto review session. Please try again with a different date range or student group.`;
       values: undefined;
     }
   | { id: "schedule_review_popup_date_range"; description: `Date Range`; values: undefined }
@@ -1751,20 +1753,20 @@ type LangRecord =
     }
   | {
       id: "schedule_review_popup_fail_notice";
-      description: `System failed to generate a review session on {value}. Please try again.`;
+      description: `There was a problem generating an auto review session on {value}. Please try again.`;
       values: { value: string | number };
     }
   | {
       id: "schedule_review_popup_pending_notice";
-      description: `System is generating adaptive learning lesson plan for each student.`;
+      description: `We are still analyzing data to generate the ‘auto review’ lesson plan for each student. Students will be able to see the new ‘auto review’ session on the calendar once this process is complete.`;
       values: undefined;
     }
   | { id: "schedule_review_popup_confirm"; description: `Confirm`; values: undefined }
-  | { id: "schedule_review_class_name"; description: `Review: {value} Materials`; values: { value: string | number } }
+  | { id: "schedule_review_class_name"; description: `Auto Review: {value} Materials`; values: { value: string | number } }
   | { id: "schedule_repeat_end_on"; description: `On`; values: undefined }
-  | { id: "assessment_list_study_review"; description: `Study / Review`; values: undefined }
-  | { id: "assessment_review_summary"; description: `Review Summary`; values: undefined }
-  | { id: "assessment_review_title"; description: `Review Title`; values: undefined }
+  | { id: "assessment_list_study_review"; description: `Study / Auto Review`; values: undefined }
+  | { id: "assessment_review_summary"; description: `Auto Review Summary`; values: undefined }
+  | { id: "assessment_review_title"; description: `Auto Review Title`; values: undefined }
   | { id: "assessment_review_detail_student_name"; description: `Student Name`; values: undefined }
   | {
       id: "report_label_teacher_usage_info";
@@ -1799,7 +1801,10 @@ type LangRecord =
   | { id: "assessment_hfs_view_drawing_feedback"; description: `View Drawing Feedback`; values: undefined }
   | { id: "assessment_hfs_no_teacher_feedback"; description: `No feedback has been provided to this file.`; values: undefined }
   | { id: "assessment_hfs_student_assessment"; description: `Assessment`; values: undefined }
-  | { id: "assessment_hfs_student_feedback"; description: `Feedback`; values: undefined };
+  | { id: "assessment_hfs_student_feedback"; description: `Feedback`; values: undefined }
+  | { id: "assessment_detail_screenshot_results"; description: `Results`; values: undefined }
+  | { id: "assessment_detail_screenshot_result_screen"; description: `Results Screen`; values: undefined }
+  | { id: "assessment_detail_total_score"; description: `Total Score`; values: undefined };
 
 export type LangRecordId = LangRecord["id"];
 export type LangRecodeDescription = LangRecord["description"];

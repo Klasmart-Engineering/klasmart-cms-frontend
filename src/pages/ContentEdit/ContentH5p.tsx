@@ -28,7 +28,7 @@ const useH5pSrc = function (sub: H5pSub, content_id?: string) {
     api.crypto.generateH5PJwt(content_id ? { sub, content_id } : { sub }).then((res) => {
       const { token } = res;
       if (!token) return;
-      setSrc(apiGenH5pResourceByToken(token));
+      setSrc(apiGenH5pResourceByToken(token, sub, content_id));
     });
   }, [content_id, sub]);
   return src;

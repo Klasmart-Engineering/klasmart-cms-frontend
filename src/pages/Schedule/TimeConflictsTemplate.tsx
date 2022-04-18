@@ -371,7 +371,7 @@ export default function TimeConflictsTemplate(props: TimeConflictsTemplateProps)
     />
   ) : (
     <div>
-      <div className={css.title}>{d("Time conflicts occured, please specify").t("schedule_time_conflict_msg")}</div>
+      <div className={css.title}>{d("Time conflicts occurred, please specify").t("schedule_time_conflict_msg")}</div>
       <div className={css.content}>
         <div className={css.classRoster}>
           {personalExist("roster") && <p>{d("Class Roster").t("schedule_detail_class_roster")}</p>}
