@@ -117,7 +117,7 @@ function Tool(props: ToolProps) {
                         }}
                       >
                         <span style={{ fontSize: "1.2rem", marginRight: "1rem" }}>+</span>{" "}
-                        {d("Schedule Class").t("schedue_button_schedule_class")}
+                        {d("Schedule Class").t("schedule_button_schedule_class")}
                       </Button>
                     )
                   }

@@ -109,7 +109,7 @@ export function OutcomeForm(props: OutcomeFormProps) {
     onInputChange,
   } = props;
   const classes = useStyles();
-  const [thresholdErrorMsg, setThresholdErrorMsg] = useState("")
+  const [thresholdErrorMsg, setThresholdErrorMsg] = useState("");
   const getItems = (list: LinkedMockOptionsItem[]) =>
     list.map((item) => (
       <MenuItem key={item.id} value={item.id}>
@@ -143,20 +143,18 @@ export function OutcomeForm(props: OutcomeFormProps) {
   };
   const scoreThresholdValidate = (value: string) => {
     const re = /^(?:\d?\d|100)$/;
-    if(!isAssumed) {
-      if(value === "0") {
-        setThresholdErrorMsg(t("learning_outcome_threshold_error_toast"))
+    if (!isAssumed) {
+      if (value === "0") {
+        setThresholdErrorMsg(t("learning_outcome_threshold_error_toast"));
         return false;
-      } else 
-      if(!value) {
-        setThresholdErrorMsg(t("learning_outcome_threshold_blank_alert"))
+      } else if (!value) {
+        setThresholdErrorMsg(t("learning_outcome_threshold_blank_alert"));
         return false;
-      } else 
-      if(!re.test(value)) {
-        setThresholdErrorMsg(t("learning_outcome_threshold_error_toast"))
+      } else if (!re.test(value)) {
+        setThresholdErrorMsg(t("learning_outcome_threshold_error_toast"));
         return false;
       } else {
-        setThresholdErrorMsg("")
+        setThresholdErrorMsg("");
       }
     }
   };
@@ -234,9 +232,9 @@ export function OutcomeForm(props: OutcomeFormProps) {
                 control={control}
                 as={TextField}
                 variant="outlined"
-                defaultValue={outcome_id? outcomeDetail.score_threshold : (isAssumed ? 0 : 80)}
+                defaultValue={outcome_id ? outcomeDetail.score_threshold : isAssumed ? 0 : 80}
                 fullWidth
-                label={d("Score Threshold").t("learning_outcome_lable_threshold")}
+                label={d("Score Threshold").t("learning_outcome_label_threshold")}
                 disabled={isAssumed ? true : showEdit}
                 InputProps={{
                   endAdornment: <InputAdornment position="end">%</InputAdornment>,

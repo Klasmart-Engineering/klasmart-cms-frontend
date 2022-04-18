@@ -17,7 +17,7 @@ import {
   ExpandMoreOutlined,
   FileCopyOutlined,
   PermIdentity,
-  VisibilityOff
+  VisibilityOff,
 } from "@material-ui/icons";
 import CloseIcon from "@material-ui/icons/Close";
 import CreateOutlinedIcon from "@material-ui/icons/CreateOutlined";
@@ -39,14 +39,14 @@ import {
   GetProgramsQuery,
   GetSchoolsFilterListQuery,
   GetUserQuery,
-  ParticipantsByClassQuery
+  ParticipantsByClassQuery,
 } from "../../api/api-ko.auto";
 import {
   EntityContentInfoWithDetails,
   EntityLessonPlanForSchedule,
   EntityScheduleAddView,
   EntityScheduleDetailsView,
-  EntityScheduleShortInfo
+  EntityScheduleShortInfo,
 } from "../../api/api.auto";
 import { enableReviewClass, MockOptionsItem, MockOptionsOptionsItem } from "../../api/extra";
 import PermissionType from "../../api/PermissionType";
@@ -58,8 +58,11 @@ import { RootState } from "../../reducers";
 import { actError, actSuccess } from "../../reducers/notify";
 import {
   actOutcomeList,
-  changeParticipants, checkScheduleReview, getLessonPlansBySchedule,
-  getLessonPlansByScheduleLoadingPage, getProgramChild,
+  changeParticipants,
+  checkScheduleReview,
+  getLessonPlansBySchedule,
+  getLessonPlansByScheduleLoadingPage,
+  getProgramChild,
   // getScheduleLiveToken,
   getScheduleMockOptionsResponse,
   getScheduleParticipant,
@@ -75,7 +78,7 @@ import {
   saveScheduleData,
   saveScheduleDataReview,
   ScheduleFilterPrograms,
-  scheduleShowOption
+  scheduleShowOption,
 } from "../../reducers/schedule";
 import theme from "../../theme";
 import {
@@ -94,7 +97,7 @@ import {
   ParticipantString,
   ParticipantValue,
   repeatOptionsType,
-  timestampType
+  timestampType,
 } from "../../types/scheduleTypes";
 import AddParticipantsTemplate from "./AddParticipantsTemplate";
 import { AddParticipantsTemplateMb, useAddParticipant } from "./AddParticipantsTemplateMb";
@@ -1026,7 +1029,7 @@ function EditBox(props: CalendarStateProps) {
         "all_day_end"
       );
       addData["due_at"] = dueDateTimestamp;
-      addData["title"] = `${d("Auto Review").t("schedule_lable_class_type_review")}: ${classItem?.name ?? ""} ${timestampToTimeReviewTitle(
+      addData["title"] = `${d("Auto Review").t("schedule_label_class_type_review")}: ${classItem?.name ?? ""} ${timestampToTimeReviewTitle(
         addData["content_start_at"] as number
       )} - ${timestampToTimeReviewTitle(addData["content_end_at"] as number)} ${d("Material").t("library_label_material")}`;
     }
@@ -1067,7 +1070,7 @@ function EditBox(props: CalendarStateProps) {
       return;
     }
     if (!participantSaveStatus && !participantsIsEmpty) {
-      dispatch(actError(d("Please confirm the fileld of ‘Add Participants’ by clicking OK").t("schedule_msg_participants_no_ok")));
+      dispatch(actError(d("Please confirm the field of ‘Add Participants’ by clicking OK").t("schedule_msg_participants_no_ok")));
       return;
     }
     addData["class_roster_student_ids"] = classRosterIds?.student.map((item: ClassOptionsItem) => {
@@ -2133,7 +2136,7 @@ function EditBox(props: CalendarStateProps) {
                 <FormControlLabel
                   disabled={isScheduleExpired() || isLimit()}
                   control={<Checkbox name="reviewCheck" color="primary" checked={checkedStatus.reviewCheck} onChange={handleCheck} />}
-                  label={d("Auto Review").t("schedule_lable_class_type_review")}
+                  label={d("Auto Review").t("schedule_label_class_type_review")}
                 />
               )}
             </FormGroup>

@@ -160,7 +160,7 @@ function RepeatCycle(props: ExtendsProps) {
     },
     {
       pureMonth: d("February").t("schedule_calendar_february"),
-      odMonth: d("of Febuary").t("schedule_yearly_of_feb"),
+      odMonth: d("of February").t("schedule_yearly_of_feb"),
     },
     {
       pureMonth: d("March").t("schedule_calendar_march"),
@@ -589,7 +589,9 @@ function EndRepeat(props: ExtendsProps) {
                   disabled={end.type !== "after_count"}
                 />
               </FormControl>
-              <span className={classes.positionText} style={{top: "75px"}}>{d("Occurrence(s)").t("schedule_repeat_occurrence(s)")}</span>
+              <span className={classes.positionText} style={{ top: "75px" }}>
+                {d("Occurrence(s)").t("schedule_repeat_occurrence(s)")}
+              </span>
             </Grid>
           </Grid>
         </Grid>
