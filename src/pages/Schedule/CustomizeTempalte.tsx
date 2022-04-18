@@ -402,7 +402,7 @@ function CustomizeTempalteMb(props: InfoMbProps) {
           {ScheduleViewInfo.is_review && (
             <div className={classes.previewDetailSubMb}>
               <span>{d("Class Type").t("schedule_detail_class_type")} </span>
-              <span>{d("Auto Review").t("schedule_lable_class_type_review")}</span>
+              <span>{d("Auto Review").t("schedule_label_class_type_review")}</span>
             </div>
           )}
           {!ScheduleViewInfo.is_review && (
@@ -926,7 +926,7 @@ export default function CustomizeTempalte(props: InfoProps) {
           <span className={classes.row}>{d("Class Type").t("schedule_detail_class_type")}</span>
           <span className={classes.row2}>
             {ScheduleViewInfo.is_review
-              ? d("Auto Review").t("schedule_lable_class_type_review")
+              ? d("Auto Review").t("schedule_label_class_type_review")
               : t(ScheduleViewInfo.class_type?.name as classTypeLabel)}
           </span>
         </p>
