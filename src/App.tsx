@@ -1,5 +1,6 @@
 import { ApolloProvider } from "@apollo/client";
 import { ThemeProvider } from "@material-ui/core";
+import InClass from "@pages/InClass";
 import { SnackbarProvider } from "notistack";
 import React from "react";
 import { Provider } from "react-redux";
@@ -130,6 +131,9 @@ function App() {
                   </Route>
                   <Route path={MilestoneEdit.routeMatchPath}>
                     <MilestoneEdit />
+                  </Route>
+                  <Route path={InClass.routeMatchPath}>
+                    <InClass />
                   </Route>
                   <Route path="/">
                     <Redirect to={MyContentList.routeRedirectDefault} />
