@@ -1,4 +1,5 @@
 import { Box, makeStyles, Typography } from "@material-ui/core";
+import Header from "./components/Header";
 
 const data: ILessonData[] = [
   {
@@ -38,13 +39,20 @@ const useStyles = makeStyles({
     backgroundColor: "#42BDFF",
     width: "100vw",
     height: "100vh",
+    backgroundImage: `url('${require("@assets/inclass/bg.jpg").default}')`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  },
+  mainContainer: {
+    position: "absolute",
+    top: 0,
+    width: "100%",
+    height: "100%",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",
-    backgroundImage: `url('${require("@assets/inclass/bg.jpg").default}')`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
+    zIndex: 0,
   },
   title: {
     fontSize: 62,
@@ -108,13 +116,16 @@ export default function SelectClassLevel() {
   const css = useStyles();
   return (
     <Box className={css.root}>
-      <Typography className={css.title} variant="h3">
-        Select your class level
-      </Typography>
-      <Box className={css.itemContainer}>
-        {data.map((d) => {
-          return <LessonItem key={d.level} {...d} />;
-        })}
+      <Header />
+      <Box className={css.mainContainer}>
+        <Typography className={css.title} variant="h3">
+          Select your class level
+        </Typography>
+        <Box className={css.itemContainer}>
+          {data.map((d) => {
+            return <LessonItem key={d.level} {...d} />;
+          })}
+        </Box>
       </Box>
     </Box>
   );
