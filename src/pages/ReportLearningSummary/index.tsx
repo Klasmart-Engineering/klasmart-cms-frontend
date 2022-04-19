@@ -2,8 +2,7 @@
 import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation, useParams } from "react-router-dom";
-import PermissionType from "../../api/PermissionType";
-import { usePermission } from "../../hooks/usePermission";
+import { useRole } from "../../hooks/usePermission";
 import { t } from "../../locale/LocaleManager";
 import { setQuery, toQueryString } from "../../models/ModelContentDetailForm";
 import { RootState } from "../../reducers";
@@ -61,16 +60,19 @@ export function ReportLearningSummary() {
   const { liveClassSummary, assignmentSummary, summaryReportOptions } = useSelector<RootState, RootState["report"]>(
     (state) => state.report
   );
-  const perm = usePermission([
-    PermissionType.report_learning_summary_org_652,
-    PermissionType.report_learning_summary_school_651,
-    PermissionType.report_learning_summary_teacher_650,
-    PermissionType.report_learning_summary_student_649,
-  ]);
-  const isOrg = perm.report_learning_summary_org_652 as boolean;
-  const isSchool = perm.report_learning_summary_school_651 as boolean;
-  const isTeacher = perm.report_learning_summary_teacher_650 as boolean;
-  const isStudent = perm.report_learning_summary_student_649 as boolean;
+  // const perm = usePermission([
+  //   PermissionType.report_learning_summary_org_652,
+  //   PermissionType.report_learning_summary_school_651,
+  //   PermissionType.report_learning_summary_teacher_650,
+  //   PermissionType.report_learning_summary_student_649,
+  // ]);
+  // const isOrg = perm.report_learning_summary_org_652 as boolean;
+  // const isSchool = perm.report_learning_summary_school_651 as boolean;
+  // const isTeacher = perm.report_learning_summary_teacher_650 as boolean;
+  // const isStudent = perm.report_learning_summary_student_649 as boolean;
+
+  const { isOrg, isSchool, isTeacher, isStudent } = useRole();
+
   const { weeks } = summaryReportOptions;
   const defaultWeeksValue = useMemo(() => {
     if (weeks.length && condition.week_start) {

@@ -1,14 +1,13 @@
+import { useRole } from "@hooks/usePermission";
 import produce from "immer";
 import React, { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
-import PermissionType from "../../api/PermissionType";
 import { AssessmentOrderBy, AssessmentStatus, ExectSeachType, HomeFunAssessmentOrderBy, StudyAssessmentOrderBy } from "../../api/type";
 import { FirstSearchHeader, FirstSearchHeaderMb } from "../../components/AssessmentFirsetHearder/FirstSearchHeader";
 import { AssessmentTypeValues } from "../../components/AssessmentType";
 import { emptyTip, permissionTip } from "../../components/TipImages";
-import { usePermission } from "../../hooks/usePermission";
 import { AppDispatch, RootState } from "../../reducers";
 import { getStudyAssessmentList } from "../../reducers/assessments";
 import { AssessmentDetail } from "../AssesmentDetail";
@@ -43,22 +42,23 @@ const toQueryString = (hash: Record<string, any>): string => {
 };
 
 export function StudyAssessmentList() {
-  const perm = usePermission([
-    PermissionType.view_completed_assessments_414,
-    PermissionType.view_in_progress_assessments_415,
-    PermissionType.view_org_completed_assessments_424,
-    PermissionType.view_org_in_progress_assessments_425,
-    PermissionType.view_school_completed_assessments_426,
-    PermissionType.view_school_in_progress_assessments_427,
-  ]);
-  const hasPerm =
-    perm.view_completed_assessments_414 ||
-    perm.view_in_progress_assessments_415 ||
-    perm.view_org_completed_assessments_424 ||
-    perm.view_org_in_progress_assessments_425 ||
-    perm.view_school_completed_assessments_426 ||
-    perm.view_school_in_progress_assessments_427;
-  const isPending = useMemo(() => perm.view_completed_assessments_414 === undefined, [perm.view_completed_assessments_414]);
+  // const perm = usePermission([
+  //   PermissionType.view_completed_assessments_414,
+  //   PermissionType.view_in_progress_assessments_415,
+  //   PermissionType.view_org_completed_assessments_424,
+  //   PermissionType.view_org_in_progress_assessments_425,
+  //   PermissionType.view_school_completed_assessments_426,
+  //   PermissionType.view_school_in_progress_assessments_427,
+  // ]);
+  // const hasPerm =
+  //   perm.view_completed_assessments_414 ||
+  //   perm.view_in_progress_assessments_415 ||
+  //   perm.view_org_completed_assessments_424 ||
+  //   perm.view_org_in_progress_assessments_425 ||
+  //   perm.view_school_completed_assessments_426 ||
+  //   perm.view_school_in_progress_assessments_427;
+  // const isPending = useMemo(() => perm.view_completed_assessments_414 === undefined, [perm.view_completed_assessments_414]);
+  const { isPending, hasPerm } = useRole();
   const condition = useQuery();
   const history = useHistory();
   const dispatch = useDispatch<AppDispatch>();

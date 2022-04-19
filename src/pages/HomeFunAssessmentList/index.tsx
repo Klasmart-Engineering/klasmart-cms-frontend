@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
-import PermissionType from "../../api/PermissionType";
+// import PermissionType from "../../api/PermissionType";
 import { AssessmentStatus, HomeFunAssessmentOrderBy, HomeFunAssessmentStatus } from "../../api/type";
 import { FirstSearchHeader, FirstSearchHeaderMb } from "../../components/AssessmentFirsetHearder/FirstSearchHeader";
 import { AssessmentTypeValues } from "../../components/AssessmentType";
 import { emptyTip, permissionTip } from "../../components/TipImages";
-import { usePermission } from "../../hooks/usePermission";
+import { useRole } from "../../hooks/usePermission";
 import { AppDispatch, RootState } from "../../reducers";
 import { actHomeFunAssessmentList } from "../../reducers/assessments";
 import { AssessmentsHomefunEdit } from "../HomefunEdit";
@@ -46,22 +46,25 @@ export function HomeFunAssessmentList() {
   const condition = useQuery();
   const history = useHistory();
   const { homeFunAssessmentList, total } = useSelector<RootState, RootState["assessments"]>((state) => state.assessments);
-  const perm = usePermission([
-    PermissionType.view_completed_assessments_414,
-    PermissionType.view_in_progress_assessments_415,
-    PermissionType.view_org_completed_assessments_424,
-    PermissionType.view_org_in_progress_assessments_425,
-    PermissionType.view_school_completed_assessments_426,
-    PermissionType.view_school_in_progress_assessments_427,
-  ]);
-  const hasPerm =
-    perm.view_completed_assessments_414 ||
-    perm.view_in_progress_assessments_415 ||
-    perm.view_org_completed_assessments_424 ||
-    perm.view_org_in_progress_assessments_425 ||
-    perm.view_school_completed_assessments_426 ||
-    perm.view_school_in_progress_assessments_427;
-  const isPending = useMemo(() => perm.view_completed_assessments_414 === undefined, [perm.view_completed_assessments_414]);
+  // const perm = usePermission([
+  //   PermissionType.view_completed_assessments_414,
+  //   PermissionType.view_in_progress_assessments_415,
+  //   PermissionType.view_org_completed_assessments_424,
+  //   PermissionType.view_org_in_progress_assessments_425,
+  //   PermissionType.view_school_completed_assessments_426,
+  //   PermissionType.view_school_in_progress_assessments_427,
+  // ]);
+  // const hasPerm =
+  //   perm.view_completed_assessments_414 ||
+  //   perm.view_in_progress_assessments_415 ||
+  //   perm.view_org_completed_assessments_424 ||
+  //   perm.view_org_in_progress_assessments_425 ||
+  //   perm.view_school_completed_assessments_426 ||
+  //   perm.view_school_in_progress_assessments_427;
+  // const isPending = useMemo(() => perm.view_completed_assessments_414 === undefined, [perm.view_completed_assessments_414]);
+
+  const { isPending, hasPerm } = useRole();
+
   const dispatch = useDispatch<AppDispatch>();
   const handleChangePage: AssessmentTableProps["onChangePage"] = (page) => history.push({ search: toQueryString({ ...condition, page }) });
   const handleChangeAssessmentType = (assessmentType: AssessmentTypeValues) => {
