@@ -10,7 +10,7 @@ const BackButton = withStyles({
   },
   label: {
     "& > img": {
-      width: 30,
+      width: "1.17vw",
       marginLeft: -5,
     },
   },
@@ -22,13 +22,13 @@ const useStyles = makeStyles({
     left: 0,
     right: 0,
     top: 0,
-    padding: 28,
+    padding: "1vw",
     zIndex: 10,
   },
   backBtn: {
     background: "#fff",
-    width: 72,
-    height: 72,
+    width: "2.81vw",
+    height: "2.81vw",
     borderRadius: "100%",
   },
 });

@@ -39,7 +39,7 @@ const useStyles = makeStyles({
     backgroundColor: "#42BDFF",
     width: "100vw",
     height: "100vh",
-    backgroundImage: `url('${require("@assets/inclass/bg.jpg").default}')`,
+    backgroundImage: `url('${require("@assets/inclass/bg2.jpg").default}')`,
     backgroundSize: "cover",
     backgroundPosition: "center",
   },

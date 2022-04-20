@@ -1,47 +1,54 @@
 import eslImg from "@assets/inclass/esl.png";
 import steamImg from "@assets/inclass/steam.png";
-import { Box, makeStyles, Typography } from "@material-ui/core";
+import { Box, Link, makeStyles, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles({
   root: {
     backgroundColor: "#42BDFF",
     width: "100vw",
     height: "100vh",
-
+    backgroundImage: `url('${require("@assets/inclass/bg.jpg").default}')`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",
   },
   title: {
-    fontSize: 62,
+    fontSize: "2.7vw",
+    paddingBottom: "2.1vw",
     fontFamily: "rooney-sans, sans-serif",
-    color: "#fff",
+    color: "#274EAF",
   },
   itemContainer: {
     display: "grid",
-    gridTemplateColumns: "426px 426px",
-    gridColumnGap: "70px",
-    padding: 75,
+    gridTemplateColumns: "25.3vw 25.3vw",
+    gridColumnGap: "1.7vw",
   },
   item: {
     background: "#fff",
-    width: 426,
-    height: 398,
+    width: "25.3vw",
+    height: "15.3vw",
     borderRadius: "80px 40px 80px 80px",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     cursor: "pointer",
+    "& > img": {
+      scale: ".8",
+    },
   },
 });
 
 function CurriculumItem(props: { name: string }) {
   const css = useStyles();
   return (
-    <Box className={css.item}>
-      <img src={props.name === "steam" ? steamImg : eslImg} alt="curriculum" />
-    </Box>
+    <Link component="button" variant="body2" onClick={() => {}}>
+      <Box className={css.item}>
+        <img src={props.name === "steam" ? steamImg : eslImg} alt={props.name} />
+      </Box>
+    </Link>
   );
 }
 
@@ -53,8 +60,8 @@ export default function SelectCurriculum() {
         Select your curriculum
       </Typography>
       <Box className={css.itemContainer}>
-        <CurriculumItem name="steam" />
         <CurriculumItem name="esl" />
+        <CurriculumItem name="steam" />
       </Box>
     </Box>
   );
