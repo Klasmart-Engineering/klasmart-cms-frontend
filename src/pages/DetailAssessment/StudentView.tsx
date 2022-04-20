@@ -22,7 +22,7 @@ import { PLField, PLTableHeader } from "../../components/PLTable";
 import { d } from "../../locale/LocaleManager";
 import { EditScore } from "./EditScore";
 import { Dimension } from "./MultiSelect";
-import { ResourceView, showAudioRecorder, useResourceView } from "./ResourceView";
+import { ResourceView, showAudioRecorder, showScreenShort, useResourceView } from "./ResourceView";
 import { FileTypes, OutcomeStatus, ResourceViewTypeValues, StudentParticipate, StudentViewItemsProps, SubDimensionOptions } from "./type";
 const useStyles = makeStyles({
   tableBar: {
@@ -62,6 +62,11 @@ const useStyles = makeStyles({
       },
     },
   },
+  totalScoreCon: {
+    width: "100px",
+    fontSize: 16,
+    fontWeight: 600,
+  }
 });
 const reBytesStr = (str: string, len: number) => {
   let bytesNum = 0;
@@ -101,6 +106,7 @@ export function StudentView(props: StudentViewProps) {
   const isReview = assessment_type === AssessmentTypeValues.review;
   const { resourceViewActive, openResourceView, closeResourceView } = useResourceView();
   const [resourceType, setResourceType] = useState<ResourceViewTypeValues>(ResourceViewTypeValues.essay);
+  const [contentSubType, setContentSubType] = useState<string | undefined>("");
   const [answer, setAnswer] = useState<string>("");
   const [comment, setComment] = useState<string>("");
   const [studentId, setStudentId] = useState<string | undefined>("");
@@ -132,6 +138,7 @@ export function StudentView(props: StudentViewProps) {
         text: d("Lesson Material Type").t("assess_detail_lesson_material_type"),
       },
       { align: "center", style: { backgroundColor: "#fff", minWidth: 150 }, value: "answer", text: d("Answer").t("assess_detail_answer") },
+      { align: "center", style: { backgroundColor: "#fff", minWidth: 150 }, value: "result", text: "Result" },
       {
         align: "center",
         style: { backgroundColor: "#fff", minWidth: 100 },
@@ -207,6 +214,15 @@ export function StudentView(props: StudentViewProps) {
     setUserId(userId);
     setH5pSubId(h5pSubId);
   };
+  const handleClickScreenshots = (roomId?: string, h5pId?: string, h5pSubId?: string, userId?: string, content_subtype?: string) => {
+    openResourceView();
+    setResourceType(ResourceViewTypeValues.viewScreenshots);
+    setContentSubType(content_subtype)
+    setRoom(roomId);
+    setH5pId(h5pId);
+    setUserId(userId);
+    setH5pSubId(h5pSubId);
+  }
   const handleChangeScore = (score?: number, studentId?: string, contentId?: string) => {
     const _studentViewItems = studentViewItems?.map((sItem) => {
       if (sItem.student_id === studentId) {
@@ -309,7 +325,7 @@ export function StudentView(props: StudentViewProps) {
                             (ritem) =>
                               (ritem.content_type === "LessonMaterial" || ritem.content_type === "Unknown") && (
                                 <TableRow key={ritem.content_id}>
-                                  <TableCell align="center" style={{ width: "50px" }}>
+                                  <TableCell align="center">
                                     {ritem.number}
                                   </TableCell>
                                   <TableCell align="center">
@@ -347,6 +363,26 @@ export function StudentView(props: StudentViewProps) {
                                         >
                                           {d("Click to View").t("assess_detail_click_to_view")}
                                         </span>
+                                      )}
+                                  </TableCell>
+                                  <TableCell align="center">
+                                    {ritem.file_type !== FileTypes.HasChildContainer &&
+                                        ritem.attempted &&
+                                        showScreenShort(ritem.content_subtype) && (
+                                          <span
+                                            style={{ color: "#006CCF", cursor: "pointer" }}
+                                            onClick={(e) =>
+                                              handleClickScreenshots(
+                                                roomId,
+                                                ritem.h5p_id,
+                                                ritem.h5p_sub_id,
+                                                sitem.student_id,
+                                                ritem.content_subtype
+                                              )
+                                            }
+                                          >
+                                            {d("Click to View").t("assess_detail_click_to_view")}
+                                          </span>
                                       )}
                                   </TableCell>
                                   <TableCell align="center">
@@ -400,6 +436,23 @@ export function StudentView(props: StudentViewProps) {
                                 </TableRow>
                               )
                           )}
+                          <TableRow>
+                              <TableCell align="center" className={css.totalScoreCon}>{"Total Score"}</TableCell>
+                              <TableCell></TableCell>
+                              <TableCell></TableCell>
+                              <TableCell></TableCell>
+                              <TableCell></TableCell>
+                              <TableCell align="center" className={css.totalScoreCon}>
+                                {sitem.attempted ? `${sitem.results
+                                  ?.filter(item => item.file_type !== FileTypes.HasChildContainer)
+                                  .reduce((pre, cur) => (pre + Number(cur?.score)), 0)}
+                                   / 
+                                  ${sitem.results
+                                  ?.filter(item => item.file_type !== FileTypes.HasChildContainer)
+                                  .reduce((pre, cur) => (pre + Number(cur.max_score)), 0)}` : "-"}
+                                </TableCell>
+                              <TableCell></TableCell>
+                          </TableRow>
                         </TableBody>
                       </Table>
                     </TableContainer>
@@ -420,6 +473,7 @@ export function StudentView(props: StudentViewProps) {
         userId={userId}
         h5pId={h5pId}
         h5pSubId={h5pSubId}
+        contentSubType={contentSubType}
       />
     </>
   );
