@@ -1,3 +1,4 @@
+import useQueryCms from "@hooks/useQueryCms";
 import { completeStudyAssessment, getStudyAssessmentDetail, updateStudyAssessment } from "@reducers/assessments";
 import { AppDispatch, RootState } from "@reducers/index";
 import { actSuccess, actWarning } from "@reducers/notify";
@@ -7,7 +8,7 @@ import { cloneDeep, uniq } from "lodash";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useLocation } from "react-router";
+import { useHistory } from "react-router";
 import { EntityAssessmentStudentViewH5PItem, EntityUpdateAssessmentH5PStudent } from "../../api/api.auto";
 import PermissionType from "../../api/PermissionType";
 import { AssessmentStatus, FinalOutcomeList, UpdataStudyAssessmentRequestData } from "../../api/type";
@@ -20,18 +21,18 @@ import LayoutPair from "../ContentEdit/Layout";
 import DetailForm from "./DetailForm";
 import { DetailHeader } from "./DetailHeader";
 
-export const useQueryDetail = () => {
-  const { search } = useLocation();
-  const query = new URLSearchParams(search);
-  const scheduleId = query.get("schedule_id") || "";
-  const id = query.get("id") || "";
-  const editindex: number = Number(query.get("editindex") || 0);
-  const filterOutcomes = query.get("filterOutcomes") || "all";
-  return { scheduleId, id, editindex, filterOutcomes };
-};
+// export const useQueryDetail = () => {
+//   const { search } = useLocation();
+//   const query = new URLSearchParams(search);
+//   const scheduleId = query.get("schedule_id") || "";
+//   const id = query.get("id") || "";
+//   const editindex: number = Number(query.get("editindex") || 0);
+//   const filterOutcomes = query.get("filterOutcomes") || "all";
+//   return { scheduleId, id, editindex, filterOutcomes };
+// };
 
 export function AssessmentDetail() {
-  const { id, editindex, filterOutcomes } = useQueryDetail();
+  const { id, editindex, filterOutcomes } = useQueryCms();
   const history = useHistory();
   const dispatch = useDispatch<AppDispatch>();
   const formMethods = useForm<UpdateStudyAssessmentDataOmitAction>();

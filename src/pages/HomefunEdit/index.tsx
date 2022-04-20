@@ -1,4 +1,5 @@
 import { V2OfflineStudyUserResultUpdateReq } from "@api/api.auto";
+import useQueryCms from "@hooks/useQueryCms";
 import { Box, Typography, useMediaQuery, useTheme } from "@material-ui/core";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Radio from "@material-ui/core/Radio";
@@ -8,7 +9,7 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import React, { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { ExtendedRequestParams } from "../../api";
 import { AssessmentUpdateAction } from "../../api/type";
 import { NoOutcome } from "../../components/TipImages";
@@ -24,18 +25,18 @@ import { Assignment } from "./Assignment";
 import { LessonPlan } from "./LessonPlan";
 import { Summary } from "./Summary";
 
-const useQuery = () => {
-  const { search } = useLocation();
-  const query = new URLSearchParams(search);
-  const id = query.get("id");
-  const editindex: number = Number(query.get("editindex") || 0);
-  return { id, editindex };
-};
+// const useQuery = () => {
+//   const { search } = useLocation();
+//   const query = new URLSearchParams(search);
+//   const id = query.get("id");
+//   const editindex: number = Number(query.get("editindex") || 0);
+//   return { id, editindex };
+// };
 
 function AssessmentsHomefunEditIner() {
   const history = useHistory();
   const dispatch = useDispatch<AppDispatch>();
-  const { id, editindex } = useQuery();
+  const { id, editindex } = useQueryCms();
   const { homefunDetail, homefunFeedbacks, hasPermissionOfHomefun } = useSelector<RootState, RootState["assessments"]>(
     (state) => state.assessments
   );
@@ -155,7 +156,7 @@ function AssessmentsHomefunEditIner() {
   );
 }
 export function AssessmentsHomefunEdit() {
-  const { id, editindex } = useQuery();
+  const { id, editindex } = useQueryCms();
   return <AssessmentsHomefunEditIner key={`${id}${editindex}`} />;
 }
 AssessmentsHomefunEdit.routeBasePath = "/assessments/homefun-edit";

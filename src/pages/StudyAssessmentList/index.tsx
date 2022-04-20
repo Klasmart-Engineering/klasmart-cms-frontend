@@ -1,4 +1,5 @@
 import { useRole } from "@hooks/usePermission";
+// import { useQueryCms } from "@hooks/useQueryCms";
 import produce from "immer";
 import React, { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
@@ -32,6 +33,7 @@ const useQuery = (): StudyAssessmentQueryCondition => {
     const status = (querys.get("status") as AssessmentStatus | null) || undefined;
     const page = Number(querys.get("page")) || 1;
     const order_by = (querys.get("order_by") as StudyAssessmentOrderBy | null) || undefined;
+    // const { query, status, page, order_by, query_type } = useQueryCms();
     return clearNull({ query, status, page, order_by, query_type });
   }, [search]);
 };

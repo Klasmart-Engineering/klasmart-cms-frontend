@@ -1,3 +1,4 @@
+import useQueryCms from "@hooks/useQueryCms";
 import { getAssessment, updateAssessment } from "@reducers/assessments";
 import { RootState } from "@reducers/index";
 import { actSuccess, actWarning } from "@reducers/notify";
@@ -7,7 +8,7 @@ import { cloneDeep, uniq } from "lodash";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { EntityUpdateAssessmentH5PStudent } from "../../api/api.auto";
 import PermissionType from "../../api/PermissionType";
 import { AssessmentStatus, FinalOutcomeList, UpdateAssessmentRequestData } from "../../api/type";
@@ -23,21 +24,21 @@ import { OutcomesFilter, OutcomesFilterProps } from "./filterOutcomes";
 import { OutcomesTable } from "./OutcomesTable";
 import { Summary } from "./Summary";
 
-const useQuery = () => {
-  const { search } = useLocation();
-  const query = new URLSearchParams(search);
-  const id = query.get("id");
-  const editindex: number = Number(query.get("editindex") || 0);
-  const filterOutcomes = query.get("filterOutcomes") || "all";
-  // const radioValue = query.get("radioValue") || RadioValue.lessonPlan;
-  const classType = query.get("classType");
-  return { id, filterOutcomes, editindex, classType };
-};
+// const useQuery = () => {
+//   const { search } = useLocation();
+//   const query = new URLSearchParams(search);
+//   const id = query.get("id");
+//   const editindex: number = Number(query.get("editindex") || 0);
+//   const filterOutcomes = query.get("filterOutcomes") || "all";
+//   const classType = query.get("classType");
+//   // const radioValue = query.get("radioValue") || RadioValue.lessonPlan;
+//   return { id, filterOutcomes, editindex, classType };
+// };
 
 export function AssessmentsEdit() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { filterOutcomes, id, editindex, classType } = useQuery();
+  const { filterOutcomes, id, editindex, classType } = useQueryCms();
   const perm = usePermission([PermissionType.edit_in_progress_assessment_439]);
   const perm_439 = perm.edit_in_progress_assessment_439;
   const { assessmentDetail, my_id } = useSelector<RootState, RootState["assessments"]>((state) => state.assessments);

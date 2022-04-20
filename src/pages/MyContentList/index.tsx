@@ -24,6 +24,7 @@ import {
 import { actWarning } from "@reducers/notify";
 import { AsyncTrunkReturned } from "@reducers/type";
 import { PayloadAction, unwrapResult } from "@reduxjs/toolkit";
+import { clearNull, toQueryString } from "@utilities/urlUtilities";
 import produce from "immer";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -63,12 +64,12 @@ import { ThirdSearchHeader, ThirdSearchHeaderMb, ThirdSearchHeaderProps } from "
 import { ContentListForm, ContentListFormKey, QueryCondition } from "./types";
 
 const ROOT_PATH = "/";
-export const clearNull = (obj: Record<string, any>) => {
-  Object.keys(obj).forEach((key) => {
-    if (obj[key] == null) delete obj[key];
-  });
-  return obj;
-};
+// export const clearNull = (obj: Record<string, any>) => {
+//   Object.keys(obj).forEach((key) => {
+//     if (obj[key] == null) delete obj[key];
+//   });
+//   return obj;
+// };
 
 const useQuery = (): QueryCondition => {
   const { search } = useLocation();
@@ -87,10 +88,10 @@ const useQuery = (): QueryCondition => {
   }, [search]);
 };
 
-const toQueryString = (hash: Record<string, any>): string => {
-  const search = new URLSearchParams(hash);
-  return `?${search.toString()}`;
-};
+// const toQueryString = (hash: Record<string, any>): string => {
+//   const search = new URLSearchParams(hash);
+//   return `?${search.toString()}`;
+// };
 
 const toFullUrl = (location: RouteProps["location"]) => {
   return `${location?.pathname}${location?.search}${location?.hash}`;
