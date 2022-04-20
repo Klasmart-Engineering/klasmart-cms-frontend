@@ -2,6 +2,7 @@ import { ModelOutcomeCreateView } from "@api/api.auto";
 import PermissionType from "@api/PermissionType";
 import { OutcomeSetResult } from "@api/type";
 import { usePermission } from "@hooks/usePermission";
+import useQueryCms from "@hooks/useQueryCms";
 import { Box, makeStyles } from "@material-ui/core";
 import { RootState } from "@reducers/index";
 import { actSuccess } from "@reducers/notify";
@@ -19,7 +20,7 @@ import {
   reject,
   resetShortCode,
   save,
-  updateOutcome
+  updateOutcome,
 } from "@reducers/outcome";
 import { AsyncTrunkReturned } from "@reducers/type";
 import { PayloadAction } from "@reduxjs/toolkit";
@@ -27,7 +28,7 @@ import { cloneDeep } from "lodash";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import ModalBox from "../../components/ModalBox";
 import { d } from "../../locale/LocaleManager";
 import { excluedOutcomeSet, findSetIndex, ids2OutcomeSet, modelOutcomeDetail } from "../../models/ModelOutcomeDetailForm";
@@ -44,20 +45,20 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const useQuery = () => {
-  const { search } = useLocation();
-  const query = new URLSearchParams(search);
-  const outcome_id = query.get("outcome_id") || "";
-  const status = query.get("status") || "";
-  const before = query.get("before") || "";
-  const readOnly = query.get("readonly") || false;
-  const is_unpub = query.get("is_unpub") || "";
-  return { outcome_id, status, before, readOnly, is_unpub };
-};
+// const useQuery = () => {
+//   const { search } = useLocation();
+//   const query = new URLSearchParams(search);
+//   const outcome_id = query.get("outcome_id") || "";
+//   const status = query.get("status") || "";
+//   const before = query.get("before") || "";
+//   const readOnly = query.get("readonly") || false;
+//   const is_unpub = query.get("is_unpub") || "";
+//   return { outcome_id, status, before, readOnly, is_unpub };
+// };
 
 export default function CreateOutcomings() {
   const classes = useStyles();
-  const { outcome_id, status, before, readOnly, is_unpub } = useQuery();
+  const { outcome_id, status, before, readOnly, is_unpub } = useQueryCms();
   const perm = usePermission([PermissionType.view_org_pending_learning_outcome_413]);
   const perm_439 = perm.view_org_pending_learning_outcome_413;
   const [openStatus, setOpenStatus] = React.useState(false);
@@ -343,7 +344,7 @@ export default function CreateOutcomings() {
       grade: [],
       assumed: true,
       shortcode: shortCode,
-      score_threshold: isAssumed ? 0 : 80
+      score_threshold: isAssumed ? 0 : 80,
     };
     if (outcome_id) {
       setSelectedOutcomeSet(outcomeDetail.sets || []);
@@ -373,8 +374,14 @@ export default function CreateOutcomings() {
         setValue("subject", _subject);
         setValue("developmental", _developmental);
         const thresholdValue = getValues("score_threshold");
-        const new_score_threshold = detail.score_threshold ? Math.floor(detail.score_threshold*100) : thresholdValue ? thresholdValue : 0;
-        const _detail = { ...detail, program: _program, subject: _subject, developmental: _developmental, score_threshold: new_score_threshold };
+        const new_score_threshold = detail.score_threshold ? Math.floor(detail.score_threshold * 100) : thresholdValue ? thresholdValue : 0;
+        const _detail = {
+          ...detail,
+          program: _program,
+          subject: _subject,
+          developmental: _developmental,
+          score_threshold: new_score_threshold,
+        };
         reset(modelOutcomeDetail(_detail));
       }
       return;
@@ -397,7 +404,7 @@ export default function CreateOutcomings() {
       setValue("skills", []);
     }
     // setIsAssumed(true);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     condition,
     newOptions.age,

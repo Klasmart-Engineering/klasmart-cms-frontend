@@ -1,16 +1,17 @@
+import useQueryCms from "@hooks/useQueryCms";
 import { Box, Card, createStyles, Grid, makeStyles, useMediaQuery, useTheme } from "@material-ui/core";
+import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 import { AccessTime, PeopleOutlineOutlined } from "@material-ui/icons";
 import { Pagination } from "@material-ui/lab";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import emptyBox from "../../../src/assets/icons/empty.svg";
 import { EntityScheduleSearchView, EntityScheduleShortInfo } from "../../api/api.auto";
 import { d } from "../../locale/LocaleManager";
 import { RootState } from "../../reducers";
 import { getSearchScheduleList } from "../../reducers/schedule";
 import { timestampType } from "../../types/scheduleTypes";
-import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 
 const useStyles = makeStyles(({ breakpoints }) =>
   createStyles({
@@ -108,12 +109,12 @@ function timeFormat(time: number, type: string = "time") {
   }
 }
 
-const useQuery = () => {
-  const { search } = useLocation();
-  const query = new URLSearchParams(search);
-  const name = query.get("name") || "";
-  return { name };
-};
+// const useQuery = () => {
+//   const { search } = useLocation();
+//   const query = new URLSearchParams(search);
+//   const name = query.get("name") || "";
+//   return { name };
+// };
 
 interface SearchListProps {
   timesTamp: timestampType;
@@ -121,7 +122,7 @@ interface SearchListProps {
 
 export default function SearchList(props: SearchListProps) {
   const dispatch = useDispatch();
-  const { name } = useQuery();
+  const { name } = useQueryCms();
   const [page, setPage] = React.useState(1);
   const { timesTamp } = props;
   React.useEffect(() => {

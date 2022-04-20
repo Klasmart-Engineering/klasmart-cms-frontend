@@ -3,7 +3,7 @@ import { updateURLSearch } from "@utilities/urlUtilities";
 import { useLocation } from "react-router-dom";
 
 const useQueryCms = () => {
-  const { search } = useLocation();
+  const { search, pathname } = useLocation();
   const querys = new URLSearchParams(search);
   const id = querys.get("id") || "";
   const searchMedia = querys.get("searchMedia") || "";
@@ -24,7 +24,7 @@ const useQueryCms = () => {
   const scheduleId = querys.get("schedule_id") || "";
   const filterOutcomes = querys.get("filterOutcomes") || "all";
   const teacher_name = querys.get("teacher_name");
-  const status = querys.get("status");
+  const status = querys.get("status") || "";
   const classType = querys.get("classType");
   const sid = querys.get("sid") as string;
   const author = querys.get("author");
@@ -33,17 +33,27 @@ const useQueryCms = () => {
   const query_type = querys.get("query_type");
 
   const description = querys.get("description");
-  const name = querys.get("name");
+  const name = querys.get("name") || "";
   const shortcode = querys.get("shortcode");
   const author_id = querys.get("author_id") || "";
 
   const publish_status = querys.get("publish_status");
   const content_type = querys.get("content_type");
 
+  const outcome_id = querys.get("outcome_id") || "";
+  const before = querys.get("before") || "";
+  const readOnly = querys.get("readonly") || false;
+
+  const teacher_id = querys.get("teacher_id") || "";
+  const class_id = querys.get("class_id") || "";
+  const lesson_plan_id = querys.get("lesson_plan_id") || "";
+  const student_id = querys.get("student_id") || "";
+
   const updateQuery = (param: { [key: string]: string | number | boolean }): string => {
     return updateURLSearch(search, param);
   };
   return {
+    pathname,
     querys,
     id,
     searchMedia,
@@ -78,6 +88,13 @@ const useQueryCms = () => {
     publish_status,
     content_type,
     author_id,
+    outcome_id,
+    before,
+    readOnly,
+    teacher_id,
+    class_id,
+    lesson_plan_id,
+    student_id,
   };
 };
 

@@ -1,3 +1,4 @@
+import useQueryCms from "@hooks/useQueryCms";
 import { Box, TextField } from "@material-ui/core";
 import CircularProgress, { CircularProgressProps } from "@material-ui/core/CircularProgress";
 import { makeStyles, Theme, withStyles } from "@material-ui/core/styles";
@@ -7,7 +8,6 @@ import { CloudDownloadOutlined, CloudUploadOutlined, InfoOutlined } from "@mater
 import CancelIcon from "@material-ui/icons/Cancel";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
 import { apiResourcePathById } from "../../api/extra";
 import { FileLikeWithId, FileSizeUnit, MultipleUploader, MultipleUploaderErrorType } from "../../components/MultipleUploader";
 import { d } from "../../locale/LocaleManager";
@@ -87,17 +87,17 @@ interface ScheduleAttachmentProps {
   checkFileExist: (source_id?: string) => Promise<boolean | undefined>;
 }
 
-const useQuery = () => {
-  const { search, pathname } = useLocation();
-  const query = new URLSearchParams(search);
-  const schedule_id = query.get("schedule_id") || "";
-  return { schedule_id, pathname };
-};
+// const useQuery = () => {
+//   const { search, pathname } = useLocation();
+//   const query = new URLSearchParams(search);
+//   const schedule_id = query.get("schedule_id") || "";
+//   return { schedule_id, pathname };
+// };
 
 export default function ScheduleAttachment(props: ScheduleAttachmentProps) {
   const { setAttachmentId, attachmentName, setAttachmentName, attachmentId, isStudent, isDisabled, checkFileExist } = props;
   const css = useStyles();
-  const { schedule_id, pathname } = useQuery();
+  const { scheduleId, pathname } = useQueryCms();
   const dispatch = useDispatch();
   const [fileName, setFileName] = React.useState<Pick<FileLikeWithId, "id" | "name">[] | undefined>([]);
   const handleOnChange = (value: Pick<FileLikeWithId, "id" | "name">[] | undefined): void => {
@@ -122,12 +122,12 @@ export default function ScheduleAttachment(props: ScheduleAttachmentProps) {
   };
 
   React.useEffect(() => {
-    if (!schedule_id) {
+    if (!scheduleId) {
       setAttachmentId("");
       setAttachmentName("");
       setFileName([]);
     }
-  }, [schedule_id, pathname, setAttachmentName, setFileName, setAttachmentId]);
+  }, [scheduleId, pathname, setAttachmentName, setFileName, setAttachmentId]);
 
   const reBytesStr = (str: string, len: number) => {
     let bytesNum = 0;
