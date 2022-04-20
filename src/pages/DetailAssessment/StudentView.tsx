@@ -127,7 +127,7 @@ export function StudentView(props: StudentViewProps) {
       { align: "center", style: { backgroundColor: "#fff" }, value: "idx", text: `${d("No").t("assess_detail_no")}.` },
       {
         align: "center",
-        style: { backgroundColor: "#fff" },
+        style: { backgroundColor: "#fff", minWidth: 100  },
         value: "name",
         text: d("Lesson Material Name").t("assess_detail_lesson_material_name"),
       },
@@ -138,7 +138,7 @@ export function StudentView(props: StudentViewProps) {
         text: d("Lesson Material Type").t("assess_detail_lesson_material_type"),
       },
       { align: "center", style: { backgroundColor: "#fff", minWidth: 100 }, value: "answer", text: d("Answer").t("assess_detail_answer") },
-      { align: "center", style: { backgroundColor: "#fff", minWidth: 100 }, value: "result", text: "Result" },
+      { align: "center", style: { backgroundColor: "#fff", minWidth: 100 }, value: "result", text: d("Results").t("assessment_detail_screenshot_results") },
       {
         align: "center",
         style: { backgroundColor: "#fff", minWidth: 100 },
@@ -360,7 +360,8 @@ export function StudentView(props: StudentViewProps) {
                                       )}
                                   </TableCell>
                                   <TableCell align="center">
-                                    {ritem.file_type !== FileTypes.HasChildContainer &&
+                                    {
+                                    ritem.file_type !== FileTypes.HasChildContainer &&
                                         ritem.attempted &&
                                         showScreenShort(ritem.content_subtype) && (
                                           <span
