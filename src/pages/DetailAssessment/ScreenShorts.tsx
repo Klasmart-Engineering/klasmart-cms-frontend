@@ -31,6 +31,7 @@ export function ScreenShorts(props: ScreenShortsProps) {
             mimeType={mediaMetadata[0].mimeType ? mediaMetadata[0].mimeType : "image/jpeg"}
           />
   }
+  
   const imgsCon = mediaMetadata.map(item => (
     <ImageView
       key={item.id}
@@ -69,7 +70,7 @@ export function ImageView(props: ImageViewProps) {
     return <p>{d("Server request failed").t("general_error_unknown")}</p>;
   }
   return (
-    <div style={{width: "100%", height: "auto"}}>
+    <div style={{width: "100%", height: "auto", marginTop: 10,}}>
       <img style={{width: "100%", height: "auto"}} src={imgSrc} alt={"screenshorts"} />
     </div>
   )

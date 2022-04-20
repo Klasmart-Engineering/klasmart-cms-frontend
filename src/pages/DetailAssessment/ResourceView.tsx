@@ -93,7 +93,7 @@ export const showAudioRecorder = (type?: string) => {
 export const showScreenShort = (type?: string) => {
   const types = ["AdvancedBlanks", "ArithmeticQuiz", "Dictation", "DragQuestion", 
   "DragText", "Blanks", "ImageMultipleHotspotQuestion", "ImageHotspotQuestion",
-  "FindTheWords", "Flashcards", "ImagePair", "ImageSequencing", "SingleChoiceSet", "Summary"];
+  "FindTheWords", "Flashcards", "ImagePair", "ImageSequencing", "SingleChoiceSet", "Summary", "H5P"];
   return types.indexOf(type as string) >= 0;
 }
 export interface ResourceViewProps {
@@ -150,13 +150,13 @@ export function ResourceView(props: ResourceViewProps) {
           {resourceType === ResourceViewTypeValues.editComment && d("Add Comments").t("assess_popup_add_comments")}
           {resourceType === ResourceViewTypeValues.viewWritingFeedback && d("View Writing Feedback").t("assessment_hfs_view_writing_feedback")}
           {resourceType === ResourceViewTypeValues.selectImg && d("Select a file to provide feedback").t("assessment_hfs_select_file")}
-          {isScreenShorts && "Result Screen"}
+          {isScreenShorts && d("Results Screen").t("assessment_detail_screenshot_result_screen")}
           {showClose && 
             <IconButton onClick={onClose} className={css.closeBtn}>
               <Close />
           </IconButton>}
         </DialogTitle>
-        <DialogContent className={css.screenShortsContent}>
+        <DialogContent className={isScreenShorts ? css.screenShortsContent : ""}>
           {resourceType === ResourceViewTypeValues.essay && <div className={css.detailView}>{answer}</div>}
           {resourceType === ResourceViewTypeValues.viewComment && <div className={css.detailView}>{comment}</div>}
           {resourceType === ResourceViewTypeValues.viewWritingFeedback && 
