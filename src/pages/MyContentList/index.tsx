@@ -1,3 +1,4 @@
+import useQueryCms from "@hooks/useQueryCms";
 import {
   addFolder1,
   approveContent,
@@ -29,7 +30,7 @@ import produce from "immer";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { RouteProps, useHistory, useLocation } from "react-router-dom";
+import { RouteProps, useHistory } from "react-router-dom";
 import { EntityFolderContentData } from "../../api/api.auto";
 import PermissionType from "../../api/PermissionType";
 import { ContentType, OrderBy, PublishStatus, SearchContentsRequestContentType } from "../../api/type";
@@ -72,20 +73,22 @@ const ROOT_PATH = "/";
 // };
 
 const useQuery = (): QueryCondition => {
-  const { search } = useLocation();
+  const { querys, page, publish_status, author, content_type, name, program_group, path } = useQueryCms();
+  const order_by = (querys.get("order_by") as OrderBy | null) || undefined;
+  const exect_search = querys.get("exect_search") || ExectSearch.all;
   return useMemo(() => {
-    const query = new URLSearchParams(search);
-    const name = query.get("name");
-    const publish_status = query.get("publish_status");
-    const author = query.get("author");
-    const page = Number(query.get("page")) || 1;
-    const order_by = (query.get("order_by") as OrderBy | null) || undefined;
-    const content_type = query.get("content_type");
-    const program_group = query.get("program_group");
-    const path = query.get("path") || "";
-    const exect_search = query.get("exect_search") || ExectSearch.all;
+    // const query = new URLSearchParams(search);
+    // const name = query.get("name");
+    // const publish_status = query.get("publish_status");
+    // const author = query.get("author");
+    // const page = Number(query.get("page")) || 1;
+    // const content_type = query.get("content_type");
+    // const program_group = query.get("program_group");
+    // const order_by = (querys.get("order_by") as OrderBy | null) || undefined;
+    // const path = query.get("path") || "";
+    // const exect_search = query.get("exect_search") || ExectSearch.all;
     return clearNull({ name, publish_status, author, page, order_by, content_type, program_group, path, exect_search });
-  }, [search]);
+  }, [name, publish_status, author, page, order_by, content_type, program_group, path, exect_search]);
 };
 
 // const toQueryString = (hash: Record<string, any>): string => {

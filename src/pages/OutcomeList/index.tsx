@@ -1,10 +1,12 @@
+import useQueryCms from "@hooks/useQueryCms";
 import { unwrapResult } from "@reduxjs/toolkit";
+import { clearNull, toQueryString } from "@utilities/urlUtilities";
 import produce from "immer";
 import { cloneDeep } from "lodash";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import PermissionType from "../../api/PermissionType";
 import { OrderBy, OutcomeOrderBy, OutcomePublishStatus, OutcomeSetResult } from "../../api/type";
 import { FirstSearchHeader, FirstSearchHeaderMb } from "../../components/AssessmentFirsetHearder/FirstSearchHeader";
@@ -35,32 +37,35 @@ import { SecondSearchHeader, SecondSearchHeaderMb } from "./SecondSearchHeader";
 import { ThirdSearchHeader, ThirdSearchHeaderMb, ThirdSearchHeaderProps } from "./ThirdSearchHeader";
 import { BulkListForm, BulkListFormKey, OutcomeListExectSearch, OutcomeQueryCondition } from "./types";
 
-const clearNull = (obj: Record<string, any>) => {
-  Object.keys(obj).forEach((key) => {
-    if (obj[key] == null) delete obj[key];
-  });
-  return obj;
-};
+// const clearNull = (obj: Record<string, any>) => {
+//   Object.keys(obj).forEach((key) => {
+//     if (obj[key] == null) delete obj[key];
+//   });
+//   return obj;
+// };
 
 const useQuery = (): OutcomeQueryCondition => {
-  const { search } = useLocation();
+  //const { search } = useLocation();
+  const { querys, search_key, publish_status, author_name, page, is_unpub } = useQueryCms();
+  const order_by = (querys.get("order_by") as OrderBy | null) || undefined;
+  const exect_search = querys.get("exect_search") || OutcomeListExectSearch.all;
   return useMemo(() => {
-    const query = new URLSearchParams(search);
-    const search_key = query.get("search_key");
-    const publish_status = query.get("publish_status");
-    const author_name = query.get("author_name");
-    const page = Number(query.get("page")) || 1;
-    const order_by = (query.get("order_by") as OrderBy | null) || undefined;
-    const is_unpub = query.get("is_unpub");
-    const exect_search = query.get("exect_search") || OutcomeListExectSearch.all;
+    // const query = new URLSearchParams(search);
+    // const search_key = query.get("search_key");
+    // const publish_status = query.get("publish_status");
+    // const author_name = query.get("author_name");
+    // const page = Number(query.get("page")) || 1;
+    // const order_by = (query.get("order_by") as OrderBy | null) || undefined;
+    // const is_unpub = query.get("is_unpub");
+    // const exect_search = query.get("exect_search") || OutcomeListExectSearch.all;
     return clearNull({ search_key, publish_status, author_name, page, order_by, is_unpub, exect_search });
-  }, [search]);
+  }, [search_key, publish_status, author_name, page, order_by, is_unpub, exect_search]);
 };
 
-const toQueryString = (hash: Record<string, any>): string => {
-  const search = new URLSearchParams(hash);
-  return `?${search.toString()}`;
-};
+// const toQueryString = (hash: Record<string, any>): string => {
+//   const search = new URLSearchParams(hash);
+//   return `?${search.toString()}`;
+// };
 
 interface RefreshWithDispatch {
   <T>(result: Promise<T>): Promise<T>;

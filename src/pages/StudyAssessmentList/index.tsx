@@ -1,10 +1,11 @@
 import { useRole } from "@hooks/usePermission";
-// import { useQueryCms } from "@hooks/useQueryCms";
+import useQueryCms from "@hooks/useQueryCms";
+import { clearNull, toQueryString } from "@utilities/urlUtilities";
 import produce from "immer";
 import React, { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { AssessmentOrderBy, AssessmentStatus, ExectSeachType, HomeFunAssessmentOrderBy, StudyAssessmentOrderBy } from "../../api/type";
 import { FirstSearchHeader, FirstSearchHeaderMb } from "../../components/AssessmentFirsetHearder/FirstSearchHeader";
 import { AssessmentTypeValues } from "../../components/AssessmentType";
@@ -16,32 +17,35 @@ import { AssessmentTable, AssessmentTableProps } from "./AssessmentTable";
 import { SecondSearchHeader, SecondSearchHeaderMb, SecondSearchHeaderProps } from "./SecondSearchHearder";
 import { ThirdSearchHeader, ThirdSearchHeaderMb } from "./ThirdSearchHearder";
 import { SearchListForm, SearchListFormKey, StudyAssessmentQueryCondition } from "./types";
-
-const clearNull = (obj: Record<string, any>) => {
-  Object.keys(obj).forEach((key) => {
-    if (obj[key] == null) delete obj[key];
-  });
-  return obj;
-};
+// const clearNull = (obj: Record<string, any>) => {
+//   Object.keys(obj).forEach((key) => {
+//     if (obj[key] == null) delete obj[key];
+//   });
+//   return obj;
+// };
 
 const useQuery = (): StudyAssessmentQueryCondition => {
-  const { search } = useLocation();
+  // const { search } = useLocation();
+  const { querys, page } = useQueryCms();
+  const order_by = (querys.get("order_by") as StudyAssessmentOrderBy | null) || undefined;
+  const status = (querys.get("status") as AssessmentStatus | null) || undefined;
+  const query_type = querys.get("query_type") || ExectSeachType.all;
+  const query = querys.get("query") || "";
   return useMemo(() => {
-    const querys = new URLSearchParams(search);
-    const query = querys.get("query") || "";
-    const query_type = querys.get("query_type") || ExectSeachType.all;
-    const status = (querys.get("status") as AssessmentStatus | null) || undefined;
-    const page = Number(querys.get("page")) || 1;
-    const order_by = (querys.get("order_by") as StudyAssessmentOrderBy | null) || undefined;
-    // const { query, status, page, order_by, query_type } = useQueryCms();
+    // const querys = new URLSearchParams(search);
+    // const query = querys.get("query") || "";
+    //const query_type = querys.get("query_type") || ExectSeachType.all;
+    // const status = (querys.get("status") as AssessmentStatus | null) || undefined;
+    // const page = Number(querys.get("page")) || 1;
+    // const order_by = (querys.get("order_by") as StudyAssessmentOrderBy | null) || undefined;
     return clearNull({ query, status, page, order_by, query_type });
-  }, [search]);
+  }, [query, status, page, order_by, query_type]);
 };
 
-const toQueryString = (hash: Record<string, any>): string => {
-  const search = new URLSearchParams(hash);
-  return `?${search.toString()}`;
-};
+// const toQueryString = (hash: Record<string, any>): string => {
+//   const search = new URLSearchParams(hash);
+//   return `?${search.toString()}`;
+// };
 
 export function StudyAssessmentList() {
   // const perm = usePermission([

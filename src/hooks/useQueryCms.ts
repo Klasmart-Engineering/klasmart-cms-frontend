@@ -31,23 +31,26 @@ const useQueryCms = () => {
   const program_group = (querys.get("program_group") as string) || "";
   const query_key = querys.get("query_key");
   const query_type = querys.get("query_type");
-
   const description = querys.get("description");
   const name = querys.get("name") || "";
   const shortcode = querys.get("shortcode");
   const author_id = querys.get("author_id") || "";
-
   const publish_status = querys.get("publish_status");
   const content_type = querys.get("content_type");
-
   const outcome_id = querys.get("outcome_id") || "";
   const before = querys.get("before") || "";
   const readOnly = querys.get("readonly") || false;
-
   const teacher_id = querys.get("teacher_id") || "";
   const class_id = querys.get("class_id") || "";
   const lesson_plan_id = querys.get("lesson_plan_id") || "";
   const student_id = querys.get("student_id") || "";
+  const path = querys.get("path") || "";
+  const author_name = querys.get("author_name");
+  const year = Number(querys.get("year"));
+  const week_start = Number(querys.get("week_start"));
+  const week_end = Number(querys.get("week_end"));
+  const school_id = querys.get("school_id") || "";
+  const subject_id = querys.get("subject_id") || "";
 
   const updateQuery = (param: { [key: string]: string | number | boolean }): string => {
     return updateURLSearch(search, param);
@@ -95,6 +98,13 @@ const useQueryCms = () => {
     class_id,
     lesson_plan_id,
     student_id,
+    path,
+    author_name,
+    year,
+    week_start,
+    week_end,
+    school_id,
+    subject_id,
   };
 };
 

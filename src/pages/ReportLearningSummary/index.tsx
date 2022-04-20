@@ -1,7 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import useQueryCms from "@hooks/useQueryCms";
+import { clearNull } from "@utilities/urlUtilities";
 import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useRole } from "../../hooks/usePermission";
 import { t } from "../../locale/LocaleManager";
 import { setQuery, toQueryString } from "../../models/ModelContentDetailForm";
@@ -25,29 +27,32 @@ export interface IWeeks {
 interface RouteParams {
   tab: QueryLearningSummaryTimeFilterCondition["summary_type"];
 }
-const clearNull = (obj: Record<string, any>) => {
-  Object.keys(obj).forEach((key) => {
-    if (obj[key] == null) delete obj[key];
-  });
-  return obj;
-};
+// const clearNull = (obj: Record<string, any>) => {
+//   Object.keys(obj).forEach((key) => {
+//     if (obj[key] == null) delete obj[key];
+//   });
+//   return obj;
+// };
 
 export const useQuery = (): QueryLearningSummaryCondition => {
-  const { search } = useLocation();
+  // const { search } = useLocation();
+  const { querys, year, week_start, week_end, school_id, class_id, student_id, subject_id } = useQueryCms();
+  const idx = Number(querys.get("lessonIndex"));
+  const lessonIndex = idx >= 0 ? idx : -1;
   return useMemo(() => {
-    const query = new URLSearchParams(search);
-    const year = Number(query.get("year"));
-    const week_start = Number(query.get("week_start"));
-    const week_end = Number(query.get("week_end"));
-    const school_id = query.get("school_id") || "";
-    const class_id = query.get("class_id") || "";
-    // const teacher_id = query.get("teacher_id") || "";
-    const student_id = query.get("student_id") || "";
-    const subject_id = query.get("subject_id") || "";
-    const idx = Number(query.get("lessonIndex"));
-    const lessonIndex = idx >= 0 ? idx : -1;
+    // const query = new URLSearchParams(search);
+    // const year = Number(query.get("year"));
+    // const week_start = Number(query.get("week_start"));
+    // const week_end = Number(query.get("week_end"));
+    // const school_id = query.get("school_id") || "";
+    // const class_id = query.get("class_id") || "";
+    // // const teacher_id = query.get("teacher_id") || "";
+    // const student_id = query.get("student_id") || "";
+    // const subject_id = query.get("subject_id") || "";
+    // const idx = Number(query.get("lessonIndex"));
+    // const lessonIndex = idx >= 0 ? idx : -1;
     return { year, week_start, week_end, school_id, class_id, student_id, subject_id, lessonIndex };
-  }, [search]);
+  }, [year, week_start, week_end, school_id, class_id, student_id, subject_id, lessonIndex]);
 };
 export function ReportLearningSummary() {
   const dispatch = useDispatch();

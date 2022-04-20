@@ -1,6 +1,6 @@
 import useQueryCms from "@hooks/useQueryCms";
 import { clearNull, toQueryString } from "@utilities/urlUtilities";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { AssessmentOrderBy, AssessmentStatus, HomeFunAssessmentOrderBy, StudyAssessmentOrderBy } from "../../api/type";
@@ -27,17 +27,17 @@ const PAGE_SIZE = 20;
 const useQuery = (): AssessmentQueryCondition => {
   // const { search } = useLocation();
   const { teacher_name, status, page, querys } = useQueryCms();
-  //return useMemo(() => {
-  //   const query = new URLSearchParams(search);
-  //   const teacher_name = query.get("teacher_name");
-  //   const status = query.get("status");
-  //   const page = Number(query.get("page")) || 1;
-  //   const order_by = (query.get("order_by") as AssessmentOrderBy | null) || undefined;
-  //   const class_type = query.get("class_type") || AssessmentTypeValues.live;
   const order_by = (querys.get("order_by") as AssessmentOrderBy | null) || undefined;
   const class_type = querys.get("class_type") || AssessmentTypeValues.live;
-  return clearNull({ teacher_name, status, page, order_by, class_type });
-  //}, [search]);
+  return useMemo(() => {
+    //   const query = new URLSearchParams(search);
+    //   const teacher_name = query.get("teacher_name");
+    //   const status = query.get("status");
+    //   const page = Number(query.get("page")) || 1;
+    //   const order_by = (query.get("order_by") as AssessmentOrderBy | null) || undefined;
+    //   const class_type = query.get("class_type") || AssessmentTypeValues.live;
+    return clearNull({ teacher_name, status, page, order_by, class_type });
+  }, [teacher_name, status, page, order_by, class_type]);
 };
 
 // const toQueryString = (hash: Record<string, any>): string => {
