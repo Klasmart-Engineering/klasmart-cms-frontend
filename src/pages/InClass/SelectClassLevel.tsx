@@ -116,7 +116,7 @@ export default function SelectClassLevel() {
   const css = useStyles();
   return (
     <Box className={css.root}>
-      <Header />
+      <Header prevLink="/inclass/curriculum" />
       <Box className={css.mainContainer}>
         <Typography className={css.title} variant="h3">
           Select your class level

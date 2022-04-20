@@ -1,6 +1,7 @@
 import eslImg from "@assets/inclass/esl.png";
 import steamImg from "@assets/inclass/steam.png";
 import { Box, Link, makeStyles, Typography } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -42,9 +43,16 @@ const useStyles = makeStyles({
 });
 
 function CurriculumItem(props: { name: string }) {
+  let history = useHistory();
   const css = useStyles();
   return (
-    <Link component="button" variant="body2" onClick={() => {}}>
+    <Link
+      component="button"
+      variant="body2"
+      onClick={() => {
+        history.push("/inclass/level");
+      }}
+    >
       <Box className={css.item}>
         <img src={props.name === "steam" ? steamImg : eslImg} alt={props.name} />
       </Box>

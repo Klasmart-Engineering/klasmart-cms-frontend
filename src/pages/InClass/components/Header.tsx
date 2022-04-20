@@ -1,5 +1,6 @@
 import backArrow from "@assets/inclass/arrow.svg";
-import { Box, IconButton, makeStyles, withStyles } from "@material-ui/core";
+import { Box, IconButton, Link, makeStyles, withStyles } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 
 const BackButton = withStyles({
   root: {
@@ -32,18 +33,27 @@ const useStyles = makeStyles({
     borderRadius: "100%",
   },
 });
-export default function Header(props: { backgroudColor?: React.CSSProperties["backgroundColor"] }) {
+export default function Header(props: { prevLink: string; backgroudColor?: React.CSSProperties["backgroundColor"] }) {
   const css = useStyles();
+  let history = useHistory();
   return (
-    <Box
-      className={css.root}
-      style={{
-        backgroundColor: props.backgroudColor || "transpant",
+    <Link
+      component="button"
+      variant="body2"
+      onClick={() => {
+        history.push(props.prevLink);
       }}
     >
-      <BackButton aria-label="back" className={css.backBtn}>
-        <img src={backArrow} alt="back" />
-      </BackButton>
-    </Box>
+      <Box
+        className={css.root}
+        style={{
+          backgroundColor: props.backgroudColor || "transpant",
+        }}
+      >
+        <BackButton aria-label="back" className={css.backBtn}>
+          <img src={backArrow} alt="back" />
+        </BackButton>
+      </Box>
+    </Link>
   );
 }
