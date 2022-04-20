@@ -1,7 +1,9 @@
 import eslImg from "@assets/inclass/esl.png";
 import steamImg from "@assets/inclass/steam.png";
 import { Box, Link, makeStyles, Typography } from "@material-ui/core";
+import { useContext } from "react";
 import { useHistory } from "react-router-dom";
+import { InClassContext, pageLinks } from ".";
 
 const useStyles = makeStyles({
   root: {
@@ -19,7 +21,7 @@ const useStyles = makeStyles({
   title: {
     fontSize: "2.7vw",
     paddingBottom: "2.1vw",
-    fontFamily: "rooney-sans, sans-serif",
+    fontFamily: "rooneysansbold, sans-serif",
     color: "#274EAF",
   },
   itemContainer: {
@@ -31,7 +33,7 @@ const useStyles = makeStyles({
     background: "#fff",
     width: "25.3vw",
     height: "15.3vw",
-    borderRadius: "80px 40px 80px 80px",
+    borderRadius: "3vw 1.5vw 3vw 3vw",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -42,15 +44,17 @@ const useStyles = makeStyles({
   },
 });
 
-function CurriculumItem(props: { name: string }) {
+function CurriculumItem(props: { name: IContextState["curriculum"] }) {
   let history = useHistory();
   const css = useStyles();
+  const { setRootState } = useContext(InClassContext);
   return (
     <Link
       component="button"
       variant="body2"
       onClick={() => {
-        history.push("/inclass/level");
+        setRootState && setRootState({ curriculum: props.name });
+        history.push(pageLinks.level);
       }}
     >
       <Box className={css.item}>
@@ -62,6 +66,7 @@ function CurriculumItem(props: { name: string }) {
 
 export default function SelectCurriculum() {
   const css = useStyles();
+
   return (
     <Box className={css.root}>
       <Typography className={css.title} variant="h3">
