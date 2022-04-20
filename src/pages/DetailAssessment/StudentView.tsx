@@ -137,20 +137,14 @@ export function StudentView(props: StudentViewProps) {
         value: "type",
         text: d("Lesson Material Type").t("assess_detail_lesson_material_type"),
       },
-      { align: "center", style: { backgroundColor: "#fff", minWidth: 150 }, value: "answer", text: d("Answer").t("assess_detail_answer") },
-      { align: "center", style: { backgroundColor: "#fff", minWidth: 150 }, value: "result", text: "Result" },
+      { align: "center", style: { backgroundColor: "#fff", minWidth: 100 }, value: "answer", text: d("Answer").t("assess_detail_answer") },
+      { align: "center", style: { backgroundColor: "#fff", minWidth: 100 }, value: "result", text: "Result" },
       {
         align: "center",
         style: { backgroundColor: "#fff", minWidth: 100 },
         value: "score",
         text: d("Score / Full Marks").t("assess_detail_score_full_marks"),
       },
-      // {
-      //   align: "center",
-      //   style: { backgroundColor: "#fff", maxWidth: 400 },
-      //   value: "LO",
-      //   text: d("Learning Outcomes").t("library_label_learning_outcomes"),
-      // },
     ];
     if (isReview) {
       headers.push({
@@ -162,7 +156,7 @@ export function StudentView(props: StudentViewProps) {
     } else {
       headers.push({
         align: "center",
-        style: { backgroundColor: "#fff", maxWidth: 400 },
+        style: { backgroundColor: "#fff", maxWidth: 400, minWidth: 150  },
         value: "LO",
         text: d("Learning Outcomes").t("library_label_learning_outcomes"),
       });
