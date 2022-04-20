@@ -452,6 +452,7 @@ export const ModelAssessment = {
         student_name,
         reviewer_comment,
         status,
+        attempted: isHomefun ? true : !results?.every(r => r.attempted === false),
         results: isHomefun 
           ?
           results?.map(result => {
