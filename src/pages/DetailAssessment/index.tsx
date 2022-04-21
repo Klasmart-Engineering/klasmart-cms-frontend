@@ -224,6 +224,7 @@ export function DetailAssessment() {
     )
     setComputedStudentViewItems(selectedContents);
     setSubDimension(ModelAssessment.getInitSubDimension(dimension, selectedContents));
+    setSelectedSubdimension(ModelAssessment.getInitSubDimension(dimension, selectedContents));
   };
   const handleChangeComputedStudentViewItems = (studentViewItems?: StudentViewItemsProps[]) => {
     studentViewItems && setComputedStudentViewItems([...studentViewItems]);

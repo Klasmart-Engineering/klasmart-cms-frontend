@@ -15,14 +15,14 @@ import PermissionType from "../../api/PermissionType";
 import { usePermission } from "../../hooks/usePermission";
 import { d } from "../../locale/LocaleManager";
 // import { AssessmentList } from "../../pages/AssesmentList";
-import { HomeFunAssessmentList } from "../../pages/HomeFunAssessmentList";
+// import { HomeFunAssessmentList } from "../../pages/HomeFunAssessmentList";
 import { ListAssessment } from "../../pages/ListAssessment";
 import MilestoneEdit from "../../pages/MilestoneEdit";
 import MilestonesList from "../../pages/MilestoneList";
 import CreateOutcomings from "../../pages/OutcomeEdit";
 import { OutcomeList } from "../../pages/OutcomeList";
 import { LoBlueIcon, LoIcon } from "../../pages/OutcomeList/Icons";
-import { StudyAssessmentList } from "../../pages/StudyAssessmentList";
+// import { StudyAssessmentList } from "../../pages/StudyAssessmentList";
 import LayoutBox from "../LayoutBox";
 import { Permission } from "../Permission";
 
@@ -98,10 +98,10 @@ export function FirstSearchHeader() {
   const css = useStyles();
   const history = useHistory();
   const pathname = history.location.pathname;
-  const hightLightAssessment =
-    pathname.indexOf(ListAssessment.routeBasePath) >= 0 ||
-    pathname.indexOf(HomeFunAssessmentList.routeBasePath) >= 0 ||
-    pathname.indexOf(StudyAssessmentList.routeBasePath) >= 0;
+  const hightLightAssessment = pathname.indexOf(ListAssessment.routeBasePath) >= 0;
+    //  ||
+    // pathname.indexOf(HomeFunAssessmentList.routeBasePath) >= 0 ||
+    // pathname.indexOf(StudyAssessmentList.routeBasePath) >= 0;
   return (
     <div className={css.root}>
       <LayoutBox holderMin={40} holderBase={202} mainBase={1517}>
@@ -175,8 +175,8 @@ export function FirstSearchHeaderMb() {
   ]);
   // const isLiveList = pathname.indexOf(AssessmentList.routeBasePath) >= 0;
   // const isStudyList = pathname.indexOf(StudyAssessmentList.routeBasePath) >= 0;
-  const isHomeFunList = pathname.indexOf(HomeFunAssessmentList.routeBasePath) >= 0;
-  const notHomeFunList = pathname.indexOf(ListAssessment.routeBasePath) >= 0;
+  // const isHomeFunList = pathname.indexOf(assessmentTypes) >= 0;
+  // const notHomeFunList = pathname.indexOf(ListAssessment.routeBasePath) >= 0;
   return (
     <div className={classes.root}>
       <Hidden only={["md", "lg", "xl"]}>
@@ -214,6 +214,13 @@ export function FirstSearchHeaderMb() {
                   label={d("Standards").t("assess_label_Standard")}
                   className={classes.capitalize}
                 />
+                <Tab
+                    component={Button}
+                    value={ListAssessment.routeBasePath}
+                    label={d("Assessments").t("assess_label_assessments")}
+                    className={classes.capitalize}
+                    onClick={() => history.push(ListAssessment.routeRedirectDefault)}
+                  />
                 {/* {perm.assessments_page_406 && !isLiveList && !isStudyList && !isHomeFunList && (
                   <Tab
                     component={Button}
@@ -232,7 +239,7 @@ export function FirstSearchHeaderMb() {
                     onClick={() => history.push(AssessmentList.routeRedirectDefault)}
                   />
                 )} */}
-                {notHomeFunList && perm.assessments_page_406 && (
+                {/* {notHomeFunList && perm.assessments_page_406 && (
                   <Tab
                     component={Button}
                     value={ListAssessment.routeBasePath}
@@ -249,7 +256,7 @@ export function FirstSearchHeaderMb() {
                     className={classes.capitalize}
                     onClick={() => history.push(ListAssessment.routeRedirectDefault)}
                   />
-                )}
+                )} */}
               </Tabs>
             </AppBar>
           </Grid>
