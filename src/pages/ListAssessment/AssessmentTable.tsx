@@ -64,15 +64,13 @@ function AssessmentRow(props: AssessmentProps) {
   const isComplete = assessment.status === AssessmentStatus.complete;
   const statusText = isComplete ? d("Complete").t("assess_filter_complete") : d("Incomplete").t("assess_filter_in_progress");
   const isLong = useMemo(() => {
-    if(statusText.length > 16) {
+    if (statusText.length > 16) {
       return true;
     } else {
       return false;
     }
   }, [statusText.length]);
-  const statusCom = <div className={clsx(css.statusCon, isComplete ? css.completeColor : css.inCompleteColor)}>
-    {statusText}
-  </div>
+  const statusCom = <div className={clsx(css.statusCon, isComplete ? css.completeColor : css.inCompleteColor)}>{statusText}</div>;
   const isClassAndLive = useMemo(() => {
     return assessmentType === AssessmentTypeValues.class || assessmentType === AssessmentTypeValues.live;
   }, [assessmentType]);
@@ -87,24 +85,41 @@ function AssessmentRow(props: AssessmentProps) {
   }, [assessmentType]);
   return (
     <TableRow onClick={(e) => onClickAssessment(assessment.id)}>
-      <TableCell className={css.tableCell} align="center">{assessment.title ?? d("N/A").t("assess_column_n_a")}</TableCell>
-      {!isReview && !isHomefun  && <TableCell align="center">{assessment.lesson_plan?.name}</TableCell>}
+      <TableCell className={css.tableCell} align="center">
+        {assessment.title ?? d("N/A").t("assess_column_n_a")}
+      </TableCell>
+      {!isReview && !isHomefun && <TableCell align="center">{assessment.lesson_plan?.name}</TableCell>}
       {isClassAndLive && (
         <>
           <TableCell align="center">{assessment.subjects?.map((v) => v.name).join(", ")}</TableCell>
           <TableCell align="center">{assessment.program?.name}</TableCell>
           <TableCell align="center" className={css.statusCell}>
-            {isLong ? <Tooltip title={statusText} placement="top">{statusCom}</Tooltip> : statusCom}
+            {isLong ? (
+              <Tooltip title={statusText} placement="top">
+                {statusCom}
+              </Tooltip>
+            ) : (
+              statusCom
+            )}
           </TableCell>
         </>
       )}
-      <TableCell align="center" className={css.nameListCell}>{assessment.teachers?.map((v) => v.name)?.join(" ,") ?? d("N/A").t("assess_column_n_a")}</TableCell>
+      <TableCell align="center" className={css.nameListCell}>
+        {assessment.teachers?.map((v) => v.name)?.join(" ,") ?? d("N/A").t("assess_column_n_a")}
+      </TableCell>
       {isClassAndLive && <TableCell align="center">{formattedTime(assessment.class_end_at)}</TableCell>}
       {!isClassAndLive && <TableCell align="center">{assessment.class_info?.name ?? d("N/A").t("assess_column_n_a")}</TableCell>}
-      {isHomefun && 
+      {isHomefun && (
         <TableCell align="center" className={css.statusCell}>
-          {isLong ? <Tooltip title={statusText} placement="top">{statusCom}</Tooltip> : statusCom}
-        </TableCell>}
+          {isLong ? (
+            <Tooltip title={statusText} placement="top">
+              {statusCom}
+            </Tooltip>
+          ) : (
+            statusCom
+          )}
+        </TableCell>
+      )}
       {!isClassAndLive && (
         <>
           {/* <TableCell align="center">{assessment.class_info?.name ?? d("N/A").t("assess_column_n_a")}</TableCell> */}
