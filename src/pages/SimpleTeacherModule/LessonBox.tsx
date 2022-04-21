@@ -1,6 +1,8 @@
 import { Box, makeStyles, Typography } from "@material-ui/core";
+import React, { useEffect } from "react";
 import LessonUnit from "./LessonUnit";
 import TeachingUnit from "./TeachingUnit";
+import { geUnits } from "./utils/api";
 import { px2vw } from "./utils/index";
 
 const useStyles = makeStyles({
@@ -23,6 +25,26 @@ const useStyles = makeStyles({
 
 export default function LessonBox() {
   const css = useStyles();
+  // const dispatch = useDispatch();
+  useEffect(() => {
+    const getResource = async () => {
+      const { payload } = await geUnits();
+      console.log(payload);
+    };
+    getResource();
+
+    const getLessonPlan = async () => {
+      const { payload } = await geUnits();
+      console.log(payload);
+    };
+    getLessonPlan();
+
+    const geLessonMaterials = async () => {
+      const { payload } = await geUnits();
+      console.log(payload);
+    };
+    geLessonMaterials();
+  });
   return (
     <Box className={css.lessonbox}>
       <Typography className={css.title}>Continue Teaching</Typography>
