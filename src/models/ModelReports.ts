@@ -304,6 +304,16 @@ export function translateMonth(month: number) {
   return months[month];
 }
 
+export function getLabel(labelParams: any, labelName: any) {
+  const labelObj = labelParams || {};
+
+  let newLabel = {} as keyof typeof labelObj;
+  Object.keys(labelObj)?.forEach((key) => {
+    Object(newLabel)[labelName[key as keyof typeof labelObj]] = labelObj[key as keyof typeof labelObj];
+  });
+  return newLabel;
+}
+
 export function parsePercent(decimal?: number) {
   return Math.ceil((decimal || 0) * 100);
 }
