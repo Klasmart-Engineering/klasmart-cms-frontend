@@ -518,8 +518,8 @@ export const ModelAssessment = {
   getStudentViewItemsByContent(students: StudentViewItemsProps[] | undefined, contents: DetailAssessmentResult["contents"]): StudentViewItemsProps[] | undefined {
     const contentObj: Record<string, DetailAssessmentResultContent> = {};
     contents
-      ?.filter((item) => item.status === "Covered")
-      .forEach((item) => {
+      // ?.filter((item) => item.status === "Covered")
+      ?.forEach((item) => {
         if (!contentObj[item.content_id!]) {
           contentObj[item.content_id!] = { ...item };
         }
@@ -527,7 +527,12 @@ export const ModelAssessment = {
     const studentViewItems: StudentViewItemsProps[] | undefined = students?.map(item => {
       return {
         ...item,
-        results: item.results?.filter(r => !!contentObj[r.content_id!])
+        results: item.results?.map(ritem => {
+          return {
+            ...ritem,
+            status: contentObj[ritem.content_id!].status
+          }
+        })
       }
     })
     return studentViewItems
@@ -657,8 +662,8 @@ export const ModelAssessment = {
     return overAllOutcomes;
   },
   getMaterialViewItems(
-    contents: DetailAssessmentResult["contents"],
-    students: DetailAssessmentResult["students"],
+    // contents: DetailAssessmentResult["contents"],
+    // students: DetailAssessmentResult["students"],
     studentViewItems?: StudentViewItemsProps[]
   ): MaterialViewItemResultProps[] {
     const materialViewObj: Record<string, MaterialViewItemResultProps> = {};
@@ -666,8 +671,8 @@ export const ModelAssessment = {
     studentViewItems?.forEach((sItem) => {
       const { student_id, student_name } = sItem;
       sItem.results
-        ?.filter((r) => r.content_type === "LessonMaterial" || r.content_type === "Unknown")
-        .forEach((rItem) => {
+        // ?.filter((r) => r.content_type === "LessonMaterial" || r.content_type === "Unknown")
+        ?.forEach((rItem) => {
           const {
             content_id,
             content_name,

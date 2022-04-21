@@ -15,10 +15,10 @@ import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
 import { ModelAssessment } from "@models/ModelAssessment";
 import { cloneDeep } from "lodash";
 import React, { ChangeEvent, Fragment, useMemo, useState } from "react";
-import { AchievedTooltips } from "../../components/DynamicTable";
 import { PLField, PLTableHeader } from "../../components/PLTable";
 import { d } from "../../locale/LocaleManager";
 import { DetailAssessmentResult, DetailAssessmentResultStudent } from "../ListAssessment/types";
+import { AchievedTooltips } from "./AchievedTooltips";
 import { EditScore } from "./EditScore";
 import { Dimension } from "./MultiSelect";
 import { ResourceView, showAudioRecorder, useResourceView } from "./ResourceView";
@@ -115,7 +115,6 @@ export function MaterialView(props: MaterialViewProps) {
   const { resourceViewActive, openResourceView, closeResourceView } = useResourceView();
   const {
     studentViewItems,
-    contents,
     students,
     editable,
     subDimension,
@@ -133,8 +132,8 @@ export function MaterialView(props: MaterialViewProps) {
     return students?.filter((student: DetailAssessmentResultStudent) => student.status === "Participate");
   }, [students]);
   const materialViewItems = useMemo(() => {
-    return ModelAssessment.getMaterialViewItems(contents, students, studentViewItems);
-  }, [contents, studentViewItems, students]);
+    return ModelAssessment.getMaterialViewItems(studentViewItems);
+  }, [studentViewItems]);
   const initCheckArr = useMemo(() => {
     return materialViewItems.map((item) => true);
   }, [materialViewItems]);
@@ -202,7 +201,8 @@ export function MaterialView(props: MaterialViewProps) {
       {materialViewItems &&
         materialViewItems.map(
           (item, index) =>
-            (isSelectAll ? true : subDimensionIds.indexOf(item.content_id!) >= 0 || subDimensionIds.indexOf(item.parent_id!) >= 0) && (
+            (isSelectAll ? true : (subDimensionIds.indexOf(item.content_id!) >= 0 || subDimensionIds.indexOf(item.parent_id!) >= 0)) 
+            && item.status === "Covered" && (
               <Fragment key={item.content_id}>
                 <TableContainer style={{ marginBottom: "20px" }}>
                   <Box className={css.tableBar} onClick={(e) => toggleCheck(index)}>

@@ -317,7 +317,7 @@ export function StudentView(props: StudentViewProps) {
                         <TableBody>
                           {sitem.results?.map(
                             (ritem) =>
-                              (ritem.content_type === "LessonMaterial" || ritem.content_type === "Unknown") && (
+                              (ritem.content_type === "LessonMaterial" || ritem.content_type === "Unknown") && ritem.status === "Covered" && (
                                 <TableRow key={ritem.content_id}>
                                   <TableCell align="center">
                                     {ritem.number}
