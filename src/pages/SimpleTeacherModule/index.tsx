@@ -1,6 +1,6 @@
 /// <reference path="index.d.ts" />
 
-import "@assets/stm/webfontkit-20220420-034701/stylesheet.css";
+import "@assets/stm/font/stylesheet.css";
 import { CircularProgress } from "@material-ui/core";
 import React, { Suspense } from "react";
 import { useParams } from "react-router-dom";

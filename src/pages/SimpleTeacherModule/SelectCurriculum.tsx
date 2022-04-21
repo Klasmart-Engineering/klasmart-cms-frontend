@@ -21,7 +21,10 @@ const useStyles = makeStyles({
   title: {
     fontSize: "2.7vw",
     paddingBottom: "2.1vw",
-    fontFamily: "rooneysansbold, sans-serif",
+    fontFamily: "RooneySans, sans-serif",
+    fontWeight: "bold",
+    fontVariantNumeric: "lining-nums",
+    fontFeatureSettings: "tnum",
     color: "#274EAF",
   },
   itemContainer: {
