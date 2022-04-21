@@ -1,7 +1,7 @@
 import eslImg from "@assets/stm/esl.png";
 import steamImg from "@assets/stm/steam.png";
 import { Box, Link, makeStyles, Typography } from "@material-ui/core";
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { pageLinks, StmContext } from "./index";
 
@@ -21,7 +21,10 @@ const useStyles = makeStyles({
   title: {
     fontSize: "2.7vw",
     paddingBottom: "2.1vw",
-    fontFamily: "rooneysansbold, sans-serif",
+    fontFamily: "RooneySans, sans-serif",
+    fontWeight: "bold",
+    fontVariantNumeric: "lining-nums",
+    fontFeatureSettings: "tnum",
     color: "#274EAF",
   },
   itemContainer: {
@@ -66,7 +69,6 @@ function CurriculumItem(props: { name: IContextState["curriculum"] }) {
 
 export default function SelectCurriculum() {
   const css = useStyles();
-
   return (
     <Box className={css.root}>
       <Typography className={css.title} variant="h3">

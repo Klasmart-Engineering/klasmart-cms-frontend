@@ -85,9 +85,12 @@ const useStyles = makeStyles({
   itemLeveText1: {
     color: "#fff",
     fontSize: "2.15vw",
-    lineHeight: 1.5,
+    lineHeight: 2,
     textAlign: "center",
-    fontFamily: "rooneysansbold, sans-serif",
+    fontFamily: "RooneySans, sans-serif",
+    fontWeight: "bold",
+    fontVariantNumeric: "lining-nums",
+    fontFeatureSettings: "tnum",
   },
   itemLeveText2: {
     color: "#fff",
@@ -96,7 +99,10 @@ const useStyles = makeStyles({
     verticalAlign: "top",
     lineHeight: 0.6,
     textAlign: "center",
-    fontFamily: "rooneysansbold, sans-serif",
+    fontFamily: "RooneySans, sans-serif",
+    fontWeight: "bold",
+    fontVariantNumeric: "lining-nums",
+    fontFeatureSettings: "tnum",
   },
   itemImg: {
     position: "absolute",
@@ -119,7 +125,10 @@ const useStyles = makeStyles({
     right: "1.1vw",
     fontSize: "1.64vw",
     lineHeight: 1.5,
-    fontFamily: "rooneysansbold, sans-serif",
+    fontFamily: "RooneySans, sans-serif",
+    fontWeight: "bold",
+    fontVariantNumeric: "lining-nums",
+    fontFeatureSettings: "tnum",
   },
 });
 
