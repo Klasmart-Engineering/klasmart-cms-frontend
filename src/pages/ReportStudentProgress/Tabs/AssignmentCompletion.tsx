@@ -33,9 +33,10 @@ export default function AssignmentCompletion() {
   const colors = ["#0e78d5", "#bed6eb", "#a8c0ef"];
   const dispatch = useDispatch();
   const css = useStyle();
-  const { assignmentsCompletion, fourWeeksAssignmentsCompletionMassage } = useSelector<RootState, RootState["report"]>(
-    (state) => state.report
-  );
+  const {
+    assignmentsCompletion: { assignments = [] },
+    fourWeeksAssignmentsCompletionMassage,
+  } = useSelector<RootState, RootState["report"]>((state) => state.report);
   const type = [
     t("report_label_student_assignments_completion_rate"),
     t("report_label_class_average_assignments_completion_rate"),
@@ -47,15 +48,15 @@ export default function AssignmentCompletion() {
     label: item,
     data:
       parsePercent(
-        assignmentsCompletion.reduce((prev, current) => {
+        assignments?.reduce((prev, current) => {
           return prev + (Object(current)[value[idx]] || 0);
-        }, 0) / assignmentsCompletion.length || 0
+        }, 0) / assignments?.length || 0
       ) + "%",
     idx,
   }));
 
   const chartData: BarGroupProps["data"] =
-    assignmentsCompletion.map((item) => {
+    assignments?.map((item) => {
       const time = item.duration?.split("-") || [];
       return {
         time:
