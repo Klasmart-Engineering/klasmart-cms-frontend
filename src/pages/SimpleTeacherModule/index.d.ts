@@ -9,3 +9,11 @@ interface ILessonData {
   age: string;
   color: string;
 }
+
+interface INavIcon {
+  src: string;
+}
+
+interface IListItem {
+  active?: boolean;
+}

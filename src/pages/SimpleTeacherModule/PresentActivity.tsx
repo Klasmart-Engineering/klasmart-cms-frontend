@@ -1,14 +1,24 @@
-import { makeStyles } from "@material-ui/core";
+import { Box, makeStyles } from "@material-ui/core";
 import React from "react";
+import PresentPlayer from "./components/Player";
+import PresentList from "./components/PresentList";
+import PresentNav from "./components/PresentNav";
 
 const useStyles = makeStyles({
   root: {
-    backgroundColor: "#42BDFF",
     width: "100vw",
     height: "100vh",
+    display: "flex",
+    flexDirection: "row",
   },
 });
 export default function PresentActivity() {
   const css = useStyles();
-  return <div className={css.root}></div>;
+  return (
+    <Box className={css.root}>
+      <PresentNav />
+      <PresentList />
+      <PresentPlayer />
+    </Box>
+  );
 }
