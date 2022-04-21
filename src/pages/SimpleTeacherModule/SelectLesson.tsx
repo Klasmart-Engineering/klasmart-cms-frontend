@@ -13,7 +13,7 @@ export default function SelectLesson() {
   const css = useStyles();
   return (
     <Box className={css.root}>
-      <Header backgroudColor={"#43A1FF"} prevLink="/inclass/level" />
+      <Header backgroudColor={"#43A1FF"} prevLink="/stm/level" />
     </Box>
   );
 }

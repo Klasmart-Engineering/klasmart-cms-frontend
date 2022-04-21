@@ -1,4 +1,4 @@
-import backArrow from "@assets/inclass/arrow.svg";
+import backArrow from "@assets/stm/arrow.svg";
 import { Box, IconButton, Link, makeStyles, withStyles } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 

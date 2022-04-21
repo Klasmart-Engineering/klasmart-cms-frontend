@@ -3,31 +3,31 @@ import Header from "./components/Header";
 
 const data: ILessonData[] = [
   {
-    img: require("@assets/inclass/bada-rhyme.png").default,
+    img: require("@assets/stm/bada-rhyme.png").default,
     level: "1",
     age: "Age 4-5",
     color: "#c572ff",
   },
   {
-    img: require("@assets/inclass/bada-genius.png").default,
+    img: require("@assets/stm/bada-genius.png").default,
     level: "2",
     age: "Age 5-6",
     color: "#fbc319",
   },
   {
-    img: require("@assets/inclass/bada-talk.png").default,
+    img: require("@assets/stm/bada-talk.png").default,
     level: "3",
     age: "Age 6-7",
     color: "#82d407",
   },
   {
-    img: require("@assets/inclass/bada-sound.png").default,
+    img: require("@assets/stm/bada-sound.png").default,
     level: "4",
     age: "Age 7-8",
     color: "#0fbff5",
   },
   {
-    img: require("@assets/inclass/bada-read.png").default,
+    img: require("@assets/stm/bada-read.png").default,
     level: "5",
     age: "Age 8-9",
     color: "#f957a8",
@@ -39,7 +39,7 @@ const useStyles = makeStyles({
     backgroundColor: "#42BDFF",
     width: "100vw",
     height: "100vh",
-    backgroundImage: `url('${require("@assets/inclass/bg2.jpg").default}')`,
+    backgroundImage: `url('${require("@assets/stm/bg2.jpg").default}')`,
     backgroundSize: "cover",
     backgroundPosition: "center",
   },
@@ -146,7 +146,7 @@ export default function SelectClassLevel() {
   const css = useStyles();
   return (
     <Box className={css.root}>
-      <Header prevLink="/inclass/curriculum" />
+      <Header prevLink="/stm/curriculum" />
       <Box className={css.mainContainer}>
         <Box className={css.itemContainer}>
           {data.map((d) => {

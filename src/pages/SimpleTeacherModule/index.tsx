@@ -1,6 +1,6 @@
 /// <reference path="index.d.ts" />
 
-import "@assets/inclass/webfontkit-20220420-034701/stylesheet.css";
+import "@assets/stm/webfontkit-20220420-034701/stylesheet.css";
 import { CircularProgress } from "@material-ui/core";
 import React, { Suspense } from "react";
 import { useParams } from "react-router-dom";
@@ -11,10 +11,10 @@ const SelectCurriculum = React.lazy(() => import("./SelectCurriculum"));
 const SelectLesson = React.lazy(() => import("./SelectLesson"));
 
 enum pageLinks {
-  curriculum = "/inclass/curriculum",
-  lesson = "/inclass/lesson",
-  level = "/inclass/level",
-  present = "/inclass/present",
+  curriculum = "/stm/curriculum",
+  lesson = "/stm/lesson",
+  level = "/stm/level",
+  present = "/stm/present",
 }
 
 const intialState: IContextState = {};
@@ -27,7 +27,7 @@ const Context = React.createContext<
   ...intialState,
 });
 
-export default function InClass() {
+export default function Stm() {
   const [rootState, setRootState] = React.useState<IContextState>(intialState);
   const { step } = useParams<{ step: string }>();
 
@@ -48,6 +48,6 @@ export default function InClass() {
   );
 }
 
-InClass.routeMatchPath = "/inclass/:step";
+Stm.routeMatchPath = "/stm/:step";
 
-export { Context as InClassContext, pageLinks };
+export { Context as StmContext, pageLinks };

@@ -1,16 +1,16 @@
-import eslImg from "@assets/inclass/esl.png";
-import steamImg from "@assets/inclass/steam.png";
+import eslImg from "@assets/stm/esl.png";
+import steamImg from "@assets/stm/steam.png";
 import { Box, Link, makeStyles, Typography } from "@material-ui/core";
 import { useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { InClassContext, pageLinks } from ".";
+import { pageLinks, StmContext } from "./index";
 
 const useStyles = makeStyles({
   root: {
     backgroundColor: "#42BDFF",
     width: "100vw",
     height: "100vh",
-    backgroundImage: `url('${require("@assets/inclass/bg.jpg").default}')`,
+    backgroundImage: `url('${require("@assets/stm/bg.jpg").default}')`,
     backgroundSize: "cover",
     backgroundPosition: "center",
     display: "flex",
@@ -47,7 +47,7 @@ const useStyles = makeStyles({
 function CurriculumItem(props: { name: IContextState["curriculum"] }) {
   let history = useHistory();
   const css = useStyles();
-  const { setRootState } = useContext(InClassContext);
+  const { setRootState } = useContext(StmContext);
   return (
     <Link
       component="button"
