@@ -42,17 +42,6 @@ export interface FilterLearningSummaryProps extends QueryLearningSummaryConditio
 }
 export function FilterLearningSummary(props: FilterLearningSummaryProps) {
   const css = useStyles();
-  // const perm = usePermission([
-  //   PermissionType.report_learning_summary_org_652,
-  //   PermissionType.report_learning_summary_school_651,
-  //   PermissionType.report_learning_summary_teacher_650,
-  //   PermissionType.report_learning_summary_student_649,
-  // ]);
-  // const isOrg = perm.report_learning_summary_org_652;
-  // const isSchoolAdmin = perm.report_learning_summary_school_651;
-  // const isTeacher = perm.report_learning_summary_teacher_650;
-  // const isStudent = perm.report_learning_summary_student_649;
-
   const { isOrg, isSchool, isTeacher } = useRole();
   const { value, defaultWeeksValue, summaryReportOptions, onChangeYearFilter, onChangeWeekFilter, onChangeFilter } = props;
   const { years, weeks, schools, classes, students, subjects } = summaryReportOptions;

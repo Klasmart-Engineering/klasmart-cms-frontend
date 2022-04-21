@@ -108,14 +108,6 @@ function timeFormat(time: number, type: string = "time") {
     return `${Y}-${M}-${D} ${h}:${m}:${s}`; // 一定要注意是反引号，否则无效。
   }
 }
-
-// const useQuery = () => {
-//   const { search } = useLocation();
-//   const query = new URLSearchParams(search);
-//   const name = query.get("name") || "";
-//   return { name };
-// };
-
 interface SearchListProps {
   timesTamp: timestampType;
 }

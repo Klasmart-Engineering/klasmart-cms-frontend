@@ -17,54 +17,17 @@ import { ThirdSearchHeader, ThirdSearchHeaderMb } from "./ThirdSearchHeader";
 import { AssessmentQueryCondition } from "./types";
 const PAGE_SIZE = 20;
 
-// const clearNull = (obj: Record<string, any>) => {
-//   Object.keys(obj).forEach((key) => {
-//     if (obj[key] == null) delete obj[key];
-//   });
-//   return obj;
-// };
-
 const useQuery = (): AssessmentQueryCondition => {
-  // const { search } = useLocation();
   const { teacher_name, status, page, querys } = useQueryCms();
   const order_by = (querys.get("order_by") as AssessmentOrderBy | null) || undefined;
   const class_type = querys.get("class_type") || AssessmentTypeValues.live;
   return useMemo(() => {
-    //   const query = new URLSearchParams(search);
-    //   const teacher_name = query.get("teacher_name");
-    //   const status = query.get("status");
-    //   const page = Number(query.get("page")) || 1;
-    //   const order_by = (query.get("order_by") as AssessmentOrderBy | null) || undefined;
-    //   const class_type = query.get("class_type") || AssessmentTypeValues.live;
     return clearNull({ teacher_name, status, page, order_by, class_type });
   }, [teacher_name, status, page, order_by, class_type]);
 };
-
-// const toQueryString = (hash: Record<string, any>): string => {
-//   const search = new URLSearchParams(hash);
-//   return `?${search.toString()}`;
-// };
-
 export function AssessmentList() {
   const condition = useQuery();
   const history = useHistory();
-  // const perm = usePermission([
-  //   PermissionType.view_completed_assessments_414,
-  //   PermissionType.view_in_progress_assessments_415,
-  //   PermissionType.view_org_completed_assessments_424,
-  //   PermissionType.view_org_in_progress_assessments_425,
-  //   PermissionType.view_school_completed_assessments_426,
-  //   PermissionType.view_school_in_progress_assessments_427,
-  // ]);
-  // const isPending = useMemo(() => perm.view_completed_assessments_414 === undefined, [perm.view_completed_assessments_414]);
-  // const hasPerm =
-  //   perm.view_completed_assessments_414 ||
-  //   perm.view_in_progress_assessments_415 ||
-  //   perm.view_org_completed_assessments_424 ||
-  //   perm.view_org_in_progress_assessments_425 ||
-  //   perm.view_school_completed_assessments_426 ||
-  //   perm.view_school_in_progress_assessments_427;
-
   const { isPending, hasPerm } = useRole();
   const { assessmentList, total } = useSelector<RootState, RootState["assessments"]>((state) => state.assessments);
   const dispatch = useDispatch<AppDispatch>();

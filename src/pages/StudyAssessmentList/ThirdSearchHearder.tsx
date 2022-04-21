@@ -96,27 +96,6 @@ export interface ThirdSearchHeaderProps extends StudyAssessmentQueryConditionBas
 export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
   const classes = useStyles();
   const { value, onChange } = props;
-
-  // const perms = usePermission([
-  //   PermissionType.view_completed_assessments_414,
-  //   PermissionType.view_org_completed_assessments_424,
-  //   PermissionType.view_school_in_progress_assessments_427,
-  //   PermissionType.view_in_progress_assessments_415,
-  //   PermissionType.view_org_in_progress_assessments_425,
-  //   PermissionType.view_school_in_progress_assessments_427,
-  // ]);
-
-  // const completed_perm = useChoosePermission(perms, [
-  //   PermissionType.view_completed_assessments_414,
-  //   PermissionType.view_org_completed_assessments_424,
-  //   PermissionType.view_school_in_progress_assessments_427,
-  // ]);
-  // const in_progress_perm = useChoosePermission(perms, [
-  //   PermissionType.view_in_progress_assessments_415,
-  //   PermissionType.view_org_in_progress_assessments_425,
-  //   PermissionType.view_school_in_progress_assessments_427,
-  // ]);
-
   const { completed_perm, in_progress_perm } = useRole();
 
   const handleChangeOrder = (event: ChangeEvent<HTMLInputElement>) => {

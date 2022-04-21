@@ -65,14 +65,6 @@ import ScheduleEdit from "./ScheduleEdit";
 import ScheduleTool from "./ScheduleTool";
 import SearchList from "./SearchList";
 
-// const useQuery = () => {
-//   const { search } = useLocation();
-//   const query = new URLSearchParams(search);
-//   const scheduleId = query.get("schedule_id") || "";
-//   const teacherName = query.get("name") || "";
-//   return { scheduleId, teacherName };
-// };
-
 const parseRightside = (rightside: RouteParams["rightside"]) => ({
   includeTable: rightside.includes("scheduleTable"),
   includeList: rightside.includes("scheduleList"),

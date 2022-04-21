@@ -20,17 +20,6 @@ import { setQuery } from "../../models/ModelContentDetailForm";
 import LayoutPair from "../ContentEdit/Layout";
 import DetailForm from "./DetailForm";
 import { DetailHeader } from "./DetailHeader";
-
-// export const useQueryDetail = () => {
-//   const { search } = useLocation();
-//   const query = new URLSearchParams(search);
-//   const scheduleId = query.get("schedule_id") || "";
-//   const id = query.get("id") || "";
-//   const editindex: number = Number(query.get("editindex") || 0);
-//   const filterOutcomes = query.get("filterOutcomes") || "all";
-//   return { scheduleId, id, editindex, filterOutcomes };
-// };
-
 export function AssessmentDetail() {
   const { id, editindex, filterOutcomes } = useQueryCms();
   const history = useHistory();

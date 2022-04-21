@@ -31,17 +31,12 @@ import { StudentView } from "./StudentView";
 import { OutcomeStatus, StudentParticipate, StudentViewItemsProps, SubDimensionOptions, UpdateAssessmentDataOmitAction } from "./type";
 
 const useQuery = () => {
-  // const { search } = useLocation();
-  // return useMemo(() => {
-  // const querys = new URLSearchParams(search);
-  // const id = querys.get("id") as string;
-  // const editindex: number = Number(querys.get("editindex") || 0);
   const { id, editindex, querys } = useQueryCms();
   const assessment_type = (querys.get("assessment_type") as AssessmentTypeValues) || AssessmentTypeValues.live;
-  return { assessment_type, editindex, id };
-  // }, [search]);
+  return useMemo(() => {
+    return { assessment_type, editindex, id };
+  }, [assessment_type, editindex, id]);
 };
-
 export function DetailAssessment() {
   const dispatch = useDispatch<AppDispatch>();
   const history = useHistory();

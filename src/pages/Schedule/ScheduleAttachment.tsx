@@ -87,13 +87,6 @@ interface ScheduleAttachmentProps {
   checkFileExist: (source_id?: string) => Promise<boolean | undefined>;
 }
 
-// const useQuery = () => {
-//   const { search, pathname } = useLocation();
-//   const query = new URLSearchParams(search);
-//   const schedule_id = query.get("schedule_id") || "";
-//   return { schedule_id, pathname };
-// };
-
 export default function ScheduleAttachment(props: ScheduleAttachmentProps) {
   const { setAttachmentId, attachmentName, setAttachmentName, attachmentId, isStudent, isDisabled, checkFileExist } = props;
   const css = useStyles();

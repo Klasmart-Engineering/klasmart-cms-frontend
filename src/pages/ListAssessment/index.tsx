@@ -2,7 +2,7 @@ import { useRole } from "@hooks/usePermission";
 import useQueryCms from "@hooks/useQueryCms";
 import { DetailAssessment } from "@pages/DetailAssessment";
 import { clearNull, toQueryString } from "@utilities/urlUtilities";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -16,22 +16,8 @@ import { AssessmentTable, AssessmentTableProps } from "./AssessmentTable";
 import { SecondSearchHeader, SecondSearchHeaderProps } from "./SecondSearchHeader";
 import { ThirdSearchHeader, ThirdSearchHeaderMb } from "./ThirdSearchHeader";
 import { AssessmentQueryCondition, SearchListForm } from "./types";
-// const clearNull = (obj: Record<string, any>) => {
-//   Object.keys(obj).forEach((key) => {
-//     if (obj[key] == null) delete obj[key];
-//   });
-//   return obj;
-// };
-// const toQueryString = (hash: Record<string, any>): string => {
-//   const search = new URLSearchParams(hash);
-//   return `?${search.toString()}`;
-// };
+
 const useQuery = (): AssessmentQueryCondition => {
-  // const { search } = useLocation();
-  // return useMemo(() => {
-  //   const querys = new URLSearchParams(search);
-  //   const query_key = querys.get("query_key") || "";
-  //   const page = Number(querys.get("page")) || 1;
   const { query_key, page, querys } = useQueryCms();
   const assessment_type = querys.get("assessment_type") || AssessmentTypeValues.live;
   const query_type = (querys.get("query_type") as ExectSeachType) || ExectSeachType.all;
@@ -42,29 +28,12 @@ const useQuery = (): AssessmentQueryCondition => {
   const defaultOrderBy = isStudy ? OrderByAssessmentList._create_at : OrderByAssessmentList._class_end_time;
   const order_by = (querys.get("order_by") as OrderByAssessmentList) || defaultOrderBy;
   const status = (querys.get("status") as AssessmentStatus) || AssessmentStatus.all;
-  return { ...clearNull({ query_key, status, page, order_by, query_type }), assessment_type };
-  // }, [search]);
+  return useMemo(() => {
+    return { ...clearNull({ query_key, status, page, order_by, query_type }), assessment_type };
+  }, [query_key, status, page, order_by, query_type, assessment_type]);
 };
 export function ListAssessment() {
-  // const perm = usePermission([
-  //   PermissionType.view_completed_assessments_414,
-  //   PermissionType.view_in_progress_assessments_415,
-  //   PermissionType.view_org_completed_assessments_424,
-  //   PermissionType.view_org_in_progress_assessments_425,
-  //   PermissionType.view_school_completed_assessments_426,
-  //   PermissionType.view_school_in_progress_assessments_427,
-  // ]);
-  // const hasPerm =
-  //   perm.view_completed_assessments_414 ||
-  //   perm.view_in_progress_assessments_415 ||
-  //   perm.view_org_completed_assessments_424 ||
-  //   perm.view_org_in_progress_assessments_425 ||
-  //   perm.view_school_completed_assessments_426 ||
-  //   perm.view_school_in_progress_assessments_427;
-  // const isPending = useMemo(() => perm.view_completed_assessments_414 === undefined, [perm.view_completed_assessments_414]);
-
   const { isPending, hasPerm } = useRole();
-
   const { assessmentListV2, total } = useSelector<RootState, RootState["assessments"]>((state) => state.assessments);
   const condition = useQuery();
   const formMethods = useForm<SearchListForm>();

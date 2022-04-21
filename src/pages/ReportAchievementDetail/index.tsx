@@ -1,5 +1,6 @@
 import useQueryCms from "@hooks/useQueryCms";
-import React, { useEffect } from "react";
+import { clearNull } from "@utilities/urlUtilities";
+import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { achievementEmpty, emptyTip } from "../../components/TipImages";
@@ -12,26 +13,12 @@ import BriefIntroduction from "../ReportAchievementList/BriefIntroduction";
 import { ReportTitle } from "../ReportDashboard";
 import { AchievementDetailChart } from "./AchievementDetailChart";
 
-const clearNull = (obj: Record<string, any>) => {
-  Object.keys(obj).forEach((key) => {
-    if (obj[key] == null) delete obj[key];
-  });
-  return obj;
-};
-
 const useQuery = () => {
-  // const { search } = useLocation();
-  // return useMemo(() => {
-  //   const query = new URLSearchParams(search);
-  //   const teacher_id = query.get("teacher_id") || "";
-  //   const class_id = query.get("class_id") || "";
-  //   const lesson_plan_id = query.get("lesson_plan_id") || "";
-  //   const student_id = query.get("student_id") || "";
   const { teacher_id, class_id, lesson_plan_id, student_id } = useQueryCms();
-  return clearNull({ teacher_id, class_id, lesson_plan_id, student_id });
-  // }, [search]);
+  return useMemo(() => {
+    return clearNull({ teacher_id, class_id, lesson_plan_id, student_id });
+  }, [teacher_id, class_id, lesson_plan_id, student_id]);
 };
-
 export function ReportAchievementDetail() {
   const condition = useQuery();
   const history = useHistory();

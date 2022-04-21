@@ -23,18 +23,6 @@ import { AssessmentHeader } from "./AssessmentHeader";
 import { OutcomesFilter, OutcomesFilterProps } from "./filterOutcomes";
 import { OutcomesTable } from "./OutcomesTable";
 import { Summary } from "./Summary";
-
-// const useQuery = () => {
-//   const { search } = useLocation();
-//   const query = new URLSearchParams(search);
-//   const id = query.get("id");
-//   const editindex: number = Number(query.get("editindex") || 0);
-//   const filterOutcomes = query.get("filterOutcomes") || "all";
-//   const classType = query.get("classType");
-//   // const radioValue = query.get("radioValue") || RadioValue.lessonPlan;
-//   return { id, filterOutcomes, editindex, classType };
-// };
-
 export function AssessmentsEdit() {
   const history = useHistory();
   const dispatch = useDispatch();

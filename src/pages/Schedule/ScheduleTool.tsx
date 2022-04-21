@@ -76,9 +76,6 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const useQuery = () => {
-  // const { search } = useLocation();
-  // const query = new URLSearchParams(search);
-  // const name = query.get("name") || "";
   const { name } = useQueryCms();
   return name;
 };

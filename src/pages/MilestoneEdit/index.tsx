@@ -44,19 +44,6 @@ import { Regulation } from "./type";
 interface RouteParams {
   tab: "details" | "leaningoutcomes";
 }
-
-// export const clearNull = (obj: Record<string, any>) => {
-//   Object.keys(obj).forEach((key) => {
-//     if (obj[key] == null) delete obj[key];
-//   });
-//   return obj;
-// };
-// const setQuery = (search: string, hash: Record<string, string | number | boolean>): string => {
-//   const query = new URLSearchParams(search);
-//   Object.keys(hash).forEach((key) => query.set(key, String(hash[key])));
-//   return query.toString();
-// };
-
 export interface MilestoneCondition {
   id: string;
   exect_search: string;

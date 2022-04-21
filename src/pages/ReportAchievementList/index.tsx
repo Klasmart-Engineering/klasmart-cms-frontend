@@ -23,30 +23,14 @@ import BriefIntroduction from "./BriefIntroduction";
 import { FilterAchievementReport, FilterAchievementReportProps } from "./FilterAchievementReport";
 import { QueryCondition } from "./types";
 
-// const clearNull = (obj: Record<string, any>) => {
-//   Object.keys(obj).forEach((key) => {
-//     if (obj[key] == null) delete obj[key];
-//   });
-//   return obj;
-// };
-
 export const useReportQuery = () => {
-  // const { search } = useLocation();
   const { querys, teacher_id, class_id, lesson_plan_id, student_id } = useQueryCms();
   const status = querys.get("status") || "all";
   const sort_by = querys.get("sort_by") || "desc";
   return useMemo(() => {
-    // const query = new URLSearchParams(search);
-    // const teacher_id = query.get("teacher_id") || "";
-    // const class_id = query.get("class_id") || "";
-    // const lesson_plan_id = query.get("lesson_plan_id") || "";
-    // const status = query.get("status") || "all";
-    // const sort_by = query.get("sort_by") || "desc";
-    // const student_id = query.get("student_id") || "";
     return clearNull({ teacher_id, class_id, lesson_plan_id, status, sort_by, student_id });
   }, [teacher_id, class_id, lesson_plan_id, status, sort_by, student_id]);
 };
-
 export function ReportAchievementList() {
   const condition = useReportQuery();
   const history = useHistory();

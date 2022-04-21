@@ -44,18 +44,6 @@ const useStyles = makeStyles(() => ({
     boxSizing: "border-box",
   },
 }));
-
-// const useQuery = () => {
-//   const { search } = useLocation();
-//   const query = new URLSearchParams(search);
-//   const outcome_id = query.get("outcome_id") || "";
-//   const status = query.get("status") || "";
-//   const before = query.get("before") || "";
-//   const readOnly = query.get("readonly") || false;
-//   const is_unpub = query.get("is_unpub") || "";
-//   return { outcome_id, status, before, readOnly, is_unpub };
-// };
-
 export default function CreateOutcomings() {
   const classes = useStyles();
   const { outcome_id, status, before, readOnly, is_unpub } = useQueryCms();

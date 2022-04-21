@@ -1407,17 +1407,6 @@ export const onLoadLearningSummary = createAsyncThunk<
     query: QueryMyUserDocument,
   });
   const myUserId = myUser?.node?.id || "";
-  // const perm = await permissionCache.usePermission([
-  //   PermissionType.report_learning_summary_org_652,
-  //   PermissionType.report_learning_summary_school_651,
-  //   PermissionType.report_learning_summary_teacher_650,
-  //   PermissionType.report_learning_summary_student_649,
-  // ]);
-  // const isOrg = perm.report_learning_summary_org_652;
-  // const isSchool = perm.report_learning_summary_school_651;
-  // const isTeacher = perm.report_learning_summary_teacher_650;
-  // const isStudent = perm.report_learning_summary_student_649;
-
   const { isOrg, isSchool, isTeacher, isStudent } = useRole();
   const isOnlyStudent = isStudent && !isOrg && !isSchool && !isTeacher;
 

@@ -37,15 +37,7 @@ import { TabValue } from "./type";
 interface RouteParams {
   tab: "details" | "outcomes";
 }
-// const useQuery = () => {
-//   const { search } = useLocation();
-//   const query = new URLSearchParams(search);
-//   const id = query.get("id") as string;
-//   const sid = query.get("sid") as string;
-//   const author = query.get("author");
-//   const program_group = query.get("program_group") as string | "";
-//   return { id, search, sid, author, program_group };
-// };
+
 export default function ContentPreview(props: EntityContentInfoWithDetails) {
   const dispatch = useDispatch();
   const { routeBasePath } = ContentPreview;

@@ -25,14 +25,6 @@ import { Assignment } from "./Assignment";
 import { LessonPlan } from "./LessonPlan";
 import { Summary } from "./Summary";
 
-// const useQuery = () => {
-//   const { search } = useLocation();
-//   const query = new URLSearchParams(search);
-//   const id = query.get("id");
-//   const editindex: number = Number(query.get("editindex") || 0);
-//   return { id, editindex };
-// };
-
 function AssessmentsHomefunEditIner() {
   const history = useHistory();
   const dispatch = useDispatch<AppDispatch>();

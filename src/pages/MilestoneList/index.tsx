@@ -45,37 +45,14 @@ function useRefreshWithDispatch() {
   return { refreshKey, refreshWithDispatch };
 }
 
-// export const clearNull = (obj: Record<string, any>) => {
-//   Object.keys(obj).forEach((key) => {
-//     if (obj[key] == null) delete obj[key];
-//   });
-//   return obj;
-// };
-// const toQueryString = (hash: Record<string, any>): string => {
-//   const search = new URLSearchParams(hash);
-//   return `?${search.toString()}`;
-// };
 const useQuery = (): MilestoneQueryCondition => {
-  // const { search } = useLocation();
-  // return useMemo(() => {
-  //   const query = new URLSearchParams(search);
-  //   const status = query.get("status") || MilestoneStatus.published;
-  //   const search_key = query.get("search_key");
-  //   const description = query.get("description");
-  //   const name = query.get("name");
-  //   const shortcode = query.get("shortcode");
-  //   const page = Number(query.get("page")) || 1;
-  //   const author_id = query.get("author_id") || "";
-  //   const order_by = (query.get("order_by") as MilestoneOrderBy | null) || undefined;
-  //   const is_unpub = query.get("is_unpub");
-
   const { querys, name, page, search_key, description, shortcode, author_id, is_unpub } = useQueryCms();
   const status = querys.get("status") || MilestoneStatus.published;
   const order_by = (querys.get("order_by") as MilestoneOrderBy | null) || undefined;
-  return clearNull({ name, status, page, order_by, search_key, description, shortcode, author_id, is_unpub });
-  //}, [search]);
+  return useMemo(() => {
+    return clearNull({ name, status, page, order_by, search_key, description, shortcode, author_id, is_unpub });
+  }, [name, status, page, order_by, search_key, description, shortcode, author_id, is_unpub]);
 };
-
 export default function MilestonesList() {
   const dispatch = useDispatch<AppDispatch>();
   const history = useHistory();
