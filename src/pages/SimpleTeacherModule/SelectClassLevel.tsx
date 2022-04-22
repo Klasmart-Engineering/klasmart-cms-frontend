@@ -1,4 +1,6 @@
-import { Box, makeStyles, Typography } from "@material-ui/core";
+import { Box, Button, makeStyles, Typography, withStyles } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
+import { pageLinks } from ".";
 import Header from "./components/Header";
 
 const data: ILessonData[] = [
@@ -132,10 +134,37 @@ const useStyles = makeStyles({
   },
 });
 
+const IconButton = withStyles({
+  root: {
+    background: "#fff",
+    width: "13.2vw",
+    height: "17vw",
+    borderRadius: "2vw",
+    cursor: "pointer",
+    position: "relative",
+    overflow: "hidden",
+    "&:hover": {
+      background: "#fff",
+      borderColor: "none",
+      boxShadow: "none",
+    },
+    "&:active": {
+      boxShadow: "none",
+      backgroundColor: "none",
+      borderColor: "none",
+    },
+  },
+})(Button);
+
 function LessonItem(props: ILessonData) {
+  const history = useHistory();
   const css = useStyles();
   return (
-    <Box className={css.item}>
+    <IconButton
+      onClick={() => {
+        history.push(pageLinks.lesson);
+      }}
+    >
       <Box className={css.itemLeve} style={{ background: props.color }}>
         <Typography className={css.itemLeveText1}>Level</Typography>
         <Typography className={css.itemLeveText2}>{props.level}</Typography>
@@ -147,7 +176,7 @@ function LessonItem(props: ILessonData) {
       <Typography className={css.itemAge} style={{ color: props.color }}>
         {props.age}
       </Typography>
-    </Box>
+    </IconButton>
   );
 }
 

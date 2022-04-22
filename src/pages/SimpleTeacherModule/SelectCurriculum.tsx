@@ -1,9 +1,10 @@
 import eslImg from "@assets/stm/esl.png";
 import steamImg from "@assets/stm/steam.png";
-import { Box, Link, makeStyles, Typography } from "@material-ui/core";
+import { Box, Button, makeStyles, Typography, withStyles } from "@material-ui/core";
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { pageLinks, StmContext } from "./index";
+import vw from "./utils/vw.macro";
 
 const useStyles = makeStyles({
   root: {
@@ -19,8 +20,8 @@ const useStyles = makeStyles({
     flexDirection: "column",
   },
   title: {
-    fontSize: "2.7vw",
-    paddingBottom: "2.1vw",
+    fontSize: vw(69),
+    paddingBottom: vw(54),
     fontFamily: "RooneySans, sans-serif",
     fontWeight: "bold",
     fontVariantNumeric: "lining-nums",
@@ -30,40 +31,48 @@ const useStyles = makeStyles({
   itemContainer: {
     display: "grid",
     gridTemplateColumns: "25.3vw 25.3vw",
-    gridColumnGap: "1.7vw",
+    gridColumnGap: vw(46),
   },
-  item: {
+});
+
+const IconButton = withStyles({
+  root: {
     background: "#fff",
-    width: "25.3vw",
-    height: "15.3vw",
-    borderRadius: "3vw 1.5vw 3vw 3vw",
+    width: vw(648),
+    height: vw(392),
+    borderRadius: `${vw(100)} ${vw(40)} ${vw(100)}  ${vw(100)}`,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     cursor: "pointer",
-    "& > img": {
+    "& img": {
       scale: ".8",
     },
+    "&:hover": {
+      backgroundColor: "#fff",
+      borderColor: "none",
+      boxShadow: "none",
+    },
+    "&:active": {
+      boxShadow: "none",
+      backgroundColor: "none",
+      borderColor: "none",
+    },
   },
-});
+})(Button);
 
 function CurriculumItem(props: { name: IContextState["curriculum"] }) {
-  let history = useHistory();
-  const css = useStyles();
+  const history = useHistory();
   const { setRootState } = useContext(StmContext);
   return (
-    <Link
-      component="button"
-      variant="body2"
+    <IconButton
       onClick={() => {
         setRootState && setRootState({ curriculum: props.name });
         history.push(pageLinks.level);
       }}
     >
-      <Box className={css.item}>
-        <img src={props.name === "steam" ? steamImg : eslImg} alt={props.name} />
-      </Box>
-    </Link>
+      <img src={props.name === "steam" ? steamImg : eslImg} alt={props.name} />
+    </IconButton>
   );
 }
 

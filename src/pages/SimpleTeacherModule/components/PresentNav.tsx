@@ -1,5 +1,7 @@
 import { Box, Button, Divider, makeStyles, withStyles } from "@material-ui/core";
 import clsx from "clsx";
+import { useHistory } from "react-router-dom";
+import { pageLinks } from "..";
 import emitter from "../utils/event";
 import vw from "../utils/vw.macro";
 
@@ -63,6 +65,7 @@ function Icon(props: INavIcon) {
 }
 export default function PresentNav() {
   const css = useStyles();
+  const history = useHistory();
   const sendEvent = (eventName: string) => () => {
     emitter.emit("cmd", eventName);
   };
@@ -91,7 +94,12 @@ export default function PresentNav() {
   return (
     <Box className={css.root}>
       <Box className={clsx(css.iconBase, css.iconWrapper)}>
-        <Icon src={require("@assets/stm/back2.png").default} onClick={() => {}} />
+        <Icon
+          src={require("@assets/stm/back2.png").default}
+          onClick={() => {
+            history.push(pageLinks.lesson);
+          }}
+        />
       </Box>
       <Box className={clsx(css.iconBase, css.iconWrapper2)}>
         <Icon src={require("@assets/stm/home.png").default} onClick={() => {}} />

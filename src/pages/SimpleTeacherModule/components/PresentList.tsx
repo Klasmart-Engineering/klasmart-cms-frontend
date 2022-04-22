@@ -1,6 +1,6 @@
 import { Box, Button, makeStyles } from "@material-ui/core";
 import clsx from "clsx";
-import { px2vw } from "../utils";
+import vw from "../utils/vw.macro";
 
 const useStyles = makeStyles({
   root: {
@@ -9,35 +9,33 @@ const useStyles = makeStyles({
     backgroundColor: "#ffffff",
     borderLeft: "1px solid #f0f0f0",
     borderRight: "1px solid #f0f0f0",
-    width: px2vw(310),
+    width: vw(310),
   },
   listMain: {
     position: "absolute",
-    top: px2vw(40),
-    bottom: px2vw(40),
+    top: vw(40),
+    bottom: vw(40),
     left: 0,
     right: 0,
-    width: px2vw(310),
+    width: vw(310),
     overflowY: "auto",
   },
   itemWrapper: {
-    width: px2vw(258),
+    width: vw(258),
     display: "grid",
-    gridTemplateColumns: px2vw(258),
-    gridRowGap: px2vw(46),
+    gridTemplateColumns: vw(258),
+    gridRowGap: vw(46),
     margin: "0 auto",
   },
   item: {
-    width: px2vw(258),
-    height: px2vw(145),
-    borderRadius: px2vw(22),
+    width: vw(258),
+    height: vw(145),
+    borderRadius: vw(22),
     background: "#ccc",
     backgroundSize: "cover",
-    border: `${px2vw(8)} solid #f0f0f0`,
+    border: `${vw(8)} solid #f0f0f0`,
     "&.active": {
-      //width: px2vw(242),
-      //height: px2vw(129),
-      border: `${px2vw(8)} solid #2475EA`,
+      border: `${vw(8)} solid #2475EA`,
     },
   },
 });
