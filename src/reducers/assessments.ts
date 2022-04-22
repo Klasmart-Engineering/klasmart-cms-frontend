@@ -1,18 +1,16 @@
 import { cloneDeep } from "@apollo/client/utilities";
 import { AssessmentTypeValues } from "@components/AssessmentType";
-import { GetHomeFunAssessmentList } from "@pages/HomeFunAssessmentList/types";
 import { AsyncThunkAction, createAsyncThunk, createSlice, PayloadAction, unwrapResult } from "@reduxjs/toolkit";
 import api, { ExtendedRequestParams, gqlapi } from "../api";
 import { QueryMyUserDocument, QueryMyUserQuery, QueryMyUserQueryVariables } from "../api/api-ko.auto";
 import { EntityScheduleFeedbackView, V2GetOfflineStudyUserResultDetailReply, V2OfflineStudyUserResultUpdateReq } from "../api/api.auto";
 import PermissionType from "../api/PermissionType";
 import {
-  // AssessmentStatus,
   ListAssessmentRequest,
   ListAssessmentResult,
   ListAssessmentResultItem,
   OrderByAssessmentList,
-  UpdateAssessmentRequestData
+  UpdateAssessmentRequestData,
 } from "../api/type";
 import { d } from "../locale/LocaleManager";
 import { ModelAssessment } from "../models/ModelAssessment";
@@ -31,7 +29,6 @@ export interface IAssessmentState {
   homefunDetail: V2GetOfflineStudyUserResultDetailReply;
   homefunFeedbacks: EntityScheduleFeedbackView[];
   hasPermissionOfHomefun: boolean | undefined;
-  homeFunAssessmentList: GetHomeFunAssessmentList;
   studyAssessmentList: NonNullable<AsyncReturnType<typeof api.studyAssessments.listStudyAssessments>["items"]>;
   studyAssessmentDetail: NonNullable<AsyncReturnType<typeof api.studyAssessments.getStudyAssessmentDetail>>;
   contentOutcomes?: UpdateAssessmentRequestData["content_outcomes"] /** https://calmisland.atlassian.net/browse/NKL-1199 **/;
@@ -48,7 +45,6 @@ interface RootState {
 const initialState: IAssessmentState = {
   total: undefined,
   assessmentList: [],
-  homeFunAssessmentList: [],
   assessmentDetail: {},
   homefunDetail: {
     assess_comment: "",
@@ -82,16 +78,6 @@ export const actAssessmentList = createAsyncThunk<ListAssessmentResult, IQueryAs
   async ({ metaLoading, ...query }) => {
     const { items, total } = await api.assessments.listAssessment(query);
     return { items, total };
-  }
-);
-
-type IQueryHomeFunAssessmentListParams = Parameters<typeof api.userOfflineStudy.queryUserOfflineStudy>[0] & LoadingMetaPayload;
-type IQueryHomeFunAssessmentListResult = AsyncReturnType<typeof api.userOfflineStudy.queryUserOfflineStudy>;
-export const actHomeFunAssessmentList = createAsyncThunk<IQueryHomeFunAssessmentListResult, IQueryHomeFunAssessmentListParams>(
-  "homeFunStudies/actHomeFunAssessmentList",
-  async ({ metaLoading, ...query }) => {
-    const { item, total } = await api.userOfflineStudy.queryUserOfflineStudy(query);
-    return { item, total };
   }
 );
 
@@ -357,17 +343,17 @@ const { reducer } = createSlice({
     [onLoadHomefunDetail.rejected.type]: (state, { error }: any) => {
       throw error;
     },
-    [actHomeFunAssessmentList.fulfilled.type]: (state, { payload }: PayloadAction<AsyncTrunkReturned<typeof actHomeFunAssessmentList>>) => {
-      state.homeFunAssessmentList = payload.item || [];
-      state.total = payload.total || 0;
-    },
-    [actHomeFunAssessmentList.pending.type]: (state, { payload }: PayloadAction<AsyncTrunkReturned<typeof getAssessment>>) => {
-      state.homeFunAssessmentList = initialState.homeFunAssessmentList;
-      state.total = initialState.total;
-    },
+    // [actHomeFunAssessmentList.fulfilled.type]: (state, { payload }: PayloadAction<AsyncTrunkReturned<typeof actHomeFunAssessmentList>>) => {
+    //   state.homeFunAssessmentList = payload.item || [];
+    //   state.total = payload.total || 0;
+    // },
+    // [actHomeFunAssessmentList.pending.type]: (state, { payload }: PayloadAction<AsyncTrunkReturned<typeof getAssessment>>) => {
+    //   state.homeFunAssessmentList = initialState.homeFunAssessmentList;
+    //   state.total = initialState.total;
+    // },
     [getDetailAssessmentV2.fulfilled.type]: (state, { payload }: PayloadAction<AsyncTrunkReturned<typeof getDetailAssessmentV2>>) => {
       state.assessmentDetailV2 = payload.detail;
-      
+
       state.my_id = payload.my_id;
     },
     [getDetailAssessmentV2.pending.type]: (state, { payload }: PayloadAction<AsyncTrunkReturned<typeof getDetailAssessmentV2>>) => {
