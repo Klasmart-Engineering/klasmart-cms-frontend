@@ -1,5 +1,5 @@
-import backArrow from "@assets/inclass/arrow.svg";
-import { Box, IconButton, Link, makeStyles, withStyles } from "@material-ui/core";
+import backArrow from "@assets/stm/arrow.svg";
+import { IconButton, Link, makeStyles, withStyles } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 
 const BackButton = withStyles({
@@ -38,22 +38,19 @@ export default function Header(props: { prevLink: string; backgroudColor?: React
   let history = useHistory();
   return (
     <Link
-      component="button"
+      component="div"
       variant="body2"
+      className={css.root}
+      style={{
+        backgroundColor: props.backgroudColor || "transpant",
+      }}
       onClick={() => {
         history.push(props.prevLink);
       }}
     >
-      <Box
-        className={css.root}
-        style={{
-          backgroundColor: props.backgroudColor || "transpant",
-        }}
-      >
-        <BackButton aria-label="back" className={css.backBtn}>
-          <img src={backArrow} alt="back" />
-        </BackButton>
-      </Box>
+      <BackButton aria-label="back" className={css.backBtn}>
+        <img src={backArrow} alt="back" />
+      </BackButton>
     </Link>
   );
 }

@@ -1,0 +1,17 @@
+@font-face {
+  font-family: "RooneySans";
+  src: local("RooneySans Bold"), local("RooneySans-Bold"), url("RooneySans-Bold.woff2") format("woff2"),
+    url("RooneySans-Bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "RooneySans";
+  src: local("RooneySans Regular"), local("RooneySans-Regular"), url("RooneySans-Regular.woff2") format("woff2"),
+    url("RooneySans-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}

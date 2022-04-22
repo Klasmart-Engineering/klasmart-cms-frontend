@@ -281,9 +281,9 @@ export default function LessonChart(props: Props) {
             totalText={lang.totalScheduled}
             content={[
               { count: item.completed_live_Lessons || 0, type: lang.liveCompleted },
-              { count: item.completed_in_class_lessons || 0, type: lang.inClassCompleted },
+              { count: item.completed_in_class_lessons || 0, type: lang.stmCompleted },
               { count: item.missed_live_lessons || 0, type: lang.liveMissed },
-              { count: item.missed_in_class_lessons || 0, type: lang.inClassMidded },
+              { count: item.missed_in_class_lessons || 0, type: lang.stmMidded },
             ]}
           >
             <Box display={"flex"} width={(count / computeCurrentPage()) * 100 + "%"} height={36}>
@@ -355,7 +355,7 @@ export default function LessonChart(props: Props) {
           0
         )}
         {renderLineFooterBlock(
-          lang.inClassCompleted,
+          lang.stmCompleted,
           `${statistic.completed_in_class_lessons?.count || 0} (${formatTime(statistic.completed_in_class_lessons?.duration)})`,
           1
         )}
@@ -365,7 +365,7 @@ export default function LessonChart(props: Props) {
           2
         )}
         {renderLineFooterBlock(
-          lang.inClassMidded,
+          lang.stmMidded,
           `${statistic.missed_in_class_lessons?.count || 0} (${formatTime(statistic.missed_in_class_lessons?.duration)})`,
           3
         )}
