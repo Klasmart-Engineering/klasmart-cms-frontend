@@ -21,7 +21,7 @@ import { DetailAssessmentResult, DetailAssessmentResultStudent } from "../ListAs
 import { AchievedTooltips } from "./AchievedTooltips";
 import { EditScore } from "./EditScore";
 import { Dimension } from "./MultiSelect";
-import { ResourceView, showAudioRecorder, useResourceView } from "./ResourceView";
+import { ResourceView, showAudioRecorder, showScreenShort, useResourceView } from "./ResourceView";
 import {
   FileTypes,
   MaterialViewItemResultOutcomeProps,
@@ -103,10 +103,12 @@ export function MaterialView(props: MaterialViewProps) {
   const MaterialDefaultHeader: PLField[] = [
     { align: "center", width: "25%", value: "Learning_Outcomes", text: d("Student Name").t("assessment_student_name") },
     { align: "center", width: "25%", value: "Answer", text: d("Answer").t("assess_detail_answer") },
+    { align: "center", width: "25%", value: "Results", text: d("Results").t("assessment_detail_screenshot_results") },
     { align: "center", width: "25%", value: "Score_FullMarks", text: d("Score / Full Marks").t("assess_detail_score_full_marks") },
     { align: "center", width: "25%", value: "Percentage", text: d("Percentage").t("assess_detail_percentage") },
   ];
   const [resourceType, setResourceType] = useState<ResourceViewTypeValues>(ResourceViewTypeValues.essay);
+  const [contentSubType, setContentSubType] = useState<string | undefined>("");
   const [answer, setAnswer] = useState<string>("");
   const [room, setRoom] = useState<string | undefined>("");
   const [h5pId, setH5pId] = useState<string | undefined>("");
@@ -165,6 +167,15 @@ export function MaterialView(props: MaterialViewProps) {
     setUserId(userId);
     setH5pSubId(h5pSubId);
   };
+  const handleClickScreenshots = (roomId?: string, h5pId?: string, h5pSubId?: string, userId?: string, content_subtype?: string) => {
+    openResourceView();
+    setResourceType(ResourceViewTypeValues.viewScreenshots);
+    setContentSubType(content_subtype)
+    setRoom(roomId);
+    setH5pId(h5pId);
+    setUserId(userId);
+    setH5pSubId(h5pSubId);
+  }
   const handleChangeScore = (score?: number, studentId?: string, contentId?: string) => {
     const _studentViewItems = studentViewItems?.map((sItem) => {
       if (sItem.student_id === studentId) {
@@ -330,6 +341,27 @@ export function MaterialView(props: MaterialViewProps) {
                                         </span>
                                       )}
                                   </TableCell>
+                                  <TableCell align="center">
+                                    {item.file_type !== FileTypes.HasChildContainer &&
+                                      sItem.attempted &&
+                                      showScreenShort(item.content_subtype) && (
+                                        <span
+                                            style={{ color: "#006CCF", cursor: "pointer" }}
+                                            onClick={(e) =>
+                                              handleClickScreenshots(
+                                                roomId,
+                                                item.h5p_id,
+                                                item.h5p_sub_id,
+                                                sItem.student_id,
+                                                item.content_subtype
+                                              )
+                                            }
+                                          >
+                                            {d("Click to View").t("assess_detail_click_to_view")}
+                                        </span>
+                                      )
+                                    }
+                                  </TableCell>
                                   <TableCell>
                                     <EditScore
                                       fileType={item.file_type}
@@ -373,6 +405,7 @@ export function MaterialView(props: MaterialViewProps) {
         userId={userId}
         h5pId={h5pId}
         h5pSubId={h5pSubId}
+        contentSubType={contentSubType}
       />
     </>
   );

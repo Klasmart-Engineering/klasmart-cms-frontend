@@ -15,7 +15,7 @@ import {
   makeStyles,
   TextField,
   useMediaQuery,
-  useTheme,
+  useTheme
 } from "@material-ui/core";
 import {
   Close,
@@ -25,7 +25,7 @@ import {
   SentimentSatisfied,
   SentimentSatisfiedOutlined,
   SentimentVeryDissatisfiedOutlined,
-  SentimentVerySatisfiedOutlined,
+  SentimentVerySatisfiedOutlined
 } from "@material-ui/icons";
 import BorderColorIcon from "@material-ui/icons/BorderColor";
 import { DetailAssessmentResultAssignment, DetailAssessmentResultFeedback } from "@pages/ListAssessment/types";
