@@ -10,7 +10,7 @@ import {
   ListAssessmentResult,
   ListAssessmentResultItem,
   OrderByAssessmentList,
-  UpdateAssessmentRequestData
+  UpdateAssessmentRequestData,
 } from "../api/type";
 import { d } from "../locale/LocaleManager";
 import { ModelAssessment } from "../models/ModelAssessment";
@@ -353,7 +353,7 @@ const { reducer } = createSlice({
     // },
     [getDetailAssessmentV2.fulfilled.type]: (state, { payload }: PayloadAction<AsyncTrunkReturned<typeof getDetailAssessmentV2>>) => {
       state.assessmentDetailV2 = payload.detail;
-      
+
       state.my_id = payload.my_id;
     },
     [getDetailAssessmentV2.pending.type]: (state, { payload }: PayloadAction<AsyncTrunkReturned<typeof getDetailAssessmentV2>>) => {

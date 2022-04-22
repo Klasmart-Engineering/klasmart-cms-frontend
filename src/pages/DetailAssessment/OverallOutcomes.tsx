@@ -109,8 +109,8 @@ export function OverallOutcomes(props: OverallOutcomesProps) {
     onChangeNotCovered(event.target.checked, id);
   };
   const selectedAttendanceList = useMemo(() => {
-    return attendanceList?.filter(item => item.status === StudentParticipate.Participate)
-  }, [attendanceList])
+    return attendanceList?.filter((item) => item.status === StudentParticipate.Participate);
+  }, [attendanceList]);
   const rows = overallOutcomes.map((outcome, index) => (
     <TableRow
       key={outcome.outcome_id}
@@ -143,7 +143,9 @@ export function OverallOutcomes(props: OverallOutcomesProps) {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={outcome.skip ? false : outcome.attendance_ids && outcome.attendance_ids?.length === selectedAttendanceList?.length}
+                  checked={
+                    outcome.skip ? false : outcome.attendance_ids && outcome.attendance_ids?.length === selectedAttendanceList?.length
+                  }
                   onChange={(e) => handleChangeAllAchieved(e, outcome.outcome_id)}
                   name="award"
                   color="primary"

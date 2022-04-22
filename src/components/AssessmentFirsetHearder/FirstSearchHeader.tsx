@@ -99,9 +99,9 @@ export function FirstSearchHeader() {
   const history = useHistory();
   const pathname = history.location.pathname;
   const hightLightAssessment = pathname.indexOf(ListAssessment.routeBasePath) >= 0;
-    //  ||
-    // pathname.indexOf(HomeFunAssessmentList.routeBasePath) >= 0 ||
-    // pathname.indexOf(StudyAssessmentList.routeBasePath) >= 0;
+  //  ||
+  // pathname.indexOf(HomeFunAssessmentList.routeBasePath) >= 0 ||
+  // pathname.indexOf(StudyAssessmentList.routeBasePath) >= 0;
   return (
     <div className={css.root}>
       <LayoutBox holderMin={40} holderBase={202} mainBase={1517}>
@@ -215,12 +215,12 @@ export function FirstSearchHeaderMb() {
                   className={classes.capitalize}
                 />
                 <Tab
-                    component={Button}
-                    value={ListAssessment.routeBasePath}
-                    label={d("Assessments").t("assess_label_assessments")}
-                    className={classes.capitalize}
-                    onClick={() => history.push(ListAssessment.routeRedirectDefault)}
-                  />
+                  component={Button}
+                  value={ListAssessment.routeBasePath}
+                  label={d("Assessments").t("assess_label_assessments")}
+                  className={classes.capitalize}
+                  onClick={() => history.push(ListAssessment.routeRedirectDefault)}
+                />
                 {/* {perm.assessments_page_406 && !isLiveList && !isStudyList && !isHomeFunList && (
                   <Tab
                     component={Button}

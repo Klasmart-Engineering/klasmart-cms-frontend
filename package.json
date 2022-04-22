@@ -84,6 +84,7 @@
   },
   "scripts": {
     "start": "react-app-rewired  --max_old_space_size=8192 start",
+    "https":"sudo PORT=443 HTTPS=true react-app-rewired start",
     "build": "react-app-rewired  build && node ./scripts/publishSourcemap.js",
     "test": "react-app-rewired  test",
     "syncapi": "node ./scripts/syncapi.js",

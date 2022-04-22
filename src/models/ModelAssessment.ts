@@ -6,14 +6,14 @@ import {
   EntityAssessmentStudent,
   EntityAssessmentStudentViewH5PItem,
   EntityUpdateAssessmentContentOutcomeArgs,
-  V2AssessmentContentReply
+  V2AssessmentContentReply,
 } from "../api/api.auto";
 import {
   DetailStudyAssessment,
   GetAssessmentResult,
   UpdataStudyAssessmentRequestData,
   UpdateAssessmentRequestData,
-  UpdateAssessmentRequestDataLessonMaterials
+  UpdateAssessmentRequestDataLessonMaterials,
 } from "../api/type";
 import { d } from "../locale/LocaleManager";
 import {
@@ -22,9 +22,14 @@ import {
   OverAllOutcomesItem,
   StudentParticipate,
   StudentViewItemsProps,
-  SubDimensionOptions
+  SubDimensionOptions,
 } from "../pages/DetailAssessment/type";
-import { DetailAssessmentResult, DetailAssessmentResultContent, DetailAssessmentResultOutcome, DetailAssessmentResultStudent } from "../pages/ListAssessment/types";
+import {
+  DetailAssessmentResult,
+  DetailAssessmentResultContent,
+  DetailAssessmentResultOutcome,
+  DetailAssessmentResultStudent,
+} from "../pages/ListAssessment/types";
 interface ObjContainId {
   id?: string;
 }
@@ -427,7 +432,7 @@ export const ModelAssessment = {
     students: DetailAssessmentResult["students"],
     contents: DetailAssessmentResult["contents"],
     outcomes: DetailAssessmentResult["outcomes"],
-    assessment_type: AssessmentTypeValues,
+    assessment_type: AssessmentTypeValues
   ): StudentViewItemsProps[] | undefined {
     // const participateStudent = students?.filter((item) => item.status === StudentParticipate.Participate);
     const isHomefun = assessment_type === AssessmentTypeValues.homeFun;
@@ -452,70 +457,72 @@ export const ModelAssessment = {
         student_name,
         reviewer_comment,
         status,
-        attempted: isHomefun ? true : !results?.every(r => r.attempted === false),
-        results: isHomefun 
-          ?
-          results?.map(result => {
-            const { outcomes } = result;
-            return {
-              ...result,
-              outcomes: outcomes?.map((oItem) => {
-                if(outcomeObj[oItem.outcome_id!]) {
-                  const { assumed, outcome_name } = outcomeObj[oItem.outcome_id!];
-                  return {
-                    ...oItem,
-                    assumed,
-                    outcome_name
+        attempted: isHomefun ? true : !results?.every((r) => r.attempted === false),
+        results: isHomefun
+          ? results?.map((result) => {
+              const { outcomes } = result;
+              return {
+                ...result,
+                outcomes: outcomes?.map((oItem) => {
+                  if (outcomeObj[oItem.outcome_id!]) {
+                    const { assumed, outcome_name } = outcomeObj[oItem.outcome_id!];
+                    return {
+                      ...oItem,
+                      assumed,
+                      outcome_name,
+                    };
+                  } else {
+                    return { ...oItem };
                   }
-                } else {
-                  return { ...oItem }
-                }
-              }),
-            }
-          }) 
+                }),
+              };
+            })
           : results
-          ?.filter((r) => !!contentObj[r.content_id!])
-          .map((result) => {
-            const { answer, attempted, content_id, score, outcomes } = result;
-            const { content_name, content_type, content_subtype, file_type, max_score, number, parent_id, h5p_id, h5p_sub_id, status } =
-              contentObj[content_id!];
-            return {
-              answer,
-              attempted,
-              content_id,
-              score,
-              content_name,
-              content_type,
-              content_subtype,
-              file_type,
-              max_score,
-              number,
-              parent_id,
-              h5p_id,
-              h5p_sub_id,
-              status,
-              outcomes: outcomes?.map((item) => {
-                if (outcomeObj[item.outcome_id!]) {
-                  const { assumed, outcome_name, assigned_to } = outcomeObj[item.outcome_id!];
-                  return {
-                    ...item,
-                    assumed,
-                    outcome_name,
-                    assigned_to,
-                  };
-                } else {
-                  return {
-                    ...item,
-                  };
-                }
+              ?.filter((r) => !!contentObj[r.content_id!])
+              .map((result) => {
+                const { answer, attempted, content_id, score, outcomes } = result;
+                const { content_name, content_type, content_subtype, file_type, max_score, number, parent_id, h5p_id, h5p_sub_id, status } =
+                  contentObj[content_id!];
+                return {
+                  answer,
+                  attempted,
+                  content_id,
+                  score,
+                  content_name,
+                  content_type,
+                  content_subtype,
+                  file_type,
+                  max_score,
+                  number,
+                  parent_id,
+                  h5p_id,
+                  h5p_sub_id,
+                  status,
+                  outcomes: outcomes?.map((item) => {
+                    if (outcomeObj[item.outcome_id!]) {
+                      const { assumed, outcome_name, assigned_to } = outcomeObj[item.outcome_id!];
+                      return {
+                        ...item,
+                        assumed,
+                        outcome_name,
+                        assigned_to,
+                      };
+                    } else {
+                      return {
+                        ...item,
+                      };
+                    }
+                  }),
+                };
               }),
-            };
-          }),
       };
     });
     return studentViewItems;
   },
-  getStudentViewItemsByContent(students: StudentViewItemsProps[] | undefined, contents: DetailAssessmentResult["contents"]): StudentViewItemsProps[] | undefined {
+  getStudentViewItemsByContent(
+    students: StudentViewItemsProps[] | undefined,
+    contents: DetailAssessmentResult["contents"]
+  ): StudentViewItemsProps[] | undefined {
     const contentObj: Record<string, DetailAssessmentResultContent> = {};
     contents
       // ?.filter((item) => item.status === "Covered")
@@ -524,33 +531,36 @@ export const ModelAssessment = {
           contentObj[item.content_id!] = { ...item };
         }
       });
-    const studentViewItems: StudentViewItemsProps[] | undefined = students?.map(item => {
+    const studentViewItems: StudentViewItemsProps[] | undefined = students?.map((item) => {
       return {
         ...item,
-        results: item.results?.map(ritem => {
+        results: item.results?.map((ritem) => {
           return {
             ...ritem,
-            status: contentObj[ritem.content_id!].status
-          }
-        })
-      }
-    })
-    return studentViewItems
+            status: contentObj[ritem.content_id!].status,
+          };
+        }),
+      };
+    });
+    return studentViewItems;
   },
-  getStudentViewItemByStudent(students: DetailAssessmentResult["students"], studentViewItems: StudentViewItemsProps[] | undefined): StudentViewItemsProps[] | undefined {
+  getStudentViewItemByStudent(
+    students: DetailAssessmentResult["students"],
+    studentViewItems: StudentViewItemsProps[] | undefined
+  ): StudentViewItemsProps[] | undefined {
     const studentObj: Record<string, DetailAssessmentResultStudent> = {};
-    students?.forEach(item => {
-      if(!studentObj[item.student_id!]) {
+    students?.forEach((item) => {
+      if (!studentObj[item.student_id!]) {
         studentObj[item.student_id!] = { ...item };
       }
-    })
-    const new_studentViewItems: StudentViewItemsProps[] | undefined = studentViewItems?.map(item => {
-      const { status } = studentObj[item.student_id!]
+    });
+    const new_studentViewItems: StudentViewItemsProps[] | undefined = studentViewItems?.map((item) => {
+      const { status } = studentObj[item.student_id!];
       return {
         ...item,
         status,
-      }
-    })
+      };
+    });
     return new_studentViewItems;
   },
   getReviewStudentsItems(students: DetailAssessmentResult["diff_content_students"]): StudentViewItemsProps[] | undefined {
@@ -577,55 +587,14 @@ export const ModelAssessment = {
   getOverallOutcomes(studentViewItems: StudentViewItemsProps[] | undefined): OverAllOutcomesItem[] {
     let outcomeView: Record<string, OverAllOutcomesItem> = {};
     let overAllOutcomes: OverAllOutcomesItem[] = [];
-    studentViewItems?.filter(item => item.status === StudentParticipate.Participate)?.forEach((sItem) => {
-      const { student_id } = sItem;
-      sItem.results?.forEach((rItem) => {
-        if (rItem.content_type === "LessonMaterial") {
-          rItem.outcomes?.forEach((oItem) => {
-            const { outcome_id, status, outcome_name, assumed, assigned_to } = oItem;
-            if (!outcomeView[outcome_id!]) {
-              outcomeView[outcome_id!] = {
-                outcome_id,
-                outcome_name,
-                assumed,
-                assigned_to,
-                attendance_ids: status === OutcomeStatus.Achieved ? [student_id!] : [],
-                not_attendance_ids: status !== OutcomeStatus.Achieved ? [student_id!] : [],
-                partial_attendance_ids: [],
-                none_achieved: status === OutcomeStatus.NotAchieved,
-                skip: status === OutcomeStatus.NotCovered,
-              };
-            } else {
-              const { none_achieved, skip, attendance_ids, not_attendance_ids } = outcomeView[outcome_id!];
-              outcomeView[outcome_id!].none_achieved = status === "NotAchieved" && none_achieved;
-              outcomeView[outcome_id!].skip = status === "NotCovered" && skip;
-              const a_index = attendance_ids?.indexOf(student_id!) ?? -1;
-              const n_index = not_attendance_ids?.indexOf(student_id!) ?? -1;
-              if (status === "Achieved") {
-                if (a_index < 0 && n_index < 0) {
-                  outcomeView[outcome_id!].attendance_ids?.push(student_id!);
-                }
-                if (n_index >= 0) {
-                  outcomeView[outcome_id!].partial_attendance_ids?.push(student_id!);
-                  if (a_index >= 0) {
-                    outcomeView[outcome_id!].attendance_ids?.splice(a_index, 1);
-                  }
-                }
-              } else {
-                if (a_index >= 0) {
-                  outcomeView[outcome_id!].partial_attendance_ids?.push(student_id!);
-                  outcomeView[outcome_id!].attendance_ids?.splice(a_index, 1);
-                }
-                if (n_index < 0) {
-                  outcomeView[outcome_id!].not_attendance_ids?.push(student_id!);
-                }
-              }
-            }
-          });
-        } else {
-          rItem.outcomes?.forEach((oItem) => {
-            const { outcome_id, status, outcome_name, assumed, assigned_to } = oItem;
-            if (oItem.assigned_to?.length === 1) {
+    studentViewItems
+      ?.filter((item) => item.status === StudentParticipate.Participate)
+      ?.forEach((sItem) => {
+        const { student_id } = sItem;
+        sItem.results?.forEach((rItem) => {
+          if (rItem.content_type === "LessonMaterial") {
+            rItem.outcomes?.forEach((oItem) => {
+              const { outcome_id, status, outcome_name, assumed, assigned_to } = oItem;
               if (!outcomeView[outcome_id!]) {
                 outcomeView[outcome_id!] = {
                   outcome_id,
@@ -633,31 +602,74 @@ export const ModelAssessment = {
                   assumed,
                   assigned_to,
                   attendance_ids: status === OutcomeStatus.Achieved ? [student_id!] : [],
-                  not_attendance_ids: [],
+                  not_attendance_ids: status !== OutcomeStatus.Achieved ? [student_id!] : [],
                   partial_attendance_ids: [],
                   none_achieved: status === OutcomeStatus.NotAchieved,
                   skip: status === OutcomeStatus.NotCovered,
                 };
               } else {
-                const { none_achieved, skip, attendance_ids = [] } = outcomeView[outcome_id!];
-                outcomeView[outcome_id!].none_achieved = status === OutcomeStatus.NotAchieved && none_achieved;
-                outcomeView[outcome_id!].skip = status === OutcomeStatus.NotCovered && skip;
+                const { none_achieved, skip, attendance_ids, not_attendance_ids } = outcomeView[outcome_id!];
+                outcomeView[outcome_id!].none_achieved = status === "NotAchieved" && none_achieved;
+                outcomeView[outcome_id!].skip = status === "NotCovered" && skip;
                 const a_index = attendance_ids?.indexOf(student_id!) ?? -1;
-                if (status === OutcomeStatus.Achieved) {
-                  if (a_index < 0) {
+                const n_index = not_attendance_ids?.indexOf(student_id!) ?? -1;
+                if (status === "Achieved") {
+                  if (a_index < 0 && n_index < 0) {
                     outcomeView[outcome_id!].attendance_ids?.push(student_id!);
+                  }
+                  if (n_index >= 0) {
+                    outcomeView[outcome_id!].partial_attendance_ids?.push(student_id!);
+                    if (a_index >= 0) {
+                      outcomeView[outcome_id!].attendance_ids?.splice(a_index, 1);
+                    }
                   }
                 } else {
                   if (a_index >= 0) {
+                    outcomeView[outcome_id!].partial_attendance_ids?.push(student_id!);
                     outcomeView[outcome_id!].attendance_ids?.splice(a_index, 1);
+                  }
+                  if (n_index < 0) {
+                    outcomeView[outcome_id!].not_attendance_ids?.push(student_id!);
                   }
                 }
               }
-            }
-          });
-        }
+            });
+          } else {
+            rItem.outcomes?.forEach((oItem) => {
+              const { outcome_id, status, outcome_name, assumed, assigned_to } = oItem;
+              if (oItem.assigned_to?.length === 1) {
+                if (!outcomeView[outcome_id!]) {
+                  outcomeView[outcome_id!] = {
+                    outcome_id,
+                    outcome_name,
+                    assumed,
+                    assigned_to,
+                    attendance_ids: status === OutcomeStatus.Achieved ? [student_id!] : [],
+                    not_attendance_ids: [],
+                    partial_attendance_ids: [],
+                    none_achieved: status === OutcomeStatus.NotAchieved,
+                    skip: status === OutcomeStatus.NotCovered,
+                  };
+                } else {
+                  const { none_achieved, skip, attendance_ids = [] } = outcomeView[outcome_id!];
+                  outcomeView[outcome_id!].none_achieved = status === OutcomeStatus.NotAchieved && none_achieved;
+                  outcomeView[outcome_id!].skip = status === OutcomeStatus.NotCovered && skip;
+                  const a_index = attendance_ids?.indexOf(student_id!) ?? -1;
+                  if (status === OutcomeStatus.Achieved) {
+                    if (a_index < 0) {
+                      outcomeView[outcome_id!].attendance_ids?.push(student_id!);
+                    }
+                  } else {
+                    if (a_index >= 0) {
+                      outcomeView[outcome_id!].attendance_ids?.splice(a_index, 1);
+                    }
+                  }
+                }
+              }
+            });
+          }
+        });
       });
-    });
     overAllOutcomes = Object.values(outcomeView);
     return overAllOutcomes;
   },
@@ -745,23 +757,22 @@ export const ModelAssessment = {
   },
   getInitSubDimension(dimension: Dimension, studentViewItems: any[] | undefined): SubDimensionOptions[] | undefined {
     if (dimension !== Dimension.material) {
-      const participateStudent = studentViewItems?.filter(student => student.status === StudentParticipate.Participate)
-      if(dimension === Dimension.student || dimension === Dimension.all) {
-        return participateStudent
-          ?.map((item) => {
-            return { id: item.student_id!, name: item.student_name! };
-          });
+      const participateStudent = studentViewItems?.filter((student) => student.status === StudentParticipate.Participate);
+      if (dimension === Dimension.student || dimension === Dimension.all) {
+        return participateStudent?.map((item) => {
+          return { id: item.student_id!, name: item.student_name! };
+        });
       }
-      if(dimension === Dimension.submitted) {
+      if (dimension === Dimension.submitted) {
         return participateStudent
-          ?.filter(student => student.results.length && !!student.results[0].student_feed_backs)
+          ?.filter((student) => student.results.length && !!student.results[0].student_feed_backs)
           .map((item) => {
             return { id: item.student_id!, name: item.student_name! };
           });
       }
-      if(dimension === Dimension.notSubmitted) {
+      if (dimension === Dimension.notSubmitted) {
         return participateStudent
-          ?.filter(student => (!student.results.length || (student.results.length && !student.results[0].student_feed_backs)))
+          ?.filter((student) => !student.results.length || (student.results.length && !student.results[0].student_feed_backs))
           .map((item) => {
             return { id: item.student_id!, name: item.student_name! };
           });
@@ -784,7 +795,7 @@ export const ModelAssessment = {
   getUpdateAssessmentData(
     assessment_type: AssessmentTypeValues,
     contents?: V2AssessmentContentReply[],
-    students?: StudentViewItemsProps[],
+    students?: StudentViewItemsProps[]
   ) {
     const isReivew = assessment_type === AssessmentTypeValues.review;
     const isHomefun = assessment_type === AssessmentTypeValues.homeFun;
@@ -807,42 +818,46 @@ export const ModelAssessment = {
           student_id,
           reviewer_comment,
           status,
-          results: isHomefun ? results?.map(rItem => {
-            const { assess_score, outcomes, student_feed_backs } = rItem;
-            return {
-              assess_score,
-              assess_feedback_id: student_feed_backs ? student_feed_backs[0].id : "",
-              assignments: student_feed_backs ? student_feed_backs[0].assignments?.map(aItem => {
+          results: isHomefun
+            ? results?.map((rItem) => {
+                const { assess_score, outcomes, student_feed_backs } = rItem;
                 return {
-                  id: aItem.id,
-                  review_attachment_id: aItem.review_attachment_id,
-                }
-              }) : [],
-              outcomes: outcomes?.map(oItem => {
-                const { outcome_id, status } = oItem
-                return {
-                  outcome_id,
-                  status,
-                }
-              })
-            }
-          }) : results?.map((rItem) => {
-            const { content_id, parent_id, score, outcomes } = rItem;
-            return {
-              content_id,
-              parent_id,
-              score: Number(score),
-              outcomes: isReivew
-                ? undefined
-                : outcomes?.map((oItem) => {
+                  assess_score,
+                  assess_feedback_id: student_feed_backs ? student_feed_backs[0].id : "",
+                  assignments: student_feed_backs
+                    ? student_feed_backs[0].assignments?.map((aItem) => {
+                        return {
+                          id: aItem.id,
+                          review_attachment_id: aItem.review_attachment_id,
+                        };
+                      })
+                    : [],
+                  outcomes: outcomes?.map((oItem) => {
                     const { outcome_id, status } = oItem;
                     return {
                       outcome_id,
                       status,
                     };
                   }),
-            };
-          }),
+                };
+              })
+            : results?.map((rItem) => {
+                const { content_id, parent_id, score, outcomes } = rItem;
+                return {
+                  content_id,
+                  parent_id,
+                  score: Number(score),
+                  outcomes: isReivew
+                    ? undefined
+                    : outcomes?.map((oItem) => {
+                        const { outcome_id, status } = oItem;
+                        return {
+                          outcome_id,
+                          status,
+                        };
+                      }),
+                };
+              }),
         };
       }) ?? [];
     return { _contents, _students };

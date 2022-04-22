@@ -1,8 +1,10 @@
+import useQueryCms from "@hooks/useQueryCms";
 import { unwrapResult } from "@reduxjs/toolkit";
+import { clearNull, toQueryString } from "@utilities/urlUtilities";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import PermissionType from "../../api/PermissionType";
 import { MilestoneOrderBy, MilestoneStatus } from "../../api/type";
 import { FirstSearchHeader, FirstSearchHeaderMb } from "../../components/AssessmentFirsetHearder/FirstSearchHeader";
@@ -43,33 +45,14 @@ function useRefreshWithDispatch() {
   return { refreshKey, refreshWithDispatch };
 }
 
-export const clearNull = (obj: Record<string, any>) => {
-  Object.keys(obj).forEach((key) => {
-    if (obj[key] == null) delete obj[key];
-  });
-  return obj;
-};
-const toQueryString = (hash: Record<string, any>): string => {
-  const search = new URLSearchParams(hash);
-  return `?${search.toString()}`;
-};
 const useQuery = (): MilestoneQueryCondition => {
-  const { search } = useLocation();
+  const { querys, name, page, search_key, description, shortcode, author_id, is_unpub } = useQueryCms();
+  const status = querys.get("status") || MilestoneStatus.published;
+  const order_by = (querys.get("order_by") as MilestoneOrderBy | null) || undefined;
   return useMemo(() => {
-    const query = new URLSearchParams(search);
-    const status = query.get("status") || MilestoneStatus.published;
-    const search_key = query.get("search_key");
-    const description = query.get("description");
-    const name = query.get("name");
-    const shortcode = query.get("shortcode");
-    const page = Number(query.get("page")) || 1;
-    const author_id = query.get("author_id") || "";
-    const order_by = (query.get("order_by") as MilestoneOrderBy | null) || undefined;
-    const is_unpub = query.get("is_unpub");
     return clearNull({ name, status, page, order_by, search_key, description, shortcode, author_id, is_unpub });
-  }, [search]);
+  }, [name, status, page, order_by, search_key, description, shortcode, author_id, is_unpub]);
 };
-
 export default function MilestonesList() {
   const dispatch = useDispatch<AppDispatch>();
   const history = useHistory();

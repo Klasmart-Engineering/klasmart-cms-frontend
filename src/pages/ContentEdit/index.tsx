@@ -24,6 +24,7 @@ import {
 } from "@reducers/content";
 import { AsyncTrunkReturned } from "@reducers/type";
 import { PayloadAction } from "@reduxjs/toolkit";
+import { setQuery } from "@utilities/urlUtilities";
 import debounce from "lodash/debounce";
 import React, { Fragment, LegacyRef, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -58,12 +59,6 @@ export interface ContentEditRouteParams {
   tab: "details" | "outcomes" | "media" | "assetDetails";
   rightside: "contentH5p" | "assetPreview" | "assetEdit" | "assetPreviewH5p" | "uploadH5p" | "planComposeGraphic" | "planComposeText";
 }
-
-const setQuery = (search: string, hash: Record<string, string | number | boolean>): string => {
-  const query = new URLSearchParams(search);
-  Object.keys(hash).forEach((key) => query.set(key, String(hash[key])));
-  return query.toString();
-};
 
 const parseRightside = (rightside: ContentEditRouteParams["rightside"]) => ({
   includePlanComposeGraphic: rightside.includes("planComposeGraphic"),

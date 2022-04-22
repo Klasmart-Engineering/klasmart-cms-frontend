@@ -24,15 +24,17 @@ export function ScreenShorts(props: ScreenShortsProps) {
   if (loading) return <p>Loading ...</p>;
   if (!length) return <p>{"This image is not available. Please try again later."}</p>;
   if (multipleScreenShorts.indexOf(resourceType as string) < 0) {
-    return <ImageView
-            resourceType={resourceType}
-            imageId={mediaMetadata[0].id}
-            roomId={roomId as string}
-            mimeType={mediaMetadata[0].mimeType ? mediaMetadata[0].mimeType : "image/jpeg"}
-          />
+    return (
+      <ImageView
+        resourceType={resourceType}
+        imageId={mediaMetadata[0].id}
+        roomId={roomId as string}
+        mimeType={mediaMetadata[0].mimeType ? mediaMetadata[0].mimeType : "image/jpeg"}
+      />
+    );
   }
-  
-  const imgsCon = mediaMetadata.map(item => (
+
+  const imgsCon = mediaMetadata.map((item) => (
     <ImageView
       key={item.id}
       resourceType={resourceType}
@@ -40,12 +42,8 @@ export function ScreenShorts(props: ScreenShortsProps) {
       roomId={roomId as string}
       mimeType={item.mimeType ? item.mimeType : "image/jpeg"}
     />
-  ))
-  return (
-    <>
-      {imgsCon}
-    </>
-  );
+  ));
+  return <>{imgsCon}</>;
 }
 
 export interface ImageViewProps {
@@ -70,8 +68,8 @@ export function ImageView(props: ImageViewProps) {
     return <p>{d("Server request failed").t("general_error_unknown")}</p>;
   }
   return (
-    <div style={{width: "100%", height: "auto", marginTop: 10,}}>
-      <img style={{width: "100%", height: "auto"}} src={imgSrc} alt={"screenshorts"} />
+    <div style={{ width: "100%", height: "auto", marginTop: 10 }}>
+      <img style={{ width: "100%", height: "auto" }} src={imgSrc} alt={"screenshorts"} />
     </div>
-  )
+  );
 }

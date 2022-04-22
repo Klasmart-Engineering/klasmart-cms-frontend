@@ -8,7 +8,7 @@ import {
   TableBody,
   TableCell,
   TableContainer,
-  TableRow
+  TableRow,
 } from "@material-ui/core";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
@@ -30,7 +30,7 @@ import {
   ResourceViewTypeValues,
   StudentParticipate,
   StudentViewItemsProps,
-  SubDimensionOptions
+  SubDimensionOptions,
 } from "./type";
 const useStyles = makeStyles({
   tableBar: {
@@ -189,8 +189,8 @@ export function MaterialView(props: MaterialViewProps) {
   };
   const toggleCheck = (index: number) => {
     const arr = cloneDeep(checkedArr);
-    if(arr[index] === undefined) {
-      arr[index] = false
+    if (arr[index] === undefined) {
+      arr[index] = false;
     } else {
       arr[index] = !checkedArr[index];
     }
@@ -201,8 +201,8 @@ export function MaterialView(props: MaterialViewProps) {
       {materialViewItems &&
         materialViewItems.map(
           (item, index) =>
-            (isSelectAll ? true : (subDimensionIds.indexOf(item.content_id!) >= 0 || subDimensionIds.indexOf(item.parent_id!) >= 0)) 
-            && item.status === "Covered" && (
+            (isSelectAll ? true : subDimensionIds.indexOf(item.content_id!) >= 0 || subDimensionIds.indexOf(item.parent_id!) >= 0) &&
+            item.status === "Covered" && (
               <Fragment key={item.content_id}>
                 <TableContainer style={{ marginBottom: "20px" }}>
                   <Box className={css.tableBar} onClick={(e) => toggleCheck(index)}>
@@ -212,7 +212,13 @@ export function MaterialView(props: MaterialViewProps) {
                         {item.content_subtype ? `(${item.content_subtype})` : ""}
                       </span>
                     </div>
-                    {checkedArr[index] === undefined ? <ArrowDropUpIcon /> : checkedArr[index] ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
+                    {checkedArr[index] === undefined ? (
+                      <ArrowDropUpIcon />
+                    ) : checkedArr[index] ? (
+                      <ArrowDropUpIcon />
+                    ) : (
+                      <ArrowDropDownIcon />
+                    )}
                   </Box>
                   <Collapse in={checkedArr[index]}>
                     <>

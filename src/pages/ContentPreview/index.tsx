@@ -3,6 +3,7 @@ import { apiLivePath } from "@api/extra";
 import PermissionType from "@api/PermissionType";
 import { ContentType } from "@api/type";
 import { usePermission } from "@hooks/usePermission";
+import useQueryCms from "@hooks/useQueryCms";
 import { t } from "@locale/LocaleManager";
 import { Box, useMediaQuery, useTheme } from "@material-ui/core";
 import {
@@ -22,7 +23,7 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import { throttle } from "lodash";
 import React, { Fragment, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { EntityContentInfoWithDetails } from "../../api/api.auto";
 import { ModelLessonPlan, Segment } from "../../models/ModelLessonPlan";
 import LayoutPair from "../ContentEdit/Layout";
@@ -36,19 +37,11 @@ import { TabValue } from "./type";
 interface RouteParams {
   tab: "details" | "outcomes";
 }
-const useQuery = () => {
-  const { search } = useLocation();
-  const query = new URLSearchParams(search);
-  const id = query.get("id") as string;
-  const sid = query.get("sid") as string;
-  const author = query.get("author");
-  const program_group = query.get("program_group") as string | "";
-  return { id, search, sid, author, program_group };
-};
+
 export default function ContentPreview(props: EntityContentInfoWithDetails) {
   const dispatch = useDispatch();
   const { routeBasePath } = ContentPreview;
-  const { id, search, sid, author, program_group } = useQuery();
+  const { id, search, sid, author, program_group } = useQueryCms();
   const { contentPreview } = useSelector<RootState, RootState["content"]>((state) => state.content);
   const { scheduleDetial } = useSelector<RootState, RootState["schedule"]>((state) => state.schedule);
   const { tab } = useParams<RouteParams>();
