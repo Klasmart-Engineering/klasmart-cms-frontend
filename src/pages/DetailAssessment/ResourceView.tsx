@@ -25,6 +25,7 @@ import { Controller, useForm } from "react-hook-form";
 import { d } from "../../locale/LocaleManager";
 import AudioView from "./AudioView";
 import { ImgSelect, ScoreInput } from "./HomefunView";
+import { ScreenShorts } from "./ScreenShorts";
 import { ResourceViewTypeValues, StudenmtViewItemResultProps } from "./type";
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -59,6 +60,13 @@ const useStyles = makeStyles((theme) =>
         backgroundColor: "rgba(220,220,220,0.4)",
       },
     },
+    screenShortsContent: {
+      backgroundColor: "#E9F2FA",
+    },
+    screenShortsCon: {
+      maxHeight: "750px",
+      textAlign: "center",
+    },
     imgCon: {
       maxHeight: "650px",
       minWidth: "400px",
@@ -82,6 +90,12 @@ export const showAudioRecorder = (type?: string) => {
   const types = ["AudioRecorder", "SpeakTheWordsSet", "SpeakTheWords"];
   return types.indexOf(type as string) >= 0;
 };
+export const showScreenShort = (type?: string) => {
+  const types = ["AdvancedBlanks", "ArithmeticQuiz", "Dictation", "DragQuestion", 
+  "DragText", "Blanks", "ImageMultipleHotspotQuestion", "ImageHotspotQuestion",
+  "FindTheWords", "Flashcards", "ImagePair", "ImageSequencing", "SingleChoiceSet", "Summary", "H5P"];
+  return types.indexOf(type as string) >= 0;
+}
 export interface ResourceViewProps {
   open: boolean;
   resourceType: ResourceViewTypeValues;
@@ -96,6 +110,7 @@ export interface ResourceViewProps {
   assignments?: DetailAssessmentResultFeedback["assignments"];
   hasSaved?: boolean;
   dialogType?: string;
+  contentSubType?: string;
   onClose: () => void;
   onChangeComment?: (studentId?: string, comment?: string) => void;
   onChangeScore?: (studentId?: string, score?: StudenmtViewItemResultProps["assess_score"]) => void;
@@ -103,10 +118,11 @@ export interface ResourceViewProps {
 }
 export function ResourceView(props: ResourceViewProps) {
   const css = useStyles();
-  const { resourceType, open, answer, comment, studentId, h5pId, roomId, userId, h5pSubId, score, assignments, dialogType,
+  const { resourceType, open, answer, comment, studentId, h5pId, roomId, userId, h5pSubId, score, assignments, dialogType, contentSubType,
     onChangeComment, onClose, onChangeScore, onOpenDrawFeedback } = props;
   const showClose = resourceType !== ResourceViewTypeValues.editScore && resourceType !== ResourceViewTypeValues.selectImg;
   const showActionBtn = resourceType === ResourceViewTypeValues.editComment || resourceType === ResourceViewTypeValues.editScore || resourceType === ResourceViewTypeValues.selectImg;
+  const isScreenShorts = resourceType === ResourceViewTypeValues.viewScreenshots;
   const formMethods = useForm();
   const { control, getValues } = formMethods;
   const handleOk = () => {
@@ -134,12 +150,13 @@ export function ResourceView(props: ResourceViewProps) {
           {resourceType === ResourceViewTypeValues.editComment && d("Add Comments").t("assess_popup_add_comments")}
           {resourceType === ResourceViewTypeValues.viewWritingFeedback && d("View Writing Feedback").t("assessment_hfs_view_writing_feedback")}
           {resourceType === ResourceViewTypeValues.selectImg && d("Select a file to provide feedback").t("assessment_hfs_select_file")}
+          {isScreenShorts && d("Results Screen").t("assessment_detail_screenshot_result_screen")}
           {showClose && 
             <IconButton onClick={onClose} className={css.closeBtn}>
               <Close />
           </IconButton>}
         </DialogTitle>
-        <DialogContent>
+        <DialogContent className={isScreenShorts ? css.screenShortsContent : ""}>
           {resourceType === ResourceViewTypeValues.essay && <div className={css.detailView}>{answer}</div>}
           {resourceType === ResourceViewTypeValues.viewComment && <div className={css.detailView}>{comment}</div>}
           {resourceType === ResourceViewTypeValues.viewWritingFeedback && 
@@ -161,6 +178,21 @@ export function ResourceView(props: ResourceViewProps) {
               </ApolloProvider>
             </div>
           )}
+          {
+            isScreenShorts && (
+              <div className={css.screenShortsCon}>
+                <ApolloProvider client={audioClient}>
+                  <ScreenShorts 
+                    resourceType={contentSubType}
+                    userId={userId as string}
+                    roomId={roomId as string}
+                    h5pId={h5pId as string}
+                    h5pSubId={h5pSubId}
+                  />
+                </ApolloProvider>
+              </div>
+            )
+          }
           {resourceType === ResourceViewTypeValues.editComment&& (
             <div className={css.detailView}>
               <Controller

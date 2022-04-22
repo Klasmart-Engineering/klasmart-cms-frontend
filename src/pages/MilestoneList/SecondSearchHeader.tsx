@@ -131,7 +131,7 @@ export default function SeacondSearchHeader(props: SecondSearchHeaderProps) {
                   onSearch={handleClickSearch}
                 />
               </Grid>
-              <Grid container direction="row" justify="flex-end" alignItems="center" item md={2} lg={4} xl={4}>
+              <Grid container direction="row" justifyContent="flex-end" alignItems="center" item md={2} lg={4} xl={4}>
                 {value.status === MilestoneStatus.published && (
                   <FormControlLabel
                     value="end"
@@ -153,7 +153,7 @@ export default function SeacondSearchHeader(props: SecondSearchHeaderProps) {
                 </Button>
               </Permission>
             </Grid>
-            <Grid container item xs={4} sm={4} justify="flex-end" alignItems="center" style={{ fontSize: "24px" }}>
+            <Grid container item xs={4} sm={4} justifyContent="flex-end" alignItems="center" style={{ fontSize: "24px" }}>
               {value.status === MilestoneStatus.published && (
                 <>
                   <LocalBarOutlinedIcon onClick={handleClickIconMyonly} />

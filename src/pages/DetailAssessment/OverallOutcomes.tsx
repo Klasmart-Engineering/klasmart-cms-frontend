@@ -1,9 +1,9 @@
 import { Box, Checkbox, FormControlLabel, makeStyles, Table, TableBody, TableCell, TableContainer, TableRow } from "@material-ui/core";
 import React, { ChangeEvent, useMemo } from "react";
-import { AchievedTooltips } from "../../components/DynamicTable";
 import { PLField, PLTableHeader } from "../../components/PLTable";
 import { d } from "../../locale/LocaleManager";
 import { DetailAssessmentResult } from "../ListAssessment/types";
+import { AchievedTooltips } from "./AchievedTooltips";
 import { OverAllOutcomesItem, StudentParticipate } from "./type";
 
 const useStyles = makeStyles({

@@ -74,6 +74,7 @@ export interface StudentViewItemsProps {
   student_name?: string;
   reviewer_comment?: string;
   results?: StudenmtViewItemResultProps[];
+  attempted?: boolean;
 }
 
 export type OverAllOutcomesItem = {
@@ -132,4 +133,5 @@ export enum ResourceViewTypeValues {
   speakTheWords = "SpeakTheWords",
   viewWritingFeedback = "ViewWritingFeedback",
   viewDrawingFeedback = "ViewDrawingFeedback",
+  viewScreenshots = "ViewScreenshots",
 }

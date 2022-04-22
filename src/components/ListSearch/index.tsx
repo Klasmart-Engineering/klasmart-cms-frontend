@@ -1,9 +1,9 @@
 import { Button, makeStyles, MenuItem, TextField, TextFieldProps } from "@material-ui/core";
 import { Search } from "@material-ui/icons";
+import { SearchListForm, SearchListFormKey } from "@pages/ListAssessment/types";
 import React from "react";
 import { Controller, UseFormMethods } from "react-hook-form";
 import { d } from "../../locale/LocaleManager";
-import { SearchListForm, SearchListFormKey } from "../../pages/StudyAssessmentList/types";
 
 const useStyles = makeStyles((theme) => ({
   searchText: {
