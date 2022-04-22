@@ -12,8 +12,31 @@ interface ILessonData {
 
 interface INavIcon {
   src: string;
+  onClick: () => void;
+}
+
+interface IListItemProps {
+  active?: boolean;
+  thumbnail: string;
+  onClick: () => void;
 }
 
 interface IListItem {
-  active?: boolean;
+  content_id: string;
+  data: string;
+  description: string;
+  id: string;
+  name: string;
+  no: number;
+  thumbnail: string;
+}
+interface IPresentListProps {
+  activeIndex: number;
+  list: Array<IListItem>;
+  onClick: (index: number) => void;
+}
+
+interface IPresentActivityState {
+  activeIndex: number;
+  lessonMaterials: IListItem[];
 }

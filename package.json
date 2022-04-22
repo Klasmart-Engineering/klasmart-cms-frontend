@@ -148,6 +148,7 @@
     "@graphql-codegen/typescript-react-apollo": "^2.0.7",
     "@hookform/devtools": "^2.2.1",
     "@newrelic/publish-sourcemap": "^5.1.0",
+    "@types/babel-plugin-macros": "^2.8.5",
     "@types/react-pdf": "^5.0.2",
     "babel-plugin-macros": "^3.0.0",
     "babel-plugin-transform-remove-console": "^6.9.4",

@@ -1,4 +1,4 @@
-import { Box, makeStyles } from "@material-ui/core";
+import { Box, Button, makeStyles } from "@material-ui/core";
 import clsx from "clsx";
 import { px2vw } from "../utils";
 
@@ -32,42 +32,39 @@ const useStyles = makeStyles({
     height: px2vw(145),
     borderRadius: px2vw(22),
     background: "#ccc",
+    backgroundSize: "cover",
+    border: `${px2vw(8)} solid #f0f0f0`,
     "&.active": {
-      width: px2vw(242),
-      height: px2vw(129),
+      //width: px2vw(242),
+      //height: px2vw(129),
       border: `${px2vw(8)} solid #2475EA`,
     },
   },
 });
 
-function ListItem(props: IListItem) {
+function ListItem(props: IListItemProps) {
   const css = useStyles();
   return (
-    <Box
+    <Button
       className={clsx(css.item, {
         active: props.active,
       })}
-    ></Box>
+      style={{
+        backgroundImage: `url(${props.thumbnail})`,
+      }}
+      onClick={props.onClick}
+    ></Button>
   );
 }
-export default function PresentList() {
+export default function PresentList(props: IPresentListProps) {
   const css = useStyles();
   return (
     <Box className={css.root}>
       <Box className={css.listMain}>
         <Box className={css.itemWrapper}>
-          <ListItem active />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
+          {props.list.map((item, index) => (
+            <ListItem key={index} active={index === props.activeIndex} thumbnail={item.thumbnail} onClick={() => props.onClick(index)} />
+          ))}
         </Box>
       </Box>
     </Box>
