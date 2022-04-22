@@ -25,14 +25,21 @@ const useStyles = makeStyles({
 
 export default function LessonBox() {
   const css = useStyles();
-  // const dispatch = useDispatch();
+  const [state, setState] = React.useState({
+    activeIndex: 0,
+    lessonPlans: [],
+  });
   useEffect(() => {
     const getLesson = async () => {
-      const payload = await getLessonPlan("unit01");
-      console.log(payload);
+      const data = await getLessonPlan("unit01");
+      console.log(data);
+      setState((state) => ({
+        ...state,
+        lessonPlans: data,
+      }));
     };
     getLesson();
-  });
+  }, []);
   return (
     <Box className={css.lessonbox}>
       <Typography className={css.title}>Continue Teaching</Typography>
@@ -40,7 +47,16 @@ export default function LessonBox() {
         <TeachingUnit></TeachingUnit>
       </Box>
       <Typography className={css.title}>Unit 1. Teddy Bear, Teddy Bear, Say Goodnight</Typography>
-      <LessonUnit></LessonUnit>
+      <LessonUnit
+        activeIndex={state.activeIndex}
+        list={state.lessonPlans}
+        onClick={(index: number) => {
+          setState({
+            ...state,
+            activeIndex: index,
+          });
+        }}
+      ></LessonUnit>
     </Box>
   );
 }

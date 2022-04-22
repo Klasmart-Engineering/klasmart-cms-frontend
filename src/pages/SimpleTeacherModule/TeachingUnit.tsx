@@ -2,16 +2,16 @@ import { Box, Button, Card, CardContent, CardMedia, Grid, makeStyles, Typography
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import { useHistory } from "react-router-dom";
 import { pageLinks } from "./index";
-import { px2vw } from "./utils/index";
+import vw from "./utils/vw.macro";
 
 const useStyles = makeStyles({
   teachingunit: {
     display: "flex",
-    width: px2vw(670),
-    height: px2vw(300),
+    width: vw(670),
+    height: vw(300),
     backgroundColor: "#C572FF",
-    borderRadius: px2vw(46),
-    padding: px2vw(19),
+    borderRadius: vw(46),
+    padding: vw(19),
   },
   content: {
     display: "flex",
@@ -19,43 +19,43 @@ const useStyles = makeStyles({
     position: "relative",
   },
   unitBtn: {
-    height: px2vw(35),
-    padding: px2vw(7),
+    height: vw(35),
+    padding: vw(7),
     color: "#C572FF",
-    borderRadius: px2vw(17),
-    fontSize: px2vw(21),
+    borderRadius: vw(17),
+    fontSize: vw(21),
     fontWeight: 800,
     backgroundColor: "#FFFFFF",
   },
   lessonNo: {
     color: "#FFFFFF",
     fontWeight: 800,
-    fontSize: px2vw(29),
+    fontSize: vw(29),
   },
   lessonDesp: {
-    marginTop: px2vw(17),
+    marginTop: vw(17),
     fontWeight: 700,
-    fontSize: px2vw(23),
-    lineHeight: px2vw(27),
+    fontSize: vw(23),
+    lineHeight: vw(27),
     color: "#FFFFFF",
   },
   cover: {
-    width: px2vw(350),
-    height: px2vw(300),
-    borderRadius: px2vw(30),
+    width: vw(350),
+    height: vw(300),
+    borderRadius: vw(30),
     backgroundColor: "#C4C4C4",
   },
   continueBtn: {
     position: "absolute",
-    bottom: px2vw(20),
+    bottom: vw(20),
     color: "#FFFFFF",
     backgroundColor: "#942CE5",
     fontWeight: 700,
-    borderRadius: px2vw(24),
-    paddingTop: px2vw(9),
-    paddingBottom: px2vw(12),
-    paddingLeft: px2vw(63),
-    paddingRight: px2vw(105),
+    borderRadius: vw(24),
+    paddingTop: vw(9),
+    paddingBottom: vw(12),
+    paddingLeft: vw(63),
+    paddingRight: vw(105),
   },
 });
 
