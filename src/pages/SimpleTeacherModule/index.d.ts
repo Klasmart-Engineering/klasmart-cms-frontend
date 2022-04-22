@@ -40,3 +40,14 @@ interface IPresentActivityState {
   activeIndex: number;
   lessonMaterials: IListItem[];
 }
+
+interface IPlayerProps {
+  data: {
+    source: string;
+    file_type: number;
+    input_source: number;
+  };
+  lessonNo: number;
+  name: string;
+  progress: string;
+}
