@@ -2155,7 +2155,7 @@ function EditBox(props: CalendarStateProps) {
               <KeyboardDatePicker
                 disableToolbar
                 variant="inline"
-                format="MM/dd/yyyy"
+                format="MM/DD/yyyy"
                 margin="normal"
                 id="date-picker-inline"
                 label="Due Date"
@@ -2198,7 +2198,7 @@ function EditBox(props: CalendarStateProps) {
               <KeyboardDatePicker
                 disableToolbar
                 variant="inline"
-                format="MM/dd/yyyy"
+                format="MM/DD/yyyy"
                 margin="normal"
                 id="date-picker-inline"
                 label={d("Start Time").t("schedule_detail_start_time")}
@@ -2216,7 +2216,7 @@ function EditBox(props: CalendarStateProps) {
               <KeyboardDatePicker
                 disableToolbar
                 variant="inline"
-                format="MM/dd/yyyy"
+                format="MM/DD/yyyy"
                 margin="normal"
                 id="date-picker-inline"
                 label={d("End Time").t("schedule_detail_end_time")}
@@ -2321,7 +2321,7 @@ function EditBox(props: CalendarStateProps) {
                 <KeyboardDatePicker
                   disableToolbar
                   variant="inline"
-                  format="MM/dd/yyyy"
+                  format="MM/DD/yyyy"
                   margin="normal"
                   id="date-picker-inline"
                   label={d("Pick Time").t("schedule_detail_pick_time")}
