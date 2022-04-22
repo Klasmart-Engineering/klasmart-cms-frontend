@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import LessonUnit from "./LessonUnit";
 import TeachingUnit from "./TeachingUnit";
 import { getLessonPlan } from "./utils/api";
-import { px2vw } from "./utils/index";
+import vw from "./utils/vw.macro";
 
 const useStyles = makeStyles({
   lessonbox: {
@@ -13,13 +13,13 @@ const useStyles = makeStyles({
     // borderRadius: px2vw(46),
   },
   teachingWrap: {
-    marginBottom: px2vw(47),
+    marginBottom: vw(47),
   },
   title: {
     fontWeight: 700,
-    fontSize: px2vw(27),
-    lineHeight: px2vw(34),
-    marginBottom: px2vw(19),
+    fontSize: vw(27),
+    lineHeight: vw(34),
+    marginBottom: vw(19),
   },
 });
 

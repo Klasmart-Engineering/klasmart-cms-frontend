@@ -1,4 +1,6 @@
 import { Box, Card, CardActionArea, CardContent, CardMedia, makeStyles, Typography } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
+import { pageLinks } from "./index";
 import { px2vw } from "./utils/index";
 
 const useStyles = makeStyles({
@@ -31,12 +33,18 @@ const useStyles = makeStyles({
 
 export default function LessonUnit() {
   const css = useStyles();
+  let history = useHistory();
   return (
     <Box>
       <Card className={css.lessonunit}>
         <CardActionArea>
           <CardMedia className={css.lessonPic} component="img" image="/static/images/cards/contemplative-reptile.jpg" title="" />
-          <CardContent className={css.content}>
+          <CardContent
+            className={css.content}
+            onClick={() => {
+              history.push(pageLinks.present);
+            }}
+          >
             <Typography className={css.lessonNo}>Lesson 01</Typography>
             <Typography className={css.lessonDesp} component="p">
               Story Book - Teddy Bear, Teddy Bear, Say Goodnight

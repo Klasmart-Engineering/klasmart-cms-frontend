@@ -1,5 +1,7 @@
 import { Box, Button, Card, CardContent, CardMedia, Grid, makeStyles, Typography } from "@material-ui/core";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import { useHistory } from "react-router-dom";
+import { pageLinks } from "./index";
 import { px2vw } from "./utils/index";
 
 const useStyles = makeStyles({
@@ -59,6 +61,7 @@ const useStyles = makeStyles({
 
 export default function TeachingUnit() {
   const css = useStyles();
+  let history = useHistory();
   return (
     <Box>
       <Card className={css.teachingunit}>
@@ -80,7 +83,14 @@ export default function TeachingUnit() {
             <Typography className={css.lessonDesp} component="p">
               Teddy Bear, Teddy Bear, Say Goodnight
             </Typography>
-            <Button variant="contained" className={css.continueBtn} disableElevation>
+            <Button
+              variant="contained"
+              className={css.continueBtn}
+              disableElevation
+              onClick={() => {
+                history.push(pageLinks.present);
+              }}
+            >
               Continue <ChevronRightIcon></ChevronRightIcon>
             </Button>
           </CardContent>
