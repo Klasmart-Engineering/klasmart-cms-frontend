@@ -6,14 +6,14 @@ import {
   EntityAssessmentStudent,
   EntityAssessmentStudentViewH5PItem,
   EntityUpdateAssessmentContentOutcomeArgs,
-  V2AssessmentContentReply,
+  V2AssessmentContentReply
 } from "../api/api.auto";
 import {
   DetailStudyAssessment,
   GetAssessmentResult,
   UpdataStudyAssessmentRequestData,
   UpdateAssessmentRequestData,
-  UpdateAssessmentRequestDataLessonMaterials,
+  UpdateAssessmentRequestDataLessonMaterials
 } from "../api/type";
 import { d } from "../locale/LocaleManager";
 import {
@@ -22,13 +22,13 @@ import {
   OverAllOutcomesItem,
   StudentParticipate,
   StudentViewItemsProps,
-  SubDimensionOptions,
+  SubDimensionOptions
 } from "../pages/DetailAssessment/type";
 import {
   DetailAssessmentResult,
   DetailAssessmentResultContent,
   DetailAssessmentResultOutcome,
-  DetailAssessmentResultStudent,
+  DetailAssessmentResultStudent
 } from "../pages/ListAssessment/types";
 interface ObjContainId {
   id?: string;
@@ -439,8 +439,8 @@ export const ModelAssessment = {
     const contentObj: Record<string, DetailAssessmentResultContent> = {};
     const outcomeObj: Record<string, DetailAssessmentResultOutcome> = {};
     contents
-      ?.filter((item) => item.status === "Covered")
-      .forEach((item) => {
+      // ?.filter((item) => item.status === "Covered")
+      ?.forEach((item) => {
         if (!contentObj[item.content_id!]) {
           contentObj[item.content_id!] = { ...item };
         }
