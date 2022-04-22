@@ -2,7 +2,7 @@ import { Box, Grid, makeStyles } from "@material-ui/core";
 import Header from "./components/Header";
 import UnitsSelector from "./components/UnitsSeletor";
 import LessonBox from "./LessonBox";
-import { px2vw } from "./utils/index";
+import vw from "./utils/vw.macro";
 
 const useStyles = makeStyles({
   root: {
@@ -13,14 +13,14 @@ const useStyles = makeStyles({
   },
   lessonbox: {
     position: "absolute",
-    left: px2vw(324),
-    top: px2vw(257),
+    left: vw(324),
+    top: vw(257),
   },
   unitSelector: {
     position: "absolute",
-    left: px2vw(110),
-    top: px2vw(130),
-    height: px2vw(1230),
+    left: vw(110),
+    top: vw(130),
+    height: vw(1352),
   },
 });
 
