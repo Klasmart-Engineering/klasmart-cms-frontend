@@ -23,13 +23,15 @@ const useStyles = makeStyles({
   },
 });
 
-export default function LessonBox() {
+export default function LessonBox(prop: any) {
   const css = useStyles();
   const [state, setState] = React.useState({
     activeIndex: 0,
     lessonPlans: [],
   });
   useEffect(() => {
+    // console.log("hahah");
+    // console.log(JSON.stringify(prop));
     const getLesson = async () => {
       const data = await getLessonPlan("unit01");
       console.log(data);

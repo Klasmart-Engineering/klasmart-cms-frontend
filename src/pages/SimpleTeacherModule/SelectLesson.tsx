@@ -1,4 +1,5 @@
 import { Box, Grid, makeStyles } from "@material-ui/core";
+import React, { useState } from "react";
 import Header from "./components/Header";
 import UnitsSelector from "./components/UnitsSeletor";
 import LessonBox from "./LessonBox";
@@ -30,8 +31,10 @@ const useStyles = makeStyles({
 
 export default function SelectLesson() {
   const css = useStyles();
+  const [unit, setUnit] = useState();
   const unitChange = (unit: any) => {
     console.log(unit);
+    setUnit(unit);
   };
   return (
     <Box className={css.root}>
@@ -41,7 +44,7 @@ export default function SelectLesson() {
           <UnitsSelector onChange={unitChange} />
         </Box>
         <Box className={css.lessonbox}>
-          <LessonBox></LessonBox>
+          <LessonBox unit={unit}></LessonBox>
         </Box>
       </Grid>
     </Box>
