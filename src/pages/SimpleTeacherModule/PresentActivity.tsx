@@ -45,6 +45,14 @@ export default function PresentActivity() {
     emitter.on("cmd", handleCmd);
     return () => emitter.off("cmd", handleCmd);
   }, []);
+
+  const [name, data] = React.useMemo(() => {
+    if (state.lessonMaterials.length > 0) {
+      const activeItem = state.lessonMaterials[state.activeIndex];
+      return [activeItem.name, JSON.parse(activeItem.data)];
+    }
+    return ["", {}];
+  }, [state.lessonMaterials, state.activeIndex]);
   return (
     <Box className={css.root}>
       <PresentNav />
@@ -58,7 +66,7 @@ export default function PresentActivity() {
           });
         }}
       />
-      <PresentPlayer />
+      <PresentPlayer data={data} name={name} lessonNo={1} progress={`${state.activeIndex + 1}/${state.lessonMaterials.length}`} />
     </Box>
   );
 }

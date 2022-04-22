@@ -43,22 +43,38 @@ const useStyles = makeStyles({
   playerMain: {
     width: "100%",
     height: "100%",
-    background: "#C4C4C4",
+    background: "#ffffff",
     borderRadius: vw(32),
+    position: "relative",
+    overflow: "hidden",
+  },
+  playerIframe: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    border: "none",
   },
 });
-export default function PresentPlayer() {
+export default function PresentPlayer(props: IPlayerProps) {
   const css = useStyles();
   return (
     <Box className={css.root}>
       <Box className={css.playerTop}>
         <Typography variant="h5" className={css.playerTitle}>
-          <b>Lesson 1.</b>
-          Teddy Bear, Teddy Bear, Say Goodnight
+          <b>Lesson {props.lessonNo}.</b> {props.name}
         </Typography>
-        <Box className={css.playerProgress}>1/30</Box>
+        <Box className={css.playerProgress}>{props.progress}</Box>
       </Box>
-      <Box className={css.playerMain}></Box>
+      <Box className={css.playerMain}>
+        {props.data.file_type === 5 && (
+          <iframe
+            title={props.name}
+            className={css.playerIframe}
+            sandbox="allow-same-origin allow-scripts"
+            src={`//live.kidsloop.live/h5p/play/${props.data.source}`}
+          />
+        )}
+      </Box>
       <Box></Box>
     </Box>
   );
