@@ -20,7 +20,7 @@ const useStyles = makeStyles({
     position: "absolute",
     left: px2vw(110),
     top: px2vw(130),
-    height: px2vw(1352),
+    height: px2vw(1230),
   },
 });
 
