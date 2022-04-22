@@ -179,6 +179,15 @@ export interface EntityAddClassAndLiveAssessmentArgs {
   schedule_id?: string;
 }
 
+export interface EntityAppInsightMessageResponse {
+  assignment_label_id?: string;
+  assignment_label_params?: EntityAssignmentLabelParams;
+  attedance_label_id?: string;
+  attedance_label_params?: EntityAttedanceLabelParams;
+  learning_outcome_achivement_label_id?: string;
+  learning_outcome_achivement_label_params?: EntityLearningOutcomeAchivementLabelParams;
+}
+
 export interface EntityAssessHomeFunStudyArgs {
   action?: "save" | "complete";
   assess_comment?: string;
@@ -324,12 +333,28 @@ export interface EntityAssignmentCompletionRate {
   student_total_assignment?: number;
 }
 
+export interface EntityAssignmentLabelParams {
+  assign_compare_3_week?: number | string;
+  assign_compare_class?: number | string;
+  assign_compare_class_3_week?: number | string;
+  assign_compare_last_week?: number | string;
+  assign_complete_count?: number | string;
+  assignment_complete_count?: number | string;
+  assignment_count?: number | string;
+}
+
 export interface EntityAssignmentRequest {
   class_id: string;
   durations?: string[];
   selected_subject_id_list?: string[];
   student_id: string;
   un_selected_subject_id_list?: string[];
+}
+
+export interface EntityAssignmentResponse {
+  assignments?: EntityAssignmentCompletionRate[];
+  label_id?: string;
+  label_params?: EntityAssignmentLabelParams;
 }
 
 export interface EntityAssignmentsSummaryItem {
@@ -365,6 +390,15 @@ export interface EntityAssignmentsSummaryItemV2 {
   teacher_feedback?: string;
 }
 
+export interface EntityAttedanceLabelParams {
+  attend_compare_last_3_week?: number | string;
+  attend_compare_last_week?: number | string;
+  attended_count?: number | string;
+  lo_compare_class?: number | string;
+  lo_compare_class_3_week?: number | string;
+  scheduled_count?: number | string;
+}
+
 export interface EntityCheckScheduleReviewDataRequest {
   content_end_at?: number;
   content_start_at?: number;
@@ -393,6 +427,8 @@ export interface EntityClassAttendanceRequest {
 
 export interface EntityClassAttendanceResponse {
   items?: EntityClassAttendanceResponseItem[];
+  label_id?: string;
+  label_params?: EntityAttedanceLabelParams;
   request_student_id?: string;
 }
 
@@ -746,6 +782,8 @@ export interface EntityLearnOutcomeAchievementResponse {
   class_average_achieved_count?: number;
   first_achieved_count?: number;
   items?: EntityLearnOutcomeAchievementResponseItem[];
+  label_id?: string;
+  label_params?: EntityLearningOutcomeAchivementLabelParams;
   re_achieved_count?: number;
   request?: EntityLearnOutcomeAchievementRequest;
   un_selected_subjects_average_achieve_count?: number;
@@ -785,6 +823,16 @@ export interface EntityLearnerUsageResponse {
   assignment_scheduled?: number;
   class_scheduled?: number;
   contents_used?: number;
+}
+
+export interface EntityLearningOutcomeAchivementLabelParams {
+  achieved_lo_count?: number | string;
+  learnt_lo_count?: number | string;
+  lo_compare_class?: number | string;
+  lo_compare_class_3_week?: number | string;
+  lo_compare_last_3_week?: number | string;
+  lo_compare_last_week?: number | string;
+  lo_review_compare_class?: number | string;
 }
 
 export interface EntityLearningSummaryFilterWeek {
@@ -4410,7 +4458,7 @@ export class Api<SecurityDataType = any> extends HttpClient<SecurityDataType> {
      * @request POST:/reports/student_progress/assignment_completion
      */
     getAssignmentsCompletion: (request: EntityAssignmentRequest, params?: RequestParams) =>
-      this.request<EntityAssignmentCompletionRate[], ApiBadRequestResponse | ApiForbiddenResponse | ApiInternalServerErrorResponse>(
+      this.request<EntityAssignmentResponse, ApiBadRequestResponse | ApiForbiddenResponse | ApiInternalServerErrorResponse>(
         `/reports/student_progress/assignment_completion`,
         "POST",
         params,
