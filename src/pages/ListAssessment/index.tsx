@@ -1,4 +1,4 @@
-import { useRole } from "@hooks/usePermission";
+import { usePermission } from "@hooks/usePermission";
 import useQueryCms from "@hooks/useQueryCms";
 import { DetailAssessment } from "@pages/DetailAssessment";
 import { clearNull, toQueryString } from "@utilities/urlUtilities";
@@ -6,6 +6,7 @@ import React, { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import PermissionType from "../../api/PermissionType";
 import { AssessmentStatus, ExectSeachType, OrderByAssessmentList } from "../../api/type";
 import { FirstSearchHeader, FirstSearchHeaderMb } from "../../components/AssessmentFirsetHearder/FirstSearchHeader";
 import { AssessmentTypeValues } from "../../components/AssessmentType";
@@ -33,7 +34,27 @@ const useQuery = (): AssessmentQueryCondition => {
   }, [query_key, status, page, order_by, query_type, assessment_type]);
 };
 export function ListAssessment() {
-  const { isPending, hasPerm } = useRole();
+  const perm = usePermission([
+    PermissionType.report_learning_summary_org_652,
+    PermissionType.report_learning_summary_school_651,
+    PermissionType.report_learning_summary_teacher_650,
+    PermissionType.report_learning_summary_student_649,
+    PermissionType.view_completed_assessments_414,
+    PermissionType.view_in_progress_assessments_415,
+    PermissionType.view_org_completed_assessments_424,
+    PermissionType.view_org_in_progress_assessments_425,
+    PermissionType.view_school_completed_assessments_426,
+    PermissionType.view_school_in_progress_assessments_427,
+  ]);
+  const isPending = useMemo(() => perm.view_completed_assessments_414 === undefined, [perm.view_completed_assessments_414]);
+  const hasPerm =
+    perm.view_completed_assessments_414 ||
+    perm.view_in_progress_assessments_415 ||
+    perm.view_org_completed_assessments_424 ||
+    perm.view_org_in_progress_assessments_425 ||
+    perm.view_school_completed_assessments_426 ||
+    perm.view_school_in_progress_assessments_427;
+
   const { assessmentListV2, total } = useSelector<RootState, RootState["assessments"]>((state) => state.assessments);
   const condition = useQuery();
   const formMethods = useForm<SearchListForm>();

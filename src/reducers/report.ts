@@ -15,7 +15,6 @@ import {
 } from "@api/api-ko.legacy.auto";
 import api, { gqlapi } from "@api/index";
 import { ApolloQueryResult } from "@apollo/client";
-import { useRole } from "@hooks/usePermission";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { orderByASC } from "@utilities/dataUtilities";
 import { WritableDraft } from "immer/dist/types/types-external";
@@ -1407,9 +1406,17 @@ export const onLoadLearningSummary = createAsyncThunk<
     query: QueryMyUserDocument,
   });
   const myUserId = myUser?.node?.id || "";
-  const { isOrg, isSchool, isTeacher, isStudent } = useRole();
+  const perm = await permissionCache.usePermission([
+    PermissionType.report_learning_summary_org_652,
+    PermissionType.report_learning_summary_school_651,
+    PermissionType.report_learning_summary_teacher_650,
+    PermissionType.report_learning_summary_student_649,
+  ]);
+  const isOrg = perm.report_learning_summary_org_652;
+  const isSchool = perm.report_learning_summary_school_651;
+  const isTeacher = perm.report_learning_summary_teacher_650;
+  const isStudent = perm.report_learning_summary_student_649;
   const isOnlyStudent = isStudent && !isOrg && !isSchool && !isTeacher;
-
   const {
     report: { summaryReportOptions },
   } = getState();
