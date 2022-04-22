@@ -8,8 +8,8 @@ import "swiper/modules/navigation/navigation.min.css";
 import "swiper/modules/pagination/pagination.min.css";
 import { Swiper, SwiperSlide } from "swiper/react/swiper-react.js";
 import "swiper/swiper.min.css";
-import { px2vw } from "../utils";
 import { geUnits } from "../utils/api";
+import vw from "../utils/vw.macro";
 
 const useStyles = makeStyles({
   root: {
@@ -26,7 +26,7 @@ const useStyles = makeStyles({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",
-    margin: `${px2vw(11)} 0`,
+    margin: `${vw(11)} 0`,
   },
   swiperSlide: {
     display: "flex",
@@ -34,26 +34,26 @@ const useStyles = makeStyles({
     alignItems: "center",
   },
   selected: {
-    width: px2vw(132),
-    height: px2vw(132),
+    width: vw(132),
+    height: vw(132),
     background: "#2B9CF9",
     color: "#fff",
-    fontSize: px2vw(45),
+    fontSize: vw(45),
     fontWeight: 800,
-    borderRadius: px2vw(40),
+    borderRadius: vw(40),
   },
   blank: {
-    width: px2vw(106),
-    height: px2vw(106),
+    width: vw(106),
+    height: vw(106),
   },
   unselected: {
-    width: px2vw(106),
-    height: px2vw(106),
+    width: vw(106),
+    height: vw(106),
     background: "#fff",
     color: "#2B9CF9",
-    fontSize: px2vw(34),
+    fontSize: vw(34),
     fontWeight: 800,
-    borderRadius: px2vw(28),
+    borderRadius: vw(28),
     "&:hover": {
       background: "#6DC2FF",
       color: "#fff",
@@ -61,14 +61,14 @@ const useStyles = makeStyles({
   },
   arrow: {
     zIndex: 2,
-    width: px2vw(132),
-    height: px2vw(132),
+    width: vw(132),
+    height: vw(132),
     color: "#2475EA",
     position: "absolute",
     display: "flex",
     justifyContent: "center",
     "& svg": {
-      fontSize: px2vw(80),
+      fontSize: vw(80),
     },
   },
   bottomArrow: {
@@ -129,7 +129,7 @@ export default function UnitsSelector(props: Props) {
                     return (
                       <SwiperSlide key={index} className={css.swiperSlide}>
                         <Box onClick={() => changeChosenIndex(index)} className={clsx(css.item, css.selected)}>
-                          <Box fontSize={px2vw(25)}>Unit</Box>
+                          <Box fontSize={vw(25)}>Unit</Box>
                           <Box>{item.name}</Box>
                         </Box>
                       </SwiperSlide>
