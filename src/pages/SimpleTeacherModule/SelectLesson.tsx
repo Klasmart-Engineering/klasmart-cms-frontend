@@ -31,9 +31,8 @@ const useStyles = makeStyles({
 
 export default function SelectLesson() {
   const css = useStyles();
-  const [unit, setUnit] = useState();
+  const [unit, setUnit] = useState<IUnitState>({ id: "unit01", name: "01", no: 1 });
   const unitChange = (unit: any) => {
-    console.log(unit);
     setUnit(unit);
   };
   return (
