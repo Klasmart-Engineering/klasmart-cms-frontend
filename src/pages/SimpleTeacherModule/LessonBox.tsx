@@ -19,17 +19,17 @@ const useStyles = makeStyles({
 
 export default function LessonBox(prop: { unit: IUnitState }) {
   const css = useStyles();
-  const [state, setState] = React.useState({
+  const [state, setState] = React.useState<{ lessonPlans: IPlanList[]; teachingList: IPlanList[] }>({
     lessonPlans: [],
     teachingList: [],
   });
   useEffect(() => {
     let { unit } = prop;
     const getLesson = async () => {
-      const data = await getLessonPlan(unit.id);
-      let teachingData: [] = [];
+      const data: IPlanList[] = await getLessonPlan(unit.id);
+      let teachingData: IPlanList[] = [];
       const pre = localStorage.getItem("selectPlan");
-      const preList = pre && JSON.parse(pre);
+      const preList: IPlanList[] = pre && JSON.parse(pre);
       if (preList && preList.length > 2) {
         teachingData = preList.filter((item: IPlanList, index: number) => {
           return index < 3;
@@ -39,10 +39,10 @@ export default function LessonBox(prop: { unit: IUnitState }) {
           return index < 3;
         });
       }
-      setState((state) => ({
+      setState({
         lessonPlans: data,
         teachingList: teachingData,
-      }));
+      });
     };
     unit && getLesson();
   }, [prop]);
