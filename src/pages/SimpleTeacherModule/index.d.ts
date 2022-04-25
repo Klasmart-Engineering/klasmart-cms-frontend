@@ -51,3 +51,18 @@ interface IPlayerProps {
   name: string;
   progress: string;
 }
+
+interface IUnitState {
+  id: string;
+  name: string;
+  no: number;
+}
+
+interface IPlanList {
+  id: string;
+  name: string;
+  no: number;
+  thumbnail: string;
+  description: string;
+  content_id: string;
+}

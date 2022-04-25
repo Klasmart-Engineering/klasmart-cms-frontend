@@ -6,12 +6,6 @@ import { getLessonPlan } from "./utils/api";
 import vw from "./utils/vw.macro";
 
 const useStyles = makeStyles({
-  lessonbox: {
-    // width: px2vw(670),
-    // height: px2vw(300),
-    // backgroundColor: "#C572FF",
-    // borderRadius: px2vw(46),
-  },
   teachingWrap: {
     marginBottom: vw(47),
   },
@@ -23,24 +17,49 @@ const useStyles = makeStyles({
   },
 });
 
-export default function LessonBox() {
+export default function LessonBox(prop: { unit: IUnitState }) {
   const css = useStyles();
-  // const dispatch = useDispatch();
-  useEffect(() => {
-    const getLesson = async () => {
-      const payload = await getLessonPlan("unit01");
-      console.log(payload);
-    };
-    getLesson();
+  const [state, setState] = React.useState<{ lessonPlans: IPlanList[]; teachingList: IPlanList[] }>({
+    lessonPlans: [],
+    teachingList: [],
   });
+  useEffect(() => {
+    let { unit } = prop;
+    const getLesson = async () => {
+      const data: IPlanList[] = await getLessonPlan(unit.id);
+      let teachingData: IPlanList[] = [];
+      const pre = localStorage.getItem("selectPlan");
+      const preList: IPlanList[] = pre && JSON.parse(pre);
+      if (!preList) {
+        teachingData = data.filter((item: IPlanList, index: number) => {
+          return index < 3;
+        });
+      } else {
+        if (preList.length > 2) {
+          teachingData = preList.filter((item: IPlanList, index: number) => {
+            return index < 3;
+          });
+        } else {
+          teachingData = preList.concat(data).filter((item: IPlanList, index: number) => {
+            return index < 3;
+          });
+        }
+      }
+      setState({
+        lessonPlans: data,
+        teachingList: teachingData,
+      });
+    };
+    unit && getLesson();
+  }, [prop]);
   return (
-    <Box className={css.lessonbox}>
+    <Box>
       <Typography className={css.title}>Continue Teaching</Typography>
       <Box className={css.teachingWrap}>
-        <TeachingUnit></TeachingUnit>
+        <TeachingUnit unit={prop.unit} list={state.teachingList}></TeachingUnit>
       </Box>
-      <Typography className={css.title}>Unit 1. Teddy Bear, Teddy Bear, Say Goodnight</Typography>
-      <LessonUnit></LessonUnit>
+      <Typography className={css.title}>Unit {prop.unit.name} Teddy Bear, Teddy Bear, Say Goodnight</Typography>
+      <LessonUnit list={state.lessonPlans}></LessonUnit>
     </Box>
   );
 }
