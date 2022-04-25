@@ -1,6 +1,6 @@
 import { Box, makeStyles, Typography } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
-// import { StmContext } from "./index";
+import React, { useContext, useEffect, useState } from "react";
+import { StmContext } from "./index";
 import LessonUnit from "./LessonUnit";
 import TeachingUnit from "./TeachingUnit";
 import { getLessonPlan } from "./utils/api";
@@ -20,16 +20,26 @@ const useStyles = makeStyles({
 
 export default function LessonBox(prop: { unit: IUnitState }) {
   const css = useStyles();
-  // const { unitId } = useContext(StmContext);
   const [state, setState] = useState<{ lessonPlans: ITeachingList[]; teachingList: ITeachingList[] }>({
     lessonPlans: [],
     teachingList: [],
   });
   const [showTeach, setShowTeach] = useState<Boolean>(false);
+  const [showLesson, setShowLesson] = useState<Boolean>(true);
+  const { curriculum, classLevel } = useContext(StmContext);
+
   useEffect(() => {
     let { unit } = prop;
+    let params: {} = { curriculum, classLevel };
     const getLesson = async () => {
-      let data: ITeachingList[] = await getLessonPlan(unit.id);
+      let data: ITeachingList[];
+      try {
+        data = await getLessonPlan(unit.id, params);
+      } catch (error) {
+        data = [];
+        setShowLesson(false);
+      }
+
       data.map((item) => {
         return (item.unitId = unit.id);
       });
@@ -48,7 +58,7 @@ export default function LessonBox(prop: { unit: IUnitState }) {
       });
     };
     unit && getLesson();
-  }, [prop]);
+  }, [prop, curriculum, classLevel]);
   return (
     <Box>
       {showTeach && (
@@ -57,9 +67,11 @@ export default function LessonBox(prop: { unit: IUnitState }) {
           <TeachingUnit list={state.teachingList}></TeachingUnit>
         </Box>
       )}
-      <Typography className={css.title}>
-        {prop.unit.id} {prop.unit.name}
-      </Typography>
+      {showLesson && (
+        <Typography className={css.title}>
+          {prop.unit.id} {prop.unit.name}
+        </Typography>
+      )}
       <LessonUnit list={state.lessonPlans}></LessonUnit>
     </Box>
   );

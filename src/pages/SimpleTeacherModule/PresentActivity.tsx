@@ -17,9 +17,7 @@ const useStyles = makeStyles({
 });
 export default function PresentActivity() {
   const css = useStyles();
-  const { planId } = useContext(StmContext);
-  console.log("313123234xx");
-  console.log(planId);
+  const { planId, curriculum, classLevel } = useContext(StmContext);
   const [state, setState] = React.useState<IPresentActivityState>({
     activeIndex: 0,
     lessonMaterials: [],
@@ -40,9 +38,9 @@ export default function PresentActivity() {
     });
   };
   React.useEffect(() => {
+    const params: {} = { curriculum, classLevel };
     planId &&
-      geLessonMaterials(planId).then((data: IListItem[]) => {
-        // geLessonMaterials("plan0102").then((data: IListItem[]) => {
+      geLessonMaterials(planId, params).then((data: IListItem[]) => {
         setState((state) => ({
           ...state,
           lessonMaterials: data,
@@ -50,7 +48,7 @@ export default function PresentActivity() {
       });
     emitter.on("cmd", handleCmd);
     return () => emitter.off("cmd", handleCmd);
-  }, [planId]);
+  }, [planId, curriculum, classLevel]);
 
   const [name, data] = React.useMemo(() => {
     if (state.lessonMaterials.length > 0) {
