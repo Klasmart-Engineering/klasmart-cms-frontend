@@ -203,7 +203,7 @@ export function ResourceView(props: ResourceViewProps) {
           )}
         </DialogTitle>
         <DialogContent className={isScreenShorts ? css.screenShortsContent : ""}>
-          {resourceType === ResourceViewTypeValues.essay && <div className={css.detailView}>{answer}</div>}
+          {resourceType === ResourceViewTypeValues.essay && <div className={css.detailView}>{answer ? answer : "An answer has not been submitted by the student."}</div>}
           {resourceType === ResourceViewTypeValues.viewComment && <div className={css.detailView}>{comment}</div>}
           {resourceType === ResourceViewTypeValues.viewWritingFeedback && (
             <div className={css.detailView}>

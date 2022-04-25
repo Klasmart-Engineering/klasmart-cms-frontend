@@ -2,7 +2,6 @@ import { ApolloClient, ApolloLink, createHttpLink, HttpLink, InMemoryCache, Oper
 import { ErrorResponse, onError } from "@apollo/client/link/error";
 import { RetryLink } from "@apollo/client/link/retry";
 import fetchIntercept from "fetch-intercept";
-import { GraphQLError } from "graphql";
 import { LangRecordId } from "../locale/lang/type";
 import { Api as AutoApi, RequestParams } from "./api.auto";
 import { apiEmitter, ApiErrorEventData, ApiEvent } from "./emitter";
@@ -78,7 +77,8 @@ export default new Api({
 
 const retry = async (count: number, operation: Operation, error: ServerError): Promise<boolean> => {
   if (count > 1) return false;
-  const isAuthError = error.result?.errors?.find((error: GraphQLError) => error.extensions?.code === `UNAUTHENTICATED`);
+  // const isAuthError = error.result?.errors?.find((error: GraphQLError) => error.extensions?.code === `UNAUTHENTICATED`);
+  const isAuthError = error.result.code === `UNAUTHORIZED`;
   if (!isAuthError) return false;
   try {
     await refreshToken();
