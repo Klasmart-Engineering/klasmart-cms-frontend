@@ -1,8 +1,9 @@
 import { Box, makeStyles } from "@material-ui/core";
-import React from "react";
+import React, { useContext } from "react";
 import PresentPlayer from "./components/Player";
 import PresentList from "./components/PresentList";
 import PresentNav from "./components/PresentNav";
+import { StmContext } from "./index";
 import { geLessonMaterials } from "./utils/api";
 import emitter from "./utils/event";
 
@@ -16,6 +17,9 @@ const useStyles = makeStyles({
 });
 export default function PresentActivity() {
   const css = useStyles();
+  const { planId } = useContext(StmContext);
+  console.log("313123234xx");
+  console.log(planId);
   const [state, setState] = React.useState<IPresentActivityState>({
     activeIndex: 0,
     lessonMaterials: [],
@@ -36,15 +40,17 @@ export default function PresentActivity() {
     });
   };
   React.useEffect(() => {
-    geLessonMaterials("plan0102").then((data: IListItem[]) => {
-      setState((state) => ({
-        ...state,
-        lessonMaterials: data,
-      }));
-    });
+    planId &&
+      geLessonMaterials(planId).then((data: IListItem[]) => {
+        // geLessonMaterials("plan0102").then((data: IListItem[]) => {
+        setState((state) => ({
+          ...state,
+          lessonMaterials: data,
+        }));
+      });
     emitter.on("cmd", handleCmd);
     return () => emitter.off("cmd", handleCmd);
-  }, []);
+  }, [planId]);
 
   const [name, data] = React.useMemo(() => {
     if (state.lessonMaterials.length > 0) {

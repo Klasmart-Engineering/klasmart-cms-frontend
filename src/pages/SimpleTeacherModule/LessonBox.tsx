@@ -1,5 +1,6 @@
 import { Box, makeStyles, Typography } from "@material-ui/core";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+// import { StmContext } from "./index";
 import LessonUnit from "./LessonUnit";
 import TeachingUnit from "./TeachingUnit";
 import { getLessonPlan } from "./utils/api";
@@ -7,7 +8,7 @@ import vw from "./utils/vw.macro";
 
 const useStyles = makeStyles({
   teachingWrap: {
-    marginBottom: vw(47),
+    marginBottom: vw(46),
   },
   title: {
     fontWeight: 700,
@@ -19,31 +20,27 @@ const useStyles = makeStyles({
 
 export default function LessonBox(prop: { unit: IUnitState }) {
   const css = useStyles();
-  const [state, setState] = React.useState<{ lessonPlans: IPlanList[]; teachingList: IPlanList[] }>({
+  // const { unitId } = useContext(StmContext);
+  const [state, setState] = useState<{ lessonPlans: ITeachingList[]; teachingList: ITeachingList[] }>({
     lessonPlans: [],
     teachingList: [],
   });
+  const [showTeach, setShowTeach] = useState<Boolean>(false);
   useEffect(() => {
     let { unit } = prop;
     const getLesson = async () => {
-      const data: IPlanList[] = await getLessonPlan(unit.id);
-      let teachingData: IPlanList[] = [];
+      let data: ITeachingList[] = await getLessonPlan(unit.id);
+      data.map((item) => {
+        return (item.unitId = unit.id);
+      });
+      let teachingData: ITeachingList[] = [];
       const pre = localStorage.getItem("selectPlan");
-      const preList: IPlanList[] = pre && JSON.parse(pre);
-      if (!preList) {
-        teachingData = data.filter((item: IPlanList, index: number) => {
+      const preList: ITeachingList[] = pre && JSON.parse(pre);
+      if (preList && preList.length > 0) {
+        setShowTeach(true);
+        teachingData = preList.filter((item: ITeachingList, index: number) => {
           return index < 3;
         });
-      } else {
-        if (preList.length > 2) {
-          teachingData = preList.filter((item: IPlanList, index: number) => {
-            return index < 3;
-          });
-        } else {
-          teachingData = preList.concat(data).filter((item: IPlanList, index: number) => {
-            return index < 3;
-          });
-        }
       }
       setState({
         lessonPlans: data,
@@ -54,11 +51,15 @@ export default function LessonBox(prop: { unit: IUnitState }) {
   }, [prop]);
   return (
     <Box>
-      <Typography className={css.title}>Continue Teaching</Typography>
-      <Box className={css.teachingWrap}>
-        <TeachingUnit unit={prop.unit} list={state.teachingList}></TeachingUnit>
-      </Box>
-      <Typography className={css.title}>Unit {prop.unit.name} Teddy Bear, Teddy Bear, Say Goodnight</Typography>
+      {showTeach && (
+        <Box className={css.teachingWrap}>
+          <Typography className={css.title}>Continue Teaching</Typography>
+          <TeachingUnit list={state.teachingList}></TeachingUnit>
+        </Box>
+      )}
+      <Typography className={css.title}>
+        {prop.unit.id} {prop.unit.name}
+      </Typography>
       <LessonUnit list={state.lessonPlans}></LessonUnit>
     </Box>
   );

@@ -1,6 +1,8 @@
 interface IContextState {
   curriculum?: "esl" | "steam";
   classLevel?: 1 | 2 | 3 | 4 | 5;
+  unitId?: string;
+  planId?: string;
 }
 
 interface ILessonData {
@@ -57,8 +59,8 @@ interface IUnitState {
   name: string;
   no: number;
 }
-
-interface IPlanList {
+interface ITeachingList {
+  unitId: string;
   id: string;
   name: string;
   no: number;
