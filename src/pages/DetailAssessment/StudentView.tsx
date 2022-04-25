@@ -10,7 +10,7 @@ import {
   TableCell,
   TableContainer,
   TableRow,
-  Tooltip,
+  Tooltip
 } from "@material-ui/core";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
@@ -330,8 +330,8 @@ export function StudentView(props: StudentViewProps) {
                           {sitem.results?.map(
                             (ritem) =>
                               (ritem.content_type === "LessonMaterial" || ritem.content_type === "Unknown") &&
-                              ritem.status === "Covered" && (
-                                <TableRow key={ritem.content_id}>
+                              (isReview ? true : ritem.status === "Covered") && (
+                                <TableRow key={ritem.h5p_sub_id ? ritem.h5p_sub_id : ritem.content_id}>
                                   <TableCell align="center">{ritem.number}</TableCell>
                                   <TableCell align="center">
                                     <Tooltip title={(ritem.content_name as string) ?? ""} placement="top-start">
