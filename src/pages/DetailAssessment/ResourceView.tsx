@@ -115,7 +115,6 @@ export const showScreenShort = (type?: string) => {
     "ImageSequencing",
     "SingleChoiceSet",
     "Summary",
-    "H5P",
   ];
   return types.indexOf(type as string) >= 0;
 };
