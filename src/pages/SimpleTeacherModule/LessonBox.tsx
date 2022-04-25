@@ -30,14 +30,20 @@ export default function LessonBox(prop: { unit: IUnitState }) {
       let teachingData: IPlanList[] = [];
       const pre = localStorage.getItem("selectPlan");
       const preList: IPlanList[] = pre && JSON.parse(pre);
-      if (preList && preList.length > 2) {
-        teachingData = preList.filter((item: IPlanList, index: number) => {
+      if (!preList) {
+        teachingData = data.filter((item: IPlanList, index: number) => {
           return index < 3;
         });
       } else {
-        teachingData = preList.concat(data).filter((item: IPlanList, index: number) => {
-          return index < 3;
-        });
+        if (preList.length > 2) {
+          teachingData = preList.filter((item: IPlanList, index: number) => {
+            return index < 3;
+          });
+        } else {
+          teachingData = preList.concat(data).filter((item: IPlanList, index: number) => {
+            return index < 3;
+          });
+        }
       }
       setState({
         lessonPlans: data,
