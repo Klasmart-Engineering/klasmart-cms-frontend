@@ -1,7 +1,7 @@
 import { Box, Card, CardActionArea, CardContent, CardMedia, makeStyles, Typography } from "@material-ui/core";
-import React from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { pageLinks } from "./index";
+import { pageLinks, StmContext } from "./index";
 import vw from "./utils/vw.macro";
 
 const useStyles = makeStyles({
@@ -40,10 +40,12 @@ const useStyles = makeStyles({
   },
 });
 
-export default function LessonUnit(props: { list: IPlanList[] }) {
+export default function LessonUnit(props: { list: ITeachingList[] }) {
   const css = useStyles();
   let history = useHistory();
-  const handleLessonClick = (payload: IPlanList) => {
+  const { setRootState } = useContext(StmContext);
+  const handleLessonClick = (payload: ITeachingList) => {
+    setRootState && setRootState({ planId: payload.id });
     var storage = window.localStorage;
     history.push(pageLinks.present);
     let temp = [];
@@ -58,7 +60,7 @@ export default function LessonUnit(props: { list: IPlanList[] }) {
   };
   return (
     <Box className={css.lessonunitWrap}>
-      {props.list.map((item: IPlanList, index: number) => (
+      {props.list.map((item: ITeachingList, index: number) => (
         <Card
           key={index}
           className={css.lessonunit}

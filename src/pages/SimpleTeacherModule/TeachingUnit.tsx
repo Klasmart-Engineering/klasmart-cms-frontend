@@ -1,7 +1,8 @@
-import { Box, Button, Card, CardContent, CardMedia, Grid, makeStyles, Typography } from "@material-ui/core";
+import { Box, Button, Card, CardContent, CardMedia, Grid, makeStyles, Typography, withStyles } from "@material-ui/core";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import { useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { pageLinks } from "./index";
+import { pageLinks, StmContext } from "./index";
 import vw from "./utils/vw.macro";
 
 const useStyles = makeStyles({
@@ -57,22 +58,40 @@ const useStyles = makeStyles({
     borderRadius: vw(30),
     backgroundColor: "#C4C4C4",
   },
-  continueBtn: {
+});
+const IconButton = withStyles({
+  root: {
+    background: "#942CE5",
     width: vw(233),
+    padding: `${vw(9)} ${vw(63)} ${vw(12)} ${vw(63)}`,
+    borderRadius: vw(24),
+    cursor: "pointer",
     position: "absolute",
     bottom: vw(20),
     color: "#FFFFFF",
-    backgroundColor: "#942CE5",
     fontWeight: 700,
-    borderRadius: vw(24),
-    padding: `${vw(9)} ${vw(63)} ${vw(12)} ${vw(63)}`,
+    "&:hover": {
+      background: "#942CE5",
+      borderColor: "none",
+      boxShadow: "none",
+    },
+    "&:active": {
+      boxShadow: "none",
+      backgroundColor: "none",
+      borderColor: "none",
+    },
   },
-});
+})(Button);
 
-export default function TeachingUnit(props: { unit: IUnitState; list: IPlanList[] }) {
+export default function TeachingUnit(props: { list: ITeachingList[] }) {
   const css = useStyles();
   let history = useHistory();
-  let { unit } = props;
+  const { setRootState } = useContext(StmContext);
+  const handleClick = (payload: ITeachingList) => {
+    setRootState && setRootState({ planId: payload.id });
+    history.push(pageLinks.present);
+  };
+
   return (
     <Box className={css.teachingUnitWrap}>
       {props.list.map((item: any, index: any) => (
@@ -81,22 +100,19 @@ export default function TeachingUnit(props: { unit: IUnitState; list: IPlanList[
           <Box className={css.content}>
             <CardContent>
               <Grid container item xs={12} spacing={1}>
-                <label className={css.unitBtn}>unit {unit.name}</label>
+                <label className={css.unitBtn}>{item.unitId}</label>
                 <span className={css.lessonNo}>Lesson {item.no}</span>
               </Grid>
               <Typography className={css.lessonDesp} component="p">
                 {item.name}
               </Typography>
-              <Button
-                variant="contained"
-                className={css.continueBtn}
-                disableElevation
+              <IconButton
                 onClick={() => {
-                  history.push(pageLinks.present);
+                  handleClick(item);
                 }}
               >
                 Continue <ChevronRightIcon></ChevronRightIcon>
-              </Button>
+              </IconButton>
             </CardContent>
           </Box>
         </Card>
