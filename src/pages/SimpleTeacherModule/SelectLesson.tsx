@@ -21,7 +21,7 @@ const useStyles = makeStyles({
     height: "100%",
     display: "flex",
     flexDirection: "row",
-    padding: `${vw(130)} 0 ${vw(110)} 0`,
+    padding: `${vw(130)} 0 0 0`,
     boxSizing: "border-box",
   },
   lessonbox: {
@@ -30,10 +30,11 @@ const useStyles = makeStyles({
     overflowY: "scroll",
   },
   unitSelector: {
-    padding: `0 ${vw(107)} 0 ${vw(110)}`,
+    paddingBottom: vw(20),
+    margin: `0 ${vw(107)} 0 ${vw(110)}`,
+    boxSizing: "border-box",
     width: vw(130),
     height: "100%",
-    margin: 0,
   },
 });
 
@@ -41,7 +42,7 @@ export default function SelectLesson() {
   const css = useStyles();
   const [unit, setUnit] = useState<IUnitState>({ id: "unit01", name: "01", no: 1 });
   const { setRootState } = useContext(StmContext);
-  const unitChange = (unit: any) => {
+  const unitChange = (unit: IUnitState) => {
     setRootState && setRootState({ unitId: unit.id });
     setUnit(unit);
   };
