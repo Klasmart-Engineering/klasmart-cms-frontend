@@ -19,19 +19,22 @@ const useStyles = makeStyles({
   },
   container: {
     height: "100%",
+    display: "flex",
+    flexDirection: "row",
+    paddingTop: vw(130),
   },
   lessonbox: {
-    position: "absolute",
-    left: vw(324),
-    top: vw(204),
+    //position: "absolute",
+    //left: vw(324),
+    // top: vw(204),
+    width: `calc(100% - ${vw(326)})`,
     height: `calc(100% - ${vw(230)})`,
     overflowY: "scroll",
   },
   unitSelector: {
     paddingLeft: vw(110),
-    paddingTop: vw(130),
     width: vw(130),
-    height: `calc(100% - ${vw(130)})`,
+    height: `100%`,
     margin: 0,
   },
 });
