@@ -21,6 +21,7 @@ interface IListItemProps {
   active?: boolean;
   thumbnail: string;
   onClick: () => void;
+  itemRef: (button: HTMLButtonElement) => void;
 }
 
 interface IListItem {

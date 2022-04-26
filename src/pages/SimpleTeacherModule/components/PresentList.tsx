@@ -1,7 +1,7 @@
-import { Box, Button, makeStyles } from "@material-ui/core";
+import { Box, Button, Container, makeStyles } from "@material-ui/core";
 import clsx from "clsx";
+import { useEffect, useRef } from "react";
 import vw from "../utils/vw.macro";
-
 const useStyles = makeStyles({
   root: {
     position: "relative",
@@ -47,6 +47,7 @@ function ListItem(props: IListItemProps) {
       className={clsx(css.item, {
         active: props.active,
       })}
+      ref={props.itemRef}
       style={{
         backgroundImage: `url(${props.thumbnail})`,
       }}
@@ -56,15 +57,46 @@ function ListItem(props: IListItemProps) {
 }
 export default function PresentList(props: IPresentListProps) {
   const css = useStyles();
+  const container = useRef<HTMLDivElement>();
+  const itemButtons = useRef<HTMLButtonElement[]>([]);
+  const isCmdChange = useRef(false);
+
+  const scroll = () => {
+    if (props.list.length && container.current) {
+      container.current.scrollTo({ top: itemButtons.current[props.activeIndex]?.offsetTop, left: 0, behavior: "smooth" });
+    }
+    isCmdChange.current = false;
+  };
+
+  const onClick = (index: number) => {
+    isCmdChange.current = true;
+    props.onClick(index);
+  };
+
+  useEffect(() => {
+    if (!isCmdChange.current) {
+      scroll();
+    } else {
+      isCmdChange.current = false;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.activeIndex]);
+
   return (
     <Box className={css.root}>
-      <Box className={css.listMain}>
+      <Container className={css.listMain} innerRef={container}>
         <Box className={css.itemWrapper}>
           {props.list.map((item, index) => (
-            <ListItem key={index} active={index === props.activeIndex} thumbnail={item.thumbnail} onClick={() => props.onClick(index)} />
+            <ListItem
+              itemRef={(button) => (itemButtons.current[index] = button)}
+              key={index}
+              active={index === props.activeIndex}
+              thumbnail={item.thumbnail}
+              onClick={() => onClick(index)}
+            />
           ))}
         </Box>
-      </Box>
+      </Container>
     </Box>
   );
 }

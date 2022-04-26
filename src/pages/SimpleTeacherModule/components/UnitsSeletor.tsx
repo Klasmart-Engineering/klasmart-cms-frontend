@@ -8,6 +8,7 @@ import "swiper/modules/navigation/navigation.min.css";
 import "swiper/modules/pagination/pagination.min.css";
 import { Swiper, SwiperSlide } from "swiper/react/swiper-react.js";
 import "swiper/swiper.min.css";
+import { Swiper as SwiperType } from "swiper/types";
 import { geUnits } from "../utils/api";
 import vw from "../utils/vw.macro";
 
@@ -89,7 +90,7 @@ export default function UnitsSelector(props: Props) {
   const css = useStyles();
   const [mock, setMock] = useState<any[]>([]);
   const [chosenIndex, setChosenIndex] = useState(0);
-  const swiper = useRef<any>();
+  const swiper = useRef<SwiperType>();
 
   useEffect(() => {
     geUnits().then((res) => {
@@ -149,10 +150,10 @@ export default function UnitsSelector(props: Props) {
               </Swiper>
             </Box>
             <Box className={clsx(css.arrow, css.topArrow)}>
-              <ExpandLessRoundedIcon onClick={() => swiper.current.slidePrev()} />
+              <ExpandLessRoundedIcon onClick={() => swiper.current?.slidePrev()} />
             </Box>
             <Box className={clsx(css.arrow, css.bottomArrow)}>
-              <ExpandMoreRoundedIcon onClick={() => swiper.current.slideNext()} />
+              <ExpandMoreRoundedIcon onClick={() => swiper.current?.slideNext()} />
             </Box>
           </>
         );
