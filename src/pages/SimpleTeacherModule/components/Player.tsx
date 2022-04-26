@@ -1,5 +1,6 @@
 import { Box, makeStyles, Typography } from "@material-ui/core";
 import vw from "../utils/vw.macro";
+import MediaControl from "./MediaControl";
 
 const useStyles = makeStyles({
   root: {
@@ -54,8 +55,18 @@ const useStyles = makeStyles({
     height: "100%",
     border: "none",
   },
+  mediaControl: {
+    width: "100%",
+    background: "#ffffff",
+    borderRadius: vw(32),
+    marginTop: vw(12),
+    height: vw(100),
+    display: "flex",
+    alignItems: "center",
+  },
 });
 export default function PresentPlayer(props: IPlayerProps) {
+  console.log(props);
   const css = useStyles();
   return (
     <Box className={css.root}>
@@ -75,7 +86,9 @@ export default function PresentPlayer(props: IPlayerProps) {
           />
         )}
       </Box>
-      <Box></Box>
+      <Box className={css.mediaControl}>
+        <MediaControl />
+      </Box>
     </Box>
   );
 }
