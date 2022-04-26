@@ -2,6 +2,7 @@ import { Box, Button, makeStyles, Typography, withStyles } from "@material-ui/co
 import { useHistory } from "react-router-dom";
 import { pageLinks } from ".";
 import Header from "./components/Header";
+import vw from "./utils/vw.macro";
 
 const data: ILessonData[] = [
   {
@@ -57,20 +58,20 @@ const useStyles = makeStyles({
     zIndex: 0,
   },
   title: {
-    fontSize: 62,
+    fontSize: vw(62),
     fontFamily: "rooneysansbold, sans-serif",
     color: "#fff",
   },
   itemContainer: {
     display: "grid",
-    gridTemplateColumns: "repeat(5, 13.2vw)",
-    gridColumnGap: "2.96vw",
+    gridTemplateColumns: `repeat(5, ${vw(338)})`,
+    gridColumnGap: vw(76),
   },
   item: {
     background: "#fff",
-    width: "13.2vw",
-    height: "17vw",
-    borderRadius: "2vw",
+    width: vw(339),
+    height: vw(436),
+    borderRadius: vw(51),
     cursor: "pointer",
     position: "relative",
     overflow: "hidden",
@@ -86,7 +87,7 @@ const useStyles = makeStyles({
   },
   itemLeveText1: {
     color: "#fff",
-    fontSize: "2.15vw",
+    fontSize: vw(55),
     lineHeight: 2,
     textAlign: "center",
     fontFamily: "RooneySans, sans-serif",
@@ -96,7 +97,7 @@ const useStyles = makeStyles({
   },
   itemLeveText2: {
     color: "#fff",
-    fontSize: "9.5vw",
+    fontSize: vw(244),
     fontStyle: "heavy",
     verticalAlign: "top",
     lineHeight: 0.6,
@@ -108,10 +109,10 @@ const useStyles = makeStyles({
   },
   itemImg: {
     position: "absolute",
-    bottom: ".8vw",
-    left: ".8vw",
-    width: "4.21vw",
-    height: "4.21vw",
+    bottom: vw(21),
+    left: vw(21),
+    width: vw(108),
+    height: vw(98),
     background: "#ffffff",
     borderRadius: "100%",
     display: "flex",
@@ -123,9 +124,9 @@ const useStyles = makeStyles({
   },
   itemAge: {
     position: "absolute",
-    bottom: "1.1vw",
-    right: "1.1vw",
-    fontSize: "1.64vw",
+    bottom: vw(47),
+    right: vw(34),
+    fontSize: vw(42),
     lineHeight: 1.5,
     fontFamily: "RooneySans, sans-serif",
     fontWeight: "bold",
@@ -137,9 +138,9 @@ const useStyles = makeStyles({
 const IconButton = withStyles({
   root: {
     background: "#fff",
-    width: "13.2vw",
-    height: "17vw",
-    borderRadius: "2vw",
+    width: vw(339),
+    height: vw(435),
+    borderRadius: vw(51),
     cursor: "pointer",
     position: "relative",
     overflow: "hidden",

@@ -10,6 +10,10 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "row",
     justifyContent: "flex-start",
+    fontFamily: "RooneySans, sans-serif",
+    fontWeight: "bold",
+    fontVariantNumeric: "lining-nums",
+    fontFeatureSettings: "tnum",
   },
   teachingunit: {
     display: "flex",
