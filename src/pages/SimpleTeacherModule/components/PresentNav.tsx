@@ -102,7 +102,12 @@ export default function PresentNav() {
         />
       </Box>
       <Box className={clsx(css.iconBase, css.iconWrapper2)}>
-        <Icon src={require("@assets/stm/home.png").default} onClick={() => {}} />
+        <Icon
+          src={require("@assets/stm/home.png").default}
+          onClick={() => {
+            history.push(pageLinks.curriculum);
+          }}
+        />
       </Box>
       <Box className={clsx(css.iconBase, css.iconWrapper3)}>
         <Divider />
