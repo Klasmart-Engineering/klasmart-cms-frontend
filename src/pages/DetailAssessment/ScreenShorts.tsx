@@ -23,16 +23,6 @@ export function ScreenShorts(props: ScreenShortsProps) {
   }
   if (loading) return <p>Loading ...</p>;
   if (!length) return <p>{"This image is not available. Please try again later."}</p>;
-  // if (multipleScreenShorts.indexOf(resourceType as string) < 0) {
-  //   return (
-  //     <ImageView
-  //       resourceType={resourceType}
-  //       imageId={mediaMetadata[0].id}
-  //       roomId={roomId as string}
-  //       mimeType={mediaMetadata[0].mimeType ? mediaMetadata[0].mimeType : "image/jpeg"}
-  //     />
-  //   )
-  // }
   return (
     <ImageView
       resourceType={resourceType}
@@ -41,20 +31,6 @@ export function ScreenShorts(props: ScreenShortsProps) {
       mimeType={mediaMetadata[0].mimeType ? mediaMetadata[0].mimeType : "image/jpeg"}
     />
   )
-//   const imgsCon = mediaMetadata.map(item => (
-//     <ImageView
-//       key={item.id}
-//       resourceType={resourceType}
-//       imageId={item.id}
-//       roomId={roomId as string}
-//       mimeType={item.mimeType ? item.mimeType : "image/jpeg"}
-//     />
-//   ))
-//   return (
-//     <>
-//       {imgsCon}
-//     </>
-//   );
 }
 
 export interface ImageViewProps {

@@ -185,7 +185,7 @@ export function ResourceView(props: ResourceViewProps) {
   };
   return (
     <>
-      <Dialog open={open} fullWidth maxWidth={"sm"}>
+      <Dialog open={open} fullWidth maxWidth={isScreenShorts ? "md" : "sm"}>
         <DialogTitle className={resourceType === ResourceViewTypeValues.editScore ? "" : css.title}>
           {(resourceType === ResourceViewTypeValues.essay || showAudioRecorder(resourceType)) &&
             d("Detailed Answer").t("assess_popup_detailed_answer")}
