@@ -371,9 +371,10 @@ export function StudentView(props: StudentViewProps) {
                                       )}
                                   </TableCell>
                                   <TableCell align="center">
-                                    {ritem.file_type !== FileTypes.HasChildContainer &&
+                                    {
+                                    ritem.file_type !== FileTypes.HasChildContainer &&
                                       ritem.attempted &&
-                                      showScreenShort(ritem.content_subtype) && (
+                                      showScreenShort(ritem.content_subtype, ritem.h5p_sub_id) && (
                                         <span
                                           style={{ color: "#006CCF", cursor: "pointer" }}
                                           onClick={(e) =>
