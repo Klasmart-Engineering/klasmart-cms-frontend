@@ -24,8 +24,10 @@ const useStyles = makeStyles({
     position: "absolute",
     left: vw(324),
     top: vw(204),
+    width: `calc(100% - ${vw(326)})`,
     height: `calc(100% - ${vw(230)})`,
-    overflow: "scroll",
+    overflowY: "scroll",
+    overflowX: "hidden",
   },
   unitSelector: {
     paddingLeft: vw(110),

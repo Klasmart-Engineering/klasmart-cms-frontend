@@ -11,10 +11,13 @@ const useStyles = makeStyles({
     marginBottom: vw(46),
   },
   title: {
-    fontWeight: 700,
     fontSize: vw(27),
     lineHeight: vw(34),
     marginBottom: vw(19),
+    fontFamily: "RooneySans, sans-serif",
+    fontWeight: "bold",
+    fontVariantNumeric: "lining-nums",
+    fontFeatureSettings: "tnum",
   },
 });
 

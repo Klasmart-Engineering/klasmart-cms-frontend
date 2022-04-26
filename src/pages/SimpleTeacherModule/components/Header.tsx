@@ -1,6 +1,7 @@
 import backArrow from "@assets/stm/arrow.svg";
 import { IconButton, Link, makeStyles, withStyles } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
+import vw from "../utils/vw.macro";
 
 const BackButton = withStyles({
   root: {
@@ -11,7 +12,8 @@ const BackButton = withStyles({
   },
   label: {
     "& > img": {
-      width: "1.17vw",
+      // width: "1.17vw",
+      width: vw(30),
       marginLeft: -5,
     },
   },
@@ -23,13 +25,13 @@ const useStyles = makeStyles({
     left: 0,
     right: 0,
     top: 0,
-    padding: "1vw",
+    padding: vw(26),
     zIndex: 10,
   },
   backBtn: {
     background: "#fff",
-    width: "2.81vw",
-    height: "2.81vw",
+    width: vw(72),
+    height: vw(72),
     borderRadius: "100%",
   },
 });

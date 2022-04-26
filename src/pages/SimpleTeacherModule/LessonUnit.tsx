@@ -9,6 +9,10 @@ const useStyles = makeStyles({
     display: "flex",
     justifyContent: "flex-start",
     flexFlow: "row wrap",
+    fontFamily: "RooneySans, sans-serif",
+    fontWeight: "bold",
+    fontVariantNumeric: "lining-nums",
+    fontFeatureSettings: "tnum",
   },
   lessonunit: {
     width: vw(320),
