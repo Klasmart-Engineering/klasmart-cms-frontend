@@ -99,10 +99,12 @@ export const showAudioRecorder = (type?: string) => {
   const types = ["AudioRecorder", "SpeakTheWordsSet", "SpeakTheWords"];
   return types.indexOf(type as string) >= 0;
 };
-export const showScreenShort = (type?: string) => {
+export const showScreenShort = (type?: string, subContentId?: string) => {
+  const mutipleScreenShortsTypes = ["ArithmeticQuiz", "Flashcards"];
   const types = [
+    "Summary", 
+    "SingleChoiceSet",
     "AdvancedBlanks",
-    "ArithmeticQuiz",
     "Dictation",
     "DragQuestion",
     "DragText",
@@ -110,13 +112,18 @@ export const showScreenShort = (type?: string) => {
     "ImageMultipleHotspotQuestion",
     "ImageHotspotQuestion",
     "FindTheWords",
-    "Flashcards",
     "ImagePair",
     "ImageSequencing",
-    "SingleChoiceSet",
-    "Summary",
   ];
-  return types.indexOf(type as string) >= 0;
+  if(mutipleScreenShortsTypes.indexOf(type as string) >= 0) {
+    if(subContentId) {
+      return true
+    } else {
+      return false
+    }
+  } else {
+    return types.indexOf(type as string) >= 0;
+  }
 };
 export interface ResourceViewProps {
   open: boolean;
