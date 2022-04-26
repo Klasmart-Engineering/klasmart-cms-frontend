@@ -9,6 +9,7 @@ import vw from "./utils/vw.macro";
 const useStyles = makeStyles({
   teachingWrap: {
     marginBottom: vw(46),
+    padding: `${vw(66)} 0 0 0`,
   },
   title: {
     fontSize: vw(27),
