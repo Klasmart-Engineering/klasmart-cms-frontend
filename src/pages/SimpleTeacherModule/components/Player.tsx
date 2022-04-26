@@ -1,6 +1,8 @@
 import { Box, makeStyles, Typography } from "@material-ui/core";
+import React from "react";
 import vw from "../utils/vw.macro";
 import MediaControl from "./MediaControl";
+import Video from "./Video";
 
 const useStyles = makeStyles({
   root: {
@@ -49,6 +51,16 @@ const useStyles = makeStyles({
     position: "relative",
     overflow: "hidden",
   },
+  videoContainer: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    "& > video": {
+      width: "100%",
+      height: "100%",
+      background: "#000000",
+    },
+  },
   playerIframe: {
     position: "absolute",
     width: "100%",
@@ -66,29 +78,38 @@ const useStyles = makeStyles({
   },
 });
 export default function PresentPlayer(props: IPlayerProps) {
-  console.log(props);
+  const videoRef = React.createRef<HTMLVideoElement>();
   const css = useStyles();
+  const { data, name, progress, lessonNo } = props;
+
   return (
     <Box className={css.root}>
       <Box className={css.playerTop}>
         <Typography variant="h5" className={css.playerTitle}>
-          <b>Lesson {props.lessonNo}.</b> {props.name}
+          <b>Lesson {lessonNo}.</b> {name}
         </Typography>
-        <Box className={css.playerProgress}>{props.progress}</Box>
+        <Box className={css.playerProgress}>{progress}</Box>
       </Box>
       <Box className={css.playerMain}>
-        {props.data.file_type === 5 && (
+        {data.file_type === 2 && (
+          <Box className={css.videoContainer}>
+            <Video ref={videoRef} source={data.source} />
+          </Box>
+        )}
+        {data.file_type === 5 && (
           <iframe
-            title={props.name}
+            title={name}
             className={css.playerIframe}
             sandbox="allow-same-origin allow-scripts"
-            src={`//live.kidsloop.live/h5p/play/${props.data.source}`}
+            src={`//live.kidsloop.live/h5p/play/${data.source}`}
           />
         )}
       </Box>
-      <Box className={css.mediaControl}>
-        <MediaControl />
-      </Box>
+      {data.file_type === 2 && (
+        <Box className={css.mediaControl}>
+          <MediaControl videoRef={videoRef} />
+        </Box>
+      )}
     </Box>
   );
 }

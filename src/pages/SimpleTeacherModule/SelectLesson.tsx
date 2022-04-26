@@ -12,6 +12,10 @@ const useStyles = makeStyles({
     height: "100vh",
     backgroundColor: "#C5DDFF",
     position: "relative",
+    fontFamily: "RooneySans, sans-serif",
+    fontWeight: "bold",
+    fontVariantNumeric: "lining-nums",
+    fontFeatureSettings: "tnum",
   },
   container: {
     height: "100%",
@@ -21,7 +25,7 @@ const useStyles = makeStyles({
     left: vw(324),
     top: vw(204),
     height: `calc(100% - ${vw(230)})`,
-    overflow: "scroll",
+    overflowY: "scroll",
   },
   unitSelector: {
     paddingLeft: vw(110),

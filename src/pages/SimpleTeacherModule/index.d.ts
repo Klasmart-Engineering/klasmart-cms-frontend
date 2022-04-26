@@ -69,3 +69,10 @@ interface ITeachingList {
   description: string;
   content_id: string;
 }
+
+interface IMediaControlProps {
+  videoRef: React.RefObject<HTMLVideoElement>;
+}
+interface IVideoPlayerProps {
+  source: string;
+}
