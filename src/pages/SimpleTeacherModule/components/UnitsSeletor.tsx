@@ -1,4 +1,4 @@
-import { Box, makeStyles } from "@material-ui/core";
+import { Box, Button, makeStyles } from "@material-ui/core";
 import ExpandLessRoundedIcon from "@material-ui/icons/ExpandLessRounded";
 import ExpandMoreRoundedIcon from "@material-ui/icons/ExpandMoreRounded";
 import { ParentSize } from "@visx/responsive";
@@ -42,6 +42,15 @@ const useStyles = makeStyles({
     fontSize: vw(45),
     fontWeight: 800,
     borderRadius: vw(40),
+    "& span": {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      lineHeight: 1,
+    },
+    "&:hover": {
+      background: "#6DC2FF",
+    },
   },
   blank: {
     width: vw(106),
@@ -64,11 +73,17 @@ const useStyles = makeStyles({
     zIndex: 2,
     width: vw(132),
     height: vw(132),
-    color: "#2475EA",
     position: "absolute",
     display: "flex",
     justifyContent: "center",
+    "& button": {
+      height: vw(80),
+      minWidth: "auto",
+      borderRadius: "50%",
+      padding: 0,
+    },
     "& svg": {
+      color: "#2475EA",
       fontSize: vw(80),
     },
   },
@@ -105,6 +120,16 @@ export default function UnitsSelector(props: Props) {
     setChosenIndex(index);
   };
 
+  const slidePrev = () => {
+    swiper.current?.slidePrev();
+    swiper.current?.update();
+  };
+
+  const slideNext = () => {
+    swiper.current?.slideNext();
+    swiper.current?.update();
+  };
+
   return (
     <ParentSize style={{ position: "relative", height: "100%" }}>
       {({ height }) => {
@@ -129,18 +154,20 @@ export default function UnitsSelector(props: Props) {
                   if (index === chosenIndex) {
                     return (
                       <SwiperSlide key={index} className={css.swiperSlide}>
-                        <Box onClick={() => changeChosenIndex(index)} className={clsx(css.item, css.selected)}>
-                          <Box fontSize={vw(25)}>Unit</Box>
+                        <Button onClick={() => changeChosenIndex(index)} className={clsx(css.item, css.selected)}>
+                          <Box fontSize={vw(25)} fontWeight={"blob"}>
+                            Unit
+                          </Box>
                           <Box>{item.name}</Box>
-                        </Box>
+                        </Button>
                       </SwiperSlide>
                     );
                   }
                   return (
                     <SwiperSlide key={index} className={css.swiperSlide}>
-                      <Box onClick={() => changeChosenIndex(index)} className={clsx(css.item, css.unselected)}>
+                      <Button onClick={() => changeChosenIndex(index)} className={clsx(css.item, css.unselected)}>
                         {item.name}
-                      </Box>
+                      </Button>
                     </SwiperSlide>
                   );
                 })}
@@ -150,10 +177,14 @@ export default function UnitsSelector(props: Props) {
               </Swiper>
             </Box>
             <Box className={clsx(css.arrow, css.topArrow)}>
-              <ExpandLessRoundedIcon onClick={() => swiper.current?.slidePrev()} />
+              <Button onClick={slidePrev}>
+                <ExpandLessRoundedIcon />
+              </Button>
             </Box>
             <Box className={clsx(css.arrow, css.bottomArrow)}>
-              <ExpandMoreRoundedIcon onClick={() => swiper.current?.slideNext()} />
+              <Button onClick={slideNext}>
+                <ExpandMoreRoundedIcon />
+              </Button>
             </Box>
           </>
         );

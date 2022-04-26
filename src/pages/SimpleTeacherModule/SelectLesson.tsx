@@ -12,6 +12,10 @@ const useStyles = makeStyles({
     height: "100vh",
     backgroundColor: "#C5DDFF",
     position: "relative",
+    fontFamily: "RooneySans, sans-serif",
+    fontWeight: "bold",
+    fontVariantNumeric: "lining-nums",
+    fontFeatureSettings: "tnum",
   },
   container: {
     height: "100%",
