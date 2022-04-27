@@ -1,8 +1,7 @@
 import backArrow from "@assets/stm/arrow.svg";
-import { Box, IconButton, Link, makeStyles, withStyles } from "@material-ui/core";
-import React, { useContext } from "react";
+import { IconButton, Link, makeStyles, withStyles } from "@material-ui/core";
+import React from "react";
 import { useHistory } from "react-router-dom";
-import { StmContext } from "../index";
 import vw from "../utils/vw.macro";
 
 const BackButton = withStyles({
@@ -64,8 +63,7 @@ const useStyles = makeStyles({
 export default function Header(props: { prevLink: string; backgroudColor?: React.CSSProperties["backgroundColor"] }) {
   const css = useStyles();
   let history = useHistory();
-  const { classLevel } = useContext(StmContext);
-  console.log(classLevel);
+
   return (
     <Link
       component="div"
@@ -81,10 +79,6 @@ export default function Header(props: { prevLink: string; backgroudColor?: React
       <BackButton aria-label="back" className={css.backBtn}>
         <img src={backArrow} alt="back" />
       </BackButton>
-      <Box className={css.title}>
-        <label className={css.unitBtn}>Level {classLevel}</label>
-        <span className={css.lessonNo}>Bada Rhyme</span>
-      </Box>
     </Link>
   );
 }
