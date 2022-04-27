@@ -457,7 +457,7 @@ export function StudentView(props: StudentViewProps) {
                                     .reduce((pre, cur) => pre + Number(cur?.score), 0)}
                                    / 
                                   ${sitem.results
-                                    ?.filter((item) => item.file_type !== FileTypes.HasChildContainer)
+                                    ?.filter((item) => item.file_type !== FileTypes.HasChildContainer && item.attempted)
                                     .reduce((pre, cur) => pre + Number(cur.max_score), 0)}`
                                 : "-"}
                             </TableCell>
