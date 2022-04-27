@@ -127,6 +127,10 @@ export default function UnitsSelector(props: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    setIsBeginning(true);
+  }, [mock]);
+
   const changeChosenIndex = (index: number) => {
     props?.onChange?.(mock[index]);
     setChosenIndex(index);
