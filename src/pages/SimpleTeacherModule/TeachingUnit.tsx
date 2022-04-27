@@ -24,6 +24,19 @@ const useStyles = makeStyles({
     padding: `${vw(19)} 0 ${vw(19)} ${vw(19)}`,
     marginRight: vw(32),
     boxSizing: "border-box",
+    borderColor: "none",
+    boxShadow: "none",
+    "&:hover": {
+      transform: "scale(1.08)",
+      backgroundColor: "#C572FF",
+      borderColor: "none",
+      boxShadow: "none",
+    },
+    "&:active": {
+      boxShadow: "none",
+      backgroundColor: "#C572FF",
+      borderColor: "none",
+    },
   },
   content: {
     display: "flex",
@@ -92,7 +105,7 @@ export default function TeachingUnit(props: { list: ITeachingList[] }) {
   let history = useHistory();
   const { setRootState, ...rootState } = useContext(StmContext);
   const handleClick = (payload: ITeachingList) => {
-    setRootState && setRootState({ ...rootState, planId: payload.id });
+    setRootState && setRootState({ ...rootState, planId: payload.id, lessonId: payload.no });
     history.push(pageLinks.present);
   };
 

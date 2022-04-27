@@ -31,7 +31,7 @@ const useStyles = makeStyles({
   },
   unitSelector: {
     paddingBottom: vw(20),
-    margin: `0 ${vw(107)} 0 ${vw(110)}`,
+    margin: `0 ${vw(75)} 0 ${vw(97)}`,
     boxSizing: "border-box",
     width: vw(130),
     height: "100%",

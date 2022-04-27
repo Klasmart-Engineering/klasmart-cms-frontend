@@ -171,7 +171,7 @@ const IconButton = withStyles({
     position: "relative",
     overflow: "hidden",
     "&:hover": {
-      scale: 1.1,
+      transform: "scale(1.1)",
       background: "#fff",
       borderColor: "none",
       boxShadow: "none",

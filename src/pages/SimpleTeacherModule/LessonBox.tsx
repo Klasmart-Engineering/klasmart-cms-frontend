@@ -7,9 +7,11 @@ import { getLessonPlan } from "./utils/api";
 import vw from "./utils/vw.macro";
 
 const useStyles = makeStyles({
+  lessonWrap: {
+    padding: `${vw(66)} 0 0 ${vw(40)}`,
+  },
   teachingWrap: {
     marginBottom: vw(46),
-    padding: `${vw(66)} 0 0 0`,
   },
   title: {
     fontSize: vw(27),
@@ -64,7 +66,7 @@ export default function LessonBox(prop: { unit: IUnitState }) {
     unit && getLesson();
   }, [prop, curriculum, classLevel]);
   return (
-    <Box>
+    <Box className={css.lessonWrap}>
       {showTeach && (
         <Box className={css.teachingWrap}>
           <Typography className={css.title}>Continue Teaching</Typography>

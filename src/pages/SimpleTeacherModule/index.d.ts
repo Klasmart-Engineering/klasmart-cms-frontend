@@ -3,6 +3,7 @@ interface IContextState {
   classLevel?: 1 | 2 | 3 | 4 | 5;
   unitId?: string;
   planId?: string;
+  lessonId?: number;
   presentState?: IPresentState;
   videoState?: IVideoState;
 }
@@ -60,7 +61,7 @@ interface IPlayerProps {
     file_type: number;
     input_source: number;
   };
-  lessonNo: number;
+  lessonNo?: number;
   name: string;
   progress: string;
 }

@@ -17,7 +17,7 @@ const useStyles = makeStyles({
 export default function PresentActivity() {
   const css = useStyles();
   const { setRootState, ...rootState } = useContext(StmContext);
-  const { planId, curriculum, classLevel, presentState } = rootState;
+  const { planId, curriculum, classLevel, presentState, lessonId } = rootState;
   const { activeIndex = 0, isFullscreen = false } = presentState || {};
   const [lessonMaterials, setLessonMaterials] = React.useState<IListItem[]>([]);
 
@@ -52,7 +52,7 @@ export default function PresentActivity() {
     <Box className={css.root}>
       <PresentNav />
       {!isFullscreen && <PresentList list={lessonMaterials} />}
-      <PresentPlayer data={data} name={name} lessonNo={1} progress={`${activeIndex + 1} / ${lessonMaterials.length}`} />
+      <PresentPlayer data={data} name={name} lessonNo={lessonId} progress={`${activeIndex + 1} / ${lessonMaterials.length}`} />
     </Box>
   );
 }

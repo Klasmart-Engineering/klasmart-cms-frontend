@@ -51,7 +51,7 @@ const IconButton = withStyles({
       height: vw(276),
     },
     "&:hover": {
-      scale: 1.06,
+      transform: "scale(1.06)",
       backgroundColor: "#fff",
       borderColor: "none",
       boxShadow: "none",
