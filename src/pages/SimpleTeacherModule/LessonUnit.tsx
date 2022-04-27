@@ -48,9 +48,9 @@ const useStyles = makeStyles({
 export default function LessonUnit(props: { list: ITeachingList[] }) {
   const css = useStyles();
   let history = useHistory();
-  const { setRootState } = useContext(StmContext);
+  const { setRootState, ...rootState } = useContext(StmContext);
   const handleLessonClick = (payload: ITeachingList) => {
-    setRootState && setRootState({ ...setRootState, planId: payload.id });
+    setRootState && setRootState({ ...rootState, planId: payload.id });
     var storage = window.localStorage;
     history.push(pageLinks.present);
     let temp: ITeachingList[] = [];

@@ -41,9 +41,9 @@ const useStyles = makeStyles({
 export default function SelectLesson() {
   const css = useStyles();
   const [unit, setUnit] = useState<IUnitState>({ id: "unit01", name: "01", no: 1 });
-  const { setRootState } = useContext(StmContext);
+  const { setRootState, ...rootState } = useContext(StmContext);
   const unitChange = (unit: IUnitState) => {
-    setRootState && setRootState({ ...setRootState, unitId: unit.id });
+    setRootState && setRootState({ ...rootState, unitId: unit.id });
     setUnit(unit);
   };
   return (
