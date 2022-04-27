@@ -34,6 +34,7 @@ const useStyles = makeStyles({
     width: vw(72),
     height: vw(72),
     borderRadius: "100%",
+    zIndex: 2,
   },
   title: {
     position: "absolute",
