@@ -8,19 +8,19 @@ import vw from "./utils/vw.macro";
 
 const useStyles = makeStyles({
   lessonWrap: {
-    padding: `${vw(66)} 0 0 ${vw(40)}`,
+    padding: `${vw(68)} 0 0 ${vw(40)}`,
+    fontFamily: "RooneySans",
   },
   teachingWrap: {
-    marginBottom: vw(46),
+    marginBottom: vw(48),
   },
   title: {
+    fontFamily: "RooneySans",
+    fontWeight: "bold",
+    color: "#333333",
     fontSize: vw(27),
     lineHeight: vw(34),
     marginBottom: vw(19),
-    fontFamily: "RooneySans, sans-serif",
-    fontWeight: "bold",
-    fontVariantNumeric: "lining-nums",
-    fontFeatureSettings: "tnum",
   },
 });
 
