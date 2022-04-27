@@ -31,6 +31,12 @@ const useStyles = makeStyles({
   iconWrapper4: {
     marginBottom: vw(28),
   },
+  divider: {
+    margin: "0 auto",
+    width: vw(32),
+    height: 0,
+    border: "1px solid #E4E4E4",
+  },
 });
 
 const IconButton = withStyles({
@@ -167,7 +173,7 @@ export default function PresentNav() {
         />
       </Box>
       <Box className={clsx(css.iconBase, css.iconWrapper3)}>
-        <Divider />
+        <Divider className={css.divider} />
       </Box>
       {actionBtns
         .filter((item) => item.display)

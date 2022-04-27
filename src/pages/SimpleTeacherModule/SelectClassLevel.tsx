@@ -164,7 +164,7 @@ const IconButton = withStyles({
     background: "#fff",
     width: vw(339),
     height: vw(435),
-    borderRadius: vw(51),
+    borderRadius: vw(60),
     cursor: "pointer",
     position: "relative",
     overflow: "hidden",

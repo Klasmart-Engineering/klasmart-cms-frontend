@@ -14,8 +14,8 @@ const useStyles = makeStyles({
   },
   listMain: {
     position: "absolute",
-    top: vw(40),
-    bottom: vw(40),
+    top: 0,
+    bottom: 0,
     left: 0,
     right: 0,
     width: vw(310),
@@ -35,7 +35,7 @@ const useStyles = makeStyles({
     borderRadius: vw(22),
     background: "#ccc",
     backgroundSize: "cover",
-    border: `${vw(8)} solid #f0f0f0`,
+    border: `1px solid #B7B7B7`,
     "&.active": {
       border: `${vw(8)} solid #2475EA`,
     },
