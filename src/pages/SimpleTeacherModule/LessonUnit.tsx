@@ -1,4 +1,4 @@
-import { Box, Card, CardActionArea, CardContent, CardMedia, makeStyles, Typography } from "@material-ui/core";
+import { Box, Card, CardContent, CardMedia, makeStyles, Typography } from "@material-ui/core";
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { StmContext } from "./contexts";
@@ -93,15 +93,13 @@ export default function LessonUnit(props: { list: ITeachingList[] }) {
             handleLessonClick(item);
           }}
         >
-          <CardActionArea>
-            <CardMedia className={css.lessonPic} component="img" image={item.thumbnail} title="" />
-            <CardContent className={css.content}>
-              <Typography className={css.lessonNo}>Lesson {item.no}</Typography>
-              <Typography className={css.lessonDesp} component="p">
-                {item.name}
-              </Typography>
-            </CardContent>
-          </CardActionArea>
+          <CardMedia className={css.lessonPic} component="img" image={item.thumbnail} title="" />
+          <CardContent className={css.content}>
+            <Typography className={css.lessonNo}>Lesson {item.no}</Typography>
+            <Typography className={css.lessonDesp} component="p">
+              {item.name}
+            </Typography>
+          </CardContent>
         </Card>
       ))}
     </Box>
