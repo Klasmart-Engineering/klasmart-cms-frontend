@@ -5,6 +5,7 @@ interface IContextState {
   planId?: string;
   lessonId?: number;
   presentState?: IPresentState;
+  title?: string;
 }
 
 interface IPresentState {
@@ -27,6 +28,7 @@ interface ILessonData {
   age: string;
   color: string;
   top: React.CSSProperties["top"];
+  title: string;
 }
 
 interface INavIcon {

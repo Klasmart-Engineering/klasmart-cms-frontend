@@ -92,11 +92,14 @@ export default function Header(props: Props) {
       style={{
         backgroundColor: props.backgroudColor || "transpant",
       }}
-      onClick={() => {
-        history.push(props.prevLink);
-      }}
     >
-      <BackButton aria-label="back" className={css.backBtn}>
+      <BackButton
+        aria-label="back"
+        className={css.backBtn}
+        onClick={() => {
+          history.push(props.prevLink);
+        }}
+      >
         <img src={backArrow} alt="back" />
       </BackButton>
       {props.showTitle && (

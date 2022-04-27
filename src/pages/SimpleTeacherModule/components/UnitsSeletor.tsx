@@ -27,7 +27,7 @@ const useStyles = makeStyles({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",
-    margin: `${vw(11)} 0`,
+    margin: `${vw(9)} 0`,
   },
   swiperSlide: {
     display: "flex",
@@ -54,7 +54,7 @@ const useStyles = makeStyles({
   },
   blank: {
     width: vw(106),
-    height: vw(70),
+    height: vw(40),
   },
   unselected: {
     width: vw(106),
@@ -185,12 +185,12 @@ export default function UnitsSelector(props: Props) {
                 </SwiperSlide>
               </Swiper>
             </Box>
-            <Box className={clsx(css.arrow, css.topArrow)}>
+            <Box className={clsx(css.arrow, css.topArrow)} style={isBeginning ? { background: "#ffffff00" } : {}}>
               <Button onClick={slidePrev} style={{ visibility: isBeginning ? "hidden" : "visible" }}>
                 <ExpandLessRoundedIcon />
               </Button>
             </Box>
-            <Box className={clsx(css.arrow, css.bottomArrow)}>
+            <Box className={clsx(css.arrow, css.bottomArrow)} style={isEnd ? { background: "#ffffff00" } : {}}>
               <Button onClick={slideNext} style={{ visibility: isEnd ? "hidden" : "visible" }}>
                 <ExpandMoreRoundedIcon />
               </Button>
