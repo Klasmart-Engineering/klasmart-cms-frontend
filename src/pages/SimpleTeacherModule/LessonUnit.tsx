@@ -15,6 +15,7 @@ const useStyles = makeStyles({
     fontWeight: "bold",
     fontVariantNumeric: "lining-nums",
     fontFeatureSettings: "tnum",
+    cursor: "pointer",
   },
   lessonunit: {
     width: vw(320),
