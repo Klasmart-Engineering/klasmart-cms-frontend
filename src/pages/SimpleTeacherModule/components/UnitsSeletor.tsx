@@ -28,6 +28,8 @@ const useStyles = makeStyles({
     justifyContent: "center",
     flexDirection: "column",
     margin: `${vw(9)} 0`,
+    fontFamily: "RooneySans",
+    fontWeight: 800,
   },
   swiperSlide: {
     display: "flex",
@@ -40,6 +42,7 @@ const useStyles = makeStyles({
     background: "#2B9CF9",
     color: "#fff",
     fontSize: vw(45),
+    lineHeight: vw(56),
     fontWeight: 800,
     borderRadius: vw(40),
     "& span": {
@@ -64,6 +67,7 @@ const useStyles = makeStyles({
     fontSize: vw(34),
     fontWeight: 800,
     borderRadius: vw(28),
+    lineHeight: vw(43),
     "&:hover": {
       background: "#6DC2FF",
       color: "#fff",
@@ -96,6 +100,10 @@ const useStyles = makeStyles({
   topArrow: {
     top: 0,
     background: "linear-gradient(180deg, #C5DDFF 30%, rgba(255, 255, 255, 0))",
+  },
+  hidArrow: {
+    background: "#ffffff00",
+    zIndex: -1,
   },
 });
 
@@ -164,9 +172,7 @@ export default function UnitsSelector(props: Props) {
                     return (
                       <SwiperSlide key={index} className={css.swiperSlide}>
                         <Button onClick={() => changeChosenIndex(index)} className={clsx(css.item, css.selected)}>
-                          <Box fontSize={vw(25)} fontWeight={"blob"}>
-                            Unit
-                          </Box>
+                          <Box fontSize={vw(25)}>Unit</Box>
                           <Box>{item.name}</Box>
                         </Button>
                       </SwiperSlide>
@@ -185,12 +191,12 @@ export default function UnitsSelector(props: Props) {
                 </SwiperSlide>
               </Swiper>
             </Box>
-            <Box className={clsx(css.arrow, css.topArrow)} style={isBeginning ? { background: "#ffffff00" } : {}}>
+            <Box className={clsx(css.arrow, css.topArrow, isBeginning ? [css.hidArrow] : [])}>
               <Button onClick={slidePrev} style={{ visibility: isBeginning ? "hidden" : "visible" }}>
                 <ExpandLessRoundedIcon />
               </Button>
             </Box>
-            <Box className={clsx(css.arrow, css.bottomArrow)} style={isEnd ? { background: "#ffffff00" } : {}}>
+            <Box className={clsx(css.arrow, css.bottomArrow, isEnd ? [css.hidArrow] : [])}>
               <Button onClick={slideNext} style={{ visibility: isEnd ? "hidden" : "visible" }}>
                 <ExpandMoreRoundedIcon />
               </Button>

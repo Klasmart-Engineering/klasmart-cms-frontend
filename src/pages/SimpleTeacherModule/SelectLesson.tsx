@@ -13,7 +13,7 @@ const useStyles = makeStyles({
     backgroundColor: "#C5DDFF",
     position: "relative",
     fontFamily: "RooneySans, sans-serif",
-    fontWeight: "bold",
+    fontWeight: 800,
     fontVariantNumeric: "lining-nums",
     fontFeatureSettings: "tnum",
   },
