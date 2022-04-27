@@ -30,6 +30,8 @@ const useStyles = makeStyles({
     margin: `${vw(9)} 0`,
     fontFamily: "RooneySans",
     fontWeight: 800,
+    fontVariantNumeric: "lining-nums",
+    fontFeatureSettings: "tnum",
   },
   swiperSlide: {
     display: "flex",
