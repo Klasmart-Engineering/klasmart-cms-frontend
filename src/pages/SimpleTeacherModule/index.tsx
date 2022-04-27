@@ -28,10 +28,11 @@ const Context = React.createContext<
 });
 
 export default function Stm() {
+  console.log();
   const [rootState, setRootState] = React.useState<IContextState>(intialState);
   const { step } = useParams<{ step: string }>();
 
-  return (
+  return process.env.NODE_ENV === "production" ? null : (
     <Context.Provider
       value={{
         ...rootState,
