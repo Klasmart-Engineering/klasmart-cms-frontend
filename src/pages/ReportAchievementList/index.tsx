@@ -13,7 +13,7 @@ import { uniqBy } from "lodash";
 import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { emptyTipAndCreate, permissionTip } from "../../components/TipImages";
+import { emptyTip, emptyTipAndCreate, permissionTip } from "../../components/TipImages";
 import { d, t } from "../../locale/LocaleManager";
 import { setQuery, toQueryString } from "../../models/ModelContentDetailForm";
 import { ReportAchievementDetail } from "../ReportAchievementDetail";
@@ -166,7 +166,6 @@ export function ReportAchievementList() {
 
   const ChangeParentContainer = () => {
     const parentContainerSrc = window.parent.document.getElementsByTagName("iframe").item(0);
-    console.log(parentContainerSrc, "iframe");
     if (parentContainerSrc) {
       parentContainerSrc.src = getDocumentUrl("library");
     } else {
@@ -185,8 +184,10 @@ export function ReportAchievementList() {
       ></FilterAchievementReport>
       <BriefIntroduction value={condition} reportMockOptions={reportMockOptions} student_name={student_name} />
       {hasPerm ? (
-        reportList && reportList.length > 0 && condition.lesson_plan_id ? (
+        reportList && reportList.length > 0 ? (
           <AchievementListChart data={reportList} filter={condition.status} onClickStudent={handleChangeStudent} />
+        ) : condition.lesson_plan_id ? (
+          emptyTip
         ) : (
           <>
             {emptyTipAndCreate}
