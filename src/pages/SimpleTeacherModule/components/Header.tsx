@@ -1,5 +1,6 @@
 import backArrow from "@assets/stm/arrow.svg";
 import { IconButton, Link, makeStyles, withStyles } from "@material-ui/core";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import vw from "../utils/vw.macro";
 
@@ -12,7 +13,6 @@ const BackButton = withStyles({
   },
   label: {
     "& > img": {
-      // width: "1.17vw",
       width: vw(30),
       marginLeft: -5,
     },
@@ -34,10 +34,36 @@ const useStyles = makeStyles({
     height: vw(72),
     borderRadius: "100%",
   },
+  title: {
+    position: "absolute",
+    display: "inline-block",
+    left: "50%",
+    top: "50%",
+    marginTop: `-${vw(10)}`,
+    marginLeft: `-${vw(10)}`,
+  },
+  unitBtn: {
+    height: vw(35),
+    padding: `0 ${vw(10)}`,
+    lineHeight: vw(35),
+    color: "#C572FF",
+    borderRadius: vw(17),
+    fontSize: vw(21),
+    fontWeight: 800,
+    backgroundColor: "#FFFFFF",
+  },
+  lessonNo: {
+    display: "inline-block",
+    marginLeft: vw(8),
+    color: "#FFFFFF",
+    fontWeight: 800,
+    fontSize: vw(29),
+  },
 });
 export default function Header(props: { prevLink: string; backgroudColor?: React.CSSProperties["backgroundColor"] }) {
   const css = useStyles();
   let history = useHistory();
+
   return (
     <Link
       component="div"

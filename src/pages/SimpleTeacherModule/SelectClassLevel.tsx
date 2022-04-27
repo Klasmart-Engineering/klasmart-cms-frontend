@@ -1,7 +1,9 @@
 import { Box, Button, makeStyles, Typography, withStyles } from "@material-ui/core";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { pageLinks } from ".";
 import Header from "./components/Header";
+import { StmContext } from "./index";
 import vw from "./utils/vw.macro";
 
 const data: ILessonData[] = [
@@ -185,6 +187,8 @@ const IconButton = withStyles({
 function LessonItem(props: ILessonData) {
   const history = useHistory();
   const css = useStyles();
+  const { setRootState, ...rootState } = useContext(StmContext);
+
   return (
     <IconButton
       style={{
@@ -192,6 +196,7 @@ function LessonItem(props: ILessonData) {
       }}
       onClick={() => {
         history.push(pageLinks.lesson);
+        setRootState && setRootState({ ...rootState, classLevel: props.level as unknown as IContextState["classLevel"] });
       }}
     >
       <Box className={css.itemLeve} style={{ background: props.color }}>

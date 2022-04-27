@@ -66,12 +66,12 @@ const IconButton = withStyles({
 
 function CurriculumItem(props: { name: IContextState["curriculum"] }) {
   const history = useHistory();
-  const { setRootState } = useContext(StmContext);
+  const { setRootState, ...rootState } = useContext(StmContext);
   return (
     <IconButton
       onClick={() => {
-        setRootState && setRootState({ curriculum: props.name });
         history.push(pageLinks.level);
+        setRootState && setRootState({ ...rootState, curriculum: props.name });
       }}
     >
       <img src={props.name === "steam" ? steamImg : eslImg} alt={props.name} />

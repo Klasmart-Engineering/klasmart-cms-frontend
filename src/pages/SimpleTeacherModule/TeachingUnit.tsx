@@ -90,9 +90,9 @@ const IconButton = withStyles({
 export default function TeachingUnit(props: { list: ITeachingList[] }) {
   const css = useStyles();
   let history = useHistory();
-  const { setRootState } = useContext(StmContext);
+  const { setRootState, ...rootState } = useContext(StmContext);
   const handleClick = (payload: ITeachingList) => {
-    setRootState && setRootState({ planId: payload.id });
+    setRootState && setRootState({ ...rootState, planId: payload.id });
     history.push(pageLinks.present);
   };
 
