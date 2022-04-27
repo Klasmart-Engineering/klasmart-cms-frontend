@@ -1142,7 +1142,9 @@
   "assessment_hfs_no_teacher_feedback": "No se han proporcionado comentarios a este archivo.",
   "assessment_hfs_student_assessment": "Evaluación",
   "assessment_hfs_student_feedback": "Comentarios",
-  "assessment_detail_screenshot_results": "Results",
-  "assessment_detail_screenshot_result_screen": "Results Screen",
-  "assessment_detail_total_score": "Total Score"
+  "assessment_detail_screenshot_results": "Resultados",
+  "assessment_detail_screenshot_result_screen": "Pantalla de resultados",
+  "assessment_detail_total_score": "Puntuación Total",
+  "assessment_detail_screenshot_no_result": "Lo sentimos, la captura de pantalla no está disponible para este material de lección.",
+  "assessment_detail_essay_no_result": "El estudiante no ha enviado una respuesta."
 }

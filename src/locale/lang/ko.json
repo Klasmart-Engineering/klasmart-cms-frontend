@@ -1142,7 +1142,9 @@
   "assessment_hfs_no_teacher_feedback": "아직 이 파일에 대한 피드백이 제공되지 않았습니다.",
   "assessment_hfs_student_assessment": "평가",
   "assessment_hfs_student_feedback": "피드백",
-  "assessment_detail_screenshot_results": "Results",
-  "assessment_detail_screenshot_result_screen": "Results Screen",
-  "assessment_detail_total_score": "Total Score"
+  "assessment_detail_screenshot_results": "결과",
+  "assessment_detail_screenshot_result_screen": "결과 화면",
+  "assessment_detail_total_score": "총 점수",
+  "assessment_detail_screenshot_no_result": "죄송합니다. 이 항목에 대한 스크린샷을 사용할 수 없습니다.",
+  "assessment_detail_essay_no_result": "학생이 답변을 제출하지 않았습니다."
 }

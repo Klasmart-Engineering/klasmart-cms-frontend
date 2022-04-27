@@ -1142,7 +1142,9 @@
   "assessment_hfs_no_teacher_feedback": "Tidak ada umpan balik yang diberikan untuk file ini.",
   "assessment_hfs_student_assessment": "Penilaian",
   "assessment_hfs_student_feedback": "Masukan",
-  "assessment_detail_screenshot_results": "Results",
-  "assessment_detail_screenshot_result_screen": "Results Screen",
-  "assessment_detail_total_score": "Total Score"
+  "assessment_detail_screenshot_results": "Hasil",
+  "assessment_detail_screenshot_result_screen": "Layar Hasil",
+  "assessment_detail_total_score": "Skor Total",
+  "assessment_detail_screenshot_no_result": "Maaf, tangkapan layar tidak tersedia untuk materi pelajaran ini.",
+  "assessment_detail_essay_no_result": "Jawaban belum diserahkan oleh siswa."
 }
