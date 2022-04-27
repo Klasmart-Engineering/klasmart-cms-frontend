@@ -21,21 +21,20 @@ const useStyles = makeStyles({
     height: "100%",
     display: "flex",
     flexDirection: "row",
-    paddingTop: vw(130),
+    padding: `${vw(130)} 0 0 0`,
+    boxSizing: "border-box",
   },
   lessonbox: {
-    //position: "absolute",
-    //left: vw(324),
-    // top: vw(204),
-    width: `calc(100% - ${vw(326)})`,
-    height: `calc(100% - ${vw(230)})`,
+    height: "100%",
+    width: "100%",
     overflowY: "scroll",
   },
   unitSelector: {
-    paddingLeft: vw(110),
+    paddingBottom: vw(20),
+    margin: `0 ${vw(107)} 0 ${vw(110)}`,
+    boxSizing: "border-box",
     width: vw(130),
-    height: `100%`,
-    margin: 0,
+    height: "100%",
   },
 });
 
@@ -43,7 +42,7 @@ export default function SelectLesson() {
   const css = useStyles();
   const [unit, setUnit] = useState<IUnitState>({ id: "unit01", name: "01", no: 1 });
   const { setRootState } = useContext(StmContext);
-  const unitChange = (unit: any) => {
+  const unitChange = (unit: IUnitState) => {
     setRootState && setRootState({ unitId: unit.id });
     setUnit(unit);
   };

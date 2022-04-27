@@ -54,7 +54,7 @@ const useStyles = makeStyles({
   },
   blank: {
     width: vw(106),
-    height: vw(106),
+    height: vw(70),
   },
   unselected: {
     width: vw(106),
@@ -84,29 +84,31 @@ const useStyles = makeStyles({
     },
     "& svg": {
       color: "#2475EA",
+      margin: `-${vw(20)} 0`,
       fontSize: vw(80),
     },
   },
   bottomArrow: {
     bottom: 0,
     alignItems: "flex-end",
-    background: "linear-gradient(0deg, #C5DDFF 30%, transparent)",
+    background: "linear-gradient(0deg, #C5DDFF 30%, rgba(255, 255, 255, 0))",
   },
   topArrow: {
     top: 0,
-    background: "linear-gradient(180deg, #C5DDFF 30%, transparent)",
+    background: "linear-gradient(180deg, #C5DDFF 30%, rgba(255, 255, 255, 0))",
   },
 });
 
 interface Props {
-  onChange: (unit: any) => void;
+  onChange: (unit: IUnitState) => void;
 }
 export default function UnitsSelector(props: Props) {
   const css = useStyles();
-  const [mock, setMock] = useState<any[]>([]);
+  const [mock, setMock] = useState<IUnitState[]>([]);
   const [chosenIndex, setChosenIndex] = useState(0);
+  const [isEnd, setIsEnd] = useState(false);
+  const [isBeginning, setIsBeginning] = useState(true);
   const swiper = useRef<SwiperType>();
-
   useEffect(() => {
     geUnits().then((res) => {
       setMock(res);
@@ -118,6 +120,11 @@ export default function UnitsSelector(props: Props) {
   const changeChosenIndex = (index: number) => {
     props?.onChange?.(mock[index]);
     setChosenIndex(index);
+  };
+
+  const onSlideChange = (event: SwiperType) => {
+    setIsEnd(event.isEnd);
+    setIsBeginning(event.isBeginning);
   };
 
   const slidePrev = () => {
@@ -146,6 +153,8 @@ export default function UnitsSelector(props: Props) {
                 onSwiper={(ins) => {
                   swiper.current = ins;
                 }}
+                onUpdate={onSlideChange}
+                onSlideChange={onSlideChange}
               >
                 <SwiperSlide>
                   <Box className={clsx(css.item, css.blank)}></Box>
@@ -177,12 +186,12 @@ export default function UnitsSelector(props: Props) {
               </Swiper>
             </Box>
             <Box className={clsx(css.arrow, css.topArrow)}>
-              <Button onClick={slidePrev}>
+              <Button onClick={slidePrev} style={{ visibility: isBeginning ? "hidden" : "visible" }}>
                 <ExpandLessRoundedIcon />
               </Button>
             </Box>
             <Box className={clsx(css.arrow, css.bottomArrow)}>
-              <Button onClick={slideNext}>
+              <Button onClick={slideNext} style={{ visibility: isEnd ? "hidden" : "visible" }}>
                 <ExpandMoreRoundedIcon />
               </Button>
             </Box>
