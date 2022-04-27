@@ -13,6 +13,7 @@ const data: ILessonData[] = [
     age: "Age 4-5",
     color: "#c572ff",
     top: vw(22),
+    title: "Bada Rhyme",
   },
   {
     img: require("@assets/stm/bada-genius.png").default,
@@ -20,6 +21,7 @@ const data: ILessonData[] = [
     age: "Age 5-6",
     color: "#fbc319",
     top: vw(152),
+    title: "Bada Genius",
   },
   {
     img: require("@assets/stm/bada-talk.png").default,
@@ -27,6 +29,7 @@ const data: ILessonData[] = [
     age: "Age 6-7",
     color: "#82d407",
     top: 0,
+    title: "Bada Talk",
   },
   {
     img: require("@assets/stm/bada-sound.png").default,
@@ -34,6 +37,7 @@ const data: ILessonData[] = [
     age: "Age 7-8",
     color: "#0fbff5",
     top: vw(92),
+    title: "Bada Sound",
   },
   {
     img: require("@assets/stm/bada-read.png").default,
@@ -41,6 +45,7 @@ const data: ILessonData[] = [
     age: "Age 8-9",
     color: "#f957a8",
     top: vw(22),
+    title: "Bada Read",
   },
 ];
 
@@ -196,7 +201,8 @@ function LessonItem(props: ILessonData) {
       }}
       onClick={() => {
         history.push(pageLinks.lesson);
-        setRootState && setRootState({ ...rootState, classLevel: props.level as unknown as IContextState["classLevel"] });
+        setRootState &&
+          setRootState({ ...rootState, classLevel: props.level as unknown as IContextState["classLevel"], title: props.title });
       }}
     >
       <Box className={css.itemLeve} style={{ background: props.color }}>

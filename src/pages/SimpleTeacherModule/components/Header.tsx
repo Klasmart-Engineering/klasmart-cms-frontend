@@ -1,7 +1,8 @@
 import backArrow from "@assets/stm/arrow.svg";
-import { IconButton, Link, makeStyles, withStyles } from "@material-ui/core";
-import React from "react";
+import { Box, IconButton, Link, makeStyles, withStyles } from "@material-ui/core";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
+import { StmContext } from "../contexts";
 import vw from "../utils/vw.macro";
 
 const BackButton = withStyles({
@@ -36,21 +37,33 @@ const useStyles = makeStyles({
   },
   title: {
     position: "absolute",
-    display: "inline-block",
-    left: "50%",
-    top: "50%",
-    marginTop: `-${vw(10)}`,
-    marginLeft: `-${vw(10)}`,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100%",
+    width: "100%",
+    top: 0,
+    left: 0,
+    fontFamily: "RooneySans",
+    fontWeight: 800,
   },
   unitBtn: {
-    height: vw(35),
-    padding: `0 ${vw(10)}`,
-    lineHeight: vw(35),
-    color: "#C572FF",
-    borderRadius: vw(17),
-    fontSize: vw(21),
-    fontWeight: 800,
-    backgroundColor: "#FFFFFF",
+    height: vw(50),
+    padding: `${vw(5)} ${vw(12)}`,
+    color: "#fff",
+    borderRadius: vw(16),
+    fontSize: vw(30),
+    marginRight: vw(10),
+    backgroundColor: "#C572FF",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  skill: {
+    fontSize: vw(40),
+    lineHeight: vw(50),
+    textAlign: "center",
+    color: "#fff",
   },
   lessonNo: {
     display: "inline-block",
@@ -60,9 +73,16 @@ const useStyles = makeStyles({
     fontSize: vw(29),
   },
 });
-export default function Header(props: { prevLink: string; backgroudColor?: React.CSSProperties["backgroundColor"] }) {
+
+interface Props {
+  prevLink: string;
+  backgroudColor?: React.CSSProperties["backgroundColor"];
+  showTitle?: boolean;
+}
+export default function Header(props: Props) {
   const css = useStyles();
   let history = useHistory();
+  const rootState = useContext(StmContext);
 
   return (
     <Link
@@ -79,6 +99,12 @@ export default function Header(props: { prevLink: string; backgroudColor?: React
       <BackButton aria-label="back" className={css.backBtn}>
         <img src={backArrow} alt="back" />
       </BackButton>
+      {props.showTitle && (
+        <Box className={css.title}>
+          <Box className={css.unitBtn}>Level&nbsp;{rootState.classLevel}</Box>
+          <Box className={css.skill}>{rootState.title}</Box>
+        </Box>
+      )}
     </Link>
   );
 }

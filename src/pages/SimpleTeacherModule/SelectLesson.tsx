@@ -48,7 +48,7 @@ export default function SelectLesson() {
   };
   return (
     <Box className={css.root}>
-      <Header backgroudColor={"#43A1FF"} prevLink="/stm/level" />
+      <Header showTitle backgroudColor={"#43A1FF"} prevLink="/stm/level" />
       <Grid className={css.container}>
         <Box className={css.unitSelector}>
           <UnitsSelector onChange={unitChange} />
