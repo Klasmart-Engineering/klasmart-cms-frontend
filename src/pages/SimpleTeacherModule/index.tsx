@@ -4,7 +4,7 @@ import "@assets/stm/font/stylesheet.css";
 import { CircularProgress } from "@material-ui/core";
 import React, { Suspense } from "react";
 import { useParams } from "react-router-dom";
-import { intialState, StmContext, VideoContext } from "./contexts";
+import { intialState, intialVideoState, StmContext, VideoContext } from "./contexts";
 
 const PresentActivity = React.lazy(() => import("./PresentActivity"));
 const SelectClassLevel = React.lazy(() => import("./SelectClassLevel"));
@@ -20,7 +20,7 @@ enum pageLinks {
 
 export default function Stm() {
   const [rootState, setRootState] = React.useState<IContextState>(intialState);
-  const [videoState, setVideoState] = React.useState<IContextState>(intialState);
+  const [videoState, setVideoState] = React.useState<IVideoState>(intialVideoState);
   const { step } = useParams<{ step: string }>();
 
   return process.env.NODE_ENV === "production" ? null : (
