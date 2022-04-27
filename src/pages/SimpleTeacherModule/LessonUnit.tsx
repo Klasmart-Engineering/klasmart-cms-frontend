@@ -11,7 +11,7 @@ const useStyles = makeStyles({
     display: "flex",
     justifyContent: "flex-start",
     flexFlow: "row wrap",
-    fontFamily: "RooneySans, sans-serif",
+    fontFamily: "RooneySans",
     fontWeight: "bold",
     fontVariantNumeric: "lining-nums",
     fontFeatureSettings: "tnum",
@@ -19,9 +19,23 @@ const useStyles = makeStyles({
   lessonunit: {
     width: vw(320),
     height: vw(312),
-    backgroundColor: "#FFFFFF",
     borderRadius: vw(32),
-    margin: `0 ${vw(31)} ${vw(20)} 0`,
+    margin: `0 ${vw(31)} ${vw(38)} 0`,
+    boxShadow: "none",
+    backgroundColor: "none",
+    borderColor: "none",
+    fontFamily: "RooneySans",
+    "&:hover": {
+      transform: "scale(1.1)",
+      backgroundColor: "none",
+      borderColor: "none",
+      boxShadow: "none",
+    },
+    "&:active": {
+      boxShadow: "none",
+      backgroundColor: "none",
+      borderColor: "none",
+    },
   },
   content: {
     padding: `${vw(12)} ${vw(23)} ${vw(25)}`,
@@ -32,12 +46,14 @@ const useStyles = makeStyles({
     backgroundColor: "#C4C4C4",
   },
   lessonNo: {
+    fontFamily: "RooneySans",
     color: "#43A1FF",
-    fontWeight: 700,
+    fontWeight: 800,
     fontSize: vw(24),
     lineHeight: vw(30),
   },
   lessonDesp: {
+    fontFamily: "RooneySans",
     marginTop: vw(10),
     color: "#444444",
     fontWeight: 500,
@@ -51,7 +67,7 @@ export default function LessonUnit(props: { list: ITeachingList[] }) {
   let history = useHistory();
   const { setRootState, ...rootState } = useContext(StmContext);
   const handleLessonClick = (payload: ITeachingList) => {
-    setRootState && setRootState({ ...rootState, planId: payload.id });
+    setRootState && setRootState({ ...rootState, planId: payload.id, lessonId: payload.no });
     var storage = window.localStorage;
     history.push(pageLinks.present);
     let temp: ITeachingList[] = [];
@@ -59,7 +75,9 @@ export default function LessonUnit(props: { list: ITeachingList[] }) {
     const preList = pre && JSON.parse(pre);
     if (preList && preList.length > 0) {
       preList.unshift(payload);
-      temp = noRepeat(preList);
+      temp = noRepeat(preList).filter((item, index) => {
+        return index < 3;
+      });
     } else {
       temp.push(payload);
     }

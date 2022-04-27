@@ -18,7 +18,7 @@ const useStyles = makeStyles({
 export default function PresentActivity() {
   const css = useStyles();
   const videoRef = React.useRef<HTMLVideoElement>(null);
-  const { planId, curriculum, classLevel } = useContext(StmContext);
+  const { planId, curriculum, classLevel, lessonId } = useContext(StmContext);
   const { presentState, setPresentState } = usePresentState();
   const { setVideoState } = useVideoState();
   const { activeIndex = 0, isFullscreen = false } = presentState;
@@ -59,7 +59,7 @@ export default function PresentActivity() {
     <Box className={css.root}>
       <PresentNav videoRef={videoRef as React.RefObject<HTMLVideoElement>} />
       {!isFullscreen && <PresentList list={lessonMaterials} />}
-      <PresentPlayer ref={videoRef} data={data} name={name} lessonNo={1} />
+      <PresentPlayer ref={videoRef} data={data} name={name} lessonNo={lessonId} />
     </Box>
   );
 }

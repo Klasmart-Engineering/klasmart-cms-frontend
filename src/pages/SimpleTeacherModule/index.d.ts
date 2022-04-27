@@ -3,6 +3,7 @@ interface IContextState {
   classLevel?: 1 | 2 | 3 | 4 | 5;
   unitId?: string;
   planId?: string;
+  lessonId?: number;
   presentState?: IPresentState;
 }
 
@@ -59,7 +60,7 @@ interface IPlayerProps {
     file_type: number;
     input_source: number;
   };
-  lessonNo: number;
+  lessonNo?: number;
   name: string;
 }
 
