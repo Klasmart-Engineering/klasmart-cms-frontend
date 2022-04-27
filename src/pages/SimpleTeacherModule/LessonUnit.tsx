@@ -2,6 +2,7 @@ import { Box, Card, CardActionArea, CardContent, CardMedia, makeStyles, Typograp
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { pageLinks, StmContext } from "./index";
+import { noRepeat } from "./utils/index";
 import vw from "./utils/vw.macro";
 
 const useStyles = makeStyles({
@@ -49,14 +50,15 @@ export default function LessonUnit(props: { list: ITeachingList[] }) {
   let history = useHistory();
   const { setRootState } = useContext(StmContext);
   const handleLessonClick = (payload: ITeachingList) => {
-    setRootState && setRootState({ planId: payload.id });
+    setRootState && setRootState({ ...setRootState, planId: payload.id });
     var storage = window.localStorage;
     history.push(pageLinks.present);
-    let temp = [];
+    let temp: ITeachingList[] = [];
     const pre = localStorage.getItem("selectPlan");
     const preList = pre && JSON.parse(pre);
-    if (preList) {
-      temp = preList.concat(payload).reverse();
+    if (preList && preList.length > 0) {
+      preList.unshift(payload);
+      temp = noRepeat(preList);
     } else {
       temp.push(payload);
     }

@@ -43,7 +43,7 @@ export default function SelectLesson() {
   const [unit, setUnit] = useState<IUnitState>({ id: "unit01", name: "01", no: 1 });
   const { setRootState } = useContext(StmContext);
   const unitChange = (unit: IUnitState) => {
-    setRootState && setRootState({ unitId: unit.id });
+    setRootState && setRootState({ ...setRootState, unitId: unit.id });
     setUnit(unit);
   };
   return (
