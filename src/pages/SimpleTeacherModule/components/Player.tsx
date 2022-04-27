@@ -1,5 +1,6 @@
 import { Box, makeStyles, Typography } from "@material-ui/core";
-import React from "react";
+import React, { useContext } from "react";
+import { StmContext } from "..";
 import vw from "../utils/vw.macro";
 import MediaControl from "./MediaControl";
 import Video from "./Video";
@@ -78,9 +79,25 @@ const useStyles = makeStyles({
   },
 });
 export default function PresentPlayer(props: IPlayerProps) {
-  const videoRef = React.createRef<HTMLVideoElement>();
+  const videoRef = React.useRef<HTMLVideoElement>(null);
   const css = useStyles();
   const { data, name, progress, lessonNo } = props;
+  const { setRootState, ...rootState } = useContext(StmContext);
+  const { videoState } = rootState;
+
+  const isMedia = data.file_type === 2;
+
+  React.useEffect(() => {
+    setRootState &&
+      setRootState({
+        ...rootState,
+        videoState: {
+          ...videoState,
+          isMedia: isMedia,
+        },
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMedia]);
 
   return (
     <Box className={css.root}>
@@ -91,7 +108,7 @@ export default function PresentPlayer(props: IPlayerProps) {
         <Box className={css.playerProgress}>{progress}</Box>
       </Box>
       <Box className={css.playerMain}>
-        {data.file_type === 2 && (
+        {isMedia && (
           <Box className={css.videoContainer}>
             <Video ref={videoRef} source={data.source} />
           </Box>
@@ -105,7 +122,7 @@ export default function PresentPlayer(props: IPlayerProps) {
           />
         )}
       </Box>
-      {data.file_type === 2 && (
+      {isMedia && (
         <Box className={css.mediaControl}>
           <MediaControl videoRef={videoRef} />
         </Box>

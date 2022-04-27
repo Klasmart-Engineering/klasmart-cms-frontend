@@ -5,7 +5,6 @@ import PresentList from "./components/PresentList";
 import PresentNav from "./components/PresentNav";
 import { StmContext } from "./index";
 import { geLessonMaterials } from "./utils/api";
-import emitter from "./utils/event";
 
 const useStyles = makeStyles({
   root: {
@@ -17,60 +16,43 @@ const useStyles = makeStyles({
 });
 export default function PresentActivity() {
   const css = useStyles();
-  const { planId, curriculum, classLevel } = useContext(StmContext);
-  const [state, setState] = React.useState<IPresentActivityState>({
-    activeIndex: 0,
-    lessonMaterials: [],
-  });
-  const handleCmd = (cmd: any) => {
-    setState((state) => {
-      let activeIndex = state.activeIndex;
-      if (cmd === "prev") {
-        activeIndex = Math.max(0, state.activeIndex - 1);
-      }
-      if (cmd === "next") {
-        activeIndex = Math.min(state.lessonMaterials.length - 1, state.activeIndex + 1);
-      }
-      return {
-        ...state,
-        activeIndex,
-      };
-    });
-  };
+  const { setRootState, ...rootState } = useContext(StmContext);
+  const { planId, curriculum, classLevel, presentState } = rootState;
+  const { activeIndex = 0, isFullscreen = false } = presentState || {};
+  const [lessonMaterials, setLessonMaterials] = React.useState<IListItem[]>([]);
+
   React.useEffect(() => {
     const params: {} = { curriculum, classLevel };
     planId &&
       geLessonMaterials(planId, params).then((data: IListItem[]) => {
-        setState((state) => ({
-          ...state,
-          lessonMaterials: data,
-        }));
+        setLessonMaterials(data);
+        setRootState &&
+          setRootState({
+            ...rootState,
+            presentState: {
+              ...presentState,
+              activeIndex: 0,
+              listLength: data.length,
+              isFullscreen: false,
+            },
+          });
       });
-    emitter.on("cmd", handleCmd);
-    return () => emitter.off("cmd", handleCmd);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [planId, curriculum, classLevel]);
 
   const [name, data] = React.useMemo(() => {
-    if (state.lessonMaterials.length > 0) {
-      const activeItem = state.lessonMaterials[state.activeIndex];
+    if (lessonMaterials.length > 0) {
+      const activeItem = lessonMaterials[activeIndex];
       return [activeItem.name, JSON.parse(activeItem.data)];
     }
     return ["", {}];
-  }, [state.lessonMaterials, state.activeIndex]);
+  }, [lessonMaterials, activeIndex]);
+
   return (
     <Box className={css.root}>
       <PresentNav />
-      <PresentList
-        activeIndex={state.activeIndex}
-        list={state.lessonMaterials}
-        onClick={(index) => {
-          setState({
-            ...state,
-            activeIndex: index,
-          });
-        }}
-      />
-      <PresentPlayer data={data} name={name} lessonNo={1} progress={`${state.activeIndex + 1}/${state.lessonMaterials.length}`} />
+      {!isFullscreen && <PresentList list={lessonMaterials} />}
+      <PresentPlayer data={data} name={name} lessonNo={1} progress={`${activeIndex + 1} / ${lessonMaterials.length}`} />
     </Box>
   );
 }

@@ -1,8 +1,8 @@
 import { Box, Button, Divider, makeStyles, withStyles } from "@material-ui/core";
 import clsx from "clsx";
+import { useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { pageLinks } from "..";
-import emitter from "../utils/event";
+import { pageLinks, StmContext } from "../index";
 import vw from "../utils/vw.macro";
 
 const useStyles = makeStyles({
@@ -66,29 +66,86 @@ function Icon(props: INavIcon) {
 export default function PresentNav() {
   const css = useStyles();
   const history = useHistory();
-  const sendEvent = (eventName: string) => () => {
-    emitter.emit("cmd", eventName);
+  const { setRootState, ...rootState } = useContext(StmContext);
+  const { presentState, videoState } = rootState;
+  const { activeIndex = 0, listLength = 0, isFullscreen = false } = presentState || {};
+  const { isMedia, isPlaying, isMute } = videoState || {};
+
+  const handleClick = (eventName: string) => () => {
+    console.log(eventName);
+    let _activeIndex = activeIndex;
+    let _isFullscreen = isFullscreen;
+    let _isPlyaing = isPlaying;
+    let _isMute = isMute;
+    if (eventName === "prev") {
+      _activeIndex = Math.max(0, activeIndex - 1);
+    }
+
+    if (eventName === "next") {
+      _activeIndex = Math.min(listLength - 1, activeIndex + 1);
+    }
+
+    if (eventName === "fullscreen") {
+      _isFullscreen = !isFullscreen;
+    }
+
+    if (eventName === "play") {
+      _isPlyaing = !isPlaying;
+    }
+    if (eventName === "mute") {
+      _isMute = !isMute;
+    }
+
+    setRootState &&
+      setRootState({
+        ...rootState,
+        presentState: {
+          ...presentState,
+          activeIndex: _activeIndex,
+          isFullscreen: _isFullscreen,
+        },
+        videoState: {
+          ...videoState,
+          isPlaying: _isPlyaing,
+          isMute: _isMute,
+        },
+      });
   };
   const actionBtns = [
     {
       src: require("@assets/stm/play2.png").default,
-      cmd: "play",
+      eventName: "play",
+      display: isMedia && !isPlaying,
+    },
+    {
+      src: require("@assets/stm/pause.png").default,
+      eventName: "pause",
+      display: isMedia && isPlaying,
     },
     {
       src: require("@assets/stm/prev.png").default,
-      cmd: "prev",
+      eventName: "prev",
+      display: true,
     },
     {
       src: require("@assets/stm/next.png").default,
-      cmd: "next",
+      eventName: "next",
+      display: true,
     },
     {
       src: require("@assets/stm/fullscreen.png").default,
-      cmd: "fullscreen",
+      eventName: "fullscreen",
+      display: true,
     },
     {
       src: require("@assets/stm/sound.png").default,
-      cmd: "sound",
+      eventName: "mute",
+      display: isMedia && !isMute,
+    },
+    {
+      src: require("@assets/stm/mute.png").default,
+      eventName: "unmute",
+      display: isMedia && isMute,
     },
   ];
   return (
@@ -112,13 +169,15 @@ export default function PresentNav() {
       <Box className={clsx(css.iconBase, css.iconWrapper3)}>
         <Divider />
       </Box>
-      {actionBtns.map((item) => {
-        return (
-          <Box key={item.cmd} className={clsx(css.iconBase, css.iconWrapper4)}>
-            <Icon src={item.src} onClick={sendEvent(item.cmd)} />
-          </Box>
-        );
-      })}
+      {actionBtns
+        .filter((item) => item.display)
+        .map((item) => {
+          return (
+            <Box key={item.eventName} className={clsx(css.iconBase, css.iconWrapper4)}>
+              <Icon src={item.src} onClick={handleClick(item.eventName)} />
+            </Box>
+          );
+        })}
     </Box>
   );
 }

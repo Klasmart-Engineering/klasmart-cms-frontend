@@ -3,6 +3,22 @@ interface IContextState {
   classLevel?: 1 | 2 | 3 | 4 | 5;
   unitId?: string;
   planId?: string;
+  presentState?: IPresentState;
+  videoState?: IVideoState;
+}
+
+interface IPresentState {
+  activeIndex?: number;
+  listLength?: bnumber;
+  isFullscreen?: boolean;
+}
+
+interface IVideoState {
+  isMedia?: boolean;
+  isPlaying?: isVideoPlaying;
+  isMute?: video.muted;
+  currentTime?: number;
+  duration?: number;
 }
 
 interface ILessonData {
@@ -34,14 +50,7 @@ interface IListItem {
   thumbnail: string;
 }
 interface IPresentListProps {
-  activeIndex: number;
   list: Array<IListItem>;
-  onClick: (index: number) => void;
-}
-
-interface IPresentActivityState {
-  activeIndex: number;
-  lessonMaterials: IListItem[];
 }
 
 interface IPlayerProps {

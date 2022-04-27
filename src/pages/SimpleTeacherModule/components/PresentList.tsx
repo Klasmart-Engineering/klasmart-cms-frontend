@@ -1,6 +1,7 @@
 import { Box, Button, Container, makeStyles } from "@material-ui/core";
 import clsx from "clsx";
-import { useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
+import { StmContext } from "..";
 import vw from "../utils/vw.macro";
 const useStyles = makeStyles({
   root: {
@@ -19,6 +20,7 @@ const useStyles = makeStyles({
     right: 0,
     width: vw(310),
     overflowY: "auto",
+    overflowX: "hidden",
   },
   itemWrapper: {
     width: vw(258),
@@ -60,17 +62,26 @@ export default function PresentList(props: IPresentListProps) {
   const container = useRef<HTMLDivElement>();
   const itemButtons = useRef<HTMLButtonElement[]>([]);
   const isCmdChange = useRef(false);
+  const { setRootState, ...rootState } = useContext(StmContext);
+  const { presentState } = rootState;
+  const { activeIndex = 0 } = presentState || {};
 
   const scroll = () => {
     if (props.list.length && container.current) {
-      container.current.scrollTo({ top: itemButtons.current[props.activeIndex]?.offsetTop, left: 0, behavior: "smooth" });
+      container.current.scrollTo({ top: itemButtons.current[activeIndex]?.offsetTop, left: 0, behavior: "smooth" });
     }
     isCmdChange.current = false;
   };
 
-  const onClick = (index: number) => {
-    isCmdChange.current = true;
-    props.onClick(index);
+  const onClick = (index: number) => () => {
+    setRootState &&
+      setRootState({
+        ...rootState,
+        presentState: {
+          ...presentState,
+          activeIndex: index,
+        },
+      });
   };
 
   useEffect(() => {
@@ -80,7 +91,7 @@ export default function PresentList(props: IPresentListProps) {
       isCmdChange.current = false;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.activeIndex]);
+  }, [activeIndex]);
 
   return (
     <Box className={css.root}>
@@ -90,9 +101,9 @@ export default function PresentList(props: IPresentListProps) {
             <ListItem
               itemRef={(button) => (itemButtons.current[index] = button)}
               key={index}
-              active={index === props.activeIndex}
+              active={index === activeIndex}
               thumbnail={item.thumbnail}
-              onClick={() => onClick(index)}
+              onClick={onClick(index)}
             />
           ))}
         </Box>
