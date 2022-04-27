@@ -3,9 +3,9 @@ import React, { useContext } from "react";
 import PresentPlayer from "./components/Player";
 import PresentList from "./components/PresentList";
 import PresentNav from "./components/PresentNav";
-import { StmContext } from "./index";
+import { StmContext } from "./contexts";
+import { usePresentState, useVideoState } from "./hooks/rootState";
 import { geLessonMaterials } from "./utils/api";
-import emitter from "./utils/event";
 
 const useStyles = makeStyles({
   root: {
@@ -17,60 +17,49 @@ const useStyles = makeStyles({
 });
 export default function PresentActivity() {
   const css = useStyles();
-  const { planId, curriculum, classLevel } = useContext(StmContext);
-  const [state, setState] = React.useState<IPresentActivityState>({
-    activeIndex: 0,
-    lessonMaterials: [],
-  });
-  const handleCmd = (cmd: any) => {
-    setState((state) => {
-      let activeIndex = state.activeIndex;
-      if (cmd === "prev") {
-        activeIndex = Math.max(0, state.activeIndex - 1);
-      }
-      if (cmd === "next") {
-        activeIndex = Math.min(state.lessonMaterials.length - 1, state.activeIndex + 1);
-      }
-      return {
-        ...state,
-        activeIndex,
-      };
-    });
-  };
+  const videoRef = React.useRef<HTMLVideoElement>(null);
+  const { planId, curriculum, classLevel, lessonId } = useContext(StmContext);
+  const { presentState, setPresentState } = usePresentState();
+  const { setVideoState } = useVideoState();
+  const { activeIndex = 0, isFullscreen = false } = presentState;
+  const [lessonMaterials, setLessonMaterials] = React.useState<IListItem[]>([]);
+
   React.useEffect(() => {
     const params: {} = { curriculum, classLevel };
-    planId &&
+    if (planId) {
       geLessonMaterials(planId, params).then((data: IListItem[]) => {
-        setState((state) => ({
-          ...state,
-          lessonMaterials: data,
-        }));
+        setLessonMaterials(data);
+        setPresentState({
+          activeIndex: 0,
+          listLength: data.length,
+          isFullscreen: false,
+        });
       });
-    emitter.on("cmd", handleCmd);
-    return () => emitter.off("cmd", handleCmd);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [planId, curriculum, classLevel]);
 
   const [name, data] = React.useMemo(() => {
-    if (state.lessonMaterials.length > 0) {
-      const activeItem = state.lessonMaterials[state.activeIndex];
+    if (lessonMaterials.length > 0) {
+      const activeItem = lessonMaterials[activeIndex];
       return [activeItem.name, JSON.parse(activeItem.data)];
     }
     return ["", {}];
-  }, [state.lessonMaterials, state.activeIndex]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeIndex]);
+
+  React.useEffect(() => {
+    setVideoState({
+      isMedia: data.file_type === 2,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data.file_type]);
+
   return (
     <Box className={css.root}>
-      <PresentNav />
-      <PresentList
-        activeIndex={state.activeIndex}
-        list={state.lessonMaterials}
-        onClick={(index) => {
-          setState({
-            ...state,
-            activeIndex: index,
-          });
-        }}
-      />
-      <PresentPlayer data={data} name={name} lessonNo={1} progress={`${state.activeIndex + 1}/${state.lessonMaterials.length}`} />
+      <PresentNav videoRef={videoRef as React.RefObject<HTMLVideoElement>} />
+      {!isFullscreen && <PresentList list={lessonMaterials} />}
+      <PresentPlayer ref={videoRef} data={data} name={name} lessonNo={lessonId} />
     </Box>
   );
 }

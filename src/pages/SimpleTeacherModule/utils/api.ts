@@ -5,7 +5,7 @@ type Params = { [key: string]: string };
 const generateURLParams = (params: Params): string => {
   const searchParams = new URLSearchParams();
   for (const key in params) {
-    if (params.hasOwnProperty(key)) {
+    if (params.hasOwnProperty(key) && params[key]) {
       searchParams.set(key, params[key]);
     }
   }

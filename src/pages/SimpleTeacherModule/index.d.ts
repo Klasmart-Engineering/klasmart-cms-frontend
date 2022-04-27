@@ -3,6 +3,23 @@ interface IContextState {
   classLevel?: 1 | 2 | 3 | 4 | 5;
   unitId?: string;
   planId?: string;
+  lessonId?: number;
+  presentState?: IPresentState;
+  title?: string;
+}
+
+interface IPresentState {
+  activeIndex?: number;
+  listLength?: number;
+  isFullscreen?: boolean;
+}
+
+interface IVideoState {
+  isMedia?: boolean;
+  isPlaying?: isVideoPlaying;
+  isMute?: video.muted;
+  currentTime?: number;
+  duration?: number;
 }
 
 interface ILessonData {
@@ -10,6 +27,8 @@ interface ILessonData {
   level: string;
   age: string;
   color: string;
+  top: React.CSSProperties["top"];
+  title: string;
 }
 
 interface INavIcon {
@@ -34,14 +53,7 @@ interface IListItem {
   thumbnail: string;
 }
 interface IPresentListProps {
-  activeIndex: number;
   list: Array<IListItem>;
-  onClick: (index: number) => void;
-}
-
-interface IPresentActivityState {
-  activeIndex: number;
-  lessonMaterials: IListItem[];
 }
 
 interface IPlayerProps {
@@ -50,9 +62,8 @@ interface IPlayerProps {
     file_type: number;
     input_source: number;
   };
-  lessonNo: number;
+  lessonNo?: number;
   name: string;
-  progress: string;
 }
 
 interface IUnitState {
@@ -71,6 +82,10 @@ interface ITeachingList {
 }
 
 interface IMediaControlProps {
+  videoRef: React.RefObject<HTMLVideoElement>;
+}
+
+interface IPresentNavProps {
   videoRef: React.RefObject<HTMLVideoElement>;
 }
 interface IVideoPlayerProps {
