@@ -100,12 +100,9 @@ export const showAudioRecorder = (type?: string) => {
   return types.indexOf(type as string) >= 0;
 };
 export const showScreenShort = (type?: string, subContentId?: string) => {
-  const mutipleScreenShortsTypes = ["ArithmeticQuiz", "Flashcards"];
+  const mutipleScreenShortsTypes = ["Summary", "SingleChoiceSet", "ArithmeticQuiz", "Flashcards", "Dictation", "Dialogcards"];
   const types = [
-    "Summary", 
-    "SingleChoiceSet",
     "AdvancedBlanks",
-    "Dictation",
     "DragQuestion",
     "DragText",
     "Blanks",
@@ -114,7 +111,6 @@ export const showScreenShort = (type?: string, subContentId?: string) => {
     "FindTheWords",
     "ImagePair",
     "ImageSequencing",
-    "Dialogcards"
   ];
   if(mutipleScreenShortsTypes.indexOf(type as string) >= 0) {
     if(subContentId) {
