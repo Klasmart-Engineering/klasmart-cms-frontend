@@ -162,14 +162,13 @@ const IconButton = withStyles({
 function LessonItem(props: ILessonData) {
   const history = useHistory();
   const css = useStyles();
-  const { setRootState } = useContext(StmContext);
-  let level: IContextState["classLevel"] = 1;
+  const { setRootState, ...rootState } = useContext(StmContext);
 
   return (
     <IconButton
       onClick={() => {
         history.push(pageLinks.lesson);
-        setRootState && setRootState({ ...setRootState, classLevel: level });
+        setRootState && setRootState({ ...rootState, classLevel: props.level as unknown as IContextState["classLevel"] });
       }}
     >
       <Box className={css.itemLeve} style={{ background: props.color }}>

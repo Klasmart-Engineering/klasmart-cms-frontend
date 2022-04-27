@@ -1,9 +1,9 @@
 import eslImg from "@assets/stm/esl.png";
 import steamImg from "@assets/stm/steam.png";
 import { Box, Button, makeStyles, Typography, withStyles } from "@material-ui/core";
-import React from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { pageLinks } from "./index";
+import { pageLinks, StmContext } from "./index";
 import vw from "./utils/vw.macro";
 
 const useStyles = makeStyles({
@@ -63,10 +63,12 @@ const IconButton = withStyles({
 
 function CurriculumItem(props: { name: IContextState["curriculum"] }) {
   const history = useHistory();
+  const { setRootState, ...rootState } = useContext(StmContext);
   return (
     <IconButton
       onClick={() => {
         history.push(pageLinks.level);
+        setRootState && setRootState({ ...rootState, curriculum: props.name });
       }}
     >
       <img src={props.name === "steam" ? steamImg : eslImg} alt={props.name} />
