@@ -229,6 +229,12 @@ export function StudentView(props: StudentViewProps) {
         return {
           ...sItem,
           results: sItem.results?.map((rItem) => {
+            if (rItem.h5p_sub_id && rItem.h5p_sub_id === contentId) {
+              return {
+                ...rItem,
+                score,
+              };
+            } else
             if (rItem.content_id === contentId) {
               return {
                 ...rItem,
@@ -399,7 +405,7 @@ export function StudentView(props: StudentViewProps) {
                                       maxScore={ritem.max_score}
                                       attempted={ritem.attempted}
                                       studentId={sitem.student_id}
-                                      contentId={ritem.content_id}
+                                      contentId={ritem.h5p_sub_id ? ritem.h5p_sub_id : ritem.content_id}
                                       isSubjectiveActivity={true}
                                       subType={ritem.content_subtype}
                                       onChangeScore={handleChangeScore}
