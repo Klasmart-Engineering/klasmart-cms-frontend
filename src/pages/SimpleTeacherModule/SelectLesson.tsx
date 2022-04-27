@@ -2,7 +2,7 @@ import { Box, Grid, makeStyles } from "@material-ui/core";
 import React, { useContext, useState } from "react";
 import Header from "./components/Header";
 import UnitsSelector from "./components/UnitsSeletor";
-import { StmContext } from "./index";
+import { StmContext } from "./contexts";
 import LessonBox from "./LessonBox";
 import vw from "./utils/vw.macro";
 

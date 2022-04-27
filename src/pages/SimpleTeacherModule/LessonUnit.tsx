@@ -1,7 +1,8 @@
 import { Box, Card, CardActionArea, CardContent, CardMedia, makeStyles, Typography } from "@material-ui/core";
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { pageLinks, StmContext } from "./index";
+import { StmContext } from "./contexts";
+import { pageLinks } from "./index";
 import { noRepeat } from "./utils/index";
 import vw from "./utils/vw.macro";
 

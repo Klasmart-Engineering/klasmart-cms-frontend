@@ -1,6 +1,7 @@
 import { Box, makeStyles, Typography } from "@material-ui/core";
-import React, { useContext } from "react";
-import { StmContext } from "..";
+import clsx from "clsx";
+import React from "react";
+import { usePresentState } from "../hooks/rootState";
 import vw from "../utils/vw.macro";
 import MediaControl from "./MediaControl";
 import Video from "./Video";
@@ -77,36 +78,33 @@ const useStyles = makeStyles({
     display: "flex",
     alignItems: "center",
   },
+  mediaControlHidden: {
+    position: "absolute",
+    width: 0,
+    height: 0,
+    zIndex: -1,
+  },
 });
-export default function PresentPlayer(props: IPlayerProps) {
-  const videoRef = React.useRef<HTMLVideoElement>(null);
+const PresentPlayer = React.forwardRef<HTMLVideoElement, IPlayerProps>((props, videoRef) => {
   const css = useStyles();
-  const { data, name, progress, lessonNo } = props;
-  const { setRootState, ...rootState } = useContext(StmContext);
-  const { videoState } = rootState;
+  const { presentState } = usePresentState();
+  const { data, name, lessonNo } = props;
 
   const isMedia = data.file_type === 2;
 
-  React.useEffect(() => {
-    setRootState &&
-      setRootState({
-        ...rootState,
-        videoState: {
-          ...videoState,
-          isMedia: isMedia,
-        },
-      });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isMedia]);
+  const progress = `${(presentState.activeIndex || 0) + 1} / ${presentState.listLength || 0}`;
 
   return (
     <Box className={css.root}>
-      <Box className={css.playerTop}>
-        <Typography variant="h5" className={css.playerTitle}>
-          <b>Lesson {lessonNo}.</b> {name}
-        </Typography>
-        <Box className={css.playerProgress}>{progress}</Box>
-      </Box>
+      {!presentState.isFullscreen && (
+        <Box className={css.playerTop}>
+          <Typography variant="h5" className={css.playerTitle}>
+            <b>Lesson {lessonNo}.</b> {name}
+          </Typography>
+          <Box className={css.playerProgress}>{progress}</Box>
+        </Box>
+      )}
+
       <Box className={css.playerMain}>
         {isMedia && (
           <Box className={css.videoContainer}>
@@ -123,10 +121,16 @@ export default function PresentPlayer(props: IPlayerProps) {
         )}
       </Box>
       {isMedia && (
-        <Box className={css.mediaControl}>
-          <MediaControl videoRef={videoRef} />
+        <Box
+          className={clsx(css.mediaControl, {
+            [css.mediaControlHidden]: presentState.isFullscreen,
+          })}
+        >
+          <MediaControl videoRef={videoRef as React.RefObject<HTMLVideoElement>} />
         </Box>
       )}
     </Box>
   );
-}
+});
+
+export default PresentPlayer;

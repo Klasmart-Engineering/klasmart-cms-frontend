@@ -3,7 +3,8 @@ import steamImg from "@assets/stm/steam.png";
 import { Box, Button, makeStyles, Typography, withStyles } from "@material-ui/core";
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { pageLinks, StmContext } from "./index";
+import { StmContext } from "./contexts";
+import { pageLinks } from "./index";
 import vw from "./utils/vw.macro";
 
 const useStyles = makeStyles({

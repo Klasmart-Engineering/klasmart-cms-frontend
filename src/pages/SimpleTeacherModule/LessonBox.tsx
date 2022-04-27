@@ -1,6 +1,6 @@
 import { Box, makeStyles, Typography } from "@material-ui/core";
 import React, { useContext, useEffect, useState } from "react";
-import { StmContext } from "./index";
+import { StmContext } from "./contexts";
 import LessonUnit from "./LessonUnit";
 import TeachingUnit from "./TeachingUnit";
 import { getLessonPlan } from "./utils/api";

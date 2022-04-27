@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { pageLinks } from ".";
 import Header from "./components/Header";
-import { StmContext } from "./index";
+import { StmContext } from "./contexts";
 import vw from "./utils/vw.macro";
 
 const data: ILessonData[] = [

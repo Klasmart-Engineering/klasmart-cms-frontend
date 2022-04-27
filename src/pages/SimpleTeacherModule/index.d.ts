@@ -4,12 +4,11 @@ interface IContextState {
   unitId?: string;
   planId?: string;
   presentState?: IPresentState;
-  videoState?: IVideoState;
 }
 
 interface IPresentState {
   activeIndex?: number;
-  listLength?: bnumber;
+  listLength?: number;
   isFullscreen?: boolean;
 }
 
@@ -62,7 +61,6 @@ interface IPlayerProps {
   };
   lessonNo: number;
   name: string;
-  progress: string;
 }
 
 interface IUnitState {
@@ -81,6 +79,10 @@ interface ITeachingList {
 }
 
 interface IMediaControlProps {
+  videoRef: React.RefObject<HTMLVideoElement>;
+}
+
+interface IPresentNavProps {
   videoRef: React.RefObject<HTMLVideoElement>;
 }
 interface IVideoPlayerProps {

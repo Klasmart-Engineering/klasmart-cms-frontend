@@ -1,7 +1,7 @@
 import { Box, Button, Container, makeStyles } from "@material-ui/core";
 import clsx from "clsx";
-import { useContext, useEffect, useRef } from "react";
-import { StmContext } from "..";
+import { useEffect, useRef } from "react";
+import { usePresentState } from "../hooks/rootState";
 import vw from "../utils/vw.macro";
 const useStyles = makeStyles({
   root: {
@@ -18,9 +18,9 @@ const useStyles = makeStyles({
     bottom: 0,
     left: 0,
     right: 0,
-    width: vw(310),
     overflowY: "auto",
     overflowX: "hidden",
+    paddingLeft: vw(18),
   },
   itemWrapper: {
     width: vw(258),
@@ -28,6 +28,7 @@ const useStyles = makeStyles({
     gridTemplateColumns: vw(258),
     gridRowGap: vw(46),
     margin: "0 auto",
+    marginTop: vw(49),
   },
   item: {
     width: vw(258),
@@ -60,52 +61,37 @@ function ListItem(props: IListItemProps) {
 export default function PresentList(props: IPresentListProps) {
   const css = useStyles();
   const container = useRef<HTMLDivElement>();
-  const itemButtons = useRef<HTMLButtonElement[]>([]);
-  const isCmdChange = useRef(false);
-  const { setRootState, ...rootState } = useContext(StmContext);
-  const { presentState } = rootState;
-  const { activeIndex = 0 } = presentState || {};
-
-  const scroll = () => {
-    if (props.list.length && container.current) {
-      container.current.scrollTo({ top: itemButtons.current[activeIndex]?.offsetTop, left: 0, behavior: "smooth" });
-    }
-    isCmdChange.current = false;
-  };
-
-  const onClick = (index: number) => () => {
-    setRootState &&
-      setRootState({
-        ...rootState,
-        presentState: {
-          ...presentState,
-          activeIndex: index,
-        },
-      });
-  };
-
+  const itemButton = useRef<HTMLButtonElement>();
+  const { presentState, setPresentState } = usePresentState();
   useEffect(() => {
-    if (!isCmdChange.current) {
-      scroll();
-    } else {
-      isCmdChange.current = false;
+    if (presentState.activeIndex && presentState.activeIndex >= 0 && container.current) {
+      container.current.scrollTo({ top: itemButton.current?.offsetTop, left: 0, behavior: "smooth" });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeIndex]);
+  }, [presentState.activeIndex]);
 
   return (
     <Box className={css.root}>
       <Container className={css.listMain} innerRef={container}>
         <Box className={css.itemWrapper}>
-          {props.list.map((item, index) => (
-            <ListItem
-              itemRef={(button) => (itemButtons.current[index] = button)}
-              key={index}
-              active={index === activeIndex}
-              thumbnail={item.thumbnail}
-              onClick={onClick(index)}
-            />
-          ))}
+          {props.list.map((item, index) => {
+            const isActive = index === presentState.activeIndex;
+            return (
+              <ListItem
+                itemRef={(button) => {
+                  if (isActive) {
+                    itemButton.current = button;
+                  }
+                }}
+                key={index}
+                active={isActive}
+                thumbnail={item.thumbnail}
+                onClick={() => {
+                  setPresentState({ activeIndex: index });
+                }}
+              />
+            );
+          })}
         </Box>
       </Container>
     </Box>
