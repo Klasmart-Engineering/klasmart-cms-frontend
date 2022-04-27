@@ -26,6 +26,7 @@ interface ILessonData {
   level: string;
   age: string;
   color: string;
+  top: React.CSSProperties["top"];
 }
 
 interface INavIcon {

@@ -21,17 +21,19 @@ const useStyles = makeStyles({
   },
   title: {
     fontSize: vw(69),
+    lineHeight: vw(86),
     paddingBottom: vw(54),
     fontFamily: "RooneySans, sans-serif",
-    fontWeight: "bold",
+    fontWeight: 900,
     fontVariantNumeric: "lining-nums",
     fontFeatureSettings: "tnum",
     color: "#274EAF",
   },
   itemContainer: {
-    display: "grid",
-    gridTemplateColumns: "25.3vw 25.3vw",
-    gridColumnGap: vw(46),
+    display: "flex",
+    alignItems: "flex-start",
+    height: vw(415),
+    gap: vw(46),
   },
 });
 
@@ -46,9 +48,10 @@ const IconButton = withStyles({
     justifyContent: "center",
     cursor: "pointer",
     "& img": {
-      scale: ".8",
+      height: vw(276),
     },
     "&:hover": {
+      scale: 1.06,
       backgroundColor: "#fff",
       borderColor: "none",
       boxShadow: "none",

@@ -10,30 +10,35 @@ const data: ILessonData[] = [
     level: "1",
     age: "Age 4-5",
     color: "#c572ff",
+    top: vw(22),
   },
   {
     img: require("@assets/stm/bada-genius.png").default,
     level: "2",
     age: "Age 5-6",
     color: "#fbc319",
+    top: vw(152),
   },
   {
     img: require("@assets/stm/bada-talk.png").default,
     level: "3",
     age: "Age 6-7",
     color: "#82d407",
+    top: 0,
   },
   {
     img: require("@assets/stm/bada-sound.png").default,
     level: "4",
     age: "Age 7-8",
     color: "#0fbff5",
+    top: vw(92),
   },
   {
     img: require("@assets/stm/bada-read.png").default,
     level: "5",
     age: "Age 8-9",
     color: "#f957a8",
+    top: vw(22),
   },
 ];
 
@@ -63,9 +68,9 @@ const useStyles = makeStyles({
     color: "#fff",
   },
   itemContainer: {
-    display: "grid",
-    gridTemplateColumns: `repeat(5, ${vw(338)})`,
-    gridColumnGap: vw(76),
+    display: "flex",
+    gap: vw(76),
+    height: vw(588),
   },
   item: {
     background: "#fff",
@@ -84,26 +89,45 @@ const useStyles = makeStyles({
     right: 0,
     top: 0,
     bottom: "24.54%",
+    "&::before": {
+      position: "absolute",
+      display: "block",
+      content: "''",
+      width: vw(30),
+      height: vw(20),
+      left: vw(24),
+      top: vw(24),
+      borderRadius: "100%",
+      background: "#fff",
+      opacity: 0.6,
+      transform: "matrix(0.71, -0.71, 0.71, 0.71, 0, 0)",
+    },
   },
   itemLeveText1: {
+    position: "absolute",
+    width: "100%",
     color: "#fff",
     fontSize: vw(55),
-    lineHeight: 2,
+    lineHeight: vw(69),
+    paddingTop: vw(20),
     textAlign: "center",
-    fontFamily: "RooneySans, sans-serif",
-    fontWeight: "bold",
+    fontFamily: "RooneySans-Black, sans-serif",
+    fontWeight: 900,
     fontVariantNumeric: "lining-nums",
     fontFeatureSettings: "tnum",
   },
   itemLeveText2: {
+    position: "absolute",
+    width: "100%",
     color: "#fff",
     fontSize: vw(244),
     fontStyle: "heavy",
     verticalAlign: "top",
-    lineHeight: 0.6,
+    lineHeight: vw(305),
+    paddingTop: vw(36),
     textAlign: "center",
     fontFamily: "RooneySans, sans-serif",
-    fontWeight: "bold",
+    fontWeight: 900,
     fontVariantNumeric: "lining-nums",
     fontFeatureSettings: "tnum",
   },
@@ -124,12 +148,12 @@ const useStyles = makeStyles({
   },
   itemAge: {
     position: "absolute",
-    bottom: vw(47),
-    right: vw(34),
+    bottom: vw(46),
+    right: vw(32),
     fontSize: vw(42),
-    lineHeight: 1.5,
+    lineHeight: vw(52),
     fontFamily: "RooneySans, sans-serif",
-    fontWeight: "bold",
+    fontWeight: 900,
     fontVariantNumeric: "lining-nums",
     fontFeatureSettings: "tnum",
   },
@@ -145,6 +169,7 @@ const IconButton = withStyles({
     position: "relative",
     overflow: "hidden",
     "&:hover": {
+      scale: 1.1,
       background: "#fff",
       borderColor: "none",
       boxShadow: "none",
@@ -162,6 +187,9 @@ function LessonItem(props: ILessonData) {
   const css = useStyles();
   return (
     <IconButton
+      style={{
+        top: props.top,
+      }}
       onClick={() => {
         history.push(pageLinks.lesson);
       }}

@@ -17,7 +17,7 @@
 }
 
 @font-face {
-  font-family: "RooneySans";
+  font-family: "RooneySans-Black";
   src: local("RooneySans Black"), local("RooneySans-Black"), url("RooneySans-Black.woff2") format("woff2"),
     url("RooneySans-Black.woff") format("woff");
   font-weight: 900;
