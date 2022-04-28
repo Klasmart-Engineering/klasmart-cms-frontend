@@ -111,6 +111,9 @@ export const showScreenShort = (type?: string, subContentId?: string) => {
     "FindTheWords",
     "ImagePair",
     "ImageSequencing",
+    "DictationSentence",
+    "DialogcardsCard",
+    "ArithmeticQuiz",
   ];
   if(mutipleScreenShortsTypes.indexOf(type as string) >= 0) {
     if(subContentId) {
@@ -206,7 +209,7 @@ export function ResourceView(props: ResourceViewProps) {
           )}
         </DialogTitle>
         <DialogContent className={isScreenShorts ? css.screenShortsContent : ""}>
-          {resourceType === ResourceViewTypeValues.essay && <div className={css.detailView}>{answer ? answer : "An answer has not been submitted by the student."}</div>}
+          {resourceType === ResourceViewTypeValues.essay && <div className={css.detailView}>{answer ? answer : d("An answer has not been submitted by the student.").t("assessment_detail_essay_no_result")}</div>}
           {resourceType === ResourceViewTypeValues.viewComment && <div className={css.detailView}>{comment}</div>}
           {resourceType === ResourceViewTypeValues.viewWritingFeedback && (
             <div className={css.detailView}>
