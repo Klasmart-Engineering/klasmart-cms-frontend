@@ -22,8 +22,7 @@ export default function Stm() {
   const [rootState, setRootState] = React.useState<IContextState>(intialState);
   const [videoState, setVideoState] = React.useState<IVideoState>(intialVideoState);
   const { step } = useParams<{ step: string }>();
-
-  return process.env.NODE_ENV === "production" ? null : (
+  return process.env.REACT_APP_ENABLE_STM === "1" ? (
     <StmContext.Provider
       value={{
         ...rootState,
@@ -46,7 +45,7 @@ export default function Stm() {
         )}
       </Suspense>
     </StmContext.Provider>
-  );
+  ) : null;
 }
 
 Stm.routeMatchPath = "/stm/:step";

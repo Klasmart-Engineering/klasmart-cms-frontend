@@ -26,6 +26,7 @@ const useStyles = makeStyles({
     backgroundColor: "none",
     borderColor: "none",
     fontFamily: "RooneySans",
+    transition: "all 0.2s ease-in-out",
     "&:hover": {
       transform: "scale(1.1)",
       backgroundColor: "none",

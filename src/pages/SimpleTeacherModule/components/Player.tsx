@@ -88,10 +88,11 @@ const useStyles = makeStyles({
 const PresentPlayer = React.forwardRef<HTMLVideoElement, IPlayerProps>((props, videoRef) => {
   const css = useStyles();
   const { presentState } = usePresentState();
-  const { data, name, lessonNo } = props;
+  const { data, name, thumbnail, lessonNo } = props;
 
-  const isMedia = data.file_type === 2;
-
+  const isVideo = data.file_type === 2;
+  const isAudio = data.file_type === 3;
+  const isMedia = isVideo || isAudio;
   const progress = `${(presentState.activeIndex || 0) + 1} / ${presentState.listLength || 0}`;
 
   return (
@@ -108,7 +109,7 @@ const PresentPlayer = React.forwardRef<HTMLVideoElement, IPlayerProps>((props, v
       <Box className={css.playerMain}>
         {isMedia && (
           <Box className={css.videoContainer}>
-            <Video ref={videoRef} source={data.source} />
+            <Video ref={videoRef} poster={thumbnail} source={data.source} />
           </Box>
         )}
         {data.file_type === 5 && (
