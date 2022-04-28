@@ -16,13 +16,15 @@ const useStyles = makeStyles({
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
+    height: vw(99),
     flex: "1",
-    marginLeft: vw(50),
+    marginLeft: vw(59),
     marginRight: vw(53),
   },
   iconButton: {
+    padding: 0,
     "& img": {
-      height: vw(34),
+      height: vw(48),
     },
   },
   progress: {
@@ -37,9 +39,11 @@ const useStyles = makeStyles({
   },
   progressTime: {
     fontFamily: "RooneySans, sans-serif",
-    fontWeight: "normal",
+    fontWeight: 500,
     fontVariantNumeric: "lining-nums",
     fontFeatureSettings: "tnum",
+    fontSize: vw(27),
+    color: "#696A70",
   },
   progressTimeLeft: {
     paddingLeft: vw(46),
@@ -47,14 +51,14 @@ const useStyles = makeStyles({
   },
   progressTimeRight: {
     paddingLeft: vw(16),
-    paddingRight: vw(46),
+    paddingRight: vw(56),
   },
   sound: {
-    width: vw(197),
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    width: vw(197),
   },
 });
 
@@ -84,16 +88,17 @@ const ProgressSlider = withStyles({
 const VolumeSlider = withStyles({
   root: {
     color: "#2475EA",
+    width: vw(140),
     height: vw(8),
     marginLeft: vw(10),
   },
   thumb: {
-    height: vw(24),
-    width: vw(24),
+    height: vw(20),
+    width: vw(20),
     backgroundColor: "#2475EA",
     border: "2px solid currentColor",
-    marginTop: `-${vw(8)}`,
-    marginLeft: `-${vw(12)}`,
+    marginTop: `-${vw(7)}`,
+    marginLeft: `-${vw(10)}`,
     "&:focus, &:hover, &$active": {
       boxShadow: "inherit",
     },
