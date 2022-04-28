@@ -4,6 +4,7 @@ import "@assets/stm/font/stylesheet.css";
 import { CircularProgress } from "@material-ui/core";
 import React, { Suspense } from "react";
 import { useParams } from "react-router-dom";
+import { intialState, intialVideoState, StmContext, VideoContext } from "./contexts";
 
 const PresentActivity = React.lazy(() => import("./PresentActivity"));
 const SelectClassLevel = React.lazy(() => import("./SelectClassLevel"));
@@ -17,22 +18,13 @@ enum pageLinks {
   present = "/stm/present",
 }
 
-const intialState: IContextState = {};
-
-const Context = React.createContext<
-  IContextState & {
-    setRootState?: (state: IContextState) => void;
-  }
->({
-  ...intialState,
-});
-
 export default function Stm() {
   const [rootState, setRootState] = React.useState<IContextState>(intialState);
+  const [videoState, setVideoState] = React.useState<IVideoState>(intialVideoState);
   const { step } = useParams<{ step: string }>();
 
-  return (
-    <Context.Provider
+  return process.env.NODE_ENV === "production" ? null : (
+    <StmContext.Provider
       value={{
         ...rootState,
         setRootState,
@@ -42,12 +34,21 @@ export default function Stm() {
         {step === "curriculum" && <SelectCurriculum />}
         {step === "lesson" && <SelectLesson />}
         {step === "level" && <SelectClassLevel />}
-        {step === "present" && <PresentActivity />}
+        {step === "present" && (
+          <VideoContext.Provider
+            value={{
+              ...videoState,
+              setVideoState,
+            }}
+          >
+            <PresentActivity />
+          </VideoContext.Provider>
+        )}
       </Suspense>
-    </Context.Provider>
+    </StmContext.Provider>
   );
 }
 
 Stm.routeMatchPath = "/stm/:step";
 
-export { Context as StmContext, pageLinks };
+export { pageLinks };

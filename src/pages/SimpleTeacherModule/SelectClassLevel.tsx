@@ -1,7 +1,10 @@
 import { Box, Button, makeStyles, Typography, withStyles } from "@material-ui/core";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { pageLinks } from ".";
 import Header from "./components/Header";
+import { StmContext } from "./contexts";
+import vw from "./utils/vw.macro";
 
 const data: ILessonData[] = [
   {
@@ -9,30 +12,40 @@ const data: ILessonData[] = [
     level: "1",
     age: "Age 4-5",
     color: "#c572ff",
+    top: vw(22),
+    title: "Bada Rhyme",
   },
   {
     img: require("@assets/stm/bada-genius.png").default,
     level: "2",
     age: "Age 5-6",
     color: "#fbc319",
+    top: vw(152),
+    title: "Bada Genius",
   },
   {
     img: require("@assets/stm/bada-talk.png").default,
     level: "3",
     age: "Age 6-7",
     color: "#82d407",
+    top: 0,
+    title: "Bada Talk",
   },
   {
     img: require("@assets/stm/bada-sound.png").default,
     level: "4",
     age: "Age 7-8",
     color: "#0fbff5",
+    top: vw(92),
+    title: "Bada Sound",
   },
   {
     img: require("@assets/stm/bada-read.png").default,
     level: "5",
     age: "Age 8-9",
     color: "#f957a8",
+    top: vw(22),
+    title: "Bada Read",
   },
 ];
 
@@ -57,20 +70,20 @@ const useStyles = makeStyles({
     zIndex: 0,
   },
   title: {
-    fontSize: 62,
+    fontSize: vw(62),
     fontFamily: "rooneysansbold, sans-serif",
     color: "#fff",
   },
   itemContainer: {
-    display: "grid",
-    gridTemplateColumns: "repeat(5, 13.2vw)",
-    gridColumnGap: "2.96vw",
+    display: "flex",
+    gap: vw(76),
+    height: vw(588),
   },
   item: {
     background: "#fff",
-    width: "13.2vw",
-    height: "17vw",
-    borderRadius: "2vw",
+    width: vw(339),
+    height: vw(436),
+    borderRadius: vw(51),
     cursor: "pointer",
     position: "relative",
     overflow: "hidden",
@@ -83,35 +96,54 @@ const useStyles = makeStyles({
     right: 0,
     top: 0,
     bottom: "24.54%",
+    "&::before": {
+      position: "absolute",
+      display: "block",
+      content: "''",
+      width: vw(30),
+      height: vw(20),
+      left: vw(24),
+      top: vw(24),
+      borderRadius: "100%",
+      background: "#fff",
+      opacity: 0.6,
+      transform: "matrix(0.71, -0.71, 0.71, 0.71, 0, 0)",
+    },
   },
   itemLeveText1: {
+    position: "absolute",
+    width: "100%",
     color: "#fff",
-    fontSize: "2.15vw",
-    lineHeight: 2,
+    fontSize: vw(55),
+    lineHeight: vw(69),
+    paddingTop: vw(20),
     textAlign: "center",
-    fontFamily: "RooneySans, sans-serif",
-    fontWeight: "bold",
+    fontFamily: "RooneySans-Black, sans-serif",
+    fontWeight: 900,
     fontVariantNumeric: "lining-nums",
     fontFeatureSettings: "tnum",
   },
   itemLeveText2: {
+    position: "absolute",
+    width: "100%",
     color: "#fff",
-    fontSize: "9.5vw",
+    fontSize: vw(244),
     fontStyle: "heavy",
     verticalAlign: "top",
-    lineHeight: 0.6,
+    lineHeight: vw(305),
+    paddingTop: vw(36),
     textAlign: "center",
     fontFamily: "RooneySans, sans-serif",
-    fontWeight: "bold",
+    fontWeight: 900,
     fontVariantNumeric: "lining-nums",
     fontFeatureSettings: "tnum",
   },
   itemImg: {
     position: "absolute",
-    bottom: ".8vw",
-    left: ".8vw",
-    width: "4.21vw",
-    height: "4.21vw",
+    bottom: vw(21),
+    left: vw(21),
+    width: vw(108),
+    height: vw(98),
     background: "#ffffff",
     borderRadius: "100%",
     display: "flex",
@@ -123,12 +155,12 @@ const useStyles = makeStyles({
   },
   itemAge: {
     position: "absolute",
-    bottom: "1.1vw",
-    right: "1.1vw",
-    fontSize: "1.64vw",
-    lineHeight: 1.5,
+    bottom: vw(46),
+    right: vw(32),
+    fontSize: vw(42),
+    lineHeight: vw(52),
     fontFamily: "RooneySans, sans-serif",
-    fontWeight: "bold",
+    fontWeight: 900,
     fontVariantNumeric: "lining-nums",
     fontFeatureSettings: "tnum",
   },
@@ -137,13 +169,14 @@ const useStyles = makeStyles({
 const IconButton = withStyles({
   root: {
     background: "#fff",
-    width: "13.2vw",
-    height: "17vw",
-    borderRadius: "2vw",
+    width: vw(339),
+    height: vw(435),
+    borderRadius: vw(60),
     cursor: "pointer",
     position: "relative",
     overflow: "hidden",
     "&:hover": {
+      transform: "scale(1.1)",
       background: "#fff",
       borderColor: "none",
       boxShadow: "none",
@@ -159,10 +192,17 @@ const IconButton = withStyles({
 function LessonItem(props: ILessonData) {
   const history = useHistory();
   const css = useStyles();
+  const { setRootState, ...rootState } = useContext(StmContext);
+
   return (
     <IconButton
+      style={{
+        top: props.top,
+      }}
       onClick={() => {
         history.push(pageLinks.lesson);
+        setRootState &&
+          setRootState({ ...rootState, classLevel: props.level as unknown as IContextState["classLevel"], title: props.title });
       }}
     >
       <Box className={css.itemLeve} style={{ background: props.color }}>

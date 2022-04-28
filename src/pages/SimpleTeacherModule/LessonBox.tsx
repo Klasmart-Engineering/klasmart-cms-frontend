@@ -1,17 +1,23 @@
 import { Box, makeStyles, Typography } from "@material-ui/core";
 import React, { useContext, useEffect, useState } from "react";
-import { StmContext } from "./index";
+import { StmContext } from "./contexts";
 import LessonUnit from "./LessonUnit";
 import TeachingUnit from "./TeachingUnit";
 import { getLessonPlan } from "./utils/api";
 import vw from "./utils/vw.macro";
 
 const useStyles = makeStyles({
+  lessonWrap: {
+    padding: `${vw(68)} 0 0 ${vw(40)}`,
+    fontFamily: "RooneySans",
+  },
   teachingWrap: {
-    marginBottom: vw(46),
+    marginBottom: vw(48),
   },
   title: {
-    fontWeight: 700,
+    fontFamily: "RooneySans",
+    fontWeight: "bold",
+    color: "#333333",
     fontSize: vw(27),
     lineHeight: vw(34),
     marginBottom: vw(19),
@@ -60,7 +66,7 @@ export default function LessonBox(prop: { unit: IUnitState }) {
     unit && getLesson();
   }, [prop, curriculum, classLevel]);
   return (
-    <Box>
+    <Box className={css.lessonWrap}>
       {showTeach && (
         <Box className={css.teachingWrap}>
           <Typography className={css.title}>Continue Teaching</Typography>

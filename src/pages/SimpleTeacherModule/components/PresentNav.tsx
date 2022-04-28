@@ -1,8 +1,8 @@
 import { Box, Button, Divider, makeStyles, withStyles } from "@material-ui/core";
 import clsx from "clsx";
 import { useHistory } from "react-router-dom";
-import { pageLinks } from "..";
-import emitter from "../utils/event";
+import { usePresentState, useVideoState } from "../hooks/rootState";
+import { pageLinks } from "../index";
 import vw from "../utils/vw.macro";
 
 const useStyles = makeStyles({
@@ -30,6 +30,12 @@ const useStyles = makeStyles({
   },
   iconWrapper4: {
     marginBottom: vw(28),
+  },
+  divider: {
+    margin: "0 auto",
+    width: vw(32),
+    height: 0,
+    border: "1px solid #E4E4E4",
   },
 });
 
@@ -63,32 +69,90 @@ function Icon(props: INavIcon) {
     </IconButton>
   );
 }
-export default function PresentNav() {
+export default function PresentNav({ videoRef }: IPresentNavProps) {
   const css = useStyles();
   const history = useHistory();
-  const sendEvent = (eventName: string) => () => {
-    emitter.emit("cmd", eventName);
+  const { presentState, setPresentState } = usePresentState();
+  const { videoState } = useVideoState();
+  const { activeIndex = 0, listLength = 0, isFullscreen = false } = presentState || {};
+  const { isMedia, isPlaying, isMute } = videoState || {};
+
+  const handleClick = (eventName: string) => () => {
+    console.log(eventName);
+    let _activeIndex = activeIndex;
+    if (eventName === "prev") {
+      _activeIndex = Math.max(0, activeIndex - 1);
+      setPresentState({
+        activeIndex: _activeIndex,
+      });
+    }
+    if (eventName === "next") {
+      _activeIndex = Math.min(listLength - 1, activeIndex + 1);
+      setPresentState({
+        activeIndex: _activeIndex,
+      });
+    }
+    if (eventName === "fullscreen") {
+      setPresentState({
+        isFullscreen: !isFullscreen,
+      });
+    }
+    if (eventName === "play" || eventName === "pause") {
+      if (videoRef.current) {
+        const video = videoRef.current;
+        if (video.paused) {
+          video.play();
+        } else {
+          video.pause();
+        }
+      }
+    }
+    if (eventName === "mute" || eventName === "unmute") {
+      if (videoRef.current) {
+        const video = videoRef.current;
+        if (video.muted) {
+          video.muted = false;
+        } else {
+          video.muted = true;
+        }
+      }
+    }
   };
   const actionBtns = [
     {
       src: require("@assets/stm/play2.png").default,
-      cmd: "play",
+      eventName: "play",
+      display: isMedia && !isPlaying,
+    },
+    {
+      src: require("@assets/stm/pause.png").default,
+      eventName: "pause",
+      display: isMedia && isPlaying,
     },
     {
       src: require("@assets/stm/prev.png").default,
-      cmd: "prev",
+      eventName: "prev",
+      display: true,
     },
     {
       src: require("@assets/stm/next.png").default,
-      cmd: "next",
+      eventName: "next",
+      display: true,
     },
     {
       src: require("@assets/stm/fullscreen.png").default,
-      cmd: "fullscreen",
+      eventName: "fullscreen",
+      display: true,
     },
     {
       src: require("@assets/stm/sound.png").default,
-      cmd: "sound",
+      eventName: "mute",
+      display: isMedia && !isMute,
+    },
+    {
+      src: require("@assets/stm/mute.png").default,
+      eventName: "unmute",
+      display: isMedia && isMute,
     },
   ];
   return (
@@ -102,18 +166,25 @@ export default function PresentNav() {
         />
       </Box>
       <Box className={clsx(css.iconBase, css.iconWrapper2)}>
-        <Icon src={require("@assets/stm/home.png").default} onClick={() => {}} />
+        <Icon
+          src={require("@assets/stm/home.png").default}
+          onClick={() => {
+            history.push(pageLinks.curriculum);
+          }}
+        />
       </Box>
       <Box className={clsx(css.iconBase, css.iconWrapper3)}>
-        <Divider />
+        <Divider className={css.divider} />
       </Box>
-      {actionBtns.map((item) => {
-        return (
-          <Box key={item.cmd} className={clsx(css.iconBase, css.iconWrapper4)}>
-            <Icon src={item.src} onClick={sendEvent(item.cmd)} />
-          </Box>
-        );
-      })}
+      {actionBtns
+        .filter((item) => item.display)
+        .map((item) => {
+          return (
+            <Box key={item.eventName} className={clsx(css.iconBase, css.iconWrapper4)}>
+              <Icon src={item.src} onClick={handleClick(item.eventName)} />
+            </Box>
+          );
+        })}
     </Box>
   );
 }
