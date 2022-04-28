@@ -62,47 +62,65 @@ const useStyles = makeStyles({
     fontSize: vw(21),
     lineHeight: vw(27),
   },
+  title: {
+    fontFamily: "RooneySans",
+    fontWeight: "bold",
+    color: "#333333",
+    fontSize: vw(27),
+    lineHeight: vw(34),
+    marginBottom: vw(19),
+  },
 });
 
 export default function LessonUnit(props: { list: ITeachingList[] }) {
   const css = useStyles();
   let history = useHistory();
   const { setRootState, ...rootState } = useContext(StmContext);
-  const handleLessonClick = (payload: ITeachingList) => {
+
+  const handleLessonClick = (payload: LessonItem, unitId: string) => {
     setRootState && setRootState({ ...rootState, planId: payload.id, lessonId: payload.no });
     var storage = window.localStorage;
     history.push(pageLinks.present);
-    let temp: ITeachingList[] = [];
+    let temp: LessonItem[] = [];
     const pre = localStorage.getItem("selectPlan");
-    const preList = pre && JSON.parse(pre);
+    const preList: LessonItem[] = pre && JSON.parse(pre);
     if (preList && preList.length > 0) {
-      preList.unshift(payload);
-      temp = noRepeat(preList).filter((item, index) => {
+      preList.unshift({ ...payload, unitId });
+      temp = noRepeat(preList).filter((item: LessonItem, index: number) => {
         return index < 3;
       });
     } else {
-      temp.push(payload);
+      temp.push({ ...payload, unitId });
     }
     storage.setItem("selectPlan", JSON.stringify(temp));
   };
   return (
-    <Box className={css.lessonunitWrap}>
+    <Box>
       {props.list.map((item: ITeachingList, index: number) => (
-        <Card
-          key={index}
-          className={css.lessonunit}
-          onClick={() => {
-            handleLessonClick(item);
-          }}
-        >
-          <CardMedia className={css.lessonPic} component="img" image={item.thumbnail} title="" />
-          <CardContent className={css.content}>
-            <Typography className={css.lessonNo}>Lesson {item.no}</Typography>
-            <Typography className={css.lessonDesp} component="p">
-              {item.name}
-            </Typography>
-          </CardContent>
-        </Card>
+        <Box key={index}>
+          <Typography className={css.title}>
+            {item.id} {item.name}
+          </Typography>
+          <Box className={css.lessonunitWrap}>
+            {item.lesson_plans.map((lessonItem: LessonItem, lessonIndex: number) => (
+              <Card
+                key={lessonIndex}
+                className={css.lessonunit}
+                onClick={() => {
+                  handleLessonClick(lessonItem, item.id);
+                }}
+              >
+                <CardMedia className={css.lessonPic} component="img" image={lessonItem.thumbnail} title="" />
+                <CardContent className={css.content}>
+                  <Typography className={css.lessonNo}>Lesson {lessonItem.no}</Typography>
+                  <Typography className={css.lessonDesp} component="p">
+                    {lessonItem.name}
+                  </Typography>
+                </CardContent>
+              </Card>
+            ))}
+          </Box>
+        </Box>
       ))}
     </Box>
   );

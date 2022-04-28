@@ -121,11 +121,11 @@ const IconButton = withStyles({
   },
 })(Button);
 
-export default function TeachingUnit(props: { list: ITeachingList[] }) {
+export default function TeachingUnit(props: { list: LessonItem[] }) {
   const css = useStyles();
   let history = useHistory();
   const { setRootState, ...rootState } = useContext(StmContext);
-  const handleClick = (payload: ITeachingList) => {
+  const handleClick = (payload: LessonItem) => {
     setRootState && setRootState({ ...rootState, planId: payload.id, lessonId: payload.no });
     history.push(pageLinks.present);
   };

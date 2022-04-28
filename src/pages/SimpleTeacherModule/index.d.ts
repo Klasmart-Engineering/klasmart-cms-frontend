@@ -72,7 +72,8 @@ interface IUnitState {
   name: string;
   no: number;
 }
-interface ITeachingList {
+
+interface LessonItem {
   unitId: string;
   id: string;
   name: string;
@@ -80,6 +81,13 @@ interface ITeachingList {
   thumbnail: string;
   description: string;
   content_id: string;
+}
+interface ITeachingList {
+  unitId: string;
+  id: string;
+  name: string;
+  no: number;
+  lesson_plans: Array<LessonItem>;
 }
 
 interface IMediaControlProps {
