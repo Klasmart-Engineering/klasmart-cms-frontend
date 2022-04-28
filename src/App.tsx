@@ -1,5 +1,6 @@
 import { ApolloProvider } from "@apollo/client";
 import { ThemeProvider } from "@material-ui/core";
+import Stm from "@pages/SimpleTeacherModule";
 import { SnackbarProvider } from "notistack";
 import React from "react";
 import { Provider } from "react-redux";
@@ -9,13 +10,13 @@ import { ConfirmDialog } from "./components/ConfirmDialog";
 import { Loading } from "./components/Loading";
 import { Locale } from "./components/Locale";
 import { Notification } from "./components/Notification";
-import { AssessmentDetail } from "./pages/AssesmentDetail";
-import { AssessmentsEdit } from "./pages/AssessmentEdit";
+// import { AssessmentDetail } from "./pages/AssesmentDetail";
+// import { AssessmentsEdit } from "./pages/AssessmentEdit";
 import ContentEdit from "./pages/ContentEdit/index";
 import ContentPreview from "./pages/ContentPreview";
 import { DetailAssessment } from "./pages/DetailAssessment";
-import { HomeFunAssessmentList } from "./pages/HomeFunAssessmentList";
-import { AssessmentsHomefunEdit } from "./pages/HomefunEdit";
+// import { HomeFunAssessmentList } from "./pages/HomeFunAssessmentList";
+// import { AssessmentsHomefunEdit } from "./pages/HomefunEdit";
 import { ListAssessment } from "./pages/ListAssessment";
 import MilestoneEdit from "./pages/MilestoneEdit";
 import MilestonesList from "./pages/MilestoneList";
@@ -32,7 +33,7 @@ import ReportStudentProgress from "./pages/ReportStudentProgress";
 import ReportStudentUsage from "./pages/ReportStudentUsage";
 import ReportTeachingLoad from "./pages/ReportTeachingLoad";
 import Schedule from "./pages/Schedule";
-import { StudyAssessmentList } from "./pages/StudyAssessmentList";
+// import { StudyAssessmentList } from "./pages/StudyAssessmentList";
 import { store } from "./reducers";
 import theme from "./theme";
 
@@ -47,12 +48,12 @@ function App() {
               <SnackbarProvider>
                 {/* <UIAppHeaderNavBar /> */}
                 <Switch>
-                  <Route path={StudyAssessmentList.routeBasePath}>
+                  {/* <Route path={StudyAssessmentList.routeBasePath}>
                     <StudyAssessmentList />
                   </Route>
                   <Route path={AssessmentDetail.routeBasePath}>
                     <AssessmentDetail />
-                  </Route>
+                  </Route> */}
                   <Route path={Preview.routeBasePath}>
                     <Preview />
                   </Route>
@@ -71,9 +72,9 @@ function App() {
                   <Route path={OutcomeList.routeBasePath}>
                     <OutcomeList />
                   </Route>
-                  <Route path={HomeFunAssessmentList.routeBasePath}>
+                  {/* <Route path={HomeFunAssessmentList.routeBasePath}>
                     <HomeFunAssessmentList />
-                  </Route>
+                  </Route> */}
                   <Route path={ListAssessment.routeBasePath}>
                     <ListAssessment />
                   </Route>
@@ -89,12 +90,12 @@ function App() {
                   <Route path={CreateOutcomings.routeBasePath}>
                     <CreateOutcome />
                   </Route>
-                  <Route path={AssessmentsEdit.routeBasePath}>
+                  {/* <Route path={AssessmentsEdit.routeBasePath}>
                     <AssessmentsEdit />
                   </Route>
                   <Route path={AssessmentsHomefunEdit.routeBasePath}>
                     <AssessmentsHomefunEdit />
-                  </Route>
+                  </Route> */}
                   {/* <Route path={Live.routeBasePath}> */}
                   {/* <Live /> */}
                   {/* </Route> */}
@@ -130,6 +131,9 @@ function App() {
                   </Route>
                   <Route path={MilestoneEdit.routeMatchPath}>
                     <MilestoneEdit />
+                  </Route>
+                  <Route path={Stm.routeMatchPath}>
+                    <Stm />
                   </Route>
                   <Route path="/">
                     <Redirect to={MyContentList.routeRedirectDefault} />

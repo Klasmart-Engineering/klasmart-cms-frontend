@@ -1,4 +1,4 @@
-import DateFnsUtils from "@date-io/date-fns";
+import MomentUtils from "@date-io/moment";
 import { Box, Button, MenuItem, TextField, ThemeProvider, useMediaQuery, useTheme } from "@material-ui/core";
 import Checkbox from "@material-ui/core/Checkbox";
 import Collapse from "@material-ui/core/Collapse";
@@ -17,18 +17,19 @@ import {
   ExpandMoreOutlined,
   FileCopyOutlined,
   PermIdentity,
-  VisibilityOff
+  VisibilityOff,
 } from "@material-ui/icons";
 import CloseIcon from "@material-ui/icons/Close";
 import CreateOutlinedIcon from "@material-ui/icons/CreateOutlined";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { DatePicker, KeyboardDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
 import ScheduleLessonPlan from "@pages/Schedule/ScheduleLessonPlan";
 import { getStudentUserNamesById } from "@reducers/schedule";
 import { AsyncTrunkReturned } from "@reducers/type";
 import { PayloadAction } from "@reduxjs/toolkit";
 import clsx from "clsx";
-import { enAU, es, id, ko, th, vi, zhCN } from "date-fns/esm/locale";
+import moment from "moment";
 import React, { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -39,14 +40,14 @@ import {
   GetProgramsQuery,
   GetSchoolsFilterListQuery,
   GetUserQuery,
-  ParticipantsByClassQuery
+  ParticipantsByClassQuery,
 } from "../../api/api-ko.auto";
 import {
   EntityContentInfoWithDetails,
   EntityLessonPlanForSchedule,
   EntityScheduleAddView,
   EntityScheduleDetailsView,
-  EntityScheduleShortInfo
+  EntityScheduleShortInfo,
 } from "../../api/api.auto";
 import { enableReviewClass, MockOptionsItem, MockOptionsOptionsItem } from "../../api/extra";
 import PermissionType from "../../api/PermissionType";
@@ -58,8 +59,11 @@ import { RootState } from "../../reducers";
 import { actError, actSuccess } from "../../reducers/notify";
 import {
   actOutcomeList,
-  changeParticipants, checkScheduleReview, getLessonPlansBySchedule,
-  getLessonPlansByScheduleLoadingPage, getProgramChild,
+  changeParticipants,
+  checkScheduleReview,
+  getLessonPlansBySchedule,
+  getLessonPlansByScheduleLoadingPage,
+  getProgramChild,
   // getScheduleLiveToken,
   getScheduleMockOptionsResponse,
   getScheduleParticipant,
@@ -75,7 +79,7 @@ import {
   saveScheduleData,
   saveScheduleDataReview,
   ScheduleFilterPrograms,
-  scheduleShowOption
+  scheduleShowOption,
 } from "../../reducers/schedule";
 import theme from "../../theme";
 import {
@@ -94,7 +98,7 @@ import {
   ParticipantString,
   ParticipantValue,
   repeatOptionsType,
-  timestampType
+  timestampType,
 } from "../../types/scheduleTypes";
 import AddParticipantsTemplate from "./AddParticipantsTemplate";
 import { AddParticipantsTemplateMb, useAddParticipant } from "./AddParticipantsTemplateMb";
@@ -107,6 +111,8 @@ import ScheduleFeedback from "./ScheduleFeedback";
 import ScheduleFilter from "./ScheduleFilter";
 import ScheduleReviewTemplate from "./ScheduleReviewTemplate";
 import TimeConflictsTemplate from "./TimeConflictsTemplate";
+
+moment.locale("en"); // it is required to select default locale manually
 
 const useStyles = makeStyles(({ shadows, breakpoints }) => ({
   fieldset: {
@@ -341,10 +347,10 @@ function SmallCalendar(props: CalendarStateProps) {
   const dispatch = useDispatch();
   const getTimestamp = (date: any | null) => new Date(date).getTime() / 1000;
 
-  const handleDateChange = (date: Date | null) => {
+  const handleDateChange = (date: MaterialUiPickersDate) => {
     changeTimesTamp({
-      start: getTimestamp(date),
-      end: getTimestamp(date),
+      start: getTimestamp(date?.toDate()),
+      end: getTimestamp(date?.toDate()),
     });
   };
 
@@ -365,14 +371,12 @@ function SmallCalendar(props: CalendarStateProps) {
 
   const css = useStyles();
 
-  const lang = { en: enAU, zh: zhCN, vi: vi, ko: ko, id: id, es: es, th: th, zh_CN: zhCN };
-
   const { breakpoints } = useTheme();
   const sm = useMediaQuery(breakpoints.down(320));
 
   return (
     <Box className={css.smallCalendarBox} style={{ width: sm ? "310px" : "310px" }}>
-      <MuiPickersUtilsProvider utils={DateFnsUtils} locale={lang[localeManager.getLocale()!]}>
+      <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils} locale={localeManager.getLocale()}>
         <Grid container justifyContent="space-around">
           <DatePicker autoOk variant="static" openTo="date" value={new Date(timesTamp.start * 1000)} onChange={handleDateChange} />
         </Grid>
@@ -1026,7 +1030,7 @@ function EditBox(props: CalendarStateProps) {
         "all_day_end"
       );
       addData["due_at"] = dueDateTimestamp;
-      addData["title"] = `${d("Auto Review").t("schedule_lable_class_type_review")}: ${classItem?.name ?? ""} ${timestampToTimeReviewTitle(
+      addData["title"] = `${d("Auto Review").t("schedule_label_class_type_review")}: ${classItem?.name ?? ""} ${timestampToTimeReviewTitle(
         addData["content_start_at"] as number
       )} - ${timestampToTimeReviewTitle(addData["content_end_at"] as number)} ${d("Material").t("library_label_material")}`;
     }
@@ -1067,7 +1071,7 @@ function EditBox(props: CalendarStateProps) {
       return;
     }
     if (!participantSaveStatus && !participantsIsEmpty) {
-      dispatch(actError(d("Please confirm the fileld of ‘Add Participants’ by clicking OK").t("schedule_msg_participants_no_ok")));
+      dispatch(actError(d("Please confirm the field of ‘Add Participants’ by clicking OK").t("schedule_msg_participants_no_ok")));
       return;
     }
     addData["class_roster_student_ids"] = classRosterIds?.student.map((item: ClassOptionsItem) => {
@@ -1500,7 +1504,8 @@ function EditBox(props: CalendarStateProps) {
     mobile && event.target.name === "repeatCheck" && showRepeatMbHandle(event.target.checked);
   };
 
-  const handleDueDateChange = (date: Date | null) => {
+  const handleDueDateChange = (value: MaterialUiPickersDate | null) => {
+    const date = value?.toDate() as Date;
     if ((timestampToTime(date?.getTime()! / 1000, "all_day_end") as number) * 1000 < new Date().getTime()) return;
     setSelectedDate(date);
   };
@@ -2133,7 +2138,7 @@ function EditBox(props: CalendarStateProps) {
                 <FormControlLabel
                   disabled={isScheduleExpired() || isLimit()}
                   control={<Checkbox name="reviewCheck" color="primary" checked={checkedStatus.reviewCheck} onChange={handleCheck} />}
-                  label={d("Auto Review").t("schedule_lable_class_type_review")}
+                  label={d("Auto Review").t("schedule_label_class_type_review")}
                 />
               )}
             </FormGroup>
@@ -2146,11 +2151,11 @@ function EditBox(props: CalendarStateProps) {
         )}
         {checkedStatus.reviewCheck && (
           <Box className={css.fieldBox}>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils}>
               <KeyboardDatePicker
                 disableToolbar
                 variant="inline"
-                format="MM/dd/yyyy"
+                format="MM/DD/yyyy"
                 margin="normal"
                 id="date-picker-inline"
                 label="Due Date"
@@ -2189,11 +2194,11 @@ function EditBox(props: CalendarStateProps) {
                 {d("I would like content to be reviewed that was covered:").t("schedule_review_date_range_info")}
               </span>
             )}
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils}>
               <KeyboardDatePicker
                 disableToolbar
                 variant="inline"
-                format="MM/dd/yyyy"
+                format="MM/DD/yyyy"
                 margin="normal"
                 id="date-picker-inline"
                 label={d("Start Time").t("schedule_detail_start_time")}
@@ -2207,11 +2212,11 @@ function EditBox(props: CalendarStateProps) {
                 onChange={handleDueDateChange}
               />
             </MuiPickersUtilsProvider>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils}>
               <KeyboardDatePicker
                 disableToolbar
                 variant="inline"
-                format="MM/dd/yyyy"
+                format="MM/DD/yyyy"
                 margin="normal"
                 id="date-picker-inline"
                 label={d("End Time").t("schedule_detail_end_time")}
@@ -2229,7 +2234,7 @@ function EditBox(props: CalendarStateProps) {
         )}
         {scheduleList.class_type !== "Homework" && (
           <Box>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils}>
               <Grid container justifyContent="space-between" alignItems="center">
                 <Grid item xs={12}>
                   <TextField
@@ -2303,7 +2308,7 @@ function EditBox(props: CalendarStateProps) {
                 : "none",
           }}
         >
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils}>
             <Grid container justifyContent="space-between" alignItems="center">
               <Grid item xs={5}>
                 <FormControlLabel
@@ -2316,7 +2321,7 @@ function EditBox(props: CalendarStateProps) {
                 <KeyboardDatePicker
                   disableToolbar
                   variant="inline"
-                  format="MM/dd/yyyy"
+                  format="MM/DD/yyyy"
                   margin="normal"
                   id="date-picker-inline"
                   label={d("Pick Time").t("schedule_detail_pick_time")}

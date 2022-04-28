@@ -1,47 +1,56 @@
 import { OutcomeListExectSearch } from "@pages/OutcomeList/types";
 import { updateURLSearch } from "@utilities/urlUtilities";
 import { useLocation } from "react-router-dom";
+import { paramsWithDefault, queryParams } from "./queryParams";
 
 const useQueryCms = () => {
-  const { search } = useLocation();
-  const query = new URLSearchParams(search);
-  const id = query.get("id") || "";
-  const searchMedia = query.get("searchMedia") || "";
-  const searchOutcome = query.get("searchOutcome") || "";
-  //const assumed = (query.get("assumed") || "") === "true" ? true : false;
-  const isShare = query.get("isShare") || "org";
-  const editindex = Number(query.get("editindex") || 0);
-  const back = query.get("back") || "";
-  const exactSerch = query.get("exactSerch") || "all";
-  const parent_folder = query.get("parent_id") || "";
-  const exect_search = query.get("exect_search") || OutcomeListExectSearch.all;
-  const search_key = query.get("search_key") || "";
-  const assumed = query.get("assumed") === "true";
-  const page = Number(query.get("page")) || 1;
-  const first = query.get("first_save");
-  const first_save = query.get("first_save") === "true";
-  const is_unpub = query.get("is_unpub") || "";
+  const { search, pathname } = useLocation();
+  const querys = new URLSearchParams(search);
+  let list: any = {};
+  queryParams.forEach((item) => {
+    list[item] = querys.get(item);
+  });
+  paramsWithDefault.forEach((item) => {
+    list[item] = querys.get(item) || "";
+  });
+  const year = Number(querys.get("year"));
+  const week_start = Number(querys.get("week_start"));
+  const week_end = Number(querys.get("week_end"));
+  const editindex = Number(querys.get("editindex")) || 0;
+  const page = Number(querys.get("page")) || 1;
+  const readOnly = querys.get("readonly") || false;
+  const parent_folder = querys.get("parent_id") || "";
+  const scheduleId = querys.get("schedule_id") || "";
+  const isShare = querys.get("isShare") || "org";
+  const exactSerch = querys.get("exactSerch") || "all";
+  const exect_search = querys.get("exect_search") || OutcomeListExectSearch.all;
+  const assumed = querys.get("assumed") === "true";
+  const first_save = querys.get("first_save") === "true";
+  const filterOutcomes = querys.get("filterOutcomes") || "all";
+
   const updateQuery = (param: { [key: string]: string | number | boolean }): string => {
     return updateURLSearch(search, param);
   };
   return {
-    id,
-    searchMedia,
-    searchOutcome,
+    ...list,
+    pathname,
+    parent_folder,
+    scheduleId,
+    querys,
     search,
     editindex,
     assumed,
     isShare,
-    back,
     exactSerch,
-    parent_folder,
     exect_search,
-    search_key,
     page,
-    first,
     first_save,
-    is_unpub,
+    filterOutcomes,
     updateQuery,
+    readOnly,
+    year,
+    week_start,
+    week_end,
   };
 };
 

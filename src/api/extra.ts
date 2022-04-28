@@ -38,7 +38,7 @@ import {
   GetStudentNameByIdQueryVariables,
   SchoolsClassesDocument,
   SchoolsClassesQuery,
-  SchoolsClassesQueryVariables
+  SchoolsClassesQueryVariables,
 } from "./api-ko.auto";
 import { EntityFolderItemInfo } from "./api.auto";
 import { apiEmitter, ApiErrorEventData, ApiEvent } from "./emitter";
@@ -154,8 +154,9 @@ export const apiWebSocketValidatePDF = (file: FileLike, onChangePercentage?: (pe
   });
 };
 
-export const apiGenH5pResourceByToken = (token: string) => {
-  return `${process.env.REACT_APP_H5P_API}/h5p/token/${token}`;
+export const apiGenH5pResourceByToken = (token: string, sub: string, content_id?: string) => {
+  // return `${process.env.REACT_APP_H5P_API}/h5p/token/${token}`;
+  return `${process.env.REACT_APP_H5P_API}/h5p/action/${sub}/${content_id}?h5ptoken=${token}`;
 };
 
 export const apiLivePath = (token: string) => {

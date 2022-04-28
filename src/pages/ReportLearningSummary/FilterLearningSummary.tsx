@@ -4,9 +4,8 @@ import React, { ChangeEvent } from "react";
 import { IWeeks } from ".";
 import { User } from "../../api/api-ko-schema.auto";
 import { ExternalSubject } from "../../api/api.auto";
-import PermissionType from "../../api/PermissionType";
 import LayoutBox from "../../components/LayoutBox";
-import { usePermission } from "../../hooks/usePermission";
+import { useRole } from "../../hooks/usePermission";
 import { t } from "../../locale/LocaleManager";
 import { IResultLearningSummary } from "../../reducers/report";
 import { ArrProps, QueryLearningSummaryCondition, QueryLearningSummaryConditionBaseProps } from "./types";
@@ -43,16 +42,7 @@ export interface FilterLearningSummaryProps extends QueryLearningSummaryConditio
 }
 export function FilterLearningSummary(props: FilterLearningSummaryProps) {
   const css = useStyles();
-  const perm = usePermission([
-    PermissionType.report_learning_summary_org_652,
-    PermissionType.report_learning_summary_school_651,
-    PermissionType.report_learning_summary_teacher_650,
-    PermissionType.report_learning_summary_student_649,
-  ]);
-  const isOrg = perm.report_learning_summary_org_652;
-  const isSchoolAdmin = perm.report_learning_summary_school_651;
-  const isTeacher = perm.report_learning_summary_teacher_650;
-  // const isStudent = perm.report_learning_summary_student_649;
+  const { isOrg, isSchool, isTeacher } = useRole();
   const { value, defaultWeeksValue, summaryReportOptions, onChangeYearFilter, onChangeWeekFilter, onChangeFilter } = props;
   const { years, weeks, schools, classes, students, subjects } = summaryReportOptions;
   // const studentList = students?.slice().sort(sortByStudentName("name"));
@@ -104,7 +94,7 @@ export function FilterLearningSummary(props: FilterLearningSummaryProps) {
     <LayoutBox holderMin={40} holderBase={202} mainBase={1517}>
       <div>
         <div>
-          {(isOrg || isSchoolAdmin || isTeacher) && (
+          {(isOrg || isSchool || isTeacher) && (
             <>
               <TextField
                 size="small"

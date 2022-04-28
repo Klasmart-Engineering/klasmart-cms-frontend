@@ -1,0 +1,53 @@
+@font-face {
+  font-family: "RooneySans";
+  src: local("RooneySans Medium"), local("RooneySans-Medium"), url("RooneySans-Medium.woff2") format("woff2"),
+    url("RooneySans-Medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "RooneySans";
+  src: local("RooneySans Heavy"), local("RooneySans-Heavy"), url("RooneySans-Heavy.woff2") format("woff2"),
+    url("RooneySans-Heavy.woff") format("woff");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "RooneySans-Black";
+  src: local("RooneySans Black"), local("RooneySans-Black"), url("RooneySans-Black.woff2") format("woff2"),
+    url("RooneySans-Black.woff") format("woff");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "RooneySans";
+  src: local("RooneySans Bold"), local("RooneySans-Bold"), url("RooneySans-Bold.woff2") format("woff2"),
+    url("RooneySans-Bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "RooneySans";
+  src: local("RooneySans Light"), local("RooneySans-Light"), url("RooneySans-Light.woff2") format("woff2"),
+    url("RooneySans-Light.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "RooneySans";
+  src: local("RooneySans Regular"), local("RooneySans-Regular"), url("RooneySans-Regular.woff2") format("woff2"),
+    url("RooneySans-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}

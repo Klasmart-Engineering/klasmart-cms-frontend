@@ -1,4 +1,5 @@
 import { apiLivePath } from "@api/extra";
+import useQueryCms from "@hooks/useQueryCms";
 import { Grid, useMediaQuery, useTheme } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import Zoom from "@material-ui/core/Zoom";
@@ -10,7 +11,7 @@ import { AsyncTrunkReturned } from "@reducers/type";
 import { PayloadAction } from "@reduxjs/toolkit";
 import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useParams } from "react-router";
+import { useParams } from "react-router";
 import { ConnectionDirection, StringOperator, UuidExclusiveOperator } from "../../api/api-ko-schema.auto";
 import { EntityContentInfoWithDetails, EntityScheduleViewDetail } from "../../api/api.auto";
 import PermissionType from "../../api/PermissionType";
@@ -64,14 +65,6 @@ import ScheduleEdit from "./ScheduleEdit";
 import ScheduleTool from "./ScheduleTool";
 import SearchList from "./SearchList";
 
-const useQuery = () => {
-  const { search } = useLocation();
-  const query = new URLSearchParams(search);
-  const scheduleId = query.get("schedule_id") || "";
-  const teacherName = query.get("name") || "";
-  return { scheduleId, teacherName };
-};
-
 const parseRightside = (rightside: RouteParams["rightside"]) => ({
   includeTable: rightside.includes("scheduleTable"),
   includeList: rightside.includes("scheduleList"),
@@ -113,7 +106,7 @@ function ScheduleContent() {
     scheduleTimeViewData,
   } = useSelector<RootState, RootState["schedule"]>((state) => state.schedule);
   const dispatch = useDispatch();
-  const { scheduleId } = useQuery();
+  const { scheduleId } = useQueryCms();
   const [state] = useRepeatSchedule();
   const { type } = state;
   const [modelYear, setModelYear] = React.useState<boolean>(false);

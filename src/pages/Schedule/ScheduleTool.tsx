@@ -1,3 +1,4 @@
+import useQueryCms from "@hooks/useQueryCms";
 import { Grid, useMediaQuery, useTheme } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
@@ -8,7 +9,6 @@ import { createStyles, makeStyles, Theme, withStyles } from "@material-ui/core/s
 import { ArrowBackIosOutlined, SearchOutlined } from "@material-ui/icons";
 import React from "react";
 import { useHistory } from "react-router";
-import { useLocation } from "react-router-dom";
 import PermissionType from "../../api/PermissionType";
 import { Permission, PermissionsWrapper } from "../../components/Permission";
 import { d } from "../../locale/LocaleManager";
@@ -76,9 +76,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const useQuery = () => {
-  const { search } = useLocation();
-  const query = new URLSearchParams(search);
-  const name = query.get("name") || "";
+  const { name } = useQueryCms();
   return name;
 };
 
@@ -137,7 +135,7 @@ function Tool(props: ToolProps) {
                         }}
                       >
                         <span style={{ fontSize: "23px", marginRight: "8px" }}>+</span>
-                        {d("Schedule Class").t("schedue_button_schedule_class")}
+                        {d("Schedule Class").t("schedule_button_schedule_class")}
                       </Button>
                     )
                   }

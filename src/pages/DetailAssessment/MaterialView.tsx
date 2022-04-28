@@ -8,20 +8,20 @@ import {
   TableBody,
   TableCell,
   TableContainer,
-  TableRow
+  TableRow,
 } from "@material-ui/core";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
 import { ModelAssessment } from "@models/ModelAssessment";
 import { cloneDeep } from "lodash";
 import React, { ChangeEvent, Fragment, useMemo, useState } from "react";
-import { AchievedTooltips } from "../../components/DynamicTable";
 import { PLField, PLTableHeader } from "../../components/PLTable";
 import { d } from "../../locale/LocaleManager";
 import { DetailAssessmentResult, DetailAssessmentResultStudent } from "../ListAssessment/types";
+import { AchievedTooltips } from "./AchievedTooltips";
 import { EditScore } from "./EditScore";
 import { Dimension } from "./MultiSelect";
-import { ResourceView, showAudioRecorder, useResourceView } from "./ResourceView";
+import { ResourceView, showAudioRecorder, showScreenShort, useResourceView } from "./ResourceView";
 import {
   FileTypes,
   MaterialViewItemResultOutcomeProps,
@@ -30,7 +30,7 @@ import {
   ResourceViewTypeValues,
   StudentParticipate,
   StudentViewItemsProps,
-  SubDimensionOptions
+  SubDimensionOptions,
 } from "./type";
 const useStyles = makeStyles({
   tableBar: {
@@ -103,10 +103,12 @@ export function MaterialView(props: MaterialViewProps) {
   const MaterialDefaultHeader: PLField[] = [
     { align: "center", width: "25%", value: "Learning_Outcomes", text: d("Student Name").t("assessment_student_name") },
     { align: "center", width: "25%", value: "Answer", text: d("Answer").t("assess_detail_answer") },
+    { align: "center", width: "25%", value: "Results", text: d("Results").t("assessment_detail_screenshot_results") },
     { align: "center", width: "25%", value: "Score_FullMarks", text: d("Score / Full Marks").t("assess_detail_score_full_marks") },
     { align: "center", width: "25%", value: "Percentage", text: d("Percentage").t("assess_detail_percentage") },
   ];
   const [resourceType, setResourceType] = useState<ResourceViewTypeValues>(ResourceViewTypeValues.essay);
+  const [contentSubType, setContentSubType] = useState<string | undefined>("");
   const [answer, setAnswer] = useState<string>("");
   const [room, setRoom] = useState<string | undefined>("");
   const [h5pId, setH5pId] = useState<string | undefined>("");
@@ -115,7 +117,6 @@ export function MaterialView(props: MaterialViewProps) {
   const { resourceViewActive, openResourceView, closeResourceView } = useResourceView();
   const {
     studentViewItems,
-    contents,
     students,
     editable,
     subDimension,
@@ -133,8 +134,8 @@ export function MaterialView(props: MaterialViewProps) {
     return students?.filter((student: DetailAssessmentResultStudent) => student.status === "Participate");
   }, [students]);
   const materialViewItems = useMemo(() => {
-    return ModelAssessment.getMaterialViewItems(contents, students, studentViewItems);
-  }, [contents, studentViewItems, students]);
+    return ModelAssessment.getMaterialViewItems(studentViewItems);
+  }, [studentViewItems]);
   const initCheckArr = useMemo(() => {
     return materialViewItems.map((item) => true);
   }, [materialViewItems]);
@@ -166,6 +167,15 @@ export function MaterialView(props: MaterialViewProps) {
     setUserId(userId);
     setH5pSubId(h5pSubId);
   };
+  const handleClickScreenshots = (roomId?: string, h5pId?: string, h5pSubId?: string, userId?: string, content_subtype?: string) => {
+    openResourceView();
+    setResourceType(ResourceViewTypeValues.viewScreenshots);
+    setContentSubType(content_subtype)
+    setRoom(roomId);
+    setH5pId(h5pId);
+    setUserId(userId);
+    setH5pSubId(h5pSubId);
+  }
   const handleChangeScore = (score?: number, studentId?: string, contentId?: string) => {
     const _studentViewItems = studentViewItems?.map((sItem) => {
       if (sItem.student_id === studentId) {
@@ -190,8 +200,8 @@ export function MaterialView(props: MaterialViewProps) {
   };
   const toggleCheck = (index: number) => {
     const arr = cloneDeep(checkedArr);
-    if(arr[index] === undefined) {
-      arr[index] = false
+    if (arr[index] === undefined) {
+      arr[index] = false;
     } else {
       arr[index] = !checkedArr[index];
     }
@@ -202,7 +212,8 @@ export function MaterialView(props: MaterialViewProps) {
       {materialViewItems &&
         materialViewItems.map(
           (item, index) =>
-            (isSelectAll ? true : subDimensionIds.indexOf(item.content_id!) >= 0 || subDimensionIds.indexOf(item.parent_id!) >= 0) && (
+            (isSelectAll ? true : subDimensionIds.indexOf(item.content_id!) >= 0 || subDimensionIds.indexOf(item.parent_id!) >= 0) &&
+            item.status === "Covered" && (
               <Fragment key={item.content_id}>
                 <TableContainer style={{ marginBottom: "20px" }}>
                   <Box className={css.tableBar} onClick={(e) => toggleCheck(index)}>
@@ -212,7 +223,13 @@ export function MaterialView(props: MaterialViewProps) {
                         {item.content_subtype ? `(${item.content_subtype})` : ""}
                       </span>
                     </div>
-                    {checkedArr[index] === undefined ? <ArrowDropUpIcon /> : checkedArr[index] ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
+                    {checkedArr[index] === undefined ? (
+                      <ArrowDropUpIcon />
+                    ) : checkedArr[index] ? (
+                      <ArrowDropUpIcon />
+                    ) : (
+                      <ArrowDropDownIcon />
+                    )}
                   </Box>
                   <Collapse in={checkedArr[index]}>
                     <>
@@ -324,6 +341,27 @@ export function MaterialView(props: MaterialViewProps) {
                                         </span>
                                       )}
                                   </TableCell>
+                                  <TableCell align="center">
+                                    {item.file_type !== FileTypes.HasChildContainer &&
+                                      sItem.attempted &&
+                                      showScreenShort(item.content_subtype) && (
+                                        <span
+                                            style={{ color: "#006CCF", cursor: "pointer" }}
+                                            onClick={(e) =>
+                                              handleClickScreenshots(
+                                                roomId,
+                                                item.h5p_id,
+                                                item.h5p_sub_id,
+                                                sItem.student_id,
+                                                item.content_subtype
+                                              )
+                                            }
+                                          >
+                                            {d("Click to View").t("assess_detail_click_to_view")}
+                                        </span>
+                                      )
+                                    }
+                                  </TableCell>
                                   <TableCell>
                                     <EditScore
                                       fileType={item.file_type}
@@ -367,6 +405,7 @@ export function MaterialView(props: MaterialViewProps) {
         userId={userId}
         h5pId={h5pId}
         h5pSubId={h5pSubId}
+        contentSubType={contentSubType}
       />
     </>
   );

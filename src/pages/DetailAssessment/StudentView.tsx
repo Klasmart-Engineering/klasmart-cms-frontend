@@ -22,7 +22,7 @@ import { PLField, PLTableHeader } from "../../components/PLTable";
 import { d } from "../../locale/LocaleManager";
 import { EditScore } from "./EditScore";
 import { Dimension } from "./MultiSelect";
-import { ResourceView, showAudioRecorder, useResourceView } from "./ResourceView";
+import { ResourceView, showAudioRecorder, showScreenShort, useResourceView } from "./ResourceView";
 import { FileTypes, OutcomeStatus, ResourceViewTypeValues, StudentParticipate, StudentViewItemsProps, SubDimensionOptions } from "./type";
 const useStyles = makeStyles({
   tableBar: {
@@ -62,6 +62,11 @@ const useStyles = makeStyles({
       },
     },
   },
+  totalScoreCon: {
+    width: "100px",
+    fontSize: 16,
+    fontWeight: 600,
+  },
 });
 const reBytesStr = (str: string, len: number) => {
   let bytesNum = 0;
@@ -97,10 +102,12 @@ export interface StudentViewProps {
 }
 export function StudentView(props: StudentViewProps) {
   const css = useStyles();
-  const { studentViewItems, editable, subDimension, roomId, assessment_type, is_anyone_attempted, onChangeComputedStudentViewItems } = props;
+  const { studentViewItems, editable, subDimension, roomId, assessment_type, is_anyone_attempted, onChangeComputedStudentViewItems } =
+    props;
   const isReview = assessment_type === AssessmentTypeValues.review;
   const { resourceViewActive, openResourceView, closeResourceView } = useResourceView();
   const [resourceType, setResourceType] = useState<ResourceViewTypeValues>(ResourceViewTypeValues.essay);
+  const [contentSubType, setContentSubType] = useState<string | undefined>("");
   const [answer, setAnswer] = useState<string>("");
   const [comment, setComment] = useState<string>("");
   const [studentId, setStudentId] = useState<string | undefined>("");
@@ -121,7 +128,7 @@ export function StudentView(props: StudentViewProps) {
       { align: "center", style: { backgroundColor: "#fff" }, value: "idx", text: `${d("No").t("assess_detail_no")}.` },
       {
         align: "center",
-        style: { backgroundColor: "#fff" },
+        style: { backgroundColor: "#fff", minWidth: 100 },
         value: "name",
         text: d("Lesson Material Name").t("assess_detail_lesson_material_name"),
       },
@@ -131,19 +138,19 @@ export function StudentView(props: StudentViewProps) {
         value: "type",
         text: d("Lesson Material Type").t("assess_detail_lesson_material_type"),
       },
-      { align: "center", style: { backgroundColor: "#fff", minWidth: 150 }, value: "answer", text: d("Answer").t("assess_detail_answer") },
+      { align: "center", style: { backgroundColor: "#fff", minWidth: 100 }, value: "answer", text: d("Answer").t("assess_detail_answer") },
+      {
+        align: "center",
+        style: { backgroundColor: "#fff", minWidth: 100 },
+        value: "result",
+        text: d("Results").t("assessment_detail_screenshot_results"),
+      },
       {
         align: "center",
         style: { backgroundColor: "#fff", minWidth: 100 },
         value: "score",
         text: d("Score / Full Marks").t("assess_detail_score_full_marks"),
       },
-      // {
-      //   align: "center",
-      //   style: { backgroundColor: "#fff", maxWidth: 400 },
-      //   value: "LO",
-      //   text: d("Learning Outcomes").t("library_label_learning_outcomes"),
-      // },
     ];
     if (isReview) {
       headers.push({
@@ -155,7 +162,7 @@ export function StudentView(props: StudentViewProps) {
     } else {
       headers.push({
         align: "center",
-        style: { backgroundColor: "#fff", maxWidth: 400 },
+        style: { backgroundColor: "#fff", maxWidth: 400, minWidth: 150 },
         value: "LO",
         text: d("Learning Outcomes").t("library_label_learning_outcomes"),
       });
@@ -207,12 +214,27 @@ export function StudentView(props: StudentViewProps) {
     setUserId(userId);
     setH5pSubId(h5pSubId);
   };
+  const handleClickScreenshots = (roomId?: string, h5pId?: string, h5pSubId?: string, userId?: string, content_subtype?: string) => {
+    openResourceView();
+    setResourceType(ResourceViewTypeValues.viewScreenshots);
+    setContentSubType(content_subtype);
+    setRoom(roomId);
+    setH5pId(h5pId);
+    setUserId(userId);
+    setH5pSubId(h5pSubId);
+  };
   const handleChangeScore = (score?: number, studentId?: string, contentId?: string) => {
     const _studentViewItems = studentViewItems?.map((sItem) => {
       if (sItem.student_id === studentId) {
         return {
           ...sItem,
           results: sItem.results?.map((rItem) => {
+            if (rItem.h5p_sub_id && rItem.h5p_sub_id === contentId) {
+              return {
+                ...rItem,
+                score,
+              };
+            } else
             if (rItem.content_id === contentId) {
               return {
                 ...rItem,
@@ -255,8 +277,8 @@ export function StudentView(props: StudentViewProps) {
   };
   const toggleCheck = (index: number) => {
     const arr = cloneDeep(checkedArr);
-    if(arr[index] === undefined) {
-      arr[index] = false
+    if (arr[index] === undefined) {
+      arr[index] = false;
     } else {
       arr[index] = !checkedArr[index];
     }
@@ -298,7 +320,13 @@ export function StudentView(props: StudentViewProps) {
                         </span>
                       )}
                     </div>
-                    {checkedArr[index] === undefined ? <ArrowDropUpIcon /> : checkedArr[index] ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
+                    {checkedArr[index] === undefined ? (
+                      <ArrowDropUpIcon />
+                    ) : checkedArr[index] ? (
+                      <ArrowDropUpIcon />
+                    ) : (
+                      <ArrowDropDownIcon />
+                    )}
                   </Box>
                   <Collapse in={checkedArr[index] === undefined ? true : checkedArr[index]}>
                     <TableContainer style={{ maxHeight: 800 }}>
@@ -307,11 +335,10 @@ export function StudentView(props: StudentViewProps) {
                         <TableBody>
                           {sitem.results?.map(
                             (ritem) =>
-                              (ritem.content_type === "LessonMaterial" || ritem.content_type === "Unknown") && (
-                                <TableRow key={ritem.content_id}>
-                                  <TableCell align="center" style={{ width: "50px" }}>
-                                    {ritem.number}
-                                  </TableCell>
+                              (ritem.content_type === "LessonMaterial" || ritem.content_type === "Unknown") &&
+                              (isReview ? true : ritem.status === "Covered") && (
+                                <TableRow key={ritem.h5p_sub_id ? ritem.h5p_sub_id : ritem.content_id}>
+                                  <TableCell align="center">{ritem.number}</TableCell>
                                   <TableCell align="center">
                                     <Tooltip title={(ritem.content_name as string) ?? ""} placement="top-start">
                                       <span>{textEllipsis(ritem.content_name)}</span>
@@ -350,6 +377,27 @@ export function StudentView(props: StudentViewProps) {
                                       )}
                                   </TableCell>
                                   <TableCell align="center">
+                                    {
+                                    ritem.file_type !== FileTypes.HasChildContainer &&
+                                      ritem.attempted &&
+                                      showScreenShort(ritem.content_subtype, ritem.h5p_sub_id) && (
+                                        <span
+                                          style={{ color: "#006CCF", cursor: "pointer" }}
+                                          onClick={(e) =>
+                                            handleClickScreenshots(
+                                              roomId,
+                                              ritem.h5p_id,
+                                              ritem.h5p_sub_id,
+                                              sitem.student_id,
+                                              ritem.content_subtype
+                                            )
+                                          }
+                                        >
+                                          {d("Click to View").t("assess_detail_click_to_view")}
+                                        </span>
+                                      )}
+                                  </TableCell>
+                                  <TableCell align="center">
                                     <EditScore
                                       fileType={ritem.file_type}
                                       score={ritem.score}
@@ -357,7 +405,7 @@ export function StudentView(props: StudentViewProps) {
                                       maxScore={ritem.max_score}
                                       attempted={ritem.attempted}
                                       studentId={sitem.student_id}
-                                      contentId={ritem.content_id}
+                                      contentId={ritem.h5p_sub_id ? ritem.h5p_sub_id : ritem.content_id}
                                       isSubjectiveActivity={true}
                                       subType={ritem.content_subtype}
                                       onChangeScore={handleChangeScore}
@@ -400,6 +448,27 @@ export function StudentView(props: StudentViewProps) {
                                 </TableRow>
                               )
                           )}
+                          <TableRow>
+                            <TableCell align="center" className={css.totalScoreCon}>
+                              {"Total Score"}
+                            </TableCell>
+                            <TableCell></TableCell>
+                            <TableCell></TableCell>
+                            <TableCell></TableCell>
+                            <TableCell></TableCell>
+                            <TableCell align="center" className={css.totalScoreCon}>
+                              {sitem.attempted
+                                ? `${sitem.results
+                                    ?.filter((item) => item.file_type !== FileTypes.HasChildContainer)
+                                    .reduce((pre, cur) => pre + Number(cur?.score), 0)}
+                                   / 
+                                  ${sitem.results
+                                    ?.filter((item) => item.file_type !== FileTypes.HasChildContainer && item.attempted)
+                                    .reduce((pre, cur) => pre + Number(cur.max_score), 0)}`
+                                : "-"}
+                            </TableCell>
+                            <TableCell></TableCell>
+                          </TableRow>
                         </TableBody>
                       </Table>
                     </TableContainer>
@@ -420,6 +489,7 @@ export function StudentView(props: StudentViewProps) {
         userId={userId}
         h5pId={h5pId}
         h5pSubId={h5pSubId}
+        contentSubType={contentSubType}
       />
     </>
   );
