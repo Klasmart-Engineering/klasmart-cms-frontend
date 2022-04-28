@@ -63,7 +63,8 @@ interface IPlayerProps {
     input_source: number;
   };
   lessonNo?: number;
-  name: string;
+  thumbnail?: string;
+  name?: string;
 }
 
 interface IUnitState {
@@ -90,4 +91,5 @@ interface IPresentNavProps {
 }
 interface IVideoPlayerProps {
   source: string;
+  poster?: string;
 }

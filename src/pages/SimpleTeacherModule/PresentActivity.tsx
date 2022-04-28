@@ -39,18 +39,20 @@ export default function PresentActivity() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [planId, curriculum, classLevel]);
 
-  const [name, data] = React.useMemo(() => {
+  const [name, thumbnail, data] = React.useMemo(() => {
     if (lessonMaterials.length > 0) {
       const activeItem = lessonMaterials[activeIndex];
-      return [activeItem.name, JSON.parse(activeItem.data)];
+      console.log(activeItem);
+      return [activeItem.name, activeItem.thumbnail, JSON.parse(activeItem.data)];
     }
-    return ["", {}];
+    return ["", "", {}];
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeIndex]);
+  }, [lessonMaterials, activeIndex]);
 
   React.useEffect(() => {
+    const isMedia = data.file_type === 2 || data.file_type === 3;
     setVideoState({
-      isMedia: data.file_type === 2,
+      isMedia,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data.file_type]);
@@ -59,7 +61,7 @@ export default function PresentActivity() {
     <Box className={css.root}>
       <PresentNav videoRef={videoRef as React.RefObject<HTMLVideoElement>} />
       {!isFullscreen && <PresentList list={lessonMaterials} />}
-      <PresentPlayer ref={videoRef} data={data} name={name} lessonNo={lessonId} />
+      <PresentPlayer ref={videoRef} data={data} name={name} thumbnail={thumbnail} lessonNo={lessonId} />
     </Box>
   );
 }

@@ -175,6 +175,7 @@ const IconButton = withStyles({
     cursor: "pointer",
     position: "relative",
     overflow: "hidden",
+    transition: "all 0.2s ease-in-out",
     "&:hover": {
       transform: "scale(1.1)",
       background: "#fff",
