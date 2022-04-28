@@ -111,6 +111,9 @@ export const showScreenShort = (type?: string, subContentId?: string) => {
     "FindTheWords",
     "ImagePair",
     "ImageSequencing",
+    "DictationSentence",
+    "DialogcardsCard",
+    "ArithmeticQuiz",
   ];
   if(mutipleScreenShortsTypes.indexOf(type as string) >= 0) {
     if(subContentId) {
