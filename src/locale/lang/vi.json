@@ -1142,7 +1142,9 @@
   "assessment_hfs_no_teacher_feedback": "Không có phản hồi nào được cung cấp cho tệp này.",
   "assessment_hfs_student_assessment": "Đánh giá",
   "assessment_hfs_student_feedback": "Nhận xét",
-  "assessment_detail_screenshot_results": "Results",
-  "assessment_detail_screenshot_result_screen": "Results Screen",
-  "assessment_detail_total_score": "Total Score"
+  "assessment_detail_screenshot_results": "Kết quả",
+  "assessment_detail_screenshot_result_screen": "Màn hình kết quả",
+  "assessment_detail_total_score": "Tổng Điểm",
+  "assessment_detail_screenshot_no_result": "Rất tiếc, ảnh chụp màn hình không có sẵn cho học liệu này.",
+  "assessment_detail_essay_no_result": "Học sinh chưa hoàn thành câu trả lời này."
 }

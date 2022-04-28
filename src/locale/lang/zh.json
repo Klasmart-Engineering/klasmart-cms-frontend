@@ -263,7 +263,7 @@
   "assess_detail_lesson_material_name": "课件素材名称",
   "assess_detail_lesson_material_type": "课件素材类型",
   "assess_detail_answer": "答案",
-  "assess_detail_click_to_view": "点击查看答案",
+  "assess_detail_click_to_view": "点击查看详情",
   "assess_detail_maximum_possible_score": "满分",
   "assess_detail_achieved_score": "得分",
   "assess_msg_exceed_maximum": "您不能输入高于满分的分数",
@@ -1144,5 +1144,7 @@
   "assessment_hfs_student_feedback": "反馈",
   "assessment_detail_screenshot_results": "成果",
   "assessment_detail_screenshot_result_screen": "成果截图",
-  "assessment_detail_total_score": "总分"
+  "assessment_detail_total_score": "总分",
+  "assessment_detail_screenshot_no_result": "对不起，这个素材暂不支持展示成果截图",
+  "assessment_detail_essay_no_result": "学生可能未提交答案。"
 }
