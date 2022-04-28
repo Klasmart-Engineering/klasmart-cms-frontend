@@ -2436,7 +2436,7 @@ const { actions, reducer } = createSlice({
       if (payload?.assignments?.length === 4) {
         state.fourWeeksAssignmentsCompletionMassage = t(
           payload.label_id as any,
-          Object.assign(getLabel(payload?.label_params, labelName), { Name: studentName })
+          Object.assign(getLabel(payload?.label_params, labelName), { Name: studentName }) as any
         );
       }
     },
@@ -2468,7 +2468,7 @@ const { actions, reducer } = createSlice({
       if (payload?.items?.length === 4) {
         state.fourWeeksClassAttendanceMassage = t(
           payload.label_id as any,
-          Object.assign(getLabel(payload?.label_params, labelName), { Name: studentName })
+          Object.assign(getLabel(payload?.label_params, labelName), { Name: studentName }) as any
         );
       }
     },
@@ -2501,7 +2501,7 @@ const { actions, reducer } = createSlice({
       if (payload?.items?.length === 4) {
         state.fourWeekslearnOutcomeAchievementMassage = t(
           payload.label_id as any,
-          Object.assign(getLabel(payload?.label_params, labelName), { Name: studentName })
+          Object.assign(getLabel(payload?.label_params, labelName), { Name: studentName }) as any
         );
       }
     },
