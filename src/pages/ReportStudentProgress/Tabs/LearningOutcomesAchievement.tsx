@@ -122,7 +122,7 @@ export default function LearningOutcomesAchievement() {
       </div>
       <div>
         <LearningOutcomeAchievedTotalType totalType={totalType} colors={colors} isLearningOutcomeAchieved={true} />
-        <StudentProgressReportFeedback fourWeeksMassage={fourWeekslearnOutcomeAchievementMassage} />
+        {durationTime === 4 && <StudentProgressReportFeedback fourWeeksMassage={fourWeekslearnOutcomeAchievementMassage} />}
       </div>
     </div>
   );
