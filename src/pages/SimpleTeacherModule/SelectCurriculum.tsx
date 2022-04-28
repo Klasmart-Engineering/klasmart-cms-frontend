@@ -48,6 +48,7 @@ const IconButton = withStyles({
     alignItems: "center",
     justifyContent: "center",
     cursor: "pointer",
+    transition: "all 0.2s ease-in-out",
     "& img": {
       height: vw(276),
     },
