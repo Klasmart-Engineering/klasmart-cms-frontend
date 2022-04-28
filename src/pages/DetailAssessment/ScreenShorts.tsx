@@ -22,7 +22,7 @@ export function ScreenShorts(props: ScreenShortsProps) {
     return <p>{d("Server request failed").t("general_error_unknown")}</p>;
   }
   if (loading) return <p>Loading ...</p>;
-  if (!length) return <p>{"This image is not available. Please try again later."}</p>;
+  if (!length) return <p>{d("Sorry, the screenshot is not available for this lesson material.").t("assessment_detail_screenshot_no_result")}</p>;
   return (
     <ImageView
       resourceType={resourceType}
