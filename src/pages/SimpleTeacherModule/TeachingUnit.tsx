@@ -1,5 +1,5 @@
+import arrowBtn from "@assets/stm/arrowbtn.png";
 import { Box, Button, Card, CardContent, CardMedia, Grid, makeStyles, Typography, withStyles } from "@material-ui/core";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { StmContext } from "./contexts";
@@ -92,14 +92,22 @@ const IconButton = withStyles({
     bottom: vw(31),
     left: vw(26),
     fontFamily: "RooneySans",
-    fontWeight: 700,
-    textAlign: "center",
+    fontSize: vw(22),
+    fontWeight: 800,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     background: "#942CE5",
     width: vw(233),
     height: vw(48),
     borderRadius: vw(24),
     cursor: "pointer",
     color: "#FFFFFF",
+    "& img": {
+      marginLeft: vw(10),
+      width: vw(8),
+      height: vw(14),
+    },
     "&:hover": {
       background: "#942CE5",
       borderColor: "none",
@@ -113,11 +121,11 @@ const IconButton = withStyles({
   },
 })(Button);
 
-export default function TeachingUnit(props: { list: ITeachingList[] }) {
+export default function TeachingUnit(props: { list: LessonItem[] }) {
   const css = useStyles();
   let history = useHistory();
   const { setRootState, ...rootState } = useContext(StmContext);
-  const handleClick = (payload: ITeachingList) => {
+  const handleClick = (payload: LessonItem) => {
     setRootState && setRootState({ ...rootState, planId: payload.id, lessonId: payload.no });
     history.push(pageLinks.present);
   };
@@ -141,7 +149,10 @@ export default function TeachingUnit(props: { list: ITeachingList[] }) {
                   handleClick(item);
                 }}
               >
-                Continue <ChevronRightIcon></ChevronRightIcon>
+                <span>
+                  <span>Continue</span>
+                  <img src={arrowBtn} alt="arrow" />
+                </span>
               </IconButton>
             </CardContent>
           </Box>
