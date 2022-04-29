@@ -1,5 +1,5 @@
 import { Box, Card, CardContent, CardMedia, makeStyles, Typography } from "@material-ui/core";
-import React, { useContext, useEffect } from "react";
+import React, { useCallback, useContext, useEffect, useLayoutEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { StmContext } from "./contexts";
 import { pageLinks } from "./index";
@@ -95,16 +95,41 @@ export default function LessonUnit(props: { list: ITeachingList[] }) {
     }
     storage.setItem("selectPlan", JSON.stringify(temp));
   };
+  const handleScroll = useCallback(() => {
+    const scrollEle = document.getElementById("lessonbox");
+    let scrollMappingList: any[] = [];
+    props.list.map((item) => {
+      let targetUnitScrollHeight = document.getElementById(item.id)?.offsetTop;
+      let unit = item.id;
+      return scrollMappingList.push({ unit, targetUnitScrollHeight });
+    });
+
+    let scrollY: any = scrollEle && scrollEle.scrollTop;
+    if (scrollY && scrollMappingList) {
+      scrollMappingList.forEach((item, index) => {
+        if (item.targetUnitScrollHeight < scrollY && scrollY < scrollMappingList[index + 1].targetUnitScrollHeight) {
+          console.log(item.unit);
+          return item.unit;
+        }
+      });
+    }
+  }, [props]);
 
   useEffect(() => {
     var element;
-    if (unitId) {
-      element = document.getElementById(unitId);
-    }
-    if (element) {
-      (element as HTMLElement).scrollIntoView();
-    }
+    element = unitId && document.getElementById(unitId);
+    element && (element as HTMLElement).scrollIntoView();
   }, [unitId]);
+
+  useLayoutEffect(() => {
+    const scrollEle = document.getElementById("lessonbox");
+    if (scrollEle) {
+      scrollEle.addEventListener("scroll", handleScroll);
+    }
+    return () => {
+      scrollEle && scrollEle.removeEventListener("scroll", handleScroll);
+    };
+  }, [handleScroll, unitId]);
 
   return (
     <Box>
