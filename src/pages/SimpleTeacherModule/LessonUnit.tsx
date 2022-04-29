@@ -107,8 +107,13 @@ export default function LessonUnit(props: { list: ITeachingList[] }) {
     const parentHeightHalf = (scrollEle?.getBoundingClientRect().height ?? 0) / 2;
     if (scrollY) {
       for (let index = 0; index < props.list.length; index++) {
-        const targetUnitScrollHeight = document.getElementById(props.list[index].id)?.offsetTop || 0;
-        if (targetUnitScrollHeight - scrollY < parentHeightHalf && targetUnitScrollHeight - scrollY > 0) {
+        const itemEl = document.getElementById(props.list[index].id);
+        const targetUnitScrollHeight = itemEl?.offsetTop || 0;
+        const itemSelfHeight = itemEl?.getBoundingClientRect().height ?? 0;
+        if (
+          (targetUnitScrollHeight - scrollY < parentHeightHalf && targetUnitScrollHeight - scrollY > 0) ||
+          itemSelfHeight + targetUnitScrollHeight > scrollY + parentHeightHalf
+        ) {
           setRootState?.({ ...rootState, currentUnit: props.list[index].id });
           break;
         }
