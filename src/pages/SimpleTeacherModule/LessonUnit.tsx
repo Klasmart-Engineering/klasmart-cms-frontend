@@ -148,9 +148,7 @@ export default function LessonUnit(props: { list: ITeachingList[] }) {
         })
         .map((item: ITeachingList, index: number) => (
           <Box key={index} id={item.id}>
-            <Typography className={css.title}>
-              {item.id}. {item.name}
-            </Typography>
+            <Typography className={css.title}>{item.name}</Typography>
             <Box className={css.lessonunitWrap}>
               {item.lesson_plans.map((lessonItem: LessonItem, lessonIndex: number) => (
                 <Card
