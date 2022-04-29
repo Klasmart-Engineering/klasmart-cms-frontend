@@ -1,5 +1,5 @@
 import { Box, Card, CardContent, CardMedia, makeStyles, Typography } from "@material-ui/core";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { StmContext } from "./contexts";
 import { pageLinks } from "./index";
@@ -76,6 +76,7 @@ export default function LessonUnit(props: { list: ITeachingList[] }) {
   const css = useStyles();
   let history = useHistory();
   const { setRootState, ...rootState } = useContext(StmContext);
+  const { unitId } = rootState;
 
   const handleLessonClick = (payload: LessonItem, unitId: string) => {
     setRootState && setRootState({ ...rootState, planId: payload.id, lessonId: payload.no });
@@ -94,11 +95,22 @@ export default function LessonUnit(props: { list: ITeachingList[] }) {
     }
     storage.setItem("selectPlan", JSON.stringify(temp));
   };
+
+  useEffect(() => {
+    var element;
+    if (unitId) {
+      element = document.getElementById(unitId);
+    }
+    if (element) {
+      (element as HTMLElement).scrollIntoView();
+    }
+  }, [unitId]);
+
   return (
     <Box>
       {props.list.map((item: ITeachingList, index: number) => (
         <Box key={index}>
-          <Typography className={css.title}>
+          <Typography className={css.title} id={item.id}>
             {item.id} {item.name}
           </Typography>
           <Box className={css.lessonunitWrap}>
