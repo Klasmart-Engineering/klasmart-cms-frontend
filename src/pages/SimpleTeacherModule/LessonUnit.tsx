@@ -76,7 +76,6 @@ export default function LessonUnit(props: { list: ITeachingList[] }) {
   const css = useStyles();
   let history = useHistory();
   const { setRootState, ...rootState } = useContext(StmContext);
-  const { unitId } = rootState;
   const needScrollEvent = useRef(true);
   const handleLessonClick = (payload: LessonItem, unitId: string) => {
     setRootState && setRootState({ ...rootState, planId: payload.id, lessonId: payload.no });
@@ -120,12 +119,16 @@ export default function LessonUnit(props: { list: ITeachingList[] }) {
     }
   }, [props, setRootState, rootState]);
 
-  useEffect(() => {
-    var element;
-    element = unitId && document.getElementById(unitId);
+  const scrollTo = useCallback((unitId: string) => {
+    const element = document.getElementById(unitId || "");
     needScrollEvent.current = false;
     element && (element as HTMLElement).scrollIntoView();
-  }, [unitId]);
+  }, []);
+
+  useEffect(() => {
+    setRootState?.({ ...rootState, scrollTo });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useLayoutEffect(() => {
     const scrollEle = document.getElementById("lessonbox");
@@ -135,7 +138,7 @@ export default function LessonUnit(props: { list: ITeachingList[] }) {
     return () => {
       scrollEle && scrollEle.removeEventListener("scroll", handleScroll);
     };
-  }, [handleScroll, unitId]);
+  }, [handleScroll]);
 
   return (
     <Box>
