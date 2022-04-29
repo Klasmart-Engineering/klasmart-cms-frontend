@@ -450,7 +450,7 @@ export function StudentView(props: StudentViewProps) {
                           )}
                           <TableRow>
                             <TableCell align="center" className={css.totalScoreCon}>
-                              {"Total Score"}
+                              {d("Total Score").t("assessment_detail_total_score")}
                             </TableCell>
                             <TableCell></TableCell>
                             <TableCell></TableCell>
