@@ -95,7 +95,7 @@ const IconButton = withStyles({
   root: {
     position: "absolute",
     bottom: vw(31),
-    left: vw(16),
+    left: vw(26),
     fontFamily: "RooneySans",
     fontSize: vw(22),
     fontWeight: 800,
