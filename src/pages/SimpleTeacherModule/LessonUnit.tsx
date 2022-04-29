@@ -108,12 +108,11 @@ export default function LessonUnit(props: { list: ITeachingList[] }) {
     if (scrollY && scrollMappingList) {
       scrollMappingList.forEach((item, index) => {
         if (item.targetUnitScrollHeight < scrollY && scrollY < scrollMappingList[index + 1].targetUnitScrollHeight) {
-          console.log(item.unit);
-          return item.unit;
+          setRootState && setRootState({ ...rootState, currentUnit: item.unit });
         }
       });
     }
-  }, [props]);
+  }, [props, setRootState, rootState]);
 
   useEffect(() => {
     var element;
