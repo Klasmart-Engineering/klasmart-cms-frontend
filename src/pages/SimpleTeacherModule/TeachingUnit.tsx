@@ -46,7 +46,12 @@ const useStyles = makeStyles({
     flexDirection: "column",
     position: "relative",
   },
+  cardContent: {
+    padding: `${vw(45)} 0 0 ${vw(22)}`,
+  },
+
   lessoNowrap: {
+    width: "100%",
     height: vw(35),
     lineHeight: vw(35),
     marginBottom: vw(5),
@@ -90,7 +95,7 @@ const IconButton = withStyles({
   root: {
     position: "absolute",
     bottom: vw(31),
-    left: vw(26),
+    left: vw(16),
     fontFamily: "RooneySans",
     fontSize: vw(22),
     fontWeight: 800,
@@ -136,7 +141,7 @@ export default function TeachingUnit(props: { list: LessonItem[] }) {
         <Card key={index} className={css.teachingunit}>
           <CardMedia className={css.cover} image={item.thumbnail} title="" />
           <Box className={css.content}>
-            <CardContent>
+            <CardContent className={css.cardContent}>
               <Grid container className={css.lessoNowrap} item xs={12} spacing={1}>
                 <label className={css.unitBtn}>{item.unitId}</label>
                 <span className={css.lessonNo}>Lesson {item.no}</span>
