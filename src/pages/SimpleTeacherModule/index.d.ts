@@ -7,6 +7,7 @@ interface IContextState {
   presentState?: IPresentState;
   title?: string;
   currentUnit?: string;
+  scrollTo?: (unitId: string) => void;
 }
 
 interface IPresentState {
@@ -72,6 +73,7 @@ interface IUnitState {
   id: string;
   name: string;
   no: number;
+  lesson_plans: Array<LessonItem>;
 }
 
 interface LessonItem {

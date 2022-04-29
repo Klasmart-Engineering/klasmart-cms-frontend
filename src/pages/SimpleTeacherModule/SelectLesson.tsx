@@ -40,11 +40,11 @@ const useStyles = makeStyles({
 
 export default function SelectLesson() {
   const css = useStyles();
-  const [unit, setUnit] = useState<IUnitState>({ id: "unit01", name: "01", no: 1 });
+  const [unit, setUnit] = useState<IUnitState>({ id: "unit01", name: "01", no: 1, lesson_plans: [] });
   const { setRootState, ...rootState } = useContext(StmContext);
   const { currentUnit } = rootState;
   const unitChange = (unit: IUnitState) => {
-    setRootState && setRootState({ ...rootState, unitId: unit.id });
+    rootState.scrollTo?.(unit.id);
     setUnit(unit);
   };
 
