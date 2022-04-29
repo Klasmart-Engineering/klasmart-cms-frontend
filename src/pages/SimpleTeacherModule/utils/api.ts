@@ -16,8 +16,12 @@ function geUnits(params: Params = {}) {
   return axios.get(`${basicPath}/units.json?${generateURLParams(params)}`).then((res) => res.data);
 }
 
-function getLessonPlan(unitid: string, params: Params = {}) {
-  return axios.get(`${basicPath}/${unitid}/lesson_plans.json?${generateURLParams(params)}`).then((res) => res.data);
+// function getLessonPlan(unitid: string, params: Params = {}) {
+//   return axios.get(`${basicPath}/${unitid}/lesson_plans.json?${generateURLParams(params)}`).then((res) => res.data);
+// }
+
+function getLessonPlan(params: Params = {}) {
+  return axios.get(`${basicPath}/units.json?${generateURLParams(params)}`).then((res) => res.data);
 }
 
 function geLessonMaterials(planid: string, params: Params = {}) {
