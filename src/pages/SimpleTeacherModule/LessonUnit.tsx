@@ -78,7 +78,6 @@ export default function LessonUnit(props: { list: ITeachingList[] }) {
   const { setRootState, ...rootState } = useContext(StmContext);
   const { unitId } = rootState;
   const needScrollEvent = useRef(true);
-
   const handleLessonClick = (payload: LessonItem, unitId: string) => {
     setRootState && setRootState({ ...rootState, planId: payload.id, lessonId: payload.no });
     var storage = window.localStorage;
@@ -140,32 +139,36 @@ export default function LessonUnit(props: { list: ITeachingList[] }) {
 
   return (
     <Box>
-      {props.list.map((item: ITeachingList, index: number) => (
-        <Box key={index} id={item.id}>
-          <Typography className={css.title}>
-            {item.id} {item.name}
-          </Typography>
-          <Box className={css.lessonunitWrap}>
-            {item.lesson_plans.map((lessonItem: LessonItem, lessonIndex: number) => (
-              <Card
-                key={lessonIndex}
-                className={css.lessonunit}
-                onClick={() => {
-                  handleLessonClick(lessonItem, item.id);
-                }}
-              >
-                <CardMedia className={css.lessonPic} component="img" image={lessonItem.thumbnail} title="" />
-                <CardContent className={css.content}>
-                  <Typography className={css.lessonNo}>Lesson {lessonItem.no}</Typography>
-                  <Typography className={css.lessonDesp} component="p">
-                    {lessonItem.name}
-                  </Typography>
-                </CardContent>
-              </Card>
-            ))}
+      {props.list
+        .filter((item) => {
+          return item.lesson_plans.length > 0;
+        })
+        .map((item: ITeachingList, index: number) => (
+          <Box key={index} id={item.id}>
+            <Typography className={css.title}>
+              {item.id}. {item.name}
+            </Typography>
+            <Box className={css.lessonunitWrap}>
+              {item.lesson_plans.map((lessonItem: LessonItem, lessonIndex: number) => (
+                <Card
+                  key={lessonIndex}
+                  className={css.lessonunit}
+                  onClick={() => {
+                    handleLessonClick(lessonItem, item.id);
+                  }}
+                >
+                  <CardMedia className={css.lessonPic} component="img" image={lessonItem.thumbnail} title="" />
+                  <CardContent className={css.content}>
+                    <Typography className={css.lessonNo}>Lesson {lessonItem.no}</Typography>
+                    <Typography className={css.lessonDesp} component="p">
+                      {lessonItem.name}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              ))}
+            </Box>
           </Box>
-        </Box>
-      ))}
+        ))}
     </Box>
   );
 }
