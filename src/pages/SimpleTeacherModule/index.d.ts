@@ -6,6 +6,7 @@ interface IContextState {
   lessonId?: number;
   presentState?: IPresentState;
   title?: string;
+  currentUnit?: string;
 }
 
 interface IPresentState {
