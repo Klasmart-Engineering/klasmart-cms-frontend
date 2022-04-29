@@ -102,18 +102,14 @@ export default function LessonUnit(props: { list: ITeachingList[] }) {
       return;
     }
     const scrollEle = document.getElementById("lessonbox");
-    let scrollMappingList: any[] = [];
-    props.list.map((item) => {
-      let targetUnitScrollHeight = document.getElementById(item.id)?.offsetTop;
-      let unit = item.id;
-      return scrollMappingList.push({ unit, targetUnitScrollHeight });
-    });
 
-    let scrollY: any = scrollEle && scrollEle.scrollTop;
-    if (scrollY && scrollMappingList) {
-      for (let index = 0; index < scrollMappingList.length; index++) {
-        if (scrollMappingList[index].targetUnitScrollHeight < scrollY && scrollY < scrollMappingList[index + 1].targetUnitScrollHeight) {
-          setRootState && setRootState({ ...rootState, currentUnit: scrollMappingList[index].unit });
+    const scrollY = scrollEle?.scrollTop || 0;
+    const parentHeightHalf = (scrollEle?.getBoundingClientRect().height ?? 0) / 2;
+    if (scrollY) {
+      for (let index = 0; index < props.list.length; index++) {
+        const targetUnitScrollHeight = document.getElementById(props.list[index].id)?.offsetTop || 0;
+        if (targetUnitScrollHeight - scrollY < parentHeightHalf && targetUnitScrollHeight - scrollY > 0) {
+          setRootState?.({ ...rootState, currentUnit: props.list[index].id });
           break;
         }
       }

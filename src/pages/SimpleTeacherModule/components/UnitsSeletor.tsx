@@ -178,8 +178,6 @@ export default function UnitsSelector(props: Props) {
                 freeMode
                 setWrapperSize
                 centeredSlides={false}
-                allowSlideNext={false}
-                allowSlidePrev={false}
                 onSwiper={(ins) => {
                   swiper.current = ins;
                 }}
