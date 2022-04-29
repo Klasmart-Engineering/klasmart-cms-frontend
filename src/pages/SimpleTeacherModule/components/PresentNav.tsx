@@ -92,7 +92,7 @@ export default function PresentNav({ videoRef }: IPresentNavProps) {
         activeIndex: _activeIndex,
       });
     }
-    if (eventName === "fullscreen") {
+    if (eventName === "fullscreen" || eventName === "exitFullscreen") {
       setPresentState({
         isFullscreen: !isFullscreen,
       });
@@ -142,7 +142,12 @@ export default function PresentNav({ videoRef }: IPresentNavProps) {
     {
       src: require("@assets/stm/fullscreen.png").default,
       eventName: "fullscreen",
-      display: true,
+      display: !isFullscreen,
+    },
+    {
+      src: require("@assets/stm/normalscreen.png").default,
+      eventName: "exitFullscreen",
+      display: isFullscreen,
     },
     {
       src: require("@assets/stm/sound.png").default,

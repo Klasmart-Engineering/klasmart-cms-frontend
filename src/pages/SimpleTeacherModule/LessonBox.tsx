@@ -26,12 +26,11 @@ const useStyles = makeStyles({
 
 export default function LessonBox(prop: { unit: IUnitState }) {
   const css = useStyles();
-  const [state, setState] = useState<{ lessonPlans: ITeachingList[]; teachingList: ITeachingList[] }>({
+  const [state, setState] = useState<{ lessonPlans: ITeachingList[]; teachingList: LessonItem[] }>({
     lessonPlans: [],
     teachingList: [],
   });
   const [showTeach, setShowTeach] = useState<Boolean>(false);
-  const [showLesson, setShowLesson] = useState<Boolean>(true);
   const { curriculum, classLevel } = useContext(StmContext);
 
   useEffect(() => {
@@ -40,21 +39,16 @@ export default function LessonBox(prop: { unit: IUnitState }) {
     const getLesson = async () => {
       let data: ITeachingList[];
       try {
-        data = await getLessonPlan(unit.id, params);
+        data = await getLessonPlan(params);
       } catch (error) {
         data = [];
-        setShowLesson(false);
       }
-
-      data.map((item) => {
-        return (item.unitId = unit.id);
-      });
-      let teachingData: ITeachingList[] = [];
+      let teachingData: LessonItem[] = [];
       const pre = localStorage.getItem("selectPlan");
-      const preList: ITeachingList[] = pre && JSON.parse(pre);
+      const preList: LessonItem[] = pre && JSON.parse(pre);
       if (preList && preList.length > 0) {
         setShowTeach(true);
-        teachingData = preList.filter((item: ITeachingList, index: number) => {
+        teachingData = preList.filter((item: LessonItem, index: number) => {
           return index < 3;
         });
       }
@@ -72,11 +66,6 @@ export default function LessonBox(prop: { unit: IUnitState }) {
           <Typography className={css.title}>Continue Teaching</Typography>
           <TeachingUnit list={state.teachingList}></TeachingUnit>
         </Box>
-      )}
-      {showLesson && (
-        <Typography className={css.title}>
-          {prop.unit.id} {prop.unit.name}
-        </Typography>
       )}
       <LessonUnit list={state.lessonPlans}></LessonUnit>
     </Box>

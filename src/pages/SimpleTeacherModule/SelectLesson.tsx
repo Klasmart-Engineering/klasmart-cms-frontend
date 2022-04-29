@@ -42,18 +42,20 @@ export default function SelectLesson() {
   const css = useStyles();
   const [unit, setUnit] = useState<IUnitState>({ id: "unit01", name: "01", no: 1 });
   const { setRootState, ...rootState } = useContext(StmContext);
+  const { currentUnit } = rootState;
   const unitChange = (unit: IUnitState) => {
     setRootState && setRootState({ ...rootState, unitId: unit.id });
     setUnit(unit);
   };
+
   return (
     <Box className={css.root}>
       <Header showTitle backgroudColor={"#43A1FF"} prevLink="/stm/level" />
       <Grid className={css.container}>
         <Box className={css.unitSelector}>
-          <UnitsSelector onChange={unitChange} />
+          <UnitsSelector chosenUnit={currentUnit} onChange={unitChange} />
         </Box>
-        <Box className={css.lessonbox}>
+        <Box id="lessonbox" className={css.lessonbox}>
           <LessonBox unit={unit}></LessonBox>
         </Box>
       </Grid>
