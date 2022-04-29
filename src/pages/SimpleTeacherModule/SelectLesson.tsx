@@ -46,6 +46,7 @@ export default function SelectLesson() {
     setRootState && setRootState({ ...rootState, unitId: unit.id });
     setUnit(unit);
   };
+
   return (
     <Box className={css.root}>
       <Header showTitle backgroudColor={"#43A1FF"} prevLink="/stm/level" />
@@ -53,7 +54,7 @@ export default function SelectLesson() {
         <Box className={css.unitSelector}>
           <UnitsSelector onChange={unitChange} />
         </Box>
-        <Box className={css.lessonbox}>
+        <Box id="lessonbox" className={css.lessonbox}>
           <LessonBox unit={unit}></LessonBox>
         </Box>
       </Grid>
