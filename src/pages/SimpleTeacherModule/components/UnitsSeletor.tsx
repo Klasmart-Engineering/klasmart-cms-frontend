@@ -111,7 +111,9 @@ const useStyles = makeStyles({
 
 interface Props {
   onChange: (unit: IUnitState) => void;
+  chosenUnit?: string;
 }
+
 export default function UnitsSelector(props: Props) {
   const css = useStyles();
   const [mock, setMock] = useState<IUnitState[]>([]);
@@ -119,6 +121,7 @@ export default function UnitsSelector(props: Props) {
   const [isEnd, setIsEnd] = useState(false);
   const [isBeginning, setIsBeginning] = useState(true);
   const swiper = useRef<SwiperType>();
+
   useEffect(() => {
     geUnits().then((res) => {
       setMock(res);
@@ -130,6 +133,16 @@ export default function UnitsSelector(props: Props) {
   useEffect(() => {
     setIsBeginning(true);
   }, [mock]);
+
+  useEffect(() => {
+    if (props.chosenUnit) {
+      console.log(mock, props.chosenUnit);
+      const index = mock.findIndex((unit) => unit.id === props.chosenUnit) ?? 0;
+      setChosenIndex(index);
+      swiper.current?.slideTo(index);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.chosenUnit]);
 
   const changeChosenIndex = (index: number) => {
     props?.onChange?.(mock[index]);
@@ -164,6 +177,9 @@ export default function UnitsSelector(props: Props) {
                 autoHeight
                 freeMode
                 setWrapperSize
+                centeredSlides={false}
+                allowSlideNext={false}
+                allowSlidePrev={false}
                 onSwiper={(ins) => {
                   swiper.current = ins;
                 }}

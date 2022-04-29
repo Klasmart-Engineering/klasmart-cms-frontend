@@ -1,5 +1,5 @@
 import { Box, Card, CardContent, CardMedia, makeStyles, Typography } from "@material-ui/core";
-import React, { useCallback, useContext, useEffect, useLayoutEffect } from "react";
+import React, { useCallback, useContext, useEffect, useLayoutEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import { StmContext } from "./contexts";
 import { pageLinks } from "./index";
@@ -77,6 +77,7 @@ export default function LessonUnit(props: { list: ITeachingList[] }) {
   let history = useHistory();
   const { setRootState, ...rootState } = useContext(StmContext);
   const { unitId } = rootState;
+  const needScrollEvent = useRef(true);
 
   const handleLessonClick = (payload: LessonItem, unitId: string) => {
     setRootState && setRootState({ ...rootState, planId: payload.id, lessonId: payload.no });
@@ -96,6 +97,10 @@ export default function LessonUnit(props: { list: ITeachingList[] }) {
     storage.setItem("selectPlan", JSON.stringify(temp));
   };
   const handleScroll = useCallback(() => {
+    if (!needScrollEvent.current) {
+      needScrollEvent.current = true;
+      return;
+    }
     const scrollEle = document.getElementById("lessonbox");
     let scrollMappingList: any[] = [];
     props.list.map((item) => {
@@ -106,17 +111,19 @@ export default function LessonUnit(props: { list: ITeachingList[] }) {
 
     let scrollY: any = scrollEle && scrollEle.scrollTop;
     if (scrollY && scrollMappingList) {
-      scrollMappingList.forEach((item, index) => {
-        if (item.targetUnitScrollHeight < scrollY && scrollY < scrollMappingList[index + 1].targetUnitScrollHeight) {
-          setRootState && setRootState({ ...rootState, currentUnit: item.unit });
+      for (let index = 0; index < scrollMappingList.length; index++) {
+        if (scrollMappingList[index].targetUnitScrollHeight < scrollY && scrollY < scrollMappingList[index + 1].targetUnitScrollHeight) {
+          setRootState && setRootState({ ...rootState, currentUnit: scrollMappingList[index].unit });
+          break;
         }
-      });
+      }
     }
   }, [props, setRootState, rootState]);
 
   useEffect(() => {
     var element;
     element = unitId && document.getElementById(unitId);
+    needScrollEvent.current = false;
     element && (element as HTMLElement).scrollIntoView();
   }, [unitId]);
 
@@ -133,8 +140,8 @@ export default function LessonUnit(props: { list: ITeachingList[] }) {
   return (
     <Box>
       {props.list.map((item: ITeachingList, index: number) => (
-        <Box key={index}>
-          <Typography className={css.title} id={item.id}>
+        <Box key={index} id={item.id}>
+          <Typography className={css.title}>
             {item.id} {item.name}
           </Typography>
           <Box className={css.lessonunitWrap}>
