@@ -132,7 +132,6 @@ export default function TeachingUnit(props: { list: LessonItem[] }) {
   const { setRootState, ...rootState } = useContext(StmContext);
   const handleClick = (payload: LessonItem) => {
     setRootState && setRootState({ ...rootState, planId: payload.id, lessonId: payload.no });
-    console.log("1");
     history.push(pageLinks.present);
   };
 
