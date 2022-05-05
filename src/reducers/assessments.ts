@@ -1,3 +1,4 @@
+import { apiGetUserNameByUserId } from "@api/extra";
 import { AssessmentTypeValues } from "@components/AssessmentType";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import api, { gqlapi } from "../api";
@@ -112,6 +113,21 @@ export const getDetailAssessmentV2 = createAsyncThunk<IQueryDetailAssessmentResu
     });
     const my_id = myUser?.node?.id || "";
     const detail = await api.assessmentsV2.getAssessmentDetailV2(id);
+    const { teachers, students, diff_content_students } = detail;
+    const teacherIds = teachers?.map(item => item.id!) || [];
+    const studentIds = diff_content_students ? (diff_content_students.map(item => item.student_id!) || []) : (students?.map(item => item.student_id!) || []);
+    const userNamesArr = await apiGetUserNameByUserId(teacherIds.concat(studentIds));
+    detail.teachers = detail.teachers?.map(item => {
+      item.name = userNamesArr.get(item.id!);
+      return item;
+    });
+    detail.students =  diff_content_students ? diff_content_students.map(item => {
+       item.student_name = userNamesArr.get(item.student_id!);
+       return item;
+    }) : detail.students?.map(item => {
+      item.student_name = userNamesArr.get(item.student_id!);
+      return item;
+    })
     return { detail, my_id };
   }
 );
