@@ -1,5 +1,5 @@
 import { Box, Grid, makeStyles } from "@material-ui/core";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Header from "./components/Header";
 import UnitsSelector from "./components/UnitsSeletor";
 import { StmContext } from "./contexts";
@@ -47,6 +47,13 @@ export default function SelectLesson() {
     rootState.scrollTo?.(unit.id);
     setUnit(unit);
   };
+
+  useEffect(() => {
+    return () => {
+      setRootState?.({ ...rootState, currentUnit: undefined });
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Box className={css.root}>
