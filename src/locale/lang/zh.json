@@ -1146,5 +1146,6 @@
   "assessment_detail_screenshot_result_screen": "成果截图",
   "assessment_detail_total_score": "总分",
   "assessment_detail_screenshot_no_result": "对不起，这个素材暂不支持展示成果截图",
-  "assessment_detail_essay_no_result": "学生可能未提交答案。"
+  "assessment_detail_essay_no_result": "学生可能未提交答案。",
+  "assessment_search_no_matching_result": "无匹配结果"
 }

@@ -1146,5 +1146,6 @@
   "assessment_detail_screenshot_result_screen": "Results Screen",
   "assessment_detail_total_score": "Total Score",
   "assessment_detail_screenshot_no_result": "Sorry, the screenshot is not available for this lesson material.",
-  "assessment_detail_essay_no_result": "An answer has not been submitted by the student."
+  "assessment_detail_essay_no_result": "An answer has not been submitted by the student.",
+  "assessment_search_no_matching_result": "No Matching Result"
 }

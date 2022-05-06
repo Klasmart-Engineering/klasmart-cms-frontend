@@ -1146,5 +1146,6 @@
   "assessment_detail_screenshot_result_screen": "결과 화면",
   "assessment_detail_total_score": "총 점수",
   "assessment_detail_screenshot_no_result": "죄송합니다. 이 항목에 대한 스크린샷을 사용할 수 없습니다.",
-  "assessment_detail_essay_no_result": "학생이 답변을 제출하지 않았습니다."
+  "assessment_detail_essay_no_result": "학생이 답변을 제출하지 않았습니다.",
+  "assessment_search_no_matching_result": "No Matching Result"
 }
