@@ -571,6 +571,7 @@ export const ModelAssessment = {
         student_id,
         student_name,
         reviewer_comment,
+        attempted: !results?.every((r) => r.attempted === false),
         results: results?.map((rItem) => {
           const { answer, attempted, score, content } = rItem;
           return {
