@@ -2799,7 +2799,7 @@ export class Api<SecurityDataType = any> extends HttpClient<SecurityDataType> {
       query: {
         status?: string;
         query_key?: string;
-        query_type?: "TeacherName";
+        query_type?: "TeacherID";
         assessment_type: string;
         page?: number;
         page_size?: number;

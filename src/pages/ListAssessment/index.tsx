@@ -12,7 +12,7 @@ import { FirstSearchHeader, FirstSearchHeaderMb } from "../../components/Assessm
 import { AssessmentTypeValues } from "../../components/AssessmentType";
 import { emptyTip, permissionTip } from "../../components/TipImages";
 import { AppDispatch, RootState } from "../../reducers";
-import { getAssessmentListV2 } from "../../reducers/assessments";
+import { getAssessmentListV2, getUserListByName } from "../../reducers/assessments";
 import { AssessmentTable, AssessmentTableProps } from "./AssessmentTable";
 import { SecondSearchHeader, SecondSearchHeaderProps } from "./SecondSearchHeader";
 import { ThirdSearchHeader, ThirdSearchHeaderMb } from "./ThirdSearchHeader";
@@ -29,9 +29,10 @@ const useQuery = (): AssessmentQueryCondition => {
   const defaultOrderBy = isStudy ? OrderByAssessmentList._create_at : OrderByAssessmentList._class_end_time;
   const order_by = (querys.get("order_by") as OrderByAssessmentList) || defaultOrderBy;
   const status = (querys.get("status") as AssessmentStatus) || AssessmentStatus.all;
+  const teacher_name = querys.get("teacher_name") as string;
   return useMemo(() => {
-    return { ...clearNull({ query_key, status, page, order_by, query_type }), assessment_type };
-  }, [query_key, status, page, order_by, query_type, assessment_type]);
+    return { ...clearNull({ query_key, status, page, order_by, query_type, teacher_name }), assessment_type };
+  }, [query_key, status, page, order_by, query_type, teacher_name, assessment_type]);
 };
 export function ListAssessment() {
   const perm = usePermission([
@@ -55,7 +56,7 @@ export function ListAssessment() {
     perm.view_school_completed_assessments_426 ||
     perm.view_school_in_progress_assessments_427;
 
-  const { assessmentListV2, total } = useSelector<RootState, RootState["assessments"]>((state) => state.assessments);
+  const { assessmentListV2, total, teacherList } = useSelector<RootState, RootState["assessments"]>((state) => state.assessments);
   const condition = useQuery();
   const formMethods = useForm<SearchListForm>();
   const { reset } = formMethods;
@@ -66,13 +67,16 @@ export function ListAssessment() {
   };
   const handleChangeAssessmentType: SecondSearchHeaderProps["onChangeAssessmentType"] = (assessment_type) => {
     reset();
-    history.push(`/assessments/assessment-list?assessment_type=${assessment_type}&status=${AssessmentStatus.all}&page=1`);
+    history.push(`/assessments/assessment-list?assessment_type=${assessment_type}&status=${AssessmentStatus.all}&page=1&query_key=${condition.query_key}&query_type=${condition.query_type}&teacher_name=${condition.teacher_name}`);
   };
   const handleChangePage: AssessmentTableProps["onChangePage"] = (page?: number) =>
     history.push({ search: toQueryString({ ...condition, page }) });
   const handleClickAssessment: AssessmentTableProps["onClickAssessment"] = (id?: string) => {
     history.push({ pathname: DetailAssessment.routeBasePath, search: toQueryString({ id, assessment_type: condition.assessment_type }) });
   };
+  const handleSearchTeacherName: SecondSearchHeaderProps["onSearchTeacherName"] = (name) => {
+    dispatch(getUserListByName(name))
+  }
   useEffect(() => {
     dispatch(getAssessmentListV2({ ...condition, metaLoading: true }));
   }, [condition, dispatch]);
@@ -85,8 +89,10 @@ export function ListAssessment() {
           <SecondSearchHeader
             value={condition}
             formMethods={formMethods}
+            teacherList={teacherList}
             onChange={handleChange}
             onChangeAssessmentType={handleChangeAssessmentType}
+            onSearchTeacherName={handleSearchTeacherName}
           />
           <ThirdSearchHeader value={condition} onChange={handleChange} />
           <ThirdSearchHeaderMb value={condition} onChange={handleChange} onChangeAssessmentType={handleChangeAssessmentType} />

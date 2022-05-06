@@ -200,7 +200,7 @@ export type UpdateStudyAssessmentStudentIds = NonNullable<UpdataStudyAssessmentR
 export enum ExectSeachType {
   all = " ",
   // class_name = "class_name",
-  teacher_name = "TeacherName",
+  teacher_name = "TeacherID",
 }
 // 添加的被删除的接口的类型-learningsummaryreport相关 s
 export interface EntityQueryLearningSummaryRemainingFilterResultItem {
