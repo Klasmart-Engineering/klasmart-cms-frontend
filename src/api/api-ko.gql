@@ -820,3 +820,19 @@ query classNodeStudents($classId:ID!,$studentsCursor:String){
   }
 
 }
+
+query getUsersByName($filter: UserFilter,$directionArgs:ConnectionsDirectionArgs) {
+  usersConnection(filter: $filter, direction: FORWARD, directionArgs: $directionArgs) {
+    edges {
+      node {
+        id
+        givenName
+        familyName
+      }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+  }
+}
