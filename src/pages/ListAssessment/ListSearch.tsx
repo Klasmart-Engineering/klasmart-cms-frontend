@@ -139,9 +139,13 @@ export function ListSearch(props: SearchComProps) {
     }
     setSelectAction(false);
     setShowMask(false);
+    setIsfocus(false);
   };
   const handleKeyPress: TextFieldProps["onKeyPress"] = (event) => {
     if (event.key === "Enter") {
+      if(disableSearchBtn) {
+        return;
+      }
       if(!teacherNameValues) {
         onSearch("TeacherID", {id: "", name: ""})
       } else {

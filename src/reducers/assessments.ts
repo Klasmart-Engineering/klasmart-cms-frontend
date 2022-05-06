@@ -8,24 +8,18 @@ import { EntityScheduleFeedbackView } from "../api/api.auto";
 import {
   ListAssessmentResult,
   ListAssessmentResultItem,
-  OrderByAssessmentList,
-  UpdateAssessmentRequestData
+  OrderByAssessmentList
 } from "../api/type";
 import { AssessmentListResult, AssessmentStatus, AssessmentStatusValues, DetailAssessmentResult, UserEntity } from "../pages/ListAssessment/types";
 import { LoadingMetaPayload } from "./middleware/loadingMiddleware";
 import { AsyncReturnType, AsyncTrunkReturned } from "./type";
 
 export interface IAssessmentState {
-  assessmentDetail: NonNullable<AsyncReturnType<typeof api.assessments.getAssessment>>;
   my_id?: string;
   total: ListAssessmentResult["total"];
   assessmentList: ListAssessmentResultItem[];
-  // homefunDetail: V2GetOfflineStudyUserResultDetailReply;
   homefunFeedbacks: EntityScheduleFeedbackView[];
   hasPermissionOfHomefun: boolean | undefined;
-  studyAssessmentList: NonNullable<AsyncReturnType<typeof api.studyAssessments.listStudyAssessments>["items"]>;
-  studyAssessmentDetail: NonNullable<AsyncReturnType<typeof api.studyAssessments.getStudyAssessmentDetail>>;
-  contentOutcomes?: UpdateAssessmentRequestData["content_outcomes"] /** https://calmisland.atlassian.net/browse/NKL-1199 **/;
   assessmentListV2: AssessmentListResult;
   assessmentDetailV2: DetailAssessmentResult;
   attachment_path: string;
@@ -40,13 +34,9 @@ export interface IAssessmentState {
 const initialState: IAssessmentState = {
   total: undefined,
   assessmentList: [],
-  assessmentDetail: {},
   homefunFeedbacks: [],
   hasPermissionOfHomefun: false,
-  studyAssessmentList: [],
-  studyAssessmentDetail: {},
   my_id: "",
-  contentOutcomes: [],
   assessmentListV2: [],
   assessmentDetailV2: {},
   attachment_path: "",
