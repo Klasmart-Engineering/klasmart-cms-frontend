@@ -154,14 +154,14 @@ export const getUserListByName = createAsyncThunk<UserEntity[], string>(
             familyName: {
               operator: StringOperator.Contains,
               value: name,
-              caseInsensitive: false
+              caseInsensitive: true
             }
           },
           {
             givenName:  {
               operator: StringOperator.Contains,
               value: name,
-              caseInsensitive: false
+              caseInsensitive: true
             }
           }
         ]
