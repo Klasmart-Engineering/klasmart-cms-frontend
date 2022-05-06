@@ -151,7 +151,7 @@ export function ListSearch(props: SearchComProps) {
       setShowMask(false);
     }
   };
-  const handleKeyUp: TextFieldProps["onKeyUp"] = (event) => {
+  const handleKeyUp: TextFieldProps["onKeyUp"] = () => {
     const searchText = getValues()["teacherName"];
     onSearchTeacherName(searchText);
     setIsfocus(true);
@@ -214,7 +214,7 @@ export function ListSearch(props: SearchComProps) {
           onFocusCapture={handleOnFocus}
           className={css.searchText}
           onKeyPress={handleKeyPress}
-          onKeyUp={throttle(handleKeyUp, 1000)}
+          onKeyUp={throttle(handleKeyUp, 500)}
           defaultValue={defaultTeacherName}
           placeholder={d("Search teacher").t("schedule_text_search_teacher")}
         />
@@ -226,7 +226,7 @@ export function ListSearch(props: SearchComProps) {
         showList &&
         <div className={css.teacherListCon}>
           {teacherList?.length ? teacherList?.map(item => 
-            <div className={css.teacherItemCon} key={item.id} onMouseDown={e => handleSelectTeacher(item)}>
+            <div className={css.teacherItemCon} key={item.id} onClick={e => handleSelectTeacher(item)}>
               {item.name}
             </div>
           ) : <div className={css.nullCon}>{"No Matching result"}</div>} 
