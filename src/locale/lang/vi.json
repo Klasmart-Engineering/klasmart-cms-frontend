@@ -1146,5 +1146,6 @@
   "assessment_detail_screenshot_result_screen": "Màn hình kết quả",
   "assessment_detail_total_score": "Tổng Điểm",
   "assessment_detail_screenshot_no_result": "Rất tiếc, ảnh chụp màn hình không có sẵn cho học liệu này.",
-  "assessment_detail_essay_no_result": "Học sinh chưa hoàn thành câu trả lời này."
+  "assessment_detail_essay_no_result": "Học sinh chưa hoàn thành câu trả lời này.",
+  "assessment_search_no_matching_result": "No Matching Result"
 }

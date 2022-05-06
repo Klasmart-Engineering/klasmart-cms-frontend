@@ -1146,5 +1146,6 @@
   "assessment_detail_screenshot_result_screen": "Pantalla de resultados",
   "assessment_detail_total_score": "Puntuación Total",
   "assessment_detail_screenshot_no_result": "Lo sentimos, la captura de pantalla no está disponible para este material de lección.",
-  "assessment_detail_essay_no_result": "El estudiante no ha enviado una respuesta."
+  "assessment_detail_essay_no_result": "El estudiante no ha enviado una respuesta.",
+  "assessment_search_no_matching_result": "No Matching Result"
 }
