@@ -162,7 +162,7 @@
           {
             "enum": ["OfflineClass", "OnlineClass", "OnlineStudy", "OfflineStudy", "home_fun_study", "ReviewStudy"],
             "type": "string",
-            "description": "type search, the value of 'home_fun_study' is deprecated,please use 'OfflineStudy' instead",
+            "description": "type search, OfflineStudy:home_fun_study",
             "name": "type",
             "in": "query",
             "required": true
@@ -202,8 +202,8 @@
               "-done_at",
               "resubmitted_at",
               "-resubmitted_at",
-              "completed_at",
-              "-completed_at"
+              "complete_at",
+              "-complete_at"
             ],
             "type": "string",
             "default": "-create_at",
@@ -11552,6 +11552,9 @@
         },
         "id": {
           "type": "string"
+        },
+        "items_count": {
+          "type": "integer"
         },
         "name": {
           "type": "string"

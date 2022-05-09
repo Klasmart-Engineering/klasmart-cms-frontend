@@ -68,7 +68,13 @@ export function DetailForm(props: DetailFormProps) {
   const isReview = assessmentType === AssessmentTypeValues.review;
   const isHomefun = assessmentType === AssessmentTypeValues.homeFun;
   const teacherList = useMemo(() => {
-    const list = assessmentDetail.teachers?.map((v) => v.name);
+    const list = assessmentDetail.teachers?.map((v) => {
+      if (v.name) {
+        return v.name;
+      } else {
+        return d("Unknown").t("assessment_summary_label_attendance_unknown");
+      }
+    });
     const length = list && list.length ? list.length : "";
     return `${list?.join(",")} (${length})`;
   }, [assessmentDetail.teachers]);

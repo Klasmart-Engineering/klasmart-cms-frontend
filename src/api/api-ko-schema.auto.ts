@@ -26,8 +26,42 @@ export type AcademicTermConnectionNode = {
   endDate: Scalars["Date"];
   id: Scalars["ID"];
   name: Scalars["String"];
+  school: SchoolConnectionNode;
   startDate: Scalars["Date"];
   status: Status;
+};
+
+export type AcademicTermFilter = {
+  AND?: Maybe<Array<Maybe<AcademicTermFilter>>>;
+  OR?: Maybe<Array<Maybe<AcademicTermFilter>>>;
+  id?: Maybe<UuidFilter>;
+  name?: Maybe<StringFilter>;
+  status?: Maybe<StringFilter>;
+};
+
+export enum AcademicTermSortBy {
+  EndDate = "endDate",
+  Id = "id",
+  Name = "name",
+  StartDate = "startDate",
+}
+
+export type AcademicTermSortInput = {
+  field: Array<AcademicTermSortBy>;
+  order: SortOrder;
+};
+
+export type AcademicTermsConnectionEdge = IConnectionEdge & {
+  __typename?: "AcademicTermsConnectionEdge";
+  cursor?: Maybe<Scalars["String"]>;
+  node?: Maybe<AcademicTermConnectionNode>;
+};
+
+export type AcademicTermsConnectionResponse = IConnectionResponse & {
+  __typename?: "AcademicTermsConnectionResponse";
+  edges?: Maybe<Array<Maybe<AcademicTermsConnectionEdge>>>;
+  pageInfo?: Maybe<ConnectionPageInfo>;
+  totalCount?: Maybe<Scalars["Int"]>;
 };
 
 export type AcademicTermsMutationResult = {
@@ -402,6 +436,7 @@ export type ClassSetArgs = {
 
 export type ClassConnectionNode = {
   __typename?: "ClassConnectionNode";
+  academicTerm?: Maybe<AcademicTermConnectionNode>;
   /** @deprecated Sunset Date: 06/03/2022 Details: https://calmisland.atlassian.net/wiki/spaces/ATZ/pages/2473459840 */
   ageRanges?: Maybe<Array<AgeRangeConnectionNode>>;
   ageRangesConnection?: Maybe<AgeRangesConnectionResponse>;
@@ -660,6 +695,10 @@ export type DateFilter = {
   value: Scalars["String"];
 };
 
+export type DeleteAcademicTermInput = {
+  id: Scalars["ID"];
+};
+
 export type DeleteCategoryInput = {
   id: Scalars["ID"];
 };
@@ -847,6 +886,7 @@ export type Mutation = {
   createSubcategories?: Maybe<SubcategoriesMutationResult>;
   createSubjects?: Maybe<SubjectsMutationResult>;
   createUsers?: Maybe<UsersMutationResult>;
+  deleteAcademicTerms?: Maybe<AcademicTermsMutationResult>;
   deleteBrandingColor?: Maybe<Scalars["Boolean"]>;
   deleteBrandingImage?: Maybe<Scalars["Boolean"]>;
   deleteCategories?: Maybe<CategoriesMutationResult>;
@@ -1031,6 +1071,10 @@ export type MutationCreateSubjectsArgs = {
 
 export type MutationCreateUsersArgs = {
   input: Array<CreateUserInput>;
+};
+
+export type MutationDeleteAcademicTermsArgs = {
+  input: Array<DeleteAcademicTermInput>;
 };
 
 export type MutationDeleteBrandingColorArgs = {
@@ -2481,6 +2525,7 @@ export type SchoolSetArgs = {
 
 export type SchoolConnectionNode = {
   __typename?: "SchoolConnectionNode";
+  academicTermsConnection?: Maybe<AcademicTermsConnectionResponse>;
   classesConnection?: Maybe<ClassesConnectionResponse>;
   id: Scalars["ID"];
   name: Scalars["String"];
@@ -2489,6 +2534,14 @@ export type SchoolConnectionNode = {
   schoolMembershipsConnection?: Maybe<SchoolMembershipsConnectionResponse>;
   shortCode?: Maybe<Scalars["String"]>;
   status: Status;
+};
+
+export type SchoolConnectionNodeAcademicTermsConnectionArgs = {
+  count?: Maybe<Scalars["PageSize"]>;
+  cursor?: Maybe<Scalars["String"]>;
+  direction?: Maybe<ConnectionDirection>;
+  filter?: Maybe<AcademicTermFilter>;
+  sort?: Maybe<AcademicTermSortInput>;
 };
 
 export type SchoolConnectionNodeClassesConnectionArgs = {

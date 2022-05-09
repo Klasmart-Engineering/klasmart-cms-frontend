@@ -1146,5 +1146,6 @@
   "assessment_detail_screenshot_result_screen": "Layar Hasil",
   "assessment_detail_total_score": "Skor Total",
   "assessment_detail_screenshot_no_result": "Maaf, tangkapan layar tidak tersedia untuk materi pelajaran ini.",
-  "assessment_detail_essay_no_result": "Jawaban belum diserahkan oleh siswa."
+  "assessment_detail_essay_no_result": "Jawaban belum diserahkan oleh siswa.",
+  "assessment_search_no_matching_result": "No Matching Result"
 }

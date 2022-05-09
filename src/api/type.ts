@@ -95,19 +95,6 @@ export type ListAssessmentRequest = Parameters<typeof api.assessments.listAssess
 export type ListAssessmentResult = NonNullable<AsyncReturnType<typeof api.assessments.listAssessment>>;
 export type ListAssessmentResultItem = NonNullable<ListAssessmentResult["items"]>[0];
 
-export type GetAssessmentRequest = Parameters<typeof api.assessments.getAssessment>[0];
-export type GetAssessmentResult = NonNullable<AsyncReturnType<typeof api.assessments.getAssessment>>;
-export type GetAssessmentResultAttendance = NonNullable<GetAssessmentResult["students"]>[0];
-export type GetAssessmentResultOutcomeAttendanceMap = NonNullable<GetAssessmentResult["outcomes"]>[0];
-export interface FinalOutcomeList extends GetAssessmentResultOutcomeAttendanceMap {
-  partial_ids?: string[];
-}
-
-export type UpdateAssessmentRequestId = Parameters<typeof api.assessments.updateAssessment>[0];
-export type UpdateAssessmentRequestData = Parameters<typeof api.assessments.updateAssessment>[1];
-export type UpdateAssessmentRequestDatAattendanceIds = NonNullable<UpdateAssessmentRequestData>["attendance_ids"];
-export type UpdateAssessmentRequestDataLessonMaterials = NonNullable<UpdateAssessmentRequestData>["lesson_materials"];
-
 export enum SearchContentsRequestContentType {
   material = "1",
   plan = "2",
@@ -191,16 +178,10 @@ export enum StudyAssessmentOrderBy {
   _complete_at = "-complete_time",
 }
 
-export type ListStudyAssessment = AsyncReturnType<typeof api.studyAssessments.listStudyAssessments>["items"];
-export type ListStudyAssessmentItem = NonNullable<ListStudyAssessment>[0];
-export type DetailStudyAssessment = AsyncReturnType<typeof api.studyAssessments.getStudyAssessmentDetail>;
-
-export type UpdataStudyAssessmentRequestData = Parameters<typeof api.studyAssessments.updateStudyAssessment>[1];
-export type UpdateStudyAssessmentStudentIds = NonNullable<UpdataStudyAssessmentRequestData["attendance_ids"]>;
 export enum ExectSeachType {
   all = " ",
   // class_name = "class_name",
-  teacher_name = "TeacherName",
+  teacher_name = "TeacherID",
 }
 // 添加的被删除的接口的类型-learningsummaryreport相关 s
 export interface EntityQueryLearningSummaryRemainingFilterResultItem {
