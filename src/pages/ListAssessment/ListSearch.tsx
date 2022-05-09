@@ -1,8 +1,7 @@
 import { Button, makeStyles, TextField, TextFieldProps } from "@material-ui/core";
 import { Search } from "@material-ui/icons";
 import clsx from "clsx";
-import { throttle } from "lodash";
-import React, { useMemo, useState } from "react";
+import React, { ChangeEvent, useMemo, useState } from "react";
 import { Controller, useForm, UseFormMethods } from "react-hook-form";
 import { d } from "../../locale/LocaleManager";
 import { SearchListForm, UserEntity } from "./types";
@@ -114,6 +113,7 @@ export function ListSearch(props: SearchComProps) {
   const [selectAction, setSelectAction] = useState(false);
   const [showMask, setShowMask] = useState(false);
   const teacherNameValues = getValues()["teacherName"];
+  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
   const showList = isFocus && teacherNameValues;
   const disableSearchBtn = useMemo(() => {
     if(!teacher.id && !teacherNameValues) {
@@ -135,7 +135,11 @@ export function ListSearch(props: SearchComProps) {
     if(!teacherNameValues) {
       onSearch("TeacherID", {id: "", name: ""})
     } else {
-      onSearch("TeacherID", teacher);
+      if(teacherNameValues === teacher.name) {
+        onSearch("TeacherID", teacher);
+      } else {
+        onSearch("TeacherID", {id: searchTextDefaultValue!, name: teacherNameValues})
+      }
     }
     setSelectAction(false);
     setShowMask(false);
@@ -155,12 +159,12 @@ export function ListSearch(props: SearchComProps) {
       setShowMask(false);
     }
   };
-  const handleKeyUp: TextFieldProps["onKeyUp"] = () => {
-    const searchText = getValues()["teacherName"];
-    onSearchTeacherName(searchText);
-    setIsfocus(true);
-    setSelectAction(false);
-  }
+  // const handleKeyUp: TextFieldProps["onKeyUp"] = () => {
+  //   const searchText = getValues()["teacherName"];
+  //   onSearchTeacherName(searchText);
+  //   setIsfocus(true);
+  //   setSelectAction(false);
+  // }
   
   const handleSelectTeacher = (teacher: UserEntity)  => {
     setValue("teacherName", teacher.name)
@@ -181,6 +185,17 @@ export function ListSearch(props: SearchComProps) {
     setShowMask(false);
     setIsfocus(false);
     setValue("teacherName", defaultTeacherName)
+  }
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    event.persist();
+    if(timer) clearTimeout(timer);
+    const curTimer = setTimeout(() => {
+      onSearchTeacherName(event.target.value);
+      setIsfocus(true);
+      setSelectAction(false);
+    }, 500);
+    setTimer(curTimer)
   }
   
   return (
@@ -218,7 +233,8 @@ export function ListSearch(props: SearchComProps) {
           onFocusCapture={handleOnFocus}
           className={css.searchText}
           onKeyPress={handleKeyPress}
-          onKeyUp={throttle(handleKeyUp, 500)}
+          // onKeyUp={throttle(handleKeyUp, 500)}
+          onChangeCapture={handleChange}
           defaultValue={defaultTeacherName}
           placeholder={d("Search teacher").t("schedule_text_search_teacher")}
         />

@@ -72,7 +72,7 @@ export const getAssessmentListV2 = createAsyncThunk<IQueryAssessmentV2Result, IQ
           ? AssessmentStatusValues.class_live_homefun_inprogress
           : AssessmentStatusValues.complete;
     }
-    const _query = { assessment_type, page, page_size, status: _status, order_by: _order_by, query_key: query_key ? query_key : "", query_type: query_key ? query_type : undefined };
+    const _query = { assessment_type, page, page_size, status: _status, order_by: _order_by, query_key: query_key ? query_key : " ", query_type: query_key ? query_type : undefined };
     const { assessments, total } = await api.assessmentsV2.queryAssessmentV2({ ..._query, page_size: 20 });
     return { assessments, total };
   }
