@@ -19,9 +19,10 @@ import { ThirdSearchHeader, ThirdSearchHeaderMb } from "./ThirdSearchHeader";
 import { AssessmentQueryCondition, SearchListForm } from "./types";
 
 const useQuery = (): AssessmentQueryCondition => {
-  const { query_key, page, querys } = useQueryCms();
+  const { page, querys } = useQueryCms();
   const assessment_type = querys.get("assessment_type") || AssessmentTypeValues.live;
   const query_type = (querys.get("query_type") as ExectSeachType) || ExectSeachType.all;
+  const query_key = querys.get("query_key") || "";
   const isStudy =
     assessment_type === AssessmentTypeValues.study ||
     assessment_type === AssessmentTypeValues.review ||
@@ -29,7 +30,7 @@ const useQuery = (): AssessmentQueryCondition => {
   const defaultOrderBy = isStudy ? OrderByAssessmentList._create_at : OrderByAssessmentList._class_end_time;
   const order_by = (querys.get("order_by") as OrderByAssessmentList) || defaultOrderBy;
   const status = (querys.get("status") as AssessmentStatus) || AssessmentStatus.all;
-  const teacher_name = querys.get("teacher_name") as string;
+  const teacher_name = querys.get("teacher_name") as string || ""; 
   return useMemo(() => {
     return { ...clearNull({ query_key, status, page, order_by, query_type, teacher_name }), assessment_type };
   }, [query_key, status, page, order_by, query_type, teacher_name, assessment_type]);
