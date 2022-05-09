@@ -18,7 +18,7 @@ export interface SecondSearchHeaderProps extends AssessmentQueryConditionBasePro
   onChangeAssessmentType: (assessment_type: string) => void;
   formMethods: UseFormMethods<SearchListForm>;
   onSearchTeacherName: (name: string) => void;
-  teacherList: UserEntity[];
+  teacherList?: UserEntity[];
 }
 export function SecondSearchHeader(props: SecondSearchHeaderProps) {
   const { value, formMethods, teacherList, onChange, onChangeAssessmentType, onSearchTeacherName } = props;
@@ -33,7 +33,6 @@ export function SecondSearchHeader(props: SecondSearchHeaderProps) {
   };
   const handleChangeAssessmentType = (assessment_type: string) => {
     const _assessment_type = assessment_type as AssessmentTypeValues;
-    // onChange({ assessment_type: _assessment_type });
     onChangeAssessmentType(_assessment_type);
   };
 
@@ -57,19 +56,6 @@ export function SecondSearchHeader(props: SecondSearchHeaderProps) {
               </Hidden>
             </Grid>
           </Grid>
-        {/* <Hidden only={["md", "lg", "xl"]}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} sm={12}>
-              <ListSearch
-                searchTextDefaultValue={value.query_key ?? ""}
-                searchFieldDefaultValue={value.query_type}
-                searchFieldList={searchFieldList()}
-                onSearch={handleClickSearch}
-                formMethods={formMethods}
-              />
-            </Grid>
-          </Grid>
-        </Hidden> */}
       </LayoutBox>
     </div>
   );

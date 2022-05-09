@@ -114,15 +114,15 @@ export function ListSearch(props: SearchComProps) {
   const [showMask, setShowMask] = useState(false);
   const teacherNameValues = getValues()["teacherName"];
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
-  const showList = isFocus && teacherNameValues;
+  const showList = isFocus && teacherNameValues && teacherList;
   const disableSearchBtn = useMemo(() => {
     if(!teacher.id && !teacherNameValues) {
-      return false
+      return false;
     }
     if(teacherNameValues) {
       if(teacherList?.length) {
         if(selectAction) {
-          return false
+          return false;
         } else {
           return true;
         }
@@ -178,6 +178,7 @@ export function ListSearch(props: SearchComProps) {
     setIsfocus(true);
     if(searchTextDefaultValue) {
       setValue("teacherName", "")
+      onSearchTeacherName("");
     }
   }
 
@@ -233,7 +234,7 @@ export function ListSearch(props: SearchComProps) {
           onFocusCapture={handleOnFocus}
           className={css.searchText}
           onKeyPress={handleKeyPress}
-          // onKeyUp={throttle(handleKeyUp, 500)}
+          // onKeyUp={debounce(handleKeyUp, 500)}
           onChangeCapture={handleChange}
           defaultValue={defaultTeacherName}
           placeholder={d("Search teacher").t("schedule_text_search_teacher")}
@@ -244,13 +245,13 @@ export function ListSearch(props: SearchComProps) {
       </Button>
       {
         showList &&
-        <div className={css.teacherListCon}>
-          {teacherList?.length ? teacherList?.map(item => 
-            <div className={css.teacherItemCon} key={item.id} onClick={e => handleSelectTeacher(item)}>
-              {item.name}
-            </div>
-          ) : <div className={css.nullCon}>{"No Matching result"}</div>} 
-        </div>
+          <div className={css.teacherListCon}>
+            {teacherList?.length ? teacherList?.map(item => 
+              <div className={css.teacherItemCon} key={item.id} onClick={e => handleSelectTeacher(item)}>
+                {item.name}
+              </div>
+            ) : <div className={css.nullCon}>{"No Matching result"}</div>} 
+          </div>
        }
        </div>
     </div>
