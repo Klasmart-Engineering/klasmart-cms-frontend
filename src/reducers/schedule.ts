@@ -918,10 +918,10 @@ export const getScheduleParticipant = createAsyncThunk<getScheduleParticipantsMo
   }
 );
 
-type GetContentsAuthedParams = Parameters<typeof api.contentsAuthed.queryAuthContent>[0];
-type GetContentsAuthedResult = ReturnType<typeof api.contentsAuthed.queryAuthContent>;
+type GetContentsAuthedParams = Parameters<typeof api.contentsAuthed.querySharedContent>[0];
+type GetContentsAuthedResult = ReturnType<typeof api.contentsAuthed.querySharedContent>;
 export const getContentsAuthed = createAsyncThunk<GetContentsAuthedResult, GetContentsAuthedParams>("getContentsAuthed", async (query) => {
-  return api.contentsAuthed.queryAuthContent({ ...query });
+  return api.contentsAuthed.querySharedContent({ ...query });
 });
 
 // contentEdit搜索contentlist
@@ -930,7 +930,7 @@ type IQueryContentsResult = AsyncReturnType<typeof api.contents.searchContents>;
 export const searchAuthContentLists = createAsyncThunk<IQueryContentsResult, IQueryContentsParams>(
   "searchAuthContentLists",
   async ({ metaLoading, ...query }) => {
-    const { list, total } = await api.contentsAuthed.queryAuthContent({ page_size: 10, ...query });
+    const { list, total } = await api.contentsAuthed.querySharedContent({ page_size: 10, ...query });
     return { list, total };
   }
 );

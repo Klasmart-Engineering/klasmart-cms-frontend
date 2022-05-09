@@ -481,7 +481,7 @@ interface IQyertOnLoadContentListResult {
   pendingRes?: AsyncReturnType<typeof api.contentsPending.searchPendingContents>;
   privateRes?: AsyncReturnType<typeof api.contentsPrivate.searchPrivateContents>;
   contentRes?: AsyncReturnType<typeof api.contents.searchContents>;
-  badaContent?: AsyncReturnType<typeof api.contentsAuthed.queryAuthContent>;
+  badaContent?: AsyncReturnType<typeof api.contentsShared.querySharedContentV2>;
   organization_id: string;
 }
 export const onLoadContentList = createAsyncThunk<IQyertOnLoadContentListResult, IQueryOnLoadContentList, { state: RootState }>(
@@ -552,7 +552,7 @@ export const onLoadContentList = createAsyncThunk<IQyertOnLoadContentListResult,
       delete params.content_type;
       delete params.path;
       params.submenu = program_group === ProgramGroup.moreFeaturedContent ? SubmenuType.moreFeatured : SubmenuType.badanamu;
-      const badaContent = await api.contentsAuthed.queryAuthContent(params);
+      const badaContent = await api.contentsShared.querySharedContentV2({ ...params, parent_id });
       return { badaContent, organization_id };
     } else {
       delete params.path;
@@ -600,7 +600,7 @@ export const searchContentLists = createAsyncThunk<IQueryContentsResult, IQueryC
 export const searchAuthContentLists = createAsyncThunk<IQueryContentsResult, IQueryContentsParams>(
   "searchAuthContentLists",
   async ({ metaLoading, ...query }) => {
-    const { list, total } = await api.contentsAuthed.queryAuthContent({ page_size: 10, ...query });
+    const { list, total } = await api.contentsAuthed.querySharedContent({ page_size: 10, ...query });
     return { list, total };
   }
 );
@@ -1337,7 +1337,7 @@ const { actions, reducer } = createSlice({
       }
       if (payload.badaContent) {
         state.total = payload.badaContent.total;
-        state.contentsList = payload.badaContent.list || [];
+        state.contentsList = payload.badaContent.items || [];
       }
     },
     [getOrgProperty.fulfilled.type]: (state, { payload }: PayloadAction<AsyncTrunkReturned<typeof getOrgProperty>>) => {

@@ -37,7 +37,6 @@ const useStyles = makeStyles((theme) => ({
     textTransform: "capitalize",
   },
   searchBtn: {
-    // width: "98px",
     height: "40px",
     backgroundColor: "#0E78D5",
     marginLeft: "10px",
@@ -57,7 +56,6 @@ const useStyles = makeStyles((theme) => ({
     padding: "20px 0px 10px 0px",
   },
   searchText: {
-    // width: "34%",
     "& .MuiOutlinedInput-notchedOutline": {
       border: 0,
       borderRadius: 0,
@@ -98,7 +96,7 @@ const useStyles = makeStyles((theme) => ({
     boxSizing: "border-box",
     verticalAlign: "top",
   },
-})); //todo接口
+}));
 
 export interface options {
   label?: string;
