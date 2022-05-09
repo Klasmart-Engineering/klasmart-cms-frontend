@@ -24,7 +24,7 @@ export interface IAssessmentState {
   assessmentDetailV2: DetailAssessmentResult;
   attachment_path: string;
   attachment_id: string;
-  teacherList: UserEntity[];
+  teacherList: UserEntity[] | undefined;
 }
 
 // interface RootState {
@@ -41,7 +41,7 @@ const initialState: IAssessmentState = {
   assessmentDetailV2: {},
   attachment_path: "",
   attachment_id: "",
-  teacherList: []
+  teacherList: undefined,
 };
 
 type IQueryAssessmentV2Params = Parameters<typeof api.assessmentsV2.queryAssessmentV2>[0] & LoadingMetaPayload;
@@ -111,9 +111,10 @@ export const getDetailAssessmentV2 = createAsyncThunk<IQueryDetailAssessmentResu
   }
 );
 
-export const getUserListByName = createAsyncThunk<UserEntity[], string>(
+export const getUserListByName = createAsyncThunk<UserEntity[] | undefined, string>(
   "assessments/getUserListByName",
   async (name) => {
+    if (!name) return undefined;
     const { data: roleData } = await gqlapi.query<GetRolesIdQuery, GetRolesIdQueryVariables>({
       query: GetRolesIdDocument,
       variables: {
@@ -169,7 +170,7 @@ export const getUserListByName = createAsyncThunk<UserEntity[], string>(
         id: item?.node?.id as string,
         name: `${item?.node?.givenName} ${item?.node?.familyName}` as string
       }
-    }) ?? []
+    })
     return teacherList;
   }
 )
@@ -221,7 +222,10 @@ const { reducer } = createSlice({
     },
     [getUserListByName.fulfilled.type]: (state, {payload}: any) => {
       state.teacherList = payload;
-    }
+    },
+    [getUserListByName.pending.type]: (state, { payload }: PayloadAction<AsyncTrunkReturned<typeof getUserListByName>>) => {
+      state.teacherList = initialState.teacherList;
+    },
   },
 });
 
