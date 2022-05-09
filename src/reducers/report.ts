@@ -2413,11 +2413,13 @@ const { actions, reducer } = createSlice({
     [getAssignmentsCompletion.fulfilled.type]: (state, { payload }: PayloadAction<AsyncTrunkReturned<typeof getAssignmentsCompletion>>) => {
       state.assignmentsCompletion = payload;
       const stuList = [{ id: "", name: "" }];
-      state.schoolClassesStudentsSubjects.classList.map((item) =>
-        item.students?.map((val) =>
+      let data = [] as any;
+      data = data.concat(state.schoolClassesStudentsSubjects.classList, state.schoolClassesStudentsSubjects.noneSchoolClassList);
+      data.map((item: any) =>
+        item.students?.map((val: any) =>
           stuList.push({
             id: val?.user_id!,
-            name: val?.user_name!,
+            name: val?.user_name! || val?.full_name!,
           })
         )
       );
@@ -2446,11 +2448,13 @@ const { actions, reducer } = createSlice({
     ) => {
       state.learnOutcomeClassAttendance = payload;
       const stuList = [{ id: "", name: "" }];
-      state.schoolClassesStudentsSubjects.classList.map((item) =>
-        item.students?.map((val) =>
+      let data = [] as any;
+      data = data.concat(state.schoolClassesStudentsSubjects.classList, state.schoolClassesStudentsSubjects.noneSchoolClassList);
+      data.map((item: any) =>
+        item.students?.map((val: any) =>
           stuList.push({
             id: val?.user_id!,
-            name: val?.user_name!,
+            name: val?.user_name! || val?.full_name!,
           })
         )
       );
@@ -2478,11 +2482,13 @@ const { actions, reducer } = createSlice({
     ) => {
       state.learnOutcomeAchievement = payload;
       const stuList = [{ id: "", name: "" }];
-      state.schoolClassesStudentsSubjects.classList.map((item) =>
-        item.students?.map((val) =>
+      let data = [] as any;
+      data = data.concat(state.schoolClassesStudentsSubjects.classList, state.schoolClassesStudentsSubjects.noneSchoolClassList);
+      data.map((item: any) =>
+        item.students?.map((val: any) =>
           stuList.push({
             id: val?.user_id!,
-            name: val?.user_name!,
+            name: val?.user_name! || val?.full_name!,
           })
         )
       );
