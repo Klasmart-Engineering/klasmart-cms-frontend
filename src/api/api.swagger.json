@@ -2534,8 +2534,8 @@
           },
           {
             "type": "string",
-            "description": "dir_path",
-            "name": "dir_path",
+            "description": "parent_id",
+            "name": "parent_id",
             "in": "query"
           }
         ],
@@ -9938,6 +9938,9 @@
         },
         "pager": {
           "$ref": "#/definitions/utils.Pager"
+        },
+        "parent_id": {
+          "type": "string"
         },
         "parents_path": {
           "$ref": "#/definitions/entity.NullStrings"

@@ -265,8 +265,6 @@ export default function MyContentList() {
     setParentId(parent_id);
     setFolderForm({});
     openFolderForm();
-    // await refreshWithDispatch(dispatch(addFolder({ content_type: condition.content_type, parent_id: parent_id })).then(unwrapResult));
-    // await dispatch(searchOrgFolderItems({ content_type: condition.content_type as string, metaLoading: true }));
   };
   const handleClickAddFolderBtn: SecondSearchHeaderProps["onNewFolder"] = async () => {
     setParentId("");
@@ -304,7 +302,6 @@ export default function MyContentList() {
     openFolderTree();
   };
   const handleGoback: ContentCardListProps["onGoBack"] = () => {
-    // history.push({ search: toQueryString({ ...condition, path: `${parentFolderInfo.dir_path}` }) });
     history.goBack();
   };
 
@@ -531,13 +528,15 @@ export default function MyContentList() {
               onClickShareBtn={handleClickShareBtn}
             />
           ) : JSON.stringify(parentFolderInfo) !== "{}" &&
-            (condition.publish_status === PublishStatus.published ||
+            (condition.program_group ||
+              condition.publish_status === PublishStatus.published ||
               condition.content_type === SearchContentsRequestContentType.assetsandfolder) ? (
             <LayoutBox holderMin={40} holderBase={202} mainBase={1517}>
               <BackToPrevPage
                 onGoBack={handleGoback}
                 parentFolderInfo={{ ...parentFolderInfo, available: total }}
                 onRenameFolder={handleClickRenameFolder}
+                isEdit={!condition.program_group}
               />
             </LayoutBox>
           ) : (

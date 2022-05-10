@@ -497,7 +497,7 @@ export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
     if (event.target.value === BulkAction.move) onBulkMove();
     if (event.target.value === BulkAction.deleteFolder) onBulkDeleteFolder();
     if (event.target.value === BulkAction.approve) onBulkApprove();
-    if (event.target.value === BulkAction.reject) onBulkReject(); // if (event.target.value === BulkAction.exportCsv) onExportCSV();
+    if (event.target.value === BulkAction.reject) onBulkReject();
   };
 
   const { setValue } = conditionFormMethods;
@@ -538,67 +538,59 @@ export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
               marginTop: "6px",
             }}
           >
-            {/* <Grid item sm={unpublish ? 3 : 6} xs={unpublish ? 3 : 6} md={unpublish ? 3 : 6}> */}
-            <div className={unpublish ? classes.unpubCon : classes.notUnpubCon}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    icon={<CheckBoxOutlineBlank viewBox="3 3 18 18"></CheckBoxOutlineBlank>}
-                    checkedIcon={<CheckBox viewBox="3 3 18 18"></CheckBox>}
-                    size="small"
-                    color="secondary"
-                    checked={ids.length > 0 && ids.length === contentList.length}
-                    onChange={(e) => {
-                      setValue(ContentListFormKey.CHECKED_CONTENT_IDS, e.target.checked ? contentList.map((item) => item.id) : []);
+            {!value.program_group && (
+              <div className={unpublish ? classes.unpubCon : classes.notUnpubCon}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      icon={<CheckBoxOutlineBlank viewBox="3 3 18 18"></CheckBoxOutlineBlank>}
+                      checkedIcon={<CheckBox viewBox="3 3 18 18"></CheckBox>}
+                      size="small"
+                      color="primary"
+                      checked={ids.length > 0 && ids.length === contentList.length}
+                      onChange={(e) => {
+                        setValue(ContentListFormKey.CHECKED_CONTENT_IDS, e.target.checked ? contentList.map((item) => item.id) : []);
+                      }}
+                    />
+                  }
+                  label={d("Select All").t("schedule_detail_select_all")}
+                />
+                <span className={classes.selectAll}>{t("library_label_files_selected", { value: ids.length.toString() })}</span>
+                {bulkOptions.length > 0 && (
+                  <TextField
+                    className={classes.bulkActionCon}
+                    style={{
+                      width: 170,
                     }}
-                  />
-                }
-                label={d("Select All").t("schedule_detail_select_all")}
-              />
-              <span className={classes.selectAll}>{t("library_label_files_selected", { value: ids.length.toString() })}</span>
-              {bulkOptions.length > 0 && (
-                <TextField
-                  className={classes.bulkActionCon}
-                  style={{
-                    width: 170,
-                  }}
-                  size="small"
-                  onChange={handleChangeBulkAction}
-                  label={d("Bulk Actions").t("library_label_bulk_actions")}
-                  value=""
-                  select
-                  SelectProps={{
-                    MenuProps: {
-                      transformOrigin: {
-                        vertical: -40,
-                        horizontal: "left",
+                    size="small"
+                    onChange={handleChangeBulkAction}
+                    label={d("Bulk Actions").t("library_label_bulk_actions")}
+                    value=""
+                    select
+                    SelectProps={{
+                      MenuProps: {
+                        transformOrigin: {
+                          vertical: -40,
+                          horizontal: "left",
+                        },
                       },
-                    },
-                  }}
-                >
-                  {bulkOptions}
-                </TextField>
-              )}
-            </div>
-            {/* </Grid> */}
+                    }}
+                  >
+                    {bulkOptions}
+                  </TextField>
+                )}
+              </div>
+            )}
             {unpublish && (
-              // <Grid item sm={6} xs={6} md={6}>
               <div style={{ width: "324px", padding: "12px", boxSizing: "border-box" }}>
                 <SubUnpublished value={value} onChange={onChange} />
               </div>
-              // </Grid>
             )}
-            {/* <Grid
-              container
-              direction="row"
-              justify="flex-end"
-              alignItems="center"
-              item
-              sm={unpublish ? 3 : 6}
-              xs={unpublish ? 3 : 6}
-              md={unpublish ? 3 : 6}
-            > */}
-            <div className={unpublish ? classes.unpubCon : classes.notUnpubCon} style={{ textAlign: "right" }}>
+
+            <div
+              className={unpublish ? classes.unpubCon : classes.notUnpubCon}
+              style={{ textAlign: "right", width: value.program_group ? "100%" : "" }}
+            >
               <TextField
                 size="small"
                 style={{
@@ -620,7 +612,6 @@ export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
                 {orderbyOptions}
               </TextField>
             </div>
-            {/* </Grid> */}
           </Grid>
         </Hidden>
       </LayoutBox>
@@ -672,7 +663,7 @@ export function ThirdSearchHeaderMb(props: ThirdSearchHeaderProps) {
     if (bulkaction === BulkAction.move) onBulkMove();
     if (bulkaction === BulkAction.deleteFolder) onBulkDeleteFolder();
     if (bulkaction === BulkAction.approve) onBulkApprove();
-    if (bulkaction === BulkAction.reject) onBulkReject(); // if (bulkaction === BulkAction.exportCsv) onExportCSV();
+    if (bulkaction === BulkAction.reject) onBulkReject();
   };
 
   const handleClose = () => {
@@ -727,22 +718,26 @@ export function ThirdSearchHeaderMb(props: ThirdSearchHeaderProps) {
             }}
           >
             <Grid item sm={9} xs={9}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    icon={<CheckBoxOutlineBlank viewBox="3 3 18 18"></CheckBoxOutlineBlank>}
-                    checkedIcon={<CheckBox viewBox="3 3 18 18"></CheckBox>}
-                    size="small"
-                    color="secondary"
-                    checked={ids.length > 0 && ids.length === contentList.length}
-                    onChange={(e) => {
-                      setValue(ContentListFormKey.CHECKED_CONTENT_IDS, e.target.checked ? contentList.map((item) => item.id) : []);
-                    }}
-                  />
-                }
-                label={d("Select All").t("schedule_detail_select_all")}
-              />
-              <span className={classes.selectAll}>{t("library_label_files_selected", { value: ids.length.toString() })}</span>
+              {!value.program_group && (
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      icon={<CheckBoxOutlineBlank viewBox="3 3 18 18"></CheckBoxOutlineBlank>}
+                      checkedIcon={<CheckBox viewBox="3 3 18 18"></CheckBox>}
+                      size="small"
+                      color="primary"
+                      checked={ids.length > 0 && ids.length === contentList.length}
+                      onChange={(e) => {
+                        setValue(ContentListFormKey.CHECKED_CONTENT_IDS, e.target.checked ? contentList.map((item) => item.id) : []);
+                      }}
+                    />
+                  }
+                  label={d("Select All").t("schedule_detail_select_all")}
+                />
+              )}
+              {!value.program_group && (
+                <span className={classes.selectAll}>{t("library_label_files_selected", { value: ids.length.toString() })}</span>
+              )}
               {unpublish && <SubUnpublished value={value} onChange={onChange} />}
             </Grid>
             <Grid container justify="flex-end" alignItems="center" item sm={3} xs={3}>

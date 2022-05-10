@@ -66,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: 10,
     "&:hover": {
       backgroundColor: "#0E78D5",
-    }
+    },
   },
   nullCon: {
     lineHeight: "40px",
@@ -84,7 +84,7 @@ const useStyles = makeStyles((theme) => ({
     opacity: 1,
     transition: "opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
     backgroundColor: "rgba(0, 0, 0, 0.5)",
-  }
+  },
 }));
 
 export interface Options {
@@ -108,7 +108,7 @@ export function ListSearch(props: SearchComProps) {
   const { searchTextDefaultValue, defaultTeacherName, teacherList, onSearch, onSearchTeacherName } = props;
   const formMethods = useForm();
   const { control, getValues, setValue } = formMethods;
-  const [teacher, setTeacher] = useState<UserEntity>({id: "", name: ""});
+  const [teacher, setTeacher] = useState<UserEntity>({ id: "", name: "" });
   const [isFocus, setIsfocus] = useState(false);
   const [selectAction, setSelectAction] = useState(false);
   const [showMask, setShowMask] = useState(false);
@@ -116,29 +116,29 @@ export function ListSearch(props: SearchComProps) {
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
   const showList = isFocus && teacherNameValues && teacherList;
   const disableSearchBtn = useMemo(() => {
-    if(!teacher.id && !teacherNameValues) {
+    if (!teacher.id && !teacherNameValues) {
       return false;
     }
-    if(teacherNameValues) {
-      if(teacherList?.length) {
-        if(selectAction) {
+    if (teacherNameValues) {
+      if (teacherList?.length) {
+        if (selectAction) {
           return false;
         } else {
           return true;
         }
       } else {
-        return true
+        return true;
       }
     }
-  }, [selectAction, teacher.id, teacherList?.length, teacherNameValues])
+  }, [selectAction, teacher.id, teacherList?.length, teacherNameValues]);
   const handleClickSearch = () => {
-    if(!teacherNameValues) {
-      onSearch("TeacherID", {id: "", name: ""})
+    if (!teacherNameValues) {
+      onSearch("TeacherID", { id: "", name: "" });
     } else {
-      if(teacherNameValues === teacher.name) {
+      if (teacherNameValues === teacher.name) {
         onSearch("TeacherID", teacher);
       } else {
-        onSearch("TeacherID", {id: searchTextDefaultValue!, name: teacherNameValues})
+        onSearch("TeacherID", { id: searchTextDefaultValue!, name: teacherNameValues });
       }
     }
     setSelectAction(false);
@@ -147,11 +147,11 @@ export function ListSearch(props: SearchComProps) {
   };
   const handleKeyPress: TextFieldProps["onKeyPress"] = (event) => {
     if (event.key === "Enter") {
-      if(disableSearchBtn) {
+      if (disableSearchBtn) {
         return;
       }
-      if(!teacherNameValues) {
-        onSearch("TeacherID", {id: "", name: ""})
+      if (!teacherNameValues) {
+        onSearch("TeacherID", { id: "", name: "" });
       } else {
         onSearch("TeacherID", teacher);
       }
@@ -165,46 +165,46 @@ export function ListSearch(props: SearchComProps) {
   //   setIsfocus(true);
   //   setSelectAction(false);
   // }
-  
-  const handleSelectTeacher = (teacher: UserEntity)  => {
-    setValue("teacherName", teacher.name)
+
+  const handleSelectTeacher = (teacher: UserEntity) => {
+    setValue("teacherName", teacher.name);
     setTeacher(teacher);
     setIsfocus(false);
     setSelectAction(true);
-  }
+  };
 
-  const handleOnFocus = () => { 
+  const handleOnFocus = () => {
     setShowMask(true);
     setIsfocus(true);
-    if(searchTextDefaultValue) {
-      setValue("teacherName", "")
+    if (searchTextDefaultValue) {
+      setValue("teacherName", "");
       onSearchTeacherName("");
     }
-  }
+  };
 
   const handleHideMask = () => {
     setShowMask(false);
     setIsfocus(false);
-    setValue("teacherName", defaultTeacherName)
-  }
+    setValue("teacherName", defaultTeacherName);
+  };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     event.persist();
-    if(timer) clearTimeout(timer);
+    if (timer) clearTimeout(timer);
     const curTimer = setTimeout(() => {
       onSearchTeacherName(event.target.value);
       setIsfocus(true);
       setSelectAction(false);
     }, 500);
-    setTimer(curTimer)
-  }
-  
+    setTimer(curTimer);
+  };
+
   return (
     <div className={clsx(css.searchWrap, isFocus ? css.bigZindex : "")}>
       {showMask && <MaskCom onHideMask={handleHideMask} />}
-      <div style={{position: "relative"}}>
-      <div className={css.searchCon}>
-        {/* <Controller
+      <div style={{ position: "relative" }}>
+        <div className={css.searchCon}>
+          {/* <Controller
           as={TextField}
           control={control}
           name={SearchListFormKey.EXECT_SEARCH}
@@ -223,37 +223,40 @@ export function ListSearch(props: SearchComProps) {
         >
           {menuItemList(searchFieldList)}
         </Controller> */}
-        <Controller
-          style={{
-            borderLeft: 0,
-          }}
-          as={TextField}
-          name={"teacherName"}
-          control={control}
-          size="small"
-          onFocusCapture={handleOnFocus}
-          className={css.searchText}
-          onKeyPress={handleKeyPress}
-          // onKeyUp={debounce(handleKeyUp, 500)}
-          onChangeCapture={handleChange}
-          defaultValue={defaultTeacherName}
-          placeholder={d("Search teacher").t("schedule_text_search_teacher")}
-        />
-      </div>
-      <Button variant="contained" color="primary" disabled={disableSearchBtn} className={css.searchBtn} onClick={handleClickSearch}>
-        <Search /> {d("Search").t("assess_label_search")}
-      </Button>
-      {
-        showList &&
+          <Controller
+            style={{
+              borderLeft: 0,
+            }}
+            as={TextField}
+            name={"teacherName"}
+            control={control}
+            size="small"
+            onFocusCapture={handleOnFocus}
+            className={css.searchText}
+            onKeyPress={handleKeyPress}
+            // onKeyUp={debounce(handleKeyUp, 500)}
+            onChangeCapture={handleChange}
+            defaultValue={defaultTeacherName}
+            placeholder={d("Search teacher").t("schedule_text_search_teacher")}
+          />
+        </div>
+        <Button variant="contained" color="primary" disabled={disableSearchBtn} className={css.searchBtn} onClick={handleClickSearch}>
+          <Search /> {d("Search").t("assess_label_search")}
+        </Button>
+        {showList && (
           <div className={css.teacherListCon}>
-            {teacherList?.length ? teacherList?.map(item => 
-              <div className={css.teacherItemCon} key={item.id} onClick={e => handleSelectTeacher(item)}>
-                {item.name}
-              </div>
-            ) : <div className={css.nullCon}>{"No Matching result"}</div>} 
+            {teacherList?.length ? (
+              teacherList?.map((item) => (
+                <div className={css.teacherItemCon} key={item.id} onClick={(e) => handleSelectTeacher(item)}>
+                  {item.name}
+                </div>
+              ))
+            ) : (
+              <div className={css.nullCon}>{"No Matching result"}</div>
+            )}
           </div>
-       }
-       </div>
+        )}
+      </div>
     </div>
   );
 }
@@ -268,6 +271,6 @@ export function MaskCom(props: MaskComProps) {
   const { onHideMask } = props;
   const handleClick = () => {
     onHideMask();
-  }
-  return (<div className={css.mask} onClick={handleClick}></div>)
+  };
+  return <div className={css.mask} onClick={handleClick}></div>;
 }

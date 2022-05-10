@@ -30,7 +30,7 @@ const useQuery = (): AssessmentQueryCondition => {
   const defaultOrderBy = isStudy ? OrderByAssessmentList._create_at : OrderByAssessmentList._class_end_time;
   const order_by = (querys.get("order_by") as OrderByAssessmentList) || defaultOrderBy;
   const status = (querys.get("status") as AssessmentStatus) || AssessmentStatus.all;
-  const teacher_name = querys.get("teacher_name") as string || ""; 
+  const teacher_name = (querys.get("teacher_name") as string) || "";
   return useMemo(() => {
     return { ...clearNull({ query_key, status, page, order_by, query_type, teacher_name }), assessment_type };
   }, [query_key, status, page, order_by, query_type, teacher_name, assessment_type]);
@@ -68,7 +68,9 @@ export function ListAssessment() {
   };
   const handleChangeAssessmentType: SecondSearchHeaderProps["onChangeAssessmentType"] = (assessment_type) => {
     reset();
-    history.push(`/assessments/assessment-list?assessment_type=${assessment_type}&status=${AssessmentStatus.all}&page=1&query_key=${condition.query_key}&query_type=${condition.query_type}&teacher_name=${condition.teacher_name}`);
+    history.push(
+      `/assessments/assessment-list?assessment_type=${assessment_type}&status=${AssessmentStatus.all}&page=1&query_key=${condition.query_key}&query_type=${condition.query_type}&teacher_name=${condition.teacher_name}`
+    );
   };
   const handleChangePage: AssessmentTableProps["onChangePage"] = (page?: number) =>
     history.push({ search: toQueryString({ ...condition, page }) });
@@ -76,8 +78,8 @@ export function ListAssessment() {
     history.push({ pathname: DetailAssessment.routeBasePath, search: toQueryString({ id, assessment_type: condition.assessment_type }) });
   };
   const handleSearchTeacherName: SecondSearchHeaderProps["onSearchTeacherName"] = (name) => {
-    dispatch(getUserListByName(name))
-  }
+    dispatch(getUserListByName(name));
+  };
   useEffect(() => {
     dispatch(getAssessmentListV2({ ...condition, metaLoading: true }));
   }, [condition, dispatch]);

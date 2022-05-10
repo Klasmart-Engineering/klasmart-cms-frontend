@@ -1,22 +1,20 @@
 import { AssessmentTypeValues } from "@components/AssessmentType";
 import { Dimension } from "@pages/DetailAssessment/MultiSelect";
-import {
-  V2AssessmentContentReply
-} from "../api/api.auto";
-import { } from "../api/type";
+import { V2AssessmentContentReply } from "../api/api.auto";
+import {} from "../api/type";
 import {
   MaterialViewItemResultProps,
   OutcomeStatus,
   OverAllOutcomesItem,
   StudentParticipate,
   StudentViewItemsProps,
-  SubDimensionOptions
+  SubDimensionOptions,
 } from "../pages/DetailAssessment/type";
 import {
   DetailAssessmentResult,
   DetailAssessmentResultContent,
   DetailAssessmentResultOutcome,
-  DetailAssessmentResultStudent
+  DetailAssessmentResultStudent,
 } from "../pages/ListAssessment/types";
 // interface ObjContainId {
 //   id?: string;

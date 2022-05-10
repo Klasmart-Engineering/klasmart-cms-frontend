@@ -69,8 +69,8 @@ export function DetailForm(props: DetailFormProps) {
   const isHomefun = assessmentType === AssessmentTypeValues.homeFun;
   const teacherList = useMemo(() => {
     const list = assessmentDetail.teachers?.map((v) => {
-      if(v.name) {
-        return v.name
+      if (v.name) {
+        return v.name;
       } else {
         return d("Unknown").t("assessment_summary_label_attendance_unknown");
       }

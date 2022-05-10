@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) =>
       fontSize: 24,
     },
   })
-); // const FOLDER_NAME = "FOLDER_NAME";
+);
 
 const REMARK = "REMARK";
 const KEYWORDS = "KEYWORDS";
@@ -109,7 +109,6 @@ export function FolderForm(props: FolderFormProps) {
               className={css.textField}
               autoFocus={true}
               rules={{
-                // required: d("Server request failed").t("general_error_unknown"),
                 ...rules,
               }}
               error={errors.FOLDER_NAME ? true : false}
@@ -141,7 +140,7 @@ export function FolderForm(props: FolderFormProps) {
               decode={decodeArray}
               defaultValue={folderForm?.keywords || []}
               className={css.textField}
-              fullWidth // variant="outlined"
+              fullWidth
             />
           </div>
         </div>

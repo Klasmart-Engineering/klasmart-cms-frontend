@@ -1507,6 +1507,21 @@ export interface EntityTeacherLoadLesson {
   teacher_id?: string;
   total_scheduled?: number;
 }
+export interface EntityQuerySharedContentV2Item {
+  author?: string;
+  author_name?: string;
+  content_type?: number;
+  dir_path?: string;
+  id?: string;
+  name?: string;
+  publish_status?: string;
+  thumbnail?: string;
+}
+
+export interface EntityQuerySharedContentV2Response {
+  items?: EntityQuerySharedContentV2Item[];
+  total?: number;
+}
 
 export interface EntityTeacherLoadLessonRequest {
   class_ids?: string[];
@@ -2817,12 +2832,12 @@ export class Api<SecurityDataType = any> extends HttpClient<SecurityDataType> {
   contentsAuthed = {
     /**
      * @tags content
-     * @name queryAuthContent
-     * @summary queryAuthContent
+     * @name querySharedContent
+     * @summary querySharedContent
      * @request GET:/contents_authed
      * @description query authed content by condition
      */
-    queryAuthContent: (
+    querySharedContent: (
       query?: {
         name?: string;
         content_type?: string;
@@ -2863,6 +2878,35 @@ export class Api<SecurityDataType = any> extends HttpClient<SecurityDataType> {
      */
     publishContentBulk: (contentIds: ApiContentBulkOperateRequest, params?: RequestParams) =>
       this.request<string, ApiBadRequestResponse | ApiInternalServerErrorResponse>(`/contents_bulk/publish`, "PUT", params, contentIds),
+  };
+  contentsShared = {
+    /**
+     * @tags content
+     * @name querySharedContentV2
+     * @summary querySharedContentV2
+     * @request GET:/contents_shared
+     * @description query shared content by condition
+     */
+    querySharedContentV2: (
+      query?: {
+        name?: string;
+        content_type?: string;
+        program?: string;
+        content_name?: string;
+        program_group?: string;
+        submenu?: string;
+        order_by?: "id" | "-id" | "content_name" | "-content_name" | "create_at" | "-create_at" | "update_at" | "-update_at";
+        page_size?: number;
+        page?: number;
+        parent_id?: string;
+      },
+      params?: RequestParams
+    ) =>
+      this.request<EntityQuerySharedContentV2Response, ApiBadRequestResponse | ApiInternalServerErrorResponse>(
+        `/contents_shared${this.addQueryParams(query)}`,
+        "GET",
+        params
+      ),
   };
   contentsFolders = {
     /**

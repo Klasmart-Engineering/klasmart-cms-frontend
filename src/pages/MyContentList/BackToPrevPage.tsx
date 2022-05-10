@@ -18,7 +18,6 @@ const LightTooltip = withStyles((theme: Theme) => ({
 
 const useStyles = makeStyles((theme) =>
   createStyles({
-    //
     card: {
       width: "86%",
       marginBottom: 40,
@@ -98,17 +97,18 @@ interface BackToPrevePageProps {
   onGoBack: () => any;
   parentFolderInfo: EntityFolderItemInfo;
   onRenameFolder: (content: NonNullable<EntityFolderContentData>) => any;
+  isEdit: boolean;
 }
 export function BackToPrevPage(props: BackToPrevePageProps) {
   const css = useStyles();
-  const { onGoBack, parentFolderInfo, onRenameFolder } = props;
+  const { onGoBack, parentFolderInfo, onRenameFolder, isEdit } = props;
   const keywords = parentFolderInfo.keywords ? parentFolderInfo.keywords.join(",") : "";
   const perm = usePermission([PermissionType.create_folder_289]);
   const folderInfo = () => {
     return (
       <>
         <div className={css.folderInfoCon}>
-          <Typography className={css.despWord}>{"Created by"}:</Typography>
+          <Typography className={css.despWord}>{d("Created By").t("library_label_created_by")}:</Typography>
           <Typography className={css.infoWord}>{parentFolderInfo.creator_name}</Typography>
         </div>
         <div className={css.folderInfoCon}>
@@ -123,13 +123,15 @@ export function BackToPrevPage(props: BackToPrevePageProps) {
             <Typography className={css.infoWord}>{parentFolderInfo.description}</Typography>
           </LightTooltip>
         </div>
-        <div className={css.folderInfoCon}>
-          <Typography className={css.despWord}>{"Contain"}:</Typography>
-          <Typography className={css.infoWord}>
-            {parentFolderInfo.items_count} {d("items").t("library_label_items")}. {parentFolderInfo.available}{" "}
-            {d("visible").t("library_label_visible")}
-          </Typography>
-        </div>
+        {isEdit && (
+          <div className={css.folderInfoCon}>
+            <Typography className={css.despWord}>{d("Contains").t("library_label_contains")}:</Typography>
+            <Typography className={css.infoWord}>
+              {parentFolderInfo.items_count} {d("items").t("library_label_items")}. {parentFolderInfo.available}{" "}
+              {d("visible").t("library_label_visible")}
+            </Typography>
+          </div>
+        )}
       </>
     );
   };
@@ -156,13 +158,15 @@ export function BackToPrevPage(props: BackToPrevePageProps) {
             <Grid item container>
               {folderInfo()}
             </Grid>
-            <Grid item container justify="flex-end">
-              {perm.create_folder_289 && (
-                <Button variant="outlined" color="primary" onClick={() => onRenameFolder(parentFolderInfo)}>
-                  {d("Edit").t("library_label_edit")}
-                </Button>
-              )}
-            </Grid>
+            {isEdit && (
+              <Grid item container justify="flex-end">
+                {perm.create_folder_289 && (
+                  <Button variant="outlined" color="primary" onClick={() => onRenameFolder(parentFolderInfo)}>
+                    {d("Edit").t("library_label_edit")}
+                  </Button>
+                )}
+              </Grid>
+            )}
           </Grid>
         </Hidden>
         <Hidden only={["sm", "md", "lg", "xl"]}>
@@ -177,13 +181,15 @@ export function BackToPrevPage(props: BackToPrevePageProps) {
               </div>
             </div>
             {folderInfo()}
-            <div className={css.mbBtnCon}>
-              {perm.create_folder_289 && (
-                <Button variant="outlined" color="primary" onClick={() => onRenameFolder(parentFolderInfo)}>
-                  {d("Edit").t("library_label_edit")}
-                </Button>
-              )}
-            </div>
+            {isEdit && (
+              <div className={css.mbBtnCon}>
+                {perm.create_folder_289 && (
+                  <Button variant="outlined" color="primary" onClick={() => onRenameFolder(parentFolderInfo)}>
+                    {d("Edit").t("library_label_edit")}
+                  </Button>
+                )}
+              </div>
+            )}
           </Grid>
         </Hidden>
       </Grid>

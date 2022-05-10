@@ -1805,6 +1805,8 @@ A new ‘Auto review’ lesson will appear on students’ calendar once our plat
   | { id: "assessment_detail_screenshot_results"; description: `Results`; values: undefined }
   | { id: "assessment_detail_screenshot_result_screen"; description: `Results Screen`; values: undefined }
   | { id: "assessment_detail_total_score"; description: `Total Score`; values: undefined }
+  | { id: "library_label_created_by"; description: `Created By`; values: undefined }
+  | { id: "library_label_contains"; description: `Contains`; values: undefined }
   | {
       id: "assessment_detail_screenshot_no_result";
       description: `Sorry, the screenshot is not available for this lesson material.`;

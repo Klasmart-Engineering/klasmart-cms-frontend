@@ -95,7 +95,6 @@ export type ListAssessmentRequest = Parameters<typeof api.assessments.listAssess
 export type ListAssessmentResult = NonNullable<AsyncReturnType<typeof api.assessments.listAssessment>>;
 export type ListAssessmentResultItem = NonNullable<ListAssessmentResult["items"]>[0];
 
-
 export enum SearchContentsRequestContentType {
   material = "1",
   plan = "2",

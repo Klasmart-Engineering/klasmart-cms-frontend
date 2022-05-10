@@ -3,14 +3,26 @@ import { apiGetUserNameByUserId, apiWaitForOrganizationOfPage } from "@api/extra
 import { AssessmentTypeValues } from "@components/AssessmentType";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import api, { gqlapi } from "../api";
-import { GetRolesIdDocument, GetRolesIdQuery, GetRolesIdQueryVariables, GetUsersByNameDocument, GetUsersByNameQuery, GetUsersByNameQueryVariables, QueryMyUserDocument, QueryMyUserQuery, QueryMyUserQueryVariables } from "../api/api-ko.auto";
-import { EntityScheduleFeedbackView } from "../api/api.auto";
 import {
-  ListAssessmentResult,
-  ListAssessmentResultItem,
-  OrderByAssessmentList
-} from "../api/type";
-import { AssessmentListResult, AssessmentStatus, AssessmentStatusValues, DetailAssessmentResult, UserEntity } from "../pages/ListAssessment/types";
+  GetRolesIdDocument,
+  GetRolesIdQuery,
+  GetRolesIdQueryVariables,
+  GetUsersByNameDocument,
+  GetUsersByNameQuery,
+  GetUsersByNameQueryVariables,
+  QueryMyUserDocument,
+  QueryMyUserQuery,
+  QueryMyUserQueryVariables,
+} from "../api/api-ko.auto";
+import { EntityScheduleFeedbackView } from "../api/api.auto";
+import { ListAssessmentResult, ListAssessmentResultItem, OrderByAssessmentList } from "../api/type";
+import {
+  AssessmentListResult,
+  AssessmentStatus,
+  AssessmentStatusValues,
+  DetailAssessmentResult,
+  UserEntity,
+} from "../pages/ListAssessment/types";
 import { LoadingMetaPayload } from "./middleware/loadingMiddleware";
 import { AsyncReturnType, AsyncTrunkReturned } from "./type";
 
@@ -72,7 +84,15 @@ export const getAssessmentListV2 = createAsyncThunk<IQueryAssessmentV2Result, IQ
           ? AssessmentStatusValues.class_live_homefun_inprogress
           : AssessmentStatusValues.complete;
     }
-    const _query = { assessment_type, page, page_size, status: _status, order_by: _order_by, query_key: query_key ? query_key : " ", query_type: query_key ? query_type : undefined };
+    const _query = {
+      assessment_type,
+      page,
+      page_size,
+      status: _status,
+      order_by: _order_by,
+      query_key: query_key ? query_key : " ",
+      query_type: query_key ? query_type : undefined,
+    };
     const { assessments, total } = await api.assessmentsV2.queryAssessmentV2({ ..._query, page_size: 20 });
     return { assessments, total };
   }
@@ -93,87 +113,90 @@ export const getDetailAssessmentV2 = createAsyncThunk<IQueryDetailAssessmentResu
     const my_id = myUser?.node?.id || "";
     const detail = await api.assessmentsV2.getAssessmentDetailV2(id);
     const { teachers, students, diff_content_students } = detail;
-    const teacherIds = teachers?.map(item => item.id!) || [];
-    const studentIds = diff_content_students ? (diff_content_students.map(item => item.student_id!) || []) : (students?.map(item => item.student_id!) || []);
+    const teacherIds = teachers?.map((item) => item.id!) || [];
+    const studentIds = diff_content_students
+      ? diff_content_students.map((item) => item.student_id!) || []
+      : students?.map((item) => item.student_id!) || [];
     const userNamesArr = await apiGetUserNameByUserId(teacherIds.concat(studentIds));
-    detail.teachers = detail.teachers?.map(item => {
+    detail.teachers = detail.teachers?.map((item) => {
       item.name = userNamesArr.get(item.id!);
       return item;
     });
-    detail.students =  diff_content_students ? diff_content_students.map(item => {
-       item.student_name = userNamesArr.get(item.student_id!);
-       return item;
-    }) : detail.students?.map(item => {
-      item.student_name = userNamesArr.get(item.student_id!);
-      return item;
-    })
+    detail.students = diff_content_students
+      ? diff_content_students.map((item) => {
+          item.student_name = userNamesArr.get(item.student_id!);
+          return item;
+        })
+      : detail.students?.map((item) => {
+          item.student_name = userNamesArr.get(item.student_id!);
+          return item;
+        });
     return { detail, my_id };
   }
 );
 
-export const getUserListByName = createAsyncThunk<UserEntity[] | undefined, string>(
-  "assessments/getUserListByName",
-  async (name) => {
-    if (!name) return undefined;
-    const { data: roleData } = await gqlapi.query<GetRolesIdQuery, GetRolesIdQueryVariables>({
-      query: GetRolesIdDocument,
-      variables: {
-        direction: ConnectionDirection.Forward,
-        directionArgs: { count: 10 },
-        filter: { system: { operator: BooleanOperator.Eq, value: true } },
-      },
-    });
-    let teacherRoleId = "";
-    roleData.rolesConnection?.edges?.forEach((item) => {
-      if (item?.node?.name === "Teacher") {
-        teacherRoleId = item.node.id;
-      }
-    });
-    const orgId = (await apiWaitForOrganizationOfPage()) as string;
-    const filter = {
-      filter: {
-        roleId: {
-          operator: UuidOperator.Eq,
-          value: teacherRoleId,
-        },
-        organizationId: {
-          operator: UuidOperator.Eq,
-          value: orgId
-        },
-        OR: [
-          {
-            familyName: {
-              operator: StringOperator.Contains,
-              value: name,
-              caseInsensitive: true
-            }
-          },
-          {
-            givenName:  {
-              operator: StringOperator.Contains,
-              value: name,
-              caseInsensitive: true
-            }
-          }
-        ]
-      },
-      directionArgs: {
-        count: 15
-      }
+export const getUserListByName = createAsyncThunk<UserEntity[] | undefined, string>("assessments/getUserListByName", async (name) => {
+  if (!name) return undefined;
+  const { data: roleData } = await gqlapi.query<GetRolesIdQuery, GetRolesIdQueryVariables>({
+    query: GetRolesIdDocument,
+    variables: {
+      direction: ConnectionDirection.Forward,
+      directionArgs: { count: 10 },
+      filter: { system: { operator: BooleanOperator.Eq, value: true } },
+    },
+  });
+  let teacherRoleId = "";
+  roleData.rolesConnection?.edges?.forEach((item) => {
+    if (item?.node?.name === "Teacher") {
+      teacherRoleId = item.node.id;
     }
-    const {data: {usersConnection}} = await gqlapi.query<GetUsersByNameQuery, GetUsersByNameQueryVariables>({
-      query: GetUsersByNameDocument,
-      variables: filter,
-    });
-    const teacherList = usersConnection?.edges?.map(item => {
-      return {
-        id: item?.node?.id as string,
-        name: `${item?.node?.givenName} ${item?.node?.familyName}` as string
-      }
-    })
-    return teacherList;
-  }
-)
+  });
+  const orgId = (await apiWaitForOrganizationOfPage()) as string;
+  const filter = {
+    filter: {
+      roleId: {
+        operator: UuidOperator.Eq,
+        value: teacherRoleId,
+      },
+      organizationId: {
+        operator: UuidOperator.Eq,
+        value: orgId,
+      },
+      OR: [
+        {
+          familyName: {
+            operator: StringOperator.Contains,
+            value: name,
+            caseInsensitive: true,
+          },
+        },
+        {
+          givenName: {
+            operator: StringOperator.Contains,
+            value: name,
+            caseInsensitive: true,
+          },
+        },
+      ],
+    },
+    directionArgs: {
+      count: 15,
+    },
+  };
+  const {
+    data: { usersConnection },
+  } = await gqlapi.query<GetUsersByNameQuery, GetUsersByNameQueryVariables>({
+    query: GetUsersByNameDocument,
+    variables: filter,
+  });
+  const teacherList = usersConnection?.edges?.map((item) => {
+    return {
+      id: item?.node?.id as string,
+      name: `${item?.node?.givenName} ${item?.node?.familyName}` as string,
+    };
+  });
+  return teacherList;
+});
 type IQueryUpdateAssessmentParams = {
   id: Parameters<typeof api.assessmentsV2.updateAssessmentV2>[0];
   data: Parameters<typeof api.assessmentsV2.updateAssessmentV2>[1];
@@ -220,7 +243,7 @@ const { reducer } = createSlice({
       state.attachment_path = payload.path;
       state.attachment_id = payload.resource_id;
     },
-    [getUserListByName.fulfilled.type]: (state, {payload}: any) => {
+    [getUserListByName.fulfilled.type]: (state, { payload }: any) => {
       state.teacherList = payload;
     },
     [getUserListByName.pending.type]: (state, { payload }: PayloadAction<AsyncTrunkReturned<typeof getUserListByName>>) => {

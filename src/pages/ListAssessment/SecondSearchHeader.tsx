@@ -22,10 +22,7 @@ export interface SecondSearchHeaderProps extends AssessmentQueryConditionBasePro
 }
 export function SecondSearchHeader(props: SecondSearchHeaderProps) {
   const { value, formMethods, teacherList, onChange, onChangeAssessmentType, onSearchTeacherName } = props;
-  const handleClickSearch = (
-    searchField: SearchComProps["searchFieldDefaultValue"],
-    searchInfo: UserEntity
-  ) => {
+  const handleClickSearch = (searchField: SearchComProps["searchFieldDefaultValue"], searchInfo: UserEntity) => {
     const teacher_name = searchInfo.name;
     const query_key = searchInfo.id;
     const query_type = searchField as AssessmentQueryCondition["query_type"];
@@ -39,23 +36,23 @@ export function SecondSearchHeader(props: SecondSearchHeaderProps) {
   return (
     <div style={{ marginBottom: 20 }}>
       <LayoutBox holderMin={40} holderBase={202} mainBase={1517}>
-          <Grid container spacing={3} style={{ marginTop: "6px" }}>
-            <Grid item md={12} lg={12} xl={12}>
-              <ListSearch
-                searchTextDefaultValue={value.query_key ?? ""}
-                searchFieldDefaultValue={value.query_type ?? ""}
-                defaultTeacherName={value.teacher_name ?? ""}
-                searchFieldList={searchFieldList()}
-                onSearch={handleClickSearch}
-                formMethods={formMethods}
-                onSearchTeacherName={onSearchTeacherName}
-                teacherList={teacherList}
-              />
-              <Hidden only={["xs", "sm"]}>
-                <AssessmentType type={value.assessment_type as AssessmentTypeValues} onChangeAssessmentType={handleChangeAssessmentType} />
-              </Hidden>
-            </Grid>
+        <Grid container spacing={3} style={{ marginTop: "6px" }}>
+          <Grid item md={12} lg={12} xl={12}>
+            <ListSearch
+              searchTextDefaultValue={value.query_key ?? ""}
+              searchFieldDefaultValue={value.query_type ?? ""}
+              defaultTeacherName={value.teacher_name ?? ""}
+              searchFieldList={searchFieldList()}
+              onSearch={handleClickSearch}
+              formMethods={formMethods}
+              onSearchTeacherName={onSearchTeacherName}
+              teacherList={teacherList}
+            />
+            <Hidden only={["xs", "sm"]}>
+              <AssessmentType type={value.assessment_type as AssessmentTypeValues} onChangeAssessmentType={handleChangeAssessmentType} />
+            </Hidden>
           </Grid>
+        </Grid>
       </LayoutBox>
     </div>
   );

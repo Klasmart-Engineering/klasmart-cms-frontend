@@ -8,7 +8,9 @@ type NonOnlyNull<T> = T extends null ? never : T;
 type NonNullRecordValue<T> = {
   [K in keyof T]: NonOnlyNull<T[K]>;
 };
-export type AssessmentQueryCondition = { teacher_name?: string } & NonNullRecordValue<NonNullable<Parameters<typeof api.assessmentsV2.queryAssessmentV2>[0]>>;
+export type AssessmentQueryCondition = { teacher_name?: string } & NonNullRecordValue<
+  NonNullable<Parameters<typeof api.assessmentsV2.queryAssessmentV2>[0]>
+>;
 
 export enum SearchListFormKey {
   EXECT_SEARCH = "EXECT_SEARCH",
