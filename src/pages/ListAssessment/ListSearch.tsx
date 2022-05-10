@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     backgroundColor: "#fff",
     zIndex: 200,
-    width: "230px",
+    width: "280px",
     // "& .MuiOutlinedInput-notchedOutline": {
     //   border: 0,
     //   borderRadius: 0,
@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "20px",
   },
   teacherListCon: {
-    width: 230,
+    width: 280,
     maxHeight: 200,
     boxShadow: "0px 5px 5px -3px rgba(0,0,0,0.20), 0px 3px 14px 2px rgba(0,0,0,0.12), 0px 8px 10px 1px rgba(0,0,0,0.14)",
     borderRadius: "4px",
@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
     cursor: "pointer",
     paddingLeft: 10,
     "&:hover": {
-      backgroundColor: "#0E78D5",
+      color: "#0E78D5",
     },
   },
   nullCon: {
