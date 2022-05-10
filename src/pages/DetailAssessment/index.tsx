@@ -20,7 +20,7 @@ import { d } from "../../locale/LocaleManager";
 import { ModelAssessment } from "../../models/ModelAssessment";
 import { AppDispatch, RootState } from "../../reducers";
 import LayoutPair from "../ContentEdit/Layout";
-import { AssessmentStatus, DetailAssessmentResult, DetailAssessmentResultStudent } from "../ListAssessment/types";
+import { AssessmentStatus, DetailAssessmentResult } from "../ListAssessment/types";
 import { DetailForm } from "./DetailForm";
 import { DetailHeader } from "./DetailHeader";
 import { Homefun } from "./HomefunView";
@@ -28,7 +28,7 @@ import { MaterialView, MaterialViewProps } from "./MaterialView";
 import { Dimension, MultiSelect, MultiSelectProps, Subtitle } from "./MultiSelect";
 import { OverallOutcomes, OverallOutcomesProps } from "./OverallOutcomes";
 import { StudentView } from "./StudentView";
-import { OutcomeStatus, StudentParticipate, StudentViewItemsProps, SubDimensionOptions, UpdateAssessmentDataOmitAction } from "./type";
+import { OutcomeStatus, StudentParticipate, StudentProps, StudentViewItemsProps, SubDimensionOptions, UpdateAssessmentDataOmitAction } from "./type";
 
 const useQuery = () => {
   const { id, editindex, querys } = useQueryCms();
@@ -47,7 +47,7 @@ export function DetailAssessment() {
   const isReview = assessment_type === AssessmentTypeValues.review;
   const isHomefun = assessment_type === AssessmentTypeValues.homeFun;
   const formMethods = useForm<UpdateAssessmentDataOmitAction>();
-  const [students, setStudents] = useState<DetailAssessmentResult["students"]>();
+  const [students, setStudents] = useState<StudentProps[]>();
   const [contents, setContents] = useState<DetailAssessmentResult["contents"]>();
   const initStudentViewItems = useMemo(() => {
     if (isReview) {
@@ -75,10 +75,10 @@ export function DetailAssessment() {
   }, [computedStudentViewItems, initStudentViewItems]);
   const attendanceList = useMemo(() => {
     if (students) {
-      return students?.filter((student: DetailAssessmentResultStudent) => student.status === StudentParticipate.Participate);
+      return students?.filter((student: StudentProps) => student.status === StudentParticipate.Participate);
     } else {
       return assessmentDetailV2.students?.filter(
-        (student: DetailAssessmentResultStudent) => student.status === StudentParticipate.Participate
+        (student: StudentProps) => student.status === StudentParticipate.Participate
       );
     }
   }, [assessmentDetailV2.students, students]);

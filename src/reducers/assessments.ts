@@ -1,6 +1,7 @@
 import { BooleanOperator, ConnectionDirection, StringOperator, UuidOperator } from "@api/api-ko-schema.auto";
 import { apiGetUserNameByUserId, apiWaitForOrganizationOfPage } from "@api/extra";
 import { AssessmentTypeValues } from "@components/AssessmentType";
+import { DetailAssessmentProps } from "@pages/DetailAssessment/type";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import api, { gqlapi } from "../api";
 import {
@@ -19,9 +20,7 @@ import { ListAssessmentResult, ListAssessmentResultItem, OrderByAssessmentList }
 import {
   AssessmentListResult,
   AssessmentStatus,
-  AssessmentStatusValues,
-  DetailAssessmentResult,
-  UserEntity
+  AssessmentStatusValues, UserEntity
 } from "../pages/ListAssessment/types";
 import { LoadingMetaPayload } from "./middleware/loadingMiddleware";
 import { AsyncReturnType, AsyncTrunkReturned } from "./type";
@@ -33,7 +32,7 @@ export interface IAssessmentState {
   homefunFeedbacks: EntityScheduleFeedbackView[];
   hasPermissionOfHomefun: boolean | undefined;
   assessmentListV2: AssessmentListResult;
-  assessmentDetailV2: DetailAssessmentResult;
+  assessmentDetailV2: DetailAssessmentProps;
   attachment_path: string;
   attachment_id: string;
   teacherList: UserEntity[] | undefined;
@@ -98,7 +97,7 @@ export const getAssessmentListV2 = createAsyncThunk<IQueryAssessmentV2Result, IQ
   }
 );
 type IQueryDetailAssessmentResult = {
-  detail: AsyncReturnType<typeof api.assessmentsV2.getAssessmentDetailV2>;
+  detail: DetailAssessmentProps;
   my_id: string;
 };
 export const getDetailAssessmentV2 = createAsyncThunk<IQueryDetailAssessmentResult, { id: string } & LoadingMetaPayload>(
@@ -111,16 +110,20 @@ export const getDetailAssessmentV2 = createAsyncThunk<IQueryDetailAssessmentResu
       query: QueryMyUserDocument,
     });
     const my_id = myUser?.node?.id || "";
-    const detail = await api.assessmentsV2.getAssessmentDetailV2(id);
-    const { teachers, students, diff_content_students } = detail;
-    const teacherIds = teachers?.map((item) => item.id!) || [];
+    const res = await api.assessmentsV2.getAssessmentDetailV2(id);
+    const detail: DetailAssessmentProps = { ...res };
+    const { teacher_ids, students, diff_content_students } = detail;
+    const teacherIds = teacher_ids || [];
     const studentIds = diff_content_students
       ? diff_content_students.map((item) => item.student_id!) || []
       : students?.map((item) => item.student_id!) || [];
     const userNamesArr = await apiGetUserNameByUserId(teacherIds.concat(studentIds));
-    detail.teachers = detail.teachers?.map((item) => {
-      item.name = userNamesArr.get(item.id!);
-      return item;
+    detail.teachers = teacher_ids?.map((item) => {
+      const name = userNamesArr.get(item!);
+      return {
+        id: item,
+        name,
+      }
     });
     detail.students = diff_content_students
       ? diff_content_students.map((item) => {
@@ -224,7 +227,6 @@ const { reducer } = createSlice({
   extraReducers: {
     [getDetailAssessmentV2.fulfilled.type]: (state, { payload }: PayloadAction<AsyncTrunkReturned<typeof getDetailAssessmentV2>>) => {
       state.assessmentDetailV2 = payload.detail;
-
       state.my_id = payload.my_id;
     },
     [getDetailAssessmentV2.pending.type]: (state, { payload }: PayloadAction<AsyncTrunkReturned<typeof getDetailAssessmentV2>>) => {

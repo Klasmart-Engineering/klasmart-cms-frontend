@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#fff",
     zIndex: 200,
     width: "280px",
+    borderRadius: "4px",
     // "& .MuiOutlinedInput-notchedOutline": {
     //   border: 0,
     //   borderRadius: 0,
@@ -239,7 +240,7 @@ export function ListSearch(props: SearchComProps) {
           // onKeyUp={debounce(handleKeyUp, 500)}
           onChangeCapture={handleChange}
           defaultValue={defaultTeacherName}
-          placeholder={d("Search teacher").t("schedule_text_search_teacher")}
+          placeholder={d("Teacher's given or family name").t("assessment_search_teacher_tips")}
         />
       </div>
       <Button variant="contained" color="primary" disabled={disableSearchBtn} className={css.searchBtn} onClick={handleClickSearch}>
@@ -252,7 +253,7 @@ export function ListSearch(props: SearchComProps) {
               <div className={css.teacherItemCon} key={item.id} onClick={e => handleSelectTeacher(item)}>
                 {item.name}
               </div>
-            ) : <div className={css.nullCon}>{"No Matching result"}</div>} 
+            ) : <div className={css.nullCon}>{d("No Matching Result").t("assessment_search_no_matching_result")}</div>} 
           </div>
         }
       </div>

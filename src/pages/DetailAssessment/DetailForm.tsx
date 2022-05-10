@@ -7,7 +7,7 @@ import { formattedTime } from "../../models/ModelContentDetailForm";
 import { DetailAssessmentResult } from "../ListAssessment/types";
 import { MaterialEdit } from "./MaterialEdit";
 import { StudentEdit } from "./StudentEdit";
-import { UpdateAssessmentDataOmitAction } from "./type";
+import { DetailAssessmentProps, UpdateAssessmentDataOmitAction } from "./type";
 const useStyles = makeStyles(({ palette, spacing }) => ({
   classSummaryHeader: {
     height: 64,
@@ -50,7 +50,7 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
 export interface DetailFormProps {
   editable: boolean;
   hasEditPerm: boolean;
-  assessmentDetail: DetailAssessmentResult;
+  assessmentDetail: DetailAssessmentProps;
   students: any[] | undefined;
   contents: DetailAssessmentResult["contents"];
   assessmentType: AssessmentTypeValues;
@@ -73,7 +73,7 @@ export function DetailForm(props: DetailFormProps) {
       if (v.name) {
         return v.name;
       } else {
-        return d("Unknown").t("assessment_summary_label_attendance_unknown");
+        return d("Unknown User").t("assessment_summary_label_attendance_unknown");
       }
     });
     const length = list && list.length ? list.length : "";

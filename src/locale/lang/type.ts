@@ -1402,22 +1402,22 @@ type LangRecord =
     }
   | {
       id: "report_msg_lo_increase_previous_w";
-      description: `{Name} has achieved {LOCompareLastWeek}% more learning outcomes compared to the previous week.`;
+      description: `In the last week, {Name} has achieved {LOCompareLastWeek}% more learning outcomes compared to the previous week.`;
       values: { Name: string | number; LOCompareLastWeek: string | number };
     }
   | {
       id: "report_msg_lo_decrease_previous_w";
-      description: `{Name} has achieved {LOCompareLastWeek}% less learning outcomes compared to the previous week.`;
+      description: `In the last week, {Name} has achieved {LOCompareLastWeek}% less learning outcomes compared to the previous week.`;
       values: { Name: string | number; LOCompareLastWeek: string | number };
     }
   | {
       id: "report_msg_lo_increase_previous_large_w";
-      description: `{Name} has achieved {LOCompareLastWeek}% more learning outcomes compared to the previous week. Give {Name} a big high-five for a job well done!`;
+      description: `In the last week, {Name} has achieved {LOCompareLastWeek}% more learning outcomes compared to the previous week. Give {Name} a big high-five for a job well done!`;
       values: { Name: string | number; LOCompareLastWeek: string | number };
     }
   | {
       id: "report_msg_lo_decrease_previous_large_w";
-      description: `{Name} has achieved {LOCompareLastWeek}% less learning outcomes compared to the previous week. It might be time to check in with {Name}.`;
+      description: `In the last week, {Name} has achieved {LOCompareLastWeek}% less learning outcomes compared to the previous week. It might be time to check in with {Name}.`;
       values: { Name: string | number; LOCompareLastWeek: string | number };
     }
   | {
@@ -1472,22 +1472,22 @@ type LangRecord =
     }
   | {
       id: "report_msg_att_increase_previous_w";
-      description: `{Name} has attended {AttendCompareLastWeek}% more classes as compared to the previous week.`;
+      description: `In the last week, {Name} has attended {AttendCompareLastWeek}% more classes as compared to the previous week.`;
       values: { Name: string | number; AttendCompareLastWeek: string | number };
     }
   | {
       id: "report_msg_att_decrease_previous_w";
-      description: `{Name} has attended {AttendCompareLastWeek}% less classes as compared to the previous week.`;
+      description: `In the last week, {Name} has attended {AttendCompareLastWeek}% less classes as compared to the previous week.`;
       values: { Name: string | number; AttendCompareLastWeek: string | number };
     }
   | {
       id: "report_msg_att_increase_previous_large_w";
-      description: `{Name} has attended {AttendCompareLastWeek}% more classes as compared to the previous week. Tell {Name}, "Awesome job!"`;
+      description: `In the last week, {Name} has attended {AttendCompareLastWeek}% more classes as compared to the previous week. Tell {Name}, "Awesome job!"`;
       values: { Name: string | number; AttendCompareLastWeek: string | number };
     }
   | {
       id: "report_msg_att_decrease_previous_large_w";
-      description: `{Name} has attended {AttendCompareLastWeek}% less classes as compared to the previous week. Please check if {Name} has any problems with the learning environment.`;
+      description: `In the last week, {Name} has attended {AttendCompareLastWeek}% less classes as compared to the previous week. Please check if {Name} has any problems with the learning environment.`;
       values: { Name: string | number; AttendCompareLastWeek: string | number };
     }
   | {
@@ -1532,22 +1532,22 @@ type LangRecord =
     }
   | {
       id: "report_msg_assign_increase_previous_w";
-      description: `{Name} has completed {AssignCompareLastWeek}% more assignments as compared to the previous week.`;
+      description: `In the last week, {Name} has completed {AssignCompareLastWeek}% more assignments as compared to the previous week.`;
       values: { Name: string | number; AssignCompareLastWeek: string | number };
     }
   | {
       id: "report_msg_assign_decrease_previous_w";
-      description: `{Name} has completed {AssignCompareLastWeek}% less assignments as compared to the previous week.`;
+      description: `In the last week, {Name} has completed {AssignCompareLastWeek}% less assignments as compared to the previous week.`;
       values: { Name: string | number; AssignCompareLastWeek: string | number };
     }
   | {
       id: "report_msg_assign_increase_previous_large_w";
-      description: `{Name} has completed {AssignCompareLastWeek}% more assignments as compared to the previous week. Give {Name} a big compliment!`;
+      description: `In last week, {Name} has completed {AssignCompareLastWeek}% more assignments as compared to the previous week. Give {Name} a big compliment!`;
       values: { Name: string | number; AssignCompareLastWeek: string | number };
     }
   | {
       id: "report_msg_assign_decrease_previous_large_w";
-      description: `{Name} has completed {AssignCompareLastWeek}% less assignments as compared to the previous week. Please check if {Name} needs more support.`;
+      description: `In last week, {Name} has completed {AssignCompareLastWeek}% less assignments as compared to the previous week. Please check if {Name} needs more support.`;
       values: { Name: string | number; AssignCompareLastWeek: string | number };
     }
   | {
@@ -1736,7 +1736,7 @@ A new ‘Auto review’ lesson will appear on students’ calendar once our plat
       values: undefined;
     }
   | { id: "learning_outcome_label_threshold"; description: `Score Threshold`; values: undefined }
-  | { id: "assessment_summary_label_attendance_unknown"; description: `Unknown`; values: undefined }
+  | { id: "assessment_summary_label_attendance_unknown"; description: `Unknown User`; values: undefined }
   | { id: "learning_outcome_threshold_blank_alert"; description: `A score threshold must be entered`; values: undefined }
   | { id: "learning_outcome_threshold_error_toast"; description: `Please input an integer from 1 to 100`; values: undefined }
   | {
@@ -1805,14 +1805,16 @@ A new ‘Auto review’ lesson will appear on students’ calendar once our plat
   | { id: "assessment_detail_screenshot_results"; description: `Results`; values: undefined }
   | { id: "assessment_detail_screenshot_result_screen"; description: `Results Screen`; values: undefined }
   | { id: "assessment_detail_total_score"; description: `Total Score`; values: undefined }
-  | { id: "library_label_created_by"; description: `Created By`; values: undefined }
-  | { id: "library_label_contains"; description: `Contains`; values: undefined }
   | {
       id: "assessment_detail_screenshot_no_result";
       description: `Sorry, the screenshot is not available for this lesson material.`;
       values: undefined;
     }
-  | { id: "assessment_detail_essay_no_result"; description: `An answer has not been submitted by the student.`; values: undefined };
+  | { id: "assessment_detail_essay_no_result"; description: `An answer has not been submitted by the student.`; values: undefined }
+  | { id: "assessment_search_no_matching_result"; description: `No Matching Result`; values: undefined }
+  | { id: "library_label_created_by"; description: `Created By`; values: undefined }
+  | { id: "library_label_contains"; description: `Contains`; values: undefined }
+  | { id: "assessment_search_teacher_tips"; description: `Teacher's given or family name`; values: undefined};
 
 export type LangRecordId = LangRecord["id"];
 export type LangRecodeDescription = LangRecord["description"];
