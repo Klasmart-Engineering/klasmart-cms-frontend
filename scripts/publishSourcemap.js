@@ -1,4 +1,4 @@
-require('dotenv').config({path: './.env.production'})
+require('dotenv').config({path: './.env'})
 const publishSourcemap = require("@newrelic/publish-sourcemap").publishSourcemap;
 const listSourcemaps = require("@newrelic/publish-sourcemap").listSourcemaps;
 const deleteSourcemap = require('@newrelic/publish-sourcemap').deleteSourcemap;
