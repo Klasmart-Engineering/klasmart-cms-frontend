@@ -7,7 +7,7 @@ import { formattedTime } from "../../models/ModelContentDetailForm";
 import { DetailAssessmentResult } from "../ListAssessment/types";
 import { MaterialEdit } from "./MaterialEdit";
 import { StudentEdit } from "./StudentEdit";
-import { UpdateAssessmentDataOmitAction } from "./type";
+import { DetailAssessmentProps, UpdateAssessmentDataOmitAction } from "./type";
 const useStyles = makeStyles(({ palette, spacing }) => ({
   classSummaryHeader: {
     height: 64,
@@ -50,7 +50,7 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
 export interface DetailFormProps {
   editable: boolean;
   hasEditPerm: boolean;
-  assessmentDetail: DetailAssessmentResult;
+  assessmentDetail: DetailAssessmentProps;
   students: any[] | undefined;
   contents: DetailAssessmentResult["contents"];
   assessmentType: AssessmentTypeValues;

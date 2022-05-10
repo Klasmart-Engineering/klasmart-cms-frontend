@@ -43,6 +43,7 @@ export type DetailAssessmentResultStudent = NonNullable<DetailAssessmentResult["
 export type DetailAssessmentStudentResult = NonNullable<DetailAssessmentResultStudent["results"]>[0];
 export type DetailAssessmentResultFeedback = NonNullable<DetailAssessmentStudentResult["student_feed_backs"]>[0];
 export type DetailAssessmentResultAssignment = NonNullable<DetailAssessmentResultFeedback["assignments"]>[0];
+export type DetailAssessmentResultDiffContentStudent = NonNullable<DetailAssessmentResult["diff_content_students"]>[0];
 
 export enum AssessmentStatus {
   all = "all",

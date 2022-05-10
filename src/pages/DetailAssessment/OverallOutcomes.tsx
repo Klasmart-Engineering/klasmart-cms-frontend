@@ -2,9 +2,8 @@ import { Box, Checkbox, FormControlLabel, makeStyles, Table, TableBody, TableCel
 import React, { ChangeEvent, useMemo } from "react";
 import { PLField, PLTableHeader } from "../../components/PLTable";
 import { d } from "../../locale/LocaleManager";
-import { DetailAssessmentResult } from "../ListAssessment/types";
 import { AchievedTooltips } from "./AchievedTooltips";
-import { OverAllOutcomesItem, StudentParticipate } from "./type";
+import { DetailAssessmentProps, OverAllOutcomesItem, StudentParticipate } from "./type";
 
 const useStyles = makeStyles({
   tableContainer: {
@@ -48,7 +47,7 @@ const useStyles = makeStyles({
   },
 });
 export interface OverallOutcomesProps {
-  attendanceList: DetailAssessmentResult["students"];
+  attendanceList: DetailAssessmentProps["students"];
   overallOutcomes: OverAllOutcomesItem[];
   editable: boolean;
   onChangeAllAchieved: (checked: boolean, outcome_id?: string) => void;

@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#fff",
     zIndex: 200,
     width: "280px",
+    borderRadius: "4px",
     // "& .MuiOutlinedInput-notchedOutline": {
     //   border: 0,
     //   borderRadius: 0,
@@ -252,7 +253,7 @@ export function ListSearch(props: SearchComProps) {
               <div className={css.teacherItemCon} key={item.id} onClick={e => handleSelectTeacher(item)}>
                 {item.name}
               </div>
-            ) : <div className={css.nullCon}>{"No Matching result"}</div>} 
+            ) : <div className={css.nullCon}>{d("No Matching Result").t("assessment_search_no_matching_result")}</div>} 
           </div>
         }
       </div>

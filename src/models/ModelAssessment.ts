@@ -1,20 +1,20 @@
 import { AssessmentTypeValues } from "@components/AssessmentType";
 import { Dimension } from "@pages/DetailAssessment/MultiSelect";
 import { V2AssessmentContentReply } from "../api/api.auto";
-import {} from "../api/type";
+import { } from "../api/type";
 import {
-  MaterialViewItemResultProps,
+  DetailAssessmentProps, MaterialViewItemResultProps,
   OutcomeStatus,
   OverAllOutcomesItem,
   StudentParticipate,
+  StudentProps,
   StudentViewItemsProps,
-  SubDimensionOptions,
+  SubDimensionOptions
 } from "../pages/DetailAssessment/type";
 import {
   DetailAssessmentResult,
   DetailAssessmentResultContent,
-  DetailAssessmentResultOutcome,
-  DetailAssessmentResultStudent,
+  DetailAssessmentResultOutcome
 } from "../pages/ListAssessment/types";
 // interface ObjContainId {
 //   id?: string;
@@ -28,22 +28,22 @@ import {
 // }
 
 export const ModelAssessment = {
-  setInitFormValue(contents: DetailAssessmentResult["contents"], students: DetailAssessmentResult["students"]) {
-    const _contents = contents
-      ?.filter((item) => item.content_type === "LessonMaterial" && !item.parent_id)
-      .map((item) => {
-        const { content_id, parent_id, reviewer_comment, status } = item;
-        return {
-          content_id,
-          parent_id,
-          reviewer_comment,
-          status,
-        };
-      });
-    return { contents: _contents };
-  },
+  // setInitFormValue(contents: DetailAssessmentResult["contents"], students: DetailAssessmentResult["students"]) {
+  //   const _contents = contents
+  //     ?.filter((item) => item.content_type === "LessonMaterial" && !item.parent_id)
+  //     .map((item) => {
+  //       const { content_id, parent_id, reviewer_comment, status } = item;
+  //       return {
+  //         content_id,
+  //         parent_id,
+  //         reviewer_comment,
+  //         status,
+  //       };
+  //     });
+  //   return { contents: _contents };
+  // },
   getStudentViewItems(
-    students: DetailAssessmentResult["students"],
+    students: DetailAssessmentProps["students"],
     contents: DetailAssessmentResult["contents"],
     outcomes: DetailAssessmentResult["outcomes"],
     assessment_type: AssessmentTypeValues
@@ -159,10 +159,10 @@ export const ModelAssessment = {
     return studentViewItems;
   },
   getStudentViewItemByStudent(
-    students: DetailAssessmentResult["students"],
+    students: DetailAssessmentProps["students"],
     studentViewItems: StudentViewItemsProps[] | undefined
   ): StudentViewItemsProps[] | undefined {
-    const studentObj: Record<string, DetailAssessmentResultStudent> = {};
+    const studentObj: Record<string, StudentProps> = {};
     students?.forEach((item) => {
       if (!studentObj[item.student_id!]) {
         studentObj[item.student_id!] = { ...item };
@@ -177,7 +177,7 @@ export const ModelAssessment = {
     });
     return new_studentViewItems;
   },
-  getReviewStudentsItems(students: DetailAssessmentResult["diff_content_students"]): StudentViewItemsProps[] | undefined {
+  getReviewStudentsItems(students: DetailAssessmentProps["diff_content_students"]): StudentViewItemsProps[] | undefined {
     const reviewStudentsItems: StudentViewItemsProps[] | undefined = students?.map((item) => {
       const { status, student_id, student_name, reviewer_comment, results } = item;
       return {

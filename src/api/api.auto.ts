@@ -2011,7 +2011,7 @@ export interface V2AssessmentDetailReply {
   status?: string;
   students?: V2AssessmentStudentReply[];
   subjects?: EntityIDName[];
-  teachers?: EntityIDName[];
+  teacher_ids?: string[];
   title?: string;
 }
 
@@ -2033,7 +2033,6 @@ export interface V2AssessmentDiffContentStudentsReply {
   reviewer_comment?: string;
   status?: "Participate" | "NotParticipate";
   student_id?: string;
-  student_name?: string;
 }
 
 export interface V2AssessmentItemForHomePage {
@@ -2093,7 +2092,6 @@ export interface V2AssessmentStudentReply {
   reviewer_comment?: string;
   status?: "Participate" | "NotParticipate";
   student_id?: string;
-  student_name?: string;
 }
 
 export interface V2AssessmentStudentResultOutcomeReply {
