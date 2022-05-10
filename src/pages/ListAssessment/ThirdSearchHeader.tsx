@@ -45,12 +45,6 @@ const sortOptions = (assessment_type: AssessmentQueryCondition["assessment_type"
       { label: d("Created On (Old-New)").t("assess_label_created_on_oldtonew"), value: OrderByAssessmentList.create_at },
     ];
   }
-  // if (assessment_type === AssessmentTypeValues.homeFun) {
-  //   changeingOptions = [
-  //     { label: d("Submit Time (New-Old)").t("assess_submit_new_old"), value: OrderByAssessmentList._submit_at },
-  //     { label: d("Submit Time (Old-New)").t("assess_submit_old_new"), value: OrderByAssessmentList.submit_at },
-  //   ];
-  // }
   return [...changeingOptions, ...unchangedOptions];
 };
 
@@ -73,7 +67,6 @@ export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
     });
     onChange({ ...newValue, page: 1 });
   };
-  // const defaultOrderby = sortOptions(value.assessment_type)[0].value!;
   return (
     <div style={{ marginBottom: 20 }}>
       <LayoutBox holderMin={40} holderBase={202} mainBase={1517}>

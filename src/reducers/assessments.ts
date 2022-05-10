@@ -12,7 +12,7 @@ import {
   GetUsersByNameQueryVariables,
   QueryMyUserDocument,
   QueryMyUserQuery,
-  QueryMyUserQueryVariables,
+  QueryMyUserQueryVariables
 } from "../api/api-ko.auto";
 import { EntityScheduleFeedbackView } from "../api/api.auto";
 import { ListAssessmentResult, ListAssessmentResultItem, OrderByAssessmentList } from "../api/type";
@@ -21,7 +21,7 @@ import {
   AssessmentStatus,
   AssessmentStatusValues,
   DetailAssessmentResult,
-  UserEntity,
+  UserEntity
 } from "../pages/ListAssessment/types";
 import { LoadingMetaPayload } from "./middleware/loadingMiddleware";
 import { AsyncReturnType, AsyncTrunkReturned } from "./type";
@@ -248,6 +248,10 @@ const { reducer } = createSlice({
     },
     [getUserListByName.pending.type]: (state, { payload }: PayloadAction<AsyncTrunkReturned<typeof getUserListByName>>) => {
       state.teacherList = initialState.teacherList;
+    },
+    [getUserListByName.rejected.type]: (state, {payload}: any) => {
+      // user service bug修好后 删掉
+      state.teacherList = [];
     },
   },
 });

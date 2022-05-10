@@ -6,6 +6,8 @@ import { Controller, useForm, UseFormMethods } from "react-hook-form";
 import { d } from "../../locale/LocaleManager";
 import { SearchListForm, UserEntity } from "./types";
 
+const SEARCHINPUT="SEARCH_NAME"
+
 const useStyles = makeStyles((theme) => ({
   searchText: {
     position: "relative",
@@ -98,30 +100,30 @@ export interface SearchComProps {
   searchTextDefaultValue?: string;
   defaultTeacherName?: string;
   formMethods?: UseFormMethods<SearchListForm>;
-  teacherList?: UserEntity[];
+  usersList?: UserEntity[];
   onSearch: (searchField: string, searchInfo: UserEntity) => void;
   onSearchTeacherName: (searchText: string) => void;
 }
 
 export function ListSearch(props: SearchComProps) {
   const css = useStyles();
-  const { searchTextDefaultValue, defaultTeacherName, teacherList, onSearch, onSearchTeacherName } = props;
+  const { searchFieldDefaultValue, searchTextDefaultValue, defaultTeacherName, usersList, onSearch, onSearchTeacherName } = props;
   const formMethods = useForm();
   const { control, getValues, setValue } = formMethods;
   const [teacher, setTeacher] = useState<UserEntity>({ id: "", name: "" });
   const [isFocus, setIsfocus] = useState(false);
   const [selectAction, setSelectAction] = useState(false);
   const [showMask, setShowMask] = useState(false);
-  const teacherNameValues = getValues()["teacherName"];
+  const teacherNameValues = getValues()[SEARCHINPUT];
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
-  const showList = isFocus && teacherNameValues && teacherList;
+  const showList = isFocus && teacherNameValues && usersList;
   const disableSearchBtn = useMemo(() => {
     if (!teacher.id && !teacherNameValues) {
       return false;
     }
-    if (teacherNameValues) {
-      if (teacherList?.length) {
-        if (selectAction) {
+    if(teacherNameValues) {
+      if(usersList?.length) {
+        if(selectAction) {
           return false;
         } else {
           return true;
@@ -130,15 +132,15 @@ export function ListSearch(props: SearchComProps) {
         return true;
       }
     }
-  }, [selectAction, teacher.id, teacherList?.length, teacherNameValues]);
+  }, [selectAction, teacher.id, usersList?.length, teacherNameValues])
   const handleClickSearch = () => {
-    if (!teacherNameValues) {
-      onSearch("TeacherID", { id: "", name: "" });
+    if(!teacherNameValues) {
+      onSearch(searchFieldDefaultValue!, {id: "", name: ""})
     } else {
-      if (teacherNameValues === teacher.name) {
-        onSearch("TeacherID", teacher);
+      if(teacherNameValues === teacher.name) {
+        onSearch(searchFieldDefaultValue!, teacher);
       } else {
-        onSearch("TeacherID", { id: searchTextDefaultValue!, name: teacherNameValues });
+        onSearch(searchFieldDefaultValue!, {id: searchTextDefaultValue!, name: teacherNameValues})
       }
     }
     setSelectAction(false);
@@ -150,10 +152,10 @@ export function ListSearch(props: SearchComProps) {
       if (disableSearchBtn) {
         return;
       }
-      if (!teacherNameValues) {
-        onSearch("TeacherID", { id: "", name: "" });
+      if(!teacherNameValues) {
+        onSearch(searchFieldDefaultValue!, {id: "", name: ""})
       } else {
-        onSearch("TeacherID", teacher);
+        onSearch(searchFieldDefaultValue!, teacher);
       }
       setSelectAction(false);
       setShowMask(false);
@@ -165,9 +167,9 @@ export function ListSearch(props: SearchComProps) {
   //   setIsfocus(true);
   //   setSelectAction(false);
   // }
-
-  const handleSelectTeacher = (teacher: UserEntity) => {
-    setValue("teacherName", teacher.name);
+  
+  const handleSelectTeacher = (teacher: UserEntity)  => {
+    setValue(SEARCHINPUT, teacher.name)
     setTeacher(teacher);
     setIsfocus(false);
     setSelectAction(true);
@@ -176,8 +178,8 @@ export function ListSearch(props: SearchComProps) {
   const handleOnFocus = () => {
     setShowMask(true);
     setIsfocus(true);
-    if (searchTextDefaultValue) {
-      setValue("teacherName", "");
+    if(searchTextDefaultValue) {
+      setValue(SEARCHINPUT, "")
       onSearchTeacherName("");
     }
   };
@@ -185,8 +187,8 @@ export function ListSearch(props: SearchComProps) {
   const handleHideMask = () => {
     setShowMask(false);
     setIsfocus(false);
-    setValue("teacherName", defaultTeacherName);
-  };
+    setValue(SEARCHINPUT, defaultTeacherName)
+  }
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     event.persist();
@@ -223,39 +225,36 @@ export function ListSearch(props: SearchComProps) {
         >
           {menuItemList(searchFieldList)}
         </Controller> */}
-          <Controller
-            style={{
-              borderLeft: 0,
-            }}
-            as={TextField}
-            name={"teacherName"}
-            control={control}
-            size="small"
-            onFocusCapture={handleOnFocus}
-            className={css.searchText}
-            onKeyPress={handleKeyPress}
-            // onKeyUp={debounce(handleKeyUp, 500)}
-            onChangeCapture={handleChange}
-            defaultValue={defaultTeacherName}
-            placeholder={d("Search teacher").t("schedule_text_search_teacher")}
-          />
-        </div>
-        <Button variant="contained" color="primary" disabled={disableSearchBtn} className={css.searchBtn} onClick={handleClickSearch}>
-          <Search /> {d("Search").t("assess_label_search")}
-        </Button>
-        {showList && (
+        <Controller
+          style={{
+            borderLeft: 0,
+          }}
+          as={TextField}
+          name={SEARCHINPUT}
+          control={control}
+          size="small"
+          onFocusCapture={handleOnFocus}
+          className={css.searchText}
+          onKeyPress={handleKeyPress}
+          // onKeyUp={debounce(handleKeyUp, 500)}
+          onChangeCapture={handleChange}
+          defaultValue={defaultTeacherName}
+          placeholder={d("Search teacher").t("schedule_text_search_teacher")}
+        />
+      </div>
+      <Button variant="contained" color="primary" disabled={disableSearchBtn} className={css.searchBtn} onClick={handleClickSearch}>
+        <Search /> {d("Search").t("assess_label_search")}
+      </Button>
+      {
+        showList &&
           <div className={css.teacherListCon}>
-            {teacherList?.length ? (
-              teacherList?.map((item) => (
-                <div className={css.teacherItemCon} key={item.id} onClick={(e) => handleSelectTeacher(item)}>
-                  {item.name}
-                </div>
-              ))
-            ) : (
-              <div className={css.nullCon}>{"No Matching result"}</div>
-            )}
+            {usersList?.length ? usersList?.map(item => 
+              <div className={css.teacherItemCon} key={item.id} onClick={e => handleSelectTeacher(item)}>
+                {item.name}
+              </div>
+            ) : <div className={css.nullCon}>{"No Matching result"}</div>} 
           </div>
-        )}
+        }
       </div>
     </div>
   );
