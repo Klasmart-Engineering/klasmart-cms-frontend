@@ -123,8 +123,6 @@ export function ListAssessment() {
     </>
   );
 }
-// ListAssessment.routeBasePath = "/assessments/list";
-// ListAssessment.routeRedirectDefault = `/assessments/list?assessment_type=${AssessmentTypeValues.live}&status=${AssessmentStatus.all}&page=1`;
 
 ListAssessment.routeBasePath = "/assessments/assessment-list";
 ListAssessment.routeRedirectDefault = `/assessments/assessment-list?assessment_type=${AssessmentTypeValues.live}&status=${AssessmentStatus.all}&page=1`;

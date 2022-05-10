@@ -36,23 +36,23 @@ export function SecondSearchHeader(props: SecondSearchHeaderProps) {
   return (
     <div style={{ marginBottom: 20 }}>
       <LayoutBox holderMin={40} holderBase={202} mainBase={1517}>
-        <Grid container spacing={3} style={{ marginTop: "6px" }}>
-          <Grid item md={12} lg={12} xl={12}>
-            <ListSearch
-              searchTextDefaultValue={value.query_key ?? ""}
-              searchFieldDefaultValue={value.query_type ?? ""}
-              defaultTeacherName={value.teacher_name ?? ""}
-              searchFieldList={searchFieldList()}
-              onSearch={handleClickSearch}
-              formMethods={formMethods}
-              onSearchTeacherName={onSearchTeacherName}
-              teacherList={teacherList}
-            />
-            <Hidden only={["xs", "sm"]}>
-              <AssessmentType type={value.assessment_type as AssessmentTypeValues} onChangeAssessmentType={handleChangeAssessmentType} />
-            </Hidden>
+          <Grid container spacing={3} style={{ marginTop: "6px" }}>
+            <Grid item md={12} lg={12} xl={12}>
+              <ListSearch
+                searchTextDefaultValue={value.query_key ?? ""}
+                searchFieldDefaultValue={ExectSeachType.teacher_name}
+                defaultTeacherName={value.teacher_name ?? ""}
+                searchFieldList={searchFieldList()}
+                onSearch={handleClickSearch}
+                formMethods={formMethods}
+                onSearchTeacherName={onSearchTeacherName}
+                usersList={teacherList}
+              />
+              <Hidden only={["xs", "sm"]}>
+                <AssessmentType type={value.assessment_type as AssessmentTypeValues} onChangeAssessmentType={handleChangeAssessmentType} />
+              </Hidden>
+            </Grid>
           </Grid>
-        </Grid>
       </LayoutBox>
     </div>
   );

@@ -102,8 +102,12 @@ export function DetailAssessment() {
   }, [computedStudentViewItems, dimension, initStudentViewItems]);
   const [subDimesion, setSubDimension] = useState<SubDimensionOptions[] | undefined>();
   const [selectedSubdimension, setSelectedSubdimension] = useState<SubDimensionOptions[] | undefined>();
-  const perm = usePermission([PermissionType.edit_in_progress_assessment_439]);
+  const perm = usePermission([
+    PermissionType.edit_in_progress_assessment_439, 
+    PermissionType.edit_attendance_for_in_progress_assessment_438
+  ]);
   const perm_439 = Boolean(perm.edit_in_progress_assessment_439);
+  const hasEditPerm = Boolean(perm_439 || perm.edit_attendance_for_in_progress_assessment_438);
   const isMyAssessmentlist = assessmentDetailV2.teachers?.filter((item) => item.id === my_id);
   const isMyAssessment = Boolean(isMyAssessmentlist && isMyAssessmentlist.length > 0);
   const hasRemainTime = assessmentDetailV2.remaining_time ? assessmentDetailV2.remaining_time > 0 : false;
@@ -513,6 +517,7 @@ export function DetailAssessment() {
           onChangeStudent={handleChangeStudent}
           onChangeContents={handleChangeContents}
           completeRate={completeRate}
+          hasEditPerm={hasEditPerm}
         />
         {rightside}
       </LayoutPair>

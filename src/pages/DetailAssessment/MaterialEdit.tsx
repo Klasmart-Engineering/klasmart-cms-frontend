@@ -11,7 +11,7 @@ import {
   InputAdornment,
   makeStyles,
   TextField,
-  Typography,
+  Typography
 } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
 import BorderColorOutlinedIcon from "@material-ui/icons/BorderColorOutlined";
@@ -22,9 +22,7 @@ import { cloneDeep } from "lodash";
 import React, { ChangeEvent, useCallback, useMemo, useState } from "react";
 import { Controller, useForm, UseFormMethods } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import PermissionType from "../../api/PermissionType";
 import { AssessmentStatus } from "../../api/type";
-import { PermissionOr } from "../../components/Permission";
 import { d } from "../../locale/LocaleManager";
 import { DetailAssessmentResult } from "../ListAssessment/types";
 import { UpdateAssessmentDataOmitAction } from "./type";
@@ -120,6 +118,7 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
 interface MaterialEditProps {
   assessmentDetail: DetailAssessmentResult;
   editable: boolean;
+  hasEditPerm: boolean;
   contents: DetailAssessmentResult["contents"];
   formMethods: UseFormMethods<UpdateAssessmentDataOmitAction>;
   onChangeContents: (contents: DetailAssessmentResult["contents"]) => void;
@@ -127,7 +126,7 @@ interface MaterialEditProps {
 export function MaterialEdit(props: MaterialEditProps) {
   const css = useStyles();
   const { contentEditActive, openCotnentEdit, closeCotentEdit, contentEditIndex } = useContentEdit();
-  const { assessmentDetail, contents, editable, onChangeContents } = props;
+  const { assessmentDetail, contents, editable, hasEditPerm, onChangeContents } = props;
   // 过滤掉子material和lessonplan
   const materialArr = useMemo(() => {
     return contents?.filter((item) => item.content_type === "LessonMaterial" && item.parent_id === "");
@@ -171,16 +170,11 @@ export function MaterialEdit(props: MaterialEditProps) {
             ),
           }}
         />
-        <PermissionOr
-          value={[PermissionType.edit_in_progress_assessment_439, PermissionType.edit_attendance_for_in_progress_assessment_438]}
-          render={(value) =>
-            value && (
-              <Button className={css.editButton} color="primary" variant="outlined" onClick={openCotnentEdit}>
-                {!editable ? d("View").t("assess_detail_button_view") : d("Edit").t("assess_button_edit")}
-              </Button>
-            )
-          }
-        />
+        {hasEditPerm && 
+          <Button className={css.editButton} color="primary" variant="outlined" onClick={openCotnentEdit}>
+            {!editable ? d("View").t("assess_detail_button_view") : d("Edit").t("assess_button_edit")}
+          </Button>
+        }
         <ContentInput
           open={contentEditActive}
           onClose={closeCotentEdit}

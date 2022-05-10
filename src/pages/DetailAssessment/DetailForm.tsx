@@ -49,6 +49,7 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
 }));
 export interface DetailFormProps {
   editable: boolean;
+  hasEditPerm: boolean;
   assessmentDetail: DetailAssessmentResult;
   students: any[] | undefined;
   contents: DetailAssessmentResult["contents"];
@@ -62,7 +63,7 @@ export function DetailForm(props: DetailFormProps) {
   const css = useStyles();
   const { breakpoints } = useTheme();
   const sm = useMediaQuery(breakpoints.down("sm"));
-  const { assessmentDetail, students, contents, assessmentType, formMethods, editable, onChangeStudent, onChangeContents } = props;
+  const { assessmentDetail, students, contents, assessmentType, formMethods, editable, hasEditPerm, onChangeStudent, onChangeContents } = props;
   const isClassAndLive = assessmentType === AssessmentTypeValues.class || assessmentType === AssessmentTypeValues.live;
   const isStudy = assessmentType === AssessmentTypeValues.study;
   const isReview = assessmentType === AssessmentTypeValues.review;
@@ -201,6 +202,7 @@ export function DetailForm(props: DetailFormProps) {
                 editable={editable}
                 formMethods={formMethods}
                 contents={contents}
+                hasEditPerm={hasEditPerm}
                 onChangeContents={onChangeContents}
               />
               {isClassAndLive && (
