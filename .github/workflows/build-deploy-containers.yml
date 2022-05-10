@@ -47,8 +47,6 @@ jobs:
             region: vn
           - environment: alpha
             region: vn
-          - environment: loadtest
-            region: vn
           - environment: prod
             region: in
           - environment: prod
