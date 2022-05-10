@@ -1736,7 +1736,7 @@ A new ‘Auto review’ lesson will appear on students’ calendar once our plat
       values: undefined;
     }
   | { id: "learning_outcome_label_threshold"; description: `Score Threshold`; values: undefined }
-  | { id: "assessment_summary_label_attendance_unknown"; description: `Unknown`; values: undefined }
+  | { id: "assessment_summary_label_attendance_unknown"; description: `Unknown User`; values: undefined }
   | { id: "learning_outcome_threshold_blank_alert"; description: `A score threshold must be entered`; values: undefined }
   | { id: "learning_outcome_threshold_error_toast"; description: `Please input an integer from 1 to 100`; values: undefined }
   | {
@@ -1813,7 +1813,8 @@ A new ‘Auto review’ lesson will appear on students’ calendar once our plat
   | { id: "assessment_detail_essay_no_result"; description: `An answer has not been submitted by the student.`; values: undefined }
   | { id: "assessment_search_no_matching_result"; description: `No Matching Result`; values: undefined }
   | { id: "library_label_created_by"; description: `Created By`; values: undefined }
-  | { id: "library_label_contains"; description: `Contains`; values: undefined };
+  | { id: "library_label_contains"; description: `Contains`; values: undefined }
+  | { id: "assessment_search_teacher_tips"; description: `Teacher's given or family name`; values: undefined};
 
 export type LangRecordId = LangRecord["id"];
 export type LangRecodeDescription = LangRecord["description"];

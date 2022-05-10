@@ -73,7 +73,7 @@ export function DetailForm(props: DetailFormProps) {
       if (v.name) {
         return v.name;
       } else {
-        return d("Unknown").t("assessment_summary_label_attendance_unknown");
+        return d("Unknown User").t("assessment_summary_label_attendance_unknown");
       }
     });
     const length = list && list.length ? list.length : "";

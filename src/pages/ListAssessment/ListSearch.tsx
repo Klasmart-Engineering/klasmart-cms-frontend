@@ -240,7 +240,7 @@ export function ListSearch(props: SearchComProps) {
           // onKeyUp={debounce(handleKeyUp, 500)}
           onChangeCapture={handleChange}
           defaultValue={defaultTeacherName}
-          placeholder={d("Search teacher").t("schedule_text_search_teacher")}
+          placeholder={d("Teacher's given or family name").t("assessment_search_teacher_tips")}
         />
       </div>
       <Button variant="contained" color="primary" disabled={disableSearchBtn} className={css.searchBtn} onClick={handleClickSearch}>
