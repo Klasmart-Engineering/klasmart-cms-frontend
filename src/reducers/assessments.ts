@@ -118,9 +118,12 @@ export const getDetailAssessmentV2 = createAsyncThunk<IQueryDetailAssessmentResu
       ? diff_content_students.map((item) => item.student_id!) || []
       : students?.map((item) => item.student_id!) || [];
     const userNamesArr = await apiGetUserNameByUserId(teacherIds.concat(studentIds));
-    detail.teachers = detail.teachers?.map((item) => {
-      item.name = userNamesArr.get(item.id!);
-      return item;
+    detail.teachers = teacher_ids?.map((item) => {
+      const name = userNamesArr.get(item!);
+      return {
+        id: item,
+        name,
+      }
     });
     detail.students = diff_content_students
       ? diff_content_students.map((item) => {
