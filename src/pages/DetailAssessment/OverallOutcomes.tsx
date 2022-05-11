@@ -183,7 +183,7 @@ export function OverallOutcomes(props: OverallOutcomesProps) {
                     checked={outcome.attendance_ids && outcome.attendance_ids?.indexOf(student.student_id!) >= 0}
                   />
                 }
-                label={student.student_name}
+                label={student.student_name ? student.student_name : d("Unknown User").t("assessment_summary_label_attendance_unknown")}
                 disabled={outcome.skip || !editable}
                 className={outcome.skip || !editable ? css.disabled : ""}
               />
