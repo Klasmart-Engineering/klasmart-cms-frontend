@@ -77,7 +77,7 @@ export default function LessonUnit(props: { list: ITeachingList[] }) {
   let history = useHistory();
   const { setRootState, ...rootState } = useContext(StmContext);
   const needScrollEvent = useRef(true);
-  const handleLessonClick = (payload: LessonItem, unitId: string) => {
+  const handleLessonClick = (payload: LessonItem, unitNo: number) => {
     setRootState && setRootState({ ...rootState, planId: payload.id, lessonId: payload.no });
     var storage = window.localStorage;
     history.push(pageLinks.present);
@@ -85,12 +85,12 @@ export default function LessonUnit(props: { list: ITeachingList[] }) {
     const pre = localStorage.getItem("selectPlan");
     const preList: LessonItem[] = pre && JSON.parse(pre);
     if (preList && preList.length > 0) {
-      preList.unshift({ ...payload, unitId });
+      preList.unshift({ ...payload, unitNo });
       temp = noRepeat(preList).filter((item: LessonItem, index: number) => {
         return index < 3;
       });
     } else {
-      temp.push({ ...payload, unitId });
+      temp.push({ ...payload, unitNo });
     }
     storage.setItem("selectPlan", JSON.stringify(temp));
   };
@@ -155,7 +155,7 @@ export default function LessonUnit(props: { list: ITeachingList[] }) {
                   key={lessonIndex}
                   className={css.lessonunit}
                   onClick={() => {
-                    handleLessonClick(lessonItem, item.id);
+                    handleLessonClick(lessonItem, item.no);
                   }}
                 >
                   <CardMedia className={css.lessonPic} component="img" image={lessonItem.thumbnail} title="" />

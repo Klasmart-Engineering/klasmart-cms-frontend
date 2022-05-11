@@ -143,7 +143,7 @@ export default function TeachingUnit(props: { list: LessonItem[] }) {
           <Box className={css.content}>
             <CardContent className={css.cardContent}>
               <Grid container className={css.lessoNowrap} item xs={12} spacing={1}>
-                <label className={css.unitBtn}>{item.unitId}</label>
+                <label className={css.unitBtn}>Unit {item.unitNo}</label>
                 <span className={css.lessonNo}>Lesson {item.no}</span>
               </Grid>
               <Typography className={css.lessonDesp} component="p">
