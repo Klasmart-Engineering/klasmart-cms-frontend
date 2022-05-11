@@ -1,4 +1,5 @@
-import { Class, Program, School, Subject, User, UserFilter, UuidExclusiveOperator, UuidOperator } from "@api/api-ko-schema.auto";
+import { Class, Program, School, Subject, UserFilter, UuidExclusiveOperator, UuidOperator } from "@api/api-ko-schema.auto";
+import { QueryMyUserDocument, QueryMyUserQuery, QueryMyUserQueryVariables } from "@api/api-ko.auto";
 import {
   ClassesSchoolsByOrganizationDocument,
   ClassesSchoolsByOrganizationQuery,
@@ -9,6 +10,9 @@ import {
   SchoolsIdNameByOrganizationDocument,
   SchoolsIdNameByOrganizationQuery,
   SchoolsIdNameByOrganizationQueryVariables,
+  StudentsByOrganizationDocument,
+  StudentsByOrganizationQuery,
+  StudentsByOrganizationQueryVariables,
   TeacherByOrgIdDocument,
   TeacherByOrgIdQuery,
   TeacherByOrgIdQueryVariables,
@@ -19,14 +23,6 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { orderByASC } from "@utilities/dataUtilities";
 import { WritableDraft } from "immer/dist/types/types-external";
 import { cloneDeep, pick, uniq, uniqBy } from "lodash";
-import {
-  QueryMyUserDocument,
-  QueryMyUserQuery,
-  QueryMyUserQueryVariables,
-  StudentsByOrganizationDocument,
-  StudentsByOrganizationQuery,
-  StudentsByOrganizationQueryVariables,
-} from "../api/api-ko.auto";
 import {
   EntityAssignmentRequest,
   EntityAssignmentResponse,
@@ -114,7 +110,6 @@ interface IreportState {
   stuReportList?: EntityStudentPerformanceReportItem[];
   stuReportDetail?: EntityStudentPerformanceReportItem[];
   h5pReportDetail?: [];
-  studentList: Pick<User, "user_id" | "user_name">[];
   studentUsage: {
     organization_id: string;
     schoolList: Pick<School, "classes" | "school_id" | "school_name">[];
@@ -291,7 +286,6 @@ const initialState: IreportState = {
   stuReportDetail: [],
   // h5pReportDetail: [],
   lessonPlanList: [],
-  studentList: [],
   teachingLoadOnload: {
     schoolList: [],
     teacherList: [],
@@ -1079,7 +1073,7 @@ export const getTeacherAndClassNew = createAsyncThunk<
       teacherList = teacherList?.concat(
         classItem?.teachers?.map((teacherItem) => ({
           id: teacherItem?.user_id || "",
-          name: teacherItem?.user_name || "",
+          name: `${teacherItem?.given_name} ${teacherItem?.family_name}`,
         })) || []
       );
     });
@@ -1129,7 +1123,7 @@ export const getTeacherAndClassOld = createAsyncThunk<
         teacherList = teacherList?.concat(
           classItem?.teachers?.map((teacherItem) => ({
             id: teacherItem?.user_id || "",
-            name: teacherItem?.user_name || "",
+            name: `${teacherItem?.given_name} ${teacherItem?.family_name}`,
           })) || []
         );
       });
@@ -1149,7 +1143,7 @@ export const getTeacherAndClassOld = createAsyncThunk<
               })
               ?.map((teacherItem) => ({
                 id: teacherItem?.user_id || "",
-                name: teacherItem?.user_name || "",
+                name: `${teacherItem?.given_name} ${teacherItem?.family_name}`,
               })) || []
           );
         });
@@ -1743,7 +1737,6 @@ const { actions, reducer } = createSlice({
       const classIDs = payload[3].map((item) => {
         return item.class_id;
       });
-      console.log(schoolIDs, classIDs);
       const permissions = payload[0];
       if (permissions[PermissionType.report_learning_summary_org_652]) {
         state.learningSummary.schoolList = schools;
@@ -1754,7 +1747,6 @@ const { actions, reducer } = createSlice({
         state.learningSummary.schoolList = schools.filter((school) => {
           return schoolIDs.indexOf(school.school_id) >= 0;
         });
-        console.log(state.learningSummary.schoolList);
         const allSchools = getAllUsers(state.learningSummary.schoolList, noneSchoolClasses, true);
         state.learningSummary.schools = [...allSchools];
       } else if (permissions[PermissionType.report_learning_summary_teacher_650]) {
@@ -2419,7 +2411,7 @@ const { actions, reducer } = createSlice({
         item.students?.map((val: any) =>
           stuList.push({
             id: val?.user_id!,
-            name: val?.user_name! || val?.full_name!,
+            name: `${val?.given_name} ${val?.family_name}`,
           })
         )
       );
@@ -2454,7 +2446,7 @@ const { actions, reducer } = createSlice({
         item.students?.map((val: any) =>
           stuList.push({
             id: val?.user_id!,
-            name: val?.user_name! || val?.full_name!,
+            name: `${val?.given_name} ${val?.family_name}`,
           })
         )
       );
@@ -2488,7 +2480,7 @@ const { actions, reducer } = createSlice({
         item.students?.map((val: any) =>
           stuList.push({
             id: val?.user_id!,
-            name: val?.user_name! || val?.full_name!,
+            name: `${val?.given_name} ${val?.family_name}`,
           })
         )
       );

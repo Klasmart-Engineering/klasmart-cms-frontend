@@ -2,7 +2,6 @@ import { Divider, makeStyles, MenuItem, TextField } from "@material-ui/core";
 // import produce from "immer";
 import React, { ChangeEvent } from "react";
 import { IWeeks } from ".";
-import { User } from "../../api/api-ko-schema.auto";
 import { ExternalSubject } from "../../api/api.auto";
 import LayoutBox from "../../components/LayoutBox";
 import { useRole } from "../../hooks/usePermission";
@@ -30,7 +29,6 @@ const useStyles = makeStyles(({ palette, shadows, breakpoints }) => ({
 export interface LearningSummartOptionsProps {
   year: number[];
   week: IWeeks[];
-  studentList: Pick<User, "user_id" | "user_name">[];
   subjectList: ExternalSubject[];
 }
 export interface FilterLearningSummaryProps extends QueryLearningSummaryConditionBaseProps {
@@ -45,8 +43,6 @@ export function FilterLearningSummary(props: FilterLearningSummaryProps) {
   const { isOrg, isSchool, isTeacher } = useRole();
   const { value, defaultWeeksValue, summaryReportOptions, onChangeYearFilter, onChangeWeekFilter, onChangeFilter } = props;
   const { years, weeks, schools, classes, students, subjects } = summaryReportOptions;
-  // const studentList = students?.slice().sort(sortByStudentName("name"));
-
   const getYear = () => {
     return (
       years &&

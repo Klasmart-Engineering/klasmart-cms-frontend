@@ -115,7 +115,7 @@ export default function TeacherFilter({ onChange }: IProps) {
         cur.teachers?.forEach((teacher) => {
           prev.push({
             value: teacher?.user_id!,
-            label: teacher?.user_name!,
+            label: `${teacher?.given_name} ${teacher?.family_name}`,
           });
         });
       }

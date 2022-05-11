@@ -177,6 +177,8 @@ export type AgeRangeFilter = {
 };
 
 export enum AgeRangeSortBy {
+  HighValue = "highValue",
+  HighValueUnit = "highValueUnit",
   Id = "id",
   LowValue = "lowValue",
   LowValueUnit = "lowValueUnit",
@@ -915,6 +917,7 @@ export type Mutation = {
   /** @deprecated Use the inviteUser() method */
   newUser?: Maybe<User>;
   organization?: Maybe<Organization>;
+  /** @deprecated Sunset Date: 08/08/2022 Details: https://calmisland.atlassian.net/wiki/spaces/ATZ/pages/2669379612. */
   program?: Maybe<Program>;
   /**
    * Reactivates users for an organization who were inactivated via removeUsersFromOrganizations
@@ -949,6 +952,7 @@ export type Mutation = {
   renameDuplicateSubjects?: Maybe<Scalars["Boolean"]>;
   replaceRole?: Maybe<Role>;
   role?: Maybe<Role>;
+  /** @deprecated Sunset Date: 09/08/2022 Details: https://calmisland.atlassian.net/l/c/Z7e0ZCzm */
   roles?: Maybe<Array<Maybe<Role>>>;
   school?: Maybe<School>;
   /** Note: A null or undefined academicTermId will remove the AcademicTerm from the class */
@@ -1906,8 +1910,11 @@ export type Program = {
   age_ranges?: Maybe<Array<AgeRange>>;
   /** @deprecated Sunset Date: 28/04/2022 Details: https://calmisland.atlassian.net/l/c/8d8mpL0Q */
   delete?: Maybe<Scalars["Boolean"]>;
+  /** @deprecated Sunset Date: 08/08/2022 Details: https://calmisland.atlassian.net/wiki/spaces/ATZ/pages/2669346881 */
   editAgeRanges?: Maybe<Array<Maybe<AgeRange>>>;
+  /** @deprecated Sunset Date: 08/08/2022 Details: https://calmisland.atlassian.net/wiki/spaces/ATZ/pages/2669379603 */
   editGrades?: Maybe<Array<Maybe<Grade>>>;
+  /** @deprecated Sunset Date: 08/08/2022 Details: https://calmisland.atlassian.net/wiki/spaces/ATZ/pages/2669346890 */
   editSubjects?: Maybe<Array<Maybe<Subject>>>;
   grades?: Maybe<Array<Grade>>;
   id: Scalars["ID"];
@@ -2073,6 +2080,7 @@ export type Query = {
   /** @deprecated Sunset Date: 08/02/2022 Details: https://calmisland.atlassian.net/wiki/spaces/ATZ/pages/2427683554 */
   role?: Maybe<Role>;
   roleNode?: Maybe<RoleConnectionNode>;
+  /** @deprecated Sunset Date: 09/08/2022 Details: https://calmisland.atlassian.net/l/c/Z7e0ZCzm */
   roles?: Maybe<Array<Maybe<Role>>>;
   rolesConnection?: Maybe<RolesConnectionResponse>;
   /** @deprecated Sunset Date: 08/02/2022 Details: https://calmisland.atlassian.net/wiki/spaces/ATZ/pages/2427683554 */
@@ -2361,14 +2369,17 @@ export type Role = {
   __typename?: "Role";
   /** @deprecated Sunset Date: 27/03/2022 Details: https://calmisland.atlassian.net/l/c/8d8mpL0Q */
   delete_role?: Maybe<Scalars["Boolean"]>;
+  /** @deprecated Sunset Date: 09/08/2022 Details: https://calmisland.atlassian.net/l/c/Z7e0ZCzm */
   deny?: Maybe<Permission>;
   edit_permissions?: Maybe<Array<Maybe<Permission>>>;
+  /** @deprecated Sunset Date: 09/08/2022 Details: https://calmisland.atlassian.net/l/c/Z7e0ZCzm */
   grant?: Maybe<Permission>;
   memberships?: Maybe<Array<Maybe<OrganizationMembership>>>;
   organization?: Maybe<Organization>;
   permission?: Maybe<Permission>;
   /** @deprecated Sunset Date: 26/02/2022 Details: https://calmisland.atlassian.net/l/c/1nEk2YHE */
   permissions?: Maybe<Array<Maybe<Permission>>>;
+  /** @deprecated Sunset Date: 09/08/2022 Details: https://calmisland.atlassian.net/l/c/Z7e0ZCzm */
   revoke?: Maybe<Scalars["Boolean"]>;
   role_description: Scalars["String"];
   role_id: Scalars["ID"];
@@ -2987,6 +2998,7 @@ export type User = {
   given_name?: Maybe<Scalars["String"]>;
   membership?: Maybe<OrganizationMembership>;
   memberships?: Maybe<Array<Maybe<OrganizationMembership>>>;
+  /** @deprecated Sunset Date: 01/08/22 Details: https://calmisland.atlassian.net/wiki/spaces/UserService/pages/2665513259/ */
   merge?: Maybe<User>;
   /**
    * 'my_organization' is the Organization that this user has created
