@@ -559,6 +559,8 @@ interface ISchool {
 interface IUser {
   user_id: string;
   user_name?: string;
+  family_name?: string;
+  given_name?: string;
 }
 type ITeacher = IUser;
 type IStudent = IUser;

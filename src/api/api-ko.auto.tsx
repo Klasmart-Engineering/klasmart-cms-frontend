@@ -332,44 +332,6 @@ export type GetProgramsQuery = { __typename?: "Query" } & {
   >;
 };
 
-export type StudentsByOrganizationQueryVariables = Types.Exact<{
-  organization_id: Types.Scalars["ID"];
-}>;
-
-export type StudentsByOrganizationQuery = { __typename?: "Query" } & {
-  organization?: Types.Maybe<
-    { __typename?: "Organization" } & {
-      classes?: Types.Maybe<
-        Array<
-          Types.Maybe<
-            { __typename?: "Class" } & Pick<Types.Class, "class_id" | "class_name" | "status"> & {
-                schools?: Types.Maybe<Array<Types.Maybe<{ __typename?: "School" } & Pick<Types.School, "school_id">>>>;
-                students?: Types.Maybe<Array<Types.Maybe<{ __typename?: "User" } & Pick<Types.User, "user_id" | "user_name">>>>;
-              }
-          >
-        >
-      >;
-      schools?: Types.Maybe<
-        Array<
-          Types.Maybe<
-            { __typename?: "School" } & Pick<Types.School, "school_id" | "school_name"> & {
-                classes?: Types.Maybe<
-                  Array<
-                    Types.Maybe<
-                      { __typename?: "Class" } & Pick<Types.Class, "class_id" | "class_name" | "status"> & {
-                          students?: Types.Maybe<Array<Types.Maybe<{ __typename?: "User" } & Pick<Types.User, "user_id" | "user_name">>>>;
-                        }
-                    >
-                  >
-                >;
-              }
-          >
-        >
-      >;
-    }
-  >;
-};
-
 export type GetProgramsAndSubjectsQueryVariables = Types.Exact<{
   count: Types.Scalars["PageSize"];
   cursor: Types.Scalars["String"];
@@ -498,7 +460,7 @@ export type GetUserQuery = { __typename?: "Query" } & {
   >;
 };
 
-export type UserIdNameFragment = { __typename?: "User" } & Pick<Types.User, "user_id" | "user_name">;
+export type UserIdNameFragment = { __typename?: "User" } & Pick<Types.User, "user_id" | "user_name" | "family_name" | "given_name">;
 
 export type ClassIdNameStatusFragment = { __typename?: "Class" } & Pick<Types.Class, "class_id" | "class_name" | "status">;
 
@@ -924,6 +886,8 @@ export const UserIdNameFragmentDoc = gql`
   fragment userIdName on User {
     user_id
     user_name
+    family_name
+    given_name
   }
 `;
 export const ClassIdNameStatusFragmentDoc = gql`
@@ -1632,69 +1596,6 @@ export function useGetProgramsLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type GetProgramsQueryHookResult = ReturnType<typeof useGetProgramsQuery>;
 export type GetProgramsLazyQueryHookResult = ReturnType<typeof useGetProgramsLazyQuery>;
 export type GetProgramsQueryResult = Apollo.QueryResult<GetProgramsQuery, GetProgramsQueryVariables>;
-export const StudentsByOrganizationDocument = gql`
-  query studentsByOrganization($organization_id: ID!) {
-    organization(organization_id: $organization_id) {
-      classes {
-        class_id
-        class_name
-        status
-        schools {
-          school_id
-        }
-        students {
-          user_id
-          user_name
-        }
-      }
-      schools {
-        school_id
-        school_name
-        classes {
-          class_id
-          class_name
-          status
-          students {
-            user_id
-            user_name
-          }
-        }
-      }
-    }
-  }
-`;
-
-/**
- * __useStudentsByOrganizationQuery__
- *
- * To run a query within a React component, call `useStudentsByOrganizationQuery` and pass it any options that fit your needs.
- * When your component renders, `useStudentsByOrganizationQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useStudentsByOrganizationQuery({
- *   variables: {
- *      organization_id: // value for 'organization_id'
- *   },
- * });
- */
-export function useStudentsByOrganizationQuery(
-  baseOptions: Apollo.QueryHookOptions<StudentsByOrganizationQuery, StudentsByOrganizationQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<StudentsByOrganizationQuery, StudentsByOrganizationQueryVariables>(StudentsByOrganizationDocument, options);
-}
-export function useStudentsByOrganizationLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<StudentsByOrganizationQuery, StudentsByOrganizationQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<StudentsByOrganizationQuery, StudentsByOrganizationQueryVariables>(StudentsByOrganizationDocument, options);
-}
-export type StudentsByOrganizationQueryHookResult = ReturnType<typeof useStudentsByOrganizationQuery>;
-export type StudentsByOrganizationLazyQueryHookResult = ReturnType<typeof useStudentsByOrganizationLazyQuery>;
-export type StudentsByOrganizationQueryResult = Apollo.QueryResult<StudentsByOrganizationQuery, StudentsByOrganizationQueryVariables>;
 export const GetProgramsAndSubjectsDocument = gql`
   query getProgramsAndSubjects($count: PageSize!, $cursor: String!, $filter: ProgramFilter!) {
     programsConnection(filter: $filter, directionArgs: { count: $count, cursor: $cursor }, direction: FORWARD) {
