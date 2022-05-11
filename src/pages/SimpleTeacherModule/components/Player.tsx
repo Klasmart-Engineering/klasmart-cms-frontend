@@ -128,12 +128,12 @@ const PresentPlayer = React.forwardRef<HTMLVideoElement, IPlayerProps>((props, v
             <Video ref={videoRef} poster={thumbnail} source={data.source} />
           </Box>
         )}
-        {data.file_type === 5 && (
+        {(data.file_type === 5 || data.file_type === 100) && (
           <iframe
             title={name}
             className={css.playerIframe}
             sandbox="allow-same-origin allow-scripts"
-            src={`//live.kidsloop.live/h5p/play/${data.source}`}
+            src={`${data.source.startsWith("http") ? data.source : `//live.kidsloop.live/h5p/play/${data.source}`}`}
           />
         )}
       </Box>
