@@ -2071,6 +2071,7 @@ const { actions, reducer } = createSlice({
             return (item.schools || []).some((school) => school?.school_id === id);
           });
         });
+        schools = schools.filter((item) => schoolIDs.indexOf(item.school_id) > -1);
       } else if (permissions["report_student_progress_teacher_660"]) {
         classesSchools = classesSchools.filter((item) => {
           return classIDs.indexOf(item.class_id) >= 0;
@@ -2093,7 +2094,7 @@ const { actions, reducer } = createSlice({
         const students = classesStudents.find((data) => data.class_id === cur.class_id)?.students;
         if (students && students?.length > 0) {
           let item: Pick<Class, "class_id" | "class_name" | "schools" | "students"> = pick(cur, ["class_id", "class_name", "schools"]);
-          item["students"] = students;
+          item["students"] = uniqBy(students, "user_id");
           prev.push(item as never);
         }
 
