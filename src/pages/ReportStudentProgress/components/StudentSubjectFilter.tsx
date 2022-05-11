@@ -100,7 +100,7 @@ export default function StudentSubjectFilter({ onInitial, onChange }: IProps) {
     data = data.concat(classList, noneSchoolClassList);
     let students = (data.find((item) => item.class_id === state.classId)?.students || []).map((item) => ({
       ...item,
-      full_name: item?.full_name || item?.user_name,
+      full_name: `${item?.given_name} ${item?.family_name}`,
     })) as Maybe<User>[];
     students = orderByASC(students as { [key: string]: any }[], "full_name") as Maybe<User>[];
     return (students || []).map((item) => ({

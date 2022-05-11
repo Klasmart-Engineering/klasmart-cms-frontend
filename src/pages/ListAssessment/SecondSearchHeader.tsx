@@ -6,7 +6,7 @@ import { AssessmentType, AssessmentTypeValues } from "../../components/Assessmen
 import LayoutBox from "../../components/LayoutBox";
 import { d } from "../../locale/LocaleManager";
 import { ListSearch, SearchComProps } from "./ListSearch";
-import { AssessmentQueryCondition, AssessmentQueryConditionBaseProps, SearchListForm } from "./types";
+import { AssessmentQueryCondition, AssessmentQueryConditionBaseProps, SearchListForm, UserEntity } from "./types";
 const searchFieldList = () => {
   return [
     { label: d("All").t("assess_search_all"), value: ExectSeachType.all },
@@ -17,52 +17,42 @@ const searchFieldList = () => {
 export interface SecondSearchHeaderProps extends AssessmentQueryConditionBaseProps {
   onChangeAssessmentType: (assessment_type: string) => void;
   formMethods: UseFormMethods<SearchListForm>;
+  onSearchTeacherName: (name: string) => void;
+  teacherList?: UserEntity[];
 }
 export function SecondSearchHeader(props: SecondSearchHeaderProps) {
-  const { value, formMethods, onChange, onChangeAssessmentType } = props;
-  const handleClickSearch = (
-    searchField: SearchComProps["searchFieldDefaultValue"],
-    searchText: SearchComProps["searchTextDefaultValue"]
-  ) => {
-    const query_key = searchText;
+  const { value, formMethods, teacherList, onChange, onChangeAssessmentType, onSearchTeacherName } = props;
+  const handleClickSearch = (searchField: SearchComProps["searchFieldDefaultValue"], searchInfo: UserEntity) => {
+    const teacher_name = searchInfo.name;
+    const query_key = searchInfo.id;
     const query_type = searchField as AssessmentQueryCondition["query_type"];
-    onChange({ ...value, query_key, query_type, page: 1 });
+    onChange({ ...value, query_key, query_type, teacher_name, page: 1 });
   };
   const handleChangeAssessmentType = (assessment_type: string) => {
     const _assessment_type = assessment_type as AssessmentTypeValues;
-    // onChange({ assessment_type: _assessment_type });
     onChangeAssessmentType(_assessment_type);
   };
+
   return (
     <div style={{ marginBottom: 20 }}>
       <LayoutBox holderMin={40} holderBase={202} mainBase={1517}>
-        <Hidden only={["xs", "sm"]}>
           <Grid container spacing={3} style={{ marginTop: "6px" }}>
             <Grid item md={12} lg={12} xl={12}>
               <ListSearch
                 searchTextDefaultValue={value.query_key ?? ""}
-                searchFieldDefaultValue={value.query_type ?? ""}
+                searchFieldDefaultValue={ExectSeachType.teacher_name}
+                defaultTeacherName={value.teacher_name ?? ""}
                 searchFieldList={searchFieldList()}
                 onSearch={handleClickSearch}
                 formMethods={formMethods}
+                onSearchTeacherName={onSearchTeacherName}
+                usersList={teacherList}
               />
-              <AssessmentType type={value.assessment_type as AssessmentTypeValues} onChangeAssessmentType={handleChangeAssessmentType} />
+              <Hidden only={["xs", "sm"]}>
+                <AssessmentType type={value.assessment_type as AssessmentTypeValues} onChangeAssessmentType={handleChangeAssessmentType} />
+              </Hidden>
             </Grid>
           </Grid>
-        </Hidden>
-        <Hidden only={["md", "lg", "xl"]}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} sm={12}>
-              <ListSearch
-                searchTextDefaultValue={value.query_key ?? ""}
-                searchFieldDefaultValue={value.query_type}
-                searchFieldList={searchFieldList()}
-                onSearch={handleClickSearch}
-                formMethods={formMethods}
-              />
-            </Grid>
-          </Grid>
-        </Hidden>
       </LayoutBox>
     </div>
   );

@@ -1,4 +1,5 @@
-import { Class, Program, School, Subject, User, UserFilter, UuidExclusiveOperator, UuidOperator } from "@api/api-ko-schema.auto";
+import { Class, Program, School, Subject, UserFilter, UuidExclusiveOperator, UuidOperator } from "@api/api-ko-schema.auto";
+import { QueryMyUserDocument, QueryMyUserQuery, QueryMyUserQueryVariables } from "@api/api-ko.auto";
 import {
   ClassesSchoolsByOrganizationDocument,
   ClassesSchoolsByOrganizationQuery,
@@ -9,6 +10,9 @@ import {
   SchoolsIdNameByOrganizationDocument,
   SchoolsIdNameByOrganizationQuery,
   SchoolsIdNameByOrganizationQueryVariables,
+  StudentsByOrganizationDocument,
+  StudentsByOrganizationQuery,
+  StudentsByOrganizationQueryVariables,
   TeacherByOrgIdDocument,
   TeacherByOrgIdQuery,
   TeacherByOrgIdQueryVariables,
@@ -19,14 +23,6 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { orderByASC } from "@utilities/dataUtilities";
 import { WritableDraft } from "immer/dist/types/types-external";
 import { cloneDeep, pick, uniq, uniqBy } from "lodash";
-import {
-  QueryMyUserDocument,
-  QueryMyUserQuery,
-  QueryMyUserQueryVariables,
-  StudentsByOrganizationDocument,
-  StudentsByOrganizationQuery,
-  StudentsByOrganizationQueryVariables,
-} from "../api/api-ko.auto";
 import {
   EntityAssignmentRequest,
   EntityAssignmentResponse,
@@ -114,7 +110,6 @@ interface IreportState {
   stuReportList?: EntityStudentPerformanceReportItem[];
   stuReportDetail?: EntityStudentPerformanceReportItem[];
   h5pReportDetail?: [];
-  studentList: Pick<User, "user_id" | "user_name">[];
   studentUsage: {
     organization_id: string;
     schoolList: Pick<School, "classes" | "school_id" | "school_name">[];
@@ -291,7 +286,6 @@ const initialState: IreportState = {
   stuReportDetail: [],
   // h5pReportDetail: [],
   lessonPlanList: [],
-  studentList: [],
   teachingLoadOnload: {
     schoolList: [],
     teacherList: [],
@@ -1079,7 +1073,7 @@ export const getTeacherAndClassNew = createAsyncThunk<
       teacherList = teacherList?.concat(
         classItem?.teachers?.map((teacherItem) => ({
           id: teacherItem?.user_id || "",
-          name: teacherItem?.user_name || "",
+          name: `${teacherItem?.given_name} ${teacherItem?.family_name}`,
         })) || []
       );
     });
@@ -1129,7 +1123,7 @@ export const getTeacherAndClassOld = createAsyncThunk<
         teacherList = teacherList?.concat(
           classItem?.teachers?.map((teacherItem) => ({
             id: teacherItem?.user_id || "",
-            name: teacherItem?.user_name || "",
+            name: `${teacherItem?.given_name} ${teacherItem?.family_name}`,
           })) || []
         );
       });
@@ -1149,7 +1143,7 @@ export const getTeacherAndClassOld = createAsyncThunk<
               })
               ?.map((teacherItem) => ({
                 id: teacherItem?.user_id || "",
-                name: teacherItem?.user_name || "",
+                name: `${teacherItem?.given_name} ${teacherItem?.family_name}`,
               })) || []
           );
         });
@@ -1743,7 +1737,6 @@ const { actions, reducer } = createSlice({
       const classIDs = payload[3].map((item) => {
         return item.class_id;
       });
-      console.log(schoolIDs, classIDs);
       const permissions = payload[0];
       if (permissions[PermissionType.report_learning_summary_org_652]) {
         state.learningSummary.schoolList = schools;
@@ -1754,7 +1747,6 @@ const { actions, reducer } = createSlice({
         state.learningSummary.schoolList = schools.filter((school) => {
           return schoolIDs.indexOf(school.school_id) >= 0;
         });
-        console.log(state.learningSummary.schoolList);
         const allSchools = getAllUsers(state.learningSummary.schoolList, noneSchoolClasses, true);
         state.learningSummary.schools = [...allSchools];
       } else if (permissions[PermissionType.report_learning_summary_teacher_650]) {
@@ -2079,6 +2071,7 @@ const { actions, reducer } = createSlice({
             return (item.schools || []).some((school) => school?.school_id === id);
           });
         });
+        schools = schools.filter((item) => schoolIDs.indexOf(item.school_id) > -1);
       } else if (permissions["report_student_progress_teacher_660"]) {
         classesSchools = classesSchools.filter((item) => {
           return classIDs.indexOf(item.class_id) >= 0;
@@ -2101,7 +2094,7 @@ const { actions, reducer } = createSlice({
         const students = classesStudents.find((data) => data.class_id === cur.class_id)?.students;
         if (students && students?.length > 0) {
           let item: Pick<Class, "class_id" | "class_name" | "schools" | "students"> = pick(cur, ["class_id", "class_name", "schools"]);
-          item["students"] = students;
+          item["students"] = uniqBy(students, "user_id");
           prev.push(item as never);
         }
 
@@ -2413,11 +2406,13 @@ const { actions, reducer } = createSlice({
     [getAssignmentsCompletion.fulfilled.type]: (state, { payload }: PayloadAction<AsyncTrunkReturned<typeof getAssignmentsCompletion>>) => {
       state.assignmentsCompletion = payload;
       const stuList = [{ id: "", name: "" }];
-      state.schoolClassesStudentsSubjects.classList.map((item) =>
-        item.students?.map((val) =>
+      let data = [] as any;
+      data = data.concat(state.schoolClassesStudentsSubjects.classList, state.schoolClassesStudentsSubjects.noneSchoolClassList);
+      data.map((item: any) =>
+        item.students?.map((val: any) =>
           stuList.push({
             id: val?.user_id!,
-            name: val?.user_name!,
+            name: `${val?.given_name} ${val?.family_name}`,
           })
         )
       );
@@ -2446,11 +2441,13 @@ const { actions, reducer } = createSlice({
     ) => {
       state.learnOutcomeClassAttendance = payload;
       const stuList = [{ id: "", name: "" }];
-      state.schoolClassesStudentsSubjects.classList.map((item) =>
-        item.students?.map((val) =>
+      let data = [] as any;
+      data = data.concat(state.schoolClassesStudentsSubjects.classList, state.schoolClassesStudentsSubjects.noneSchoolClassList);
+      data.map((item: any) =>
+        item.students?.map((val: any) =>
           stuList.push({
             id: val?.user_id!,
-            name: val?.user_name!,
+            name: `${val?.given_name} ${val?.family_name}`,
           })
         )
       );
@@ -2478,11 +2475,13 @@ const { actions, reducer } = createSlice({
     ) => {
       state.learnOutcomeAchievement = payload;
       const stuList = [{ id: "", name: "" }];
-      state.schoolClassesStudentsSubjects.classList.map((item) =>
-        item.students?.map((val) =>
+      let data = [] as any;
+      data = data.concat(state.schoolClassesStudentsSubjects.classList, state.schoolClassesStudentsSubjects.noneSchoolClassList);
+      data.map((item: any) =>
+        item.students?.map((val: any) =>
           stuList.push({
             id: val?.user_id!,
-            name: val?.user_name!,
+            name: `${val?.given_name} ${val?.family_name}`,
           })
         )
       );

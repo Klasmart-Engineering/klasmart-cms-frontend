@@ -8,7 +8,7 @@ import {
   TableBody,
   TableCell,
   TableContainer,
-  TableRow,
+  TableRow
 } from "@material-ui/core";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
@@ -17,20 +17,22 @@ import { cloneDeep } from "lodash";
 import React, { ChangeEvent, Fragment, useMemo, useState } from "react";
 import { PLField, PLTableHeader } from "../../components/PLTable";
 import { d } from "../../locale/LocaleManager";
-import { DetailAssessmentResult, DetailAssessmentResultStudent } from "../ListAssessment/types";
+import { DetailAssessmentResult } from "../ListAssessment/types";
 import { AchievedTooltips } from "./AchievedTooltips";
 import { EditScore } from "./EditScore";
 import { Dimension } from "./MultiSelect";
 import { ResourceView, showAudioRecorder, showScreenShort, useResourceView } from "./ResourceView";
 import {
+  DetailAssessmentProps,
   FileTypes,
   MaterialViewItemResultOutcomeProps,
   MaterialViewItemStudentProps,
   OutcomeStatus,
   ResourceViewTypeValues,
   StudentParticipate,
+  StudentProps,
   StudentViewItemsProps,
-  SubDimensionOptions,
+  SubDimensionOptions
 } from "./type";
 const useStyles = makeStyles({
   tableBar: {
@@ -75,7 +77,7 @@ export interface MaterialViewProps {
   dimension: Dimension;
   subDimension: SubDimensionOptions[];
   contents: DetailAssessmentResult["contents"];
-  students: DetailAssessmentResult["students"];
+  students: DetailAssessmentProps["students"];
   editable: boolean;
   roomId?: string;
   onChangeMaterialAllAchieved: (checked: boolean, content_id?: string, outcome_id?: string) => void;
@@ -131,7 +133,7 @@ export function MaterialView(props: MaterialViewProps) {
   }, [subDimension]);
   const isSelectAll = subDimension.findIndex((item) => item.id === "all") >= 0 ? true : false;
   const attendanceList = useMemo(() => {
-    return students?.filter((student: DetailAssessmentResultStudent) => student.status === "Participate");
+    return students?.filter((student: StudentProps) => student.status === "Participate");
   }, [students]);
   const materialViewItems = useMemo(() => {
     return ModelAssessment.getMaterialViewItems(studentViewItems);
@@ -276,7 +278,7 @@ export function MaterialView(props: MaterialViewProps) {
                                           />
                                         </Box>
                                         <Box px={3} className={css.assessActionline}>
-                                          {attendanceList?.map((student: DetailAssessmentResultStudent) => (
+                                          {attendanceList?.map((student: StudentProps) => (
                                             <FormControlLabel
                                               key={student.student_id}
                                               control={

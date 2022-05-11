@@ -9,7 +9,7 @@ import {
   FormControlLabel,
   makeStyles,
   TextField,
-  Typography,
+  Typography
 } from "@material-ui/core";
 import { actWarning } from "@reducers/notify";
 import clsx from "clsx";
@@ -86,7 +86,7 @@ export function StudentEdit(props: StudentEditProps) {
         if (item.student_name) {
           return item.student_name;
         } else {
-          return d("Unknown").t("assessment_summary_label_attendance_unknown");
+          return d("Unknown User").t("assessment_summary_label_attendance_unknown");
         }
       });
     return `${studentsNameArr?.join(",")}(${studentsNameArr?.length ?? 0})`;
@@ -178,7 +178,7 @@ export function StudentInput(props: StudentEditProps) {
               onChange={(e) => handleChange(e, index)}
             />
           }
-          label={item.student_name ? item.student_name : d("Unknown").t("assessment_summary_label_attendance_unknown")}
+          label={item.student_name ? item.student_name : d("Unknown User").t("assessment_summary_label_attendance_unknown")}
         />
       ))}
     </Box>

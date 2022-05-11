@@ -60,7 +60,6 @@ export function content2ids(contents: EntityFolderContentData[], ids?: string[])
   if (!ids) return [];
   const contentsArr = ids2Content(contents, ids);
   const content_ids: string[] = [];
-  // debugger;
   contentsArr.forEach((item) => {
     content_ids.push(item.id as string);
     if (item.data) {

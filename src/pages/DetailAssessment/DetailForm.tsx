@@ -7,7 +7,7 @@ import { formattedTime } from "../../models/ModelContentDetailForm";
 import { DetailAssessmentResult } from "../ListAssessment/types";
 import { MaterialEdit } from "./MaterialEdit";
 import { StudentEdit } from "./StudentEdit";
-import { UpdateAssessmentDataOmitAction } from "./type";
+import { DetailAssessmentProps, UpdateAssessmentDataOmitAction } from "./type";
 const useStyles = makeStyles(({ palette, spacing }) => ({
   classSummaryHeader: {
     height: 64,
@@ -49,7 +49,8 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
 }));
 export interface DetailFormProps {
   editable: boolean;
-  assessmentDetail: DetailAssessmentResult;
+  hasEditPerm: boolean;
+  assessmentDetail: DetailAssessmentProps;
   students: any[] | undefined;
   contents: DetailAssessmentResult["contents"];
   assessmentType: AssessmentTypeValues;
@@ -62,13 +63,19 @@ export function DetailForm(props: DetailFormProps) {
   const css = useStyles();
   const { breakpoints } = useTheme();
   const sm = useMediaQuery(breakpoints.down("sm"));
-  const { assessmentDetail, students, contents, assessmentType, formMethods, editable, onChangeStudent, onChangeContents } = props;
+  const { assessmentDetail, students, contents, assessmentType, formMethods, editable, hasEditPerm, onChangeStudent, onChangeContents } = props;
   const isClassAndLive = assessmentType === AssessmentTypeValues.class || assessmentType === AssessmentTypeValues.live;
   const isStudy = assessmentType === AssessmentTypeValues.study;
   const isReview = assessmentType === AssessmentTypeValues.review;
   const isHomefun = assessmentType === AssessmentTypeValues.homeFun;
   const teacherList = useMemo(() => {
-    const list = assessmentDetail.teachers?.map((v) => v.name);
+    const list = assessmentDetail.teachers?.map((v) => {
+      if (v.name) {
+        return v.name;
+      } else {
+        return d("Unknown User").t("assessment_summary_label_attendance_unknown");
+      }
+    });
     const length = list && list.length ? list.length : "";
     return `${list?.join(",")} (${length})`;
   }, [assessmentDetail.teachers]);
@@ -195,6 +202,7 @@ export function DetailForm(props: DetailFormProps) {
                 editable={editable}
                 formMethods={formMethods}
                 contents={contents}
+                hasEditPerm={hasEditPerm}
                 onChangeContents={onChangeContents}
               />
               {isClassAndLive && (

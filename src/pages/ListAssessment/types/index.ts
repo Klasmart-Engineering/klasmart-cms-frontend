@@ -8,12 +8,10 @@ type NonOnlyNull<T> = T extends null ? never : T;
 type NonNullRecordValue<T> = {
   [K in keyof T]: NonOnlyNull<T[K]>;
 };
-export type AssessmentQueryCondition = NonNullRecordValue<NonNullable<Parameters<typeof api.assessmentsV2.queryAssessmentV2>[0]>>;
+export type AssessmentQueryCondition = { teacher_name?: string } & NonNullRecordValue<
+  NonNullable<Parameters<typeof api.assessmentsV2.queryAssessmentV2>[0]>
+>;
 
-// export type NoStatusAssessmentQueryCondition = Omit<AssessmentQueryCondition, "status">;
-// export interface CustomAssessmentQueryCondition extends NoStatusAssessmentQueryCondition {
-//   status?: "all" | "in_progress" | "complete"
-// }
 export enum SearchListFormKey {
   EXECT_SEARCH = "EXECT_SEARCH",
   SEARCH_TEXT = "SEARCH_TEXT",
@@ -45,6 +43,7 @@ export type DetailAssessmentResultStudent = NonNullable<DetailAssessmentResult["
 export type DetailAssessmentStudentResult = NonNullable<DetailAssessmentResultStudent["results"]>[0];
 export type DetailAssessmentResultFeedback = NonNullable<DetailAssessmentStudentResult["student_feed_backs"]>[0];
 export type DetailAssessmentResultAssignment = NonNullable<DetailAssessmentResultFeedback["assignments"]>[0];
+export type DetailAssessmentResultDiffContentStudent = NonNullable<DetailAssessmentResult["diff_content_students"]>[0];
 
 export enum AssessmentStatus {
   all = "all",
@@ -58,4 +57,9 @@ export enum AssessmentStatusValues {
   class_live_homefun_inprogress = "Started,Draft",
   study_inprogress = "NotStarted,Started,Draft",
   complete = "Complete",
+}
+
+export interface UserEntity {
+  id: string;
+  name: string;
 }

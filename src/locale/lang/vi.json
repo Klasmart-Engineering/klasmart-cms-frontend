@@ -1100,7 +1100,7 @@
   "schedule_review_pop_up_all_success": "Công khai phần ôn tập tự động của bạn\n\nBài Ôn tập tự động' mới sẽ xuất hiện trên lịch của học sinh sau khi nền tảng của chúng tôi đã hoàn thành phân tích cho mỗi học sinh.",
   "schedule_review_popup_partial_success": "Xin lưu ý rằng chúng tôi không có đủ dữ liệu cho học sinh sau đây trong khoảng thời gian được chọn - mỗi người sẽ được cung cấp một bài học ngẫu nhiên. Để tránh điều này trong tương lai, vui lòng đảm bảo rằng học sinh đã làm ít nhất 10 hoạt động trước khi thiết lập ôn tập tự động.",
   "learning_outcome_label_threshold": "Ngưỡng điểm",
-  "assessment_summary_label_attendance_unknown": "Không xác định",
+  "assessment_summary_label_attendance_unknown": "Người dùng không xác định",
   "learning_outcome_threshold_blank_alert": "Một ngưỡng điểm phải được nhập",
   "learning_outcome_threshold_error_toast": "Vui lòng nhập số nguyên từ 1 đến 100",
   "schedule_review_group_fail_no_data": "Không có đủ nội dung cho nhóm học sinh này trong phạm vi ngày được chỉ định để tạo phần ôn tập tự động. Vui lòng thử lại với phạm vi ngày hoặc nhóm học sinh khác.",
@@ -1146,5 +1146,9 @@
   "assessment_detail_screenshot_result_screen": "Màn hình kết quả",
   "assessment_detail_total_score": "Tổng Điểm",
   "assessment_detail_screenshot_no_result": "Rất tiếc, ảnh chụp màn hình không có sẵn cho học liệu này.",
-  "assessment_detail_essay_no_result": "Học sinh chưa hoàn thành câu trả lời này."
+  "assessment_detail_essay_no_result": "Học sinh chưa hoàn thành câu trả lời này.",
+  "assessment_search_no_matching_result": "Không có kết quả phù hợp",
+  "library_label_created_by": "Created By",
+  "library_label_contains": "Contains",
+  "assessment_search_teacher_tips": "Tên của giáo viên hoặc họ"
 }

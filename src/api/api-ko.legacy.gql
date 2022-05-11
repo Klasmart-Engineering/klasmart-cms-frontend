@@ -51,3 +51,31 @@ query schoolsIdNameByOrganization($organization_id: ID!) {
     }
   }
 }
+
+query studentsByOrganization($organization_id: ID!) {
+  organization(organization_id: $organization_id) {
+    classes {
+      class_id
+      class_name
+      status
+      schools {
+        school_id
+      }
+      students {
+        ...userIdName
+      }
+    }
+    schools {
+      school_id
+      school_name
+      classes {
+        class_id
+        class_name
+        status
+        students {
+          ...userIdName
+        }
+      }
+    }
+  }
+}

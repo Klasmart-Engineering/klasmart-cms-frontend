@@ -6,6 +6,8 @@ interface IContextState {
   lessonId?: number;
   presentState?: IPresentState;
   title?: string;
+  currentUnit?: string;
+  scrollTo?: (unitId: string) => void;
 }
 
 interface IPresentState {
@@ -71,15 +73,25 @@ interface IUnitState {
   id: string;
   name: string;
   no: number;
+  lesson_plans: Array<LessonItem>;
 }
-interface ITeachingList {
+
+interface LessonItem {
   unitId: string;
+  unitNo: number;
   id: string;
   name: string;
   no: number;
   thumbnail: string;
   description: string;
   content_id: string;
+}
+interface ITeachingList {
+  unitId: string;
+  id: string;
+  name: string;
+  no: number;
+  lesson_plans: Array<LessonItem>;
 }
 
 interface IMediaControlProps {

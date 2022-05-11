@@ -1,5 +1,5 @@
 import { Box, Grid, makeStyles } from "@material-ui/core";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Header from "./components/Header";
 import UnitsSelector from "./components/UnitsSeletor";
 import { StmContext } from "./contexts";
@@ -40,20 +40,29 @@ const useStyles = makeStyles({
 
 export default function SelectLesson() {
   const css = useStyles();
-  const [unit, setUnit] = useState<IUnitState>({ id: "unit01", name: "01", no: 1 });
+  const [unit, setUnit] = useState<IUnitState>({ id: "unit01", name: "01", no: 1, lesson_plans: [] });
   const { setRootState, ...rootState } = useContext(StmContext);
+  const { currentUnit } = rootState;
   const unitChange = (unit: IUnitState) => {
-    setRootState && setRootState({ ...rootState, unitId: unit.id });
+    rootState.scrollTo?.(unit.id);
     setUnit(unit);
   };
+
+  useEffect(() => {
+    return () => {
+      setRootState?.({ ...rootState, currentUnit: undefined });
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <Box className={css.root}>
       <Header showTitle backgroudColor={"#43A1FF"} prevLink="/stm/level" />
       <Grid className={css.container}>
         <Box className={css.unitSelector}>
-          <UnitsSelector onChange={unitChange} />
+          <UnitsSelector chosenUnit={currentUnit} onChange={unitChange} />
         </Box>
-        <Box className={css.lessonbox}>
+        <Box id="lessonbox" className={css.lessonbox}>
           <LessonBox unit={unit}></LessonBox>
         </Box>
       </Grid>

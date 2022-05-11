@@ -111,7 +111,10 @@ const useStyles = makeStyles({
 
 interface Props {
   onChange: (unit: IUnitState) => void;
+  chosenUnit?: string;
 }
+
+const dibit = (num: number) => (num < 10 ? `0${num}` : num);
 export default function UnitsSelector(props: Props) {
   const css = useStyles();
   const [mock, setMock] = useState<IUnitState[]>([]);
@@ -119,10 +122,12 @@ export default function UnitsSelector(props: Props) {
   const [isEnd, setIsEnd] = useState(false);
   const [isBeginning, setIsBeginning] = useState(true);
   const swiper = useRef<SwiperType>();
+
   useEffect(() => {
-    geUnits().then((res) => {
-      setMock(res);
-      props?.onChange?.(res[0]);
+    geUnits().then((res: IUnitState[]) => {
+      const data = res.filter((item) => Boolean(item.lesson_plans?.length));
+      setMock(data);
+      props?.onChange?.(data[0]);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -130,6 +135,15 @@ export default function UnitsSelector(props: Props) {
   useEffect(() => {
     setIsBeginning(true);
   }, [mock]);
+
+  useEffect(() => {
+    if (props.chosenUnit) {
+      const index = mock.findIndex((unit) => unit.id === props.chosenUnit) ?? 0;
+      setChosenIndex(index);
+      swiper.current?.slideTo(index);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.chosenUnit]);
 
   const changeChosenIndex = (index: number) => {
     props?.onChange?.(mock[index]);
@@ -164,6 +178,7 @@ export default function UnitsSelector(props: Props) {
                 autoHeight
                 freeMode
                 setWrapperSize
+                centeredSlides={false}
                 onSwiper={(ins) => {
                   swiper.current = ins;
                 }}
@@ -179,7 +194,7 @@ export default function UnitsSelector(props: Props) {
                       <SwiperSlide key={index} className={css.swiperSlide}>
                         <Button onClick={() => changeChosenIndex(index)} className={clsx(css.item, css.selected)}>
                           <Box fontSize={vw(25)}>Unit</Box>
-                          <Box>{item.name}</Box>
+                          <Box>{dibit(item.no)}</Box>
                         </Button>
                       </SwiperSlide>
                     );
@@ -187,7 +202,7 @@ export default function UnitsSelector(props: Props) {
                   return (
                     <SwiperSlide key={index} className={css.swiperSlide}>
                       <Button onClick={() => changeChosenIndex(index)} className={clsx(css.item, css.unselected)}>
-                        {item.name}
+                        {dibit(item.no)}
                       </Button>
                     </SwiperSlide>
                   );

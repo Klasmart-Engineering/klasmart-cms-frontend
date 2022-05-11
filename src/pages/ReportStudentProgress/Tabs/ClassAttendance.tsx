@@ -126,7 +126,7 @@ export default function ClassAttendance() {
       </div>
       <div>
         <LearningOutcomeAchievedTotalType totalType={totalType} colors={colors} isLearningOutcomeAchieved={false} />
-        <StudentProgressReportFeedback fourWeeksMassage={fourWeeksClassAttendanceMassage} />
+        {durationTime === 4 && <StudentProgressReportFeedback fourWeeksMassage={fourWeeksClassAttendanceMassage} />}
       </div>
     </div>
   );

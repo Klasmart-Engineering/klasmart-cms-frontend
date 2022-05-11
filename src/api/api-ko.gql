@@ -329,35 +329,7 @@ query getPrograms($program_id: ID!) {
   }
 }
 # 换成connection
-query studentsByOrganization($organization_id: ID!) {
-  organization(organization_id: $organization_id) {
-    classes {
-      class_id
-      class_name
-      status
-      schools {
-        school_id
-      }
-      students {
-        user_id
-        user_name
-      }
-    }
-    schools {
-      school_id
-      school_name
-      classes {
-        class_id
-        class_name
-        status
-        students {
-          user_id
-          user_name
-        }
-      }
-    }
-  }
-}
+
 
 
 
@@ -473,6 +445,8 @@ query getUser($filter: UserFilter, $direction: ConnectionDirection!, $directionA
 fragment userIdName on User {
   user_id
   user_name
+  family_name
+  given_name
 }
 
 fragment classIdNameStatus on Class {
@@ -819,4 +793,20 @@ query classNodeStudents($classId:ID!,$studentsCursor:String){
     }
   }
 
+}
+
+query getUsersByName($filter: UserFilter,$directionArgs:ConnectionsDirectionArgs) {
+  usersConnection(filter: $filter, direction: FORWARD, directionArgs: $directionArgs) {
+    edges {
+      node {
+        id
+        givenName
+        familyName
+      }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+  }
 }

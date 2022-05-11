@@ -224,7 +224,6 @@ const useStyles = makeStyles((theme) =>
       color: "#4CAF50",
       padding: "0 0 0 10px",
     },
-    //
     folderName: {
       display: "flex",
       alignItems: "center",
@@ -344,16 +343,18 @@ function ContentCard(props: ContentProps) {
       : DeleteText.delete;
   return (
     <Card className={css.card}>
-      <Checkbox
-        icon={<CheckBoxOutlineBlank viewBox="3 3 18 18"></CheckBoxOutlineBlank>}
-        checkedIcon={<CheckBox viewBox="3 3 18 18"></CheckBox>}
-        size="small"
-        className={css.checkbox}
-        color="secondary"
-        value={content.id}
-        checked={hashValue[content.id as string] || false}
-        onChange={registerChange}
-      ></Checkbox>
+      {!queryCondition.program_group && (
+        <Checkbox
+          icon={<CheckBoxOutlineBlank viewBox="3 3 18 18"></CheckBoxOutlineBlank>}
+          checkedIcon={<CheckBox viewBox="3 3 18 18"></CheckBox>}
+          size="small"
+          color="primary"
+          className={css.checkbox}
+          value={content.id}
+          checked={hashValue[content.id as string] || false}
+          onChange={registerChange}
+        ></Checkbox>
+      )}
       <CardActionArea onClick={(e) => onClickContent(content.id, content.content_type, content.dir_path)}>
         <CardMedia className={css.cardMedia}>
           {content.content_type === ContentType.assets && (
@@ -365,7 +366,8 @@ function ContentCard(props: ContentProps) {
           {content.content_type === ContentType.folder && (
             <Thumbnail className={css.cardImg} type={content.content_type} id={content.thumbnail}></Thumbnail>
           )}
-          {content.content_type === ContentType.folder && <div className={css.fileCount}>{content.items_count}</div>}
+          {content.content_type === ContentType.folder &&
+            (queryCondition.program_group ? <></> : <div className={css.fileCount}>{content.items_count}</div>)}
         </CardMedia>
       </CardActionArea>
       <CardContent className={css.cardContent}>
@@ -373,7 +375,7 @@ function ContentCard(props: ContentProps) {
           <Typography variant="h6" style={{ flex: 1 }} noWrap>
             {content?.name}
           </Typography>
-          {content.content_type === ContentType.folder && (
+          {!queryCondition.program_group && content.content_type === ContentType.folder && (
             <Permission value={PermissionType.create_folder_289}>
               <IconButton className={clsx(css.editBtn, css.MuiIconButtonRoot)} onClick={(e) => onRenameFolder(content)}>
                 <EditOutlinedIcon />
@@ -393,7 +395,7 @@ function ContentCard(props: ContentProps) {
       <Typography className={css.body2} style={{ marginLeft: "10px" }} variant="body2">
         {content?.content_type === ContentType.material && d("Material").t("library_label_material")}
         {content?.content_type === ContentType.plan && d("Plan").t("library_label_plan")}
-        {content?.content_type === ContentType.folder && "Folder"}
+        {content?.content_type === ContentType.folder && d("Folder").t("library_label_folder")}
         {content?.content_type === ContentType.assets && file_type === ContentType.image % 10 && d("Image").t("library_label_image")}
         {content?.content_type === ContentType.assets && file_type === ContentType.video % 10 && d("Video").t("library_label_video")}
         {content?.content_type === ContentType.assets && file_type === ContentType.audio % 10 && d("Audio").t("library_label_audio")}
@@ -472,16 +474,6 @@ function ContentCard(props: ContentProps) {
               >
                 <PublishOutlinedIcon />
               </LButton>
-              // <Permission value={PermissionType.republish_archived_content_274}>
-              //   <LButton
-              //     as={IconButton}
-              //     replace
-              //     className={clsx(css.rePublishColor, css.MuiIconButtonRoot)}
-              //     onClick={() => onPublish(content.id as string)}
-              //   >
-              //     <PublishOutlinedIcon />
-              //   </LButton>
-              // </Permission>
             )}
           {!queryCondition.program_group &&
             content?.publish_status === PublishStatus.archive &&
@@ -623,7 +615,11 @@ export function ContentCardList(props: ContentCardListProps) {
                     queryCondition.path !== "/" &&
                     queryCondition.page === 1 &&
                     JSON.stringify(parentFolderInfo) !== "{}" && (
-                      <BackToPrevPage parentFolderInfo={{ ...parentFolderInfo, available: total }} {...{ onGoBack, onRenameFolder }} />
+                      <BackToPrevPage
+                        parentFolderInfo={{ ...parentFolderInfo, available: total }}
+                        {...{ onGoBack, onRenameFolder }}
+                        isEdit={!queryCondition.program_group}
+                      />
                     )}
                   {list.map((item, idx) => (
                     <Grid key={item.id} item xs={12} sm={6} md={4} lg={3} xl={3}>

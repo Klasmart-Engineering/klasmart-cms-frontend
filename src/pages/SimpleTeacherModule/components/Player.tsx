@@ -14,6 +14,11 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
   },
+  fullScreenRoot: {
+    backgroundColor: "#000",
+    paddingLeft: 0,
+    paddingRight: 0,
+  },
   playerTop: {
     display: "flex",
     flexDirection: "row",
@@ -52,6 +57,9 @@ const useStyles = makeStyles({
     borderRadius: vw(32),
     position: "relative",
     overflow: "hidden",
+  },
+  playerMainFullScreen: {
+    borderRadius: 0,
   },
   videoContainer: {
     position: "absolute",
@@ -96,7 +104,11 @@ const PresentPlayer = React.forwardRef<HTMLVideoElement, IPlayerProps>((props, v
   const progress = `${(presentState.activeIndex || 0) + 1} / ${presentState.listLength || 0}`;
 
   return (
-    <Box className={css.root}>
+    <Box
+      className={clsx(css.root, {
+        [css.fullScreenRoot]: presentState.isFullscreen,
+      })}
+    >
       {!presentState.isFullscreen && (
         <Box className={css.playerTop}>
           <Typography variant="h5" className={css.playerTitle}>
@@ -106,18 +118,22 @@ const PresentPlayer = React.forwardRef<HTMLVideoElement, IPlayerProps>((props, v
         </Box>
       )}
 
-      <Box className={css.playerMain}>
+      <Box
+        className={clsx(css.playerMain, {
+          [css.playerMainFullScreen]: presentState.isFullscreen,
+        })}
+      >
         {isMedia && (
           <Box className={css.videoContainer}>
             <Video ref={videoRef} poster={thumbnail} source={data.source} />
           </Box>
         )}
-        {data.file_type === 5 && (
+        {(data.file_type === 5 || data.file_type === 100) && (
           <iframe
             title={name}
             className={css.playerIframe}
             sandbox="allow-same-origin allow-scripts"
-            src={`//live.kidsloop.live/h5p/play/${data.source}`}
+            src={`${data.source.startsWith("http") ? data.source : `//live.kidsloop.live/h5p/play/${data.source}`}`}
           />
         )}
       </Box>

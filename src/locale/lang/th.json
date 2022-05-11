@@ -1146,5 +1146,9 @@
   "assessment_detail_screenshot_result_screen": "หน้าจอผลลัพธ์",
   "assessment_detail_total_score": "คะแนนรวม",
   "assessment_detail_screenshot_no_result": "ขออภัย ภาพหน้าจอไม่พร้อมใช้งานสำหรับเนื้อหาบทเรียนนี้",
-  "assessment_detail_essay_no_result": "นักเรียนยังไม่ได้ส่งคำตอบ"
+  "assessment_detail_essay_no_result": "นักเรียนยังไม่ได้ส่งคำตอบ",
+  "assessment_search_no_matching_result": "ไม่มีผลลัพธ์ที่ตรงกัน",
+  "library_label_created_by": "สร้างโดย",
+  "library_label_contains": "ประกอบด้วย",
+  "assessment_search_teacher_tips": "ชื่อครูหรือนามสกุล"
 }

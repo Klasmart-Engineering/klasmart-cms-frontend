@@ -1100,7 +1100,7 @@
   "schedule_review_pop_up_all_success": "Menerbitkan ulas otomatis Anda\n\nPelajaran 'Ulas Otomatis' akan muncul di kalender siswa saat platform kami selesai melakukan analisis untuk setiap siswa.",
   "schedule_review_popup_partial_success": "Catatan: Kami tidak memiliki cukup data untuk siswa berikut dalam rentang waktu yang dipilih – pelajaran acak akan diberikan. Untuk menghindari hal ini di kemudian hari, pastikan siswa telah mengerjakan setidaknya 10 aktivitas sebelum menyetel Ulas Otomatis.",
   "learning_outcome_label_threshold": "Ambang Skor",
-  "assessment_summary_label_attendance_unknown": "Tidak dikenal",
+  "assessment_summary_label_attendance_unknown": "Pengguna tidak dikenal",
   "learning_outcome_threshold_blank_alert": "Ambang batas skor harus dimasukkan",
   "learning_outcome_threshold_error_toast": "Harap masukkan bilangan bulat dari 1 hingga 100",
   "schedule_review_group_fail_no_data": "Tidak ada cukup konten untuk kelompok siswa ini di rentang tanggal yang dipilih untuk membuat sesi ulas otomatis. Coba lagi dengan tanggal atau kelompok siswa berbeda.",
@@ -1146,5 +1146,9 @@
   "assessment_detail_screenshot_result_screen": "Layar Hasil",
   "assessment_detail_total_score": "Skor Total",
   "assessment_detail_screenshot_no_result": "Maaf, tangkapan layar tidak tersedia untuk materi pelajaran ini.",
-  "assessment_detail_essay_no_result": "Jawaban belum diserahkan oleh siswa."
+  "assessment_detail_essay_no_result": "Jawaban belum diserahkan oleh siswa.",
+  "assessment_search_no_matching_result": "Tidak ada hasil yang cocok",
+  "library_label_created_by": "Created By",
+  "library_label_contains": "Contains",
+  "assessment_search_teacher_tips": "Nama keluarga atau pemberian guru"
 }

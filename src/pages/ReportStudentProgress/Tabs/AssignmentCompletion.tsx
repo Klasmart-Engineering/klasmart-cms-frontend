@@ -119,7 +119,7 @@ export default function AssignmentCompletion() {
       </div>
       <div>
         <LearningOutcomeAchievedTotalType totalType={totalType} colors={colors} isLearningOutcomeAchieved={false} />
-        <StudentProgressReportFeedback fourWeeksMassage={fourWeeksAssignmentsCompletionMassage} />
+        {durationTime === 4 && <StudentProgressReportFeedback fourWeeksMassage={fourWeeksAssignmentsCompletionMassage} />}
       </div>
     </div>
   );

@@ -332,9 +332,6 @@ export function OrganizationList(props: OrganizationListProps) {
                               pageInfo={orgListPageInfo}
                               onChange={searchOrgList}
                               disabled={radioValue !== ShareScope.share_to_org}
-                              // pageSize={pageSize}
-                              // rowsPerPages={[10, 25, 50]}
-                              // onChangePageSize={setPageSize}
                             />
                           </>
                         ) : (

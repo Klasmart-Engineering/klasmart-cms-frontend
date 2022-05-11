@@ -1100,7 +1100,7 @@
   "schedule_review_pop_up_all_success": "Publicación de su revisión automática \n\n Una nueva lección de 'Revisión automática' aparecerá en el calendario de los estudiantes una vez que nuestra plataforma haya terminado un análisis para cada estudiante.",
   "schedule_review_popup_partial_success": "Tenga en cuenta que no tenemos suficientes datos para los siguientes estudiantes durante el intervalo de tiempo seleccionado; a cada uno se le dará una lección aleatoria. Para evitar esto en el futuro, asegúrese de que los estudiantes hayan trabajado en al menos 10 actividades antes de configurar una revisión automática.",
   "learning_outcome_label_threshold": "Umbral de puntuación",
-  "assessment_summary_label_attendance_unknown": "Desconocido",
+  "assessment_summary_label_attendance_unknown": "Usuario desconocido",
   "learning_outcome_threshold_blank_alert": "Se debe introducir un umbral de puntuación",
   "learning_outcome_threshold_error_toast": "Introduzca un entero de 1 a 100",
   "schedule_review_group_fail_no_data": "No se cubrió suficiente contenido para este grupo de estudiantes durante el intervalo de fechas especificado para crear una sesión de revisión automática. Vuelva a intentarlo con otro rango de fechas o grupo de estudiantes.",
@@ -1146,5 +1146,9 @@
   "assessment_detail_screenshot_result_screen": "Pantalla de resultados",
   "assessment_detail_total_score": "Puntuación Total",
   "assessment_detail_screenshot_no_result": "Lo sentimos, la captura de pantalla no está disponible para este material de lección.",
-  "assessment_detail_essay_no_result": "El estudiante no ha enviado una respuesta."
+  "assessment_detail_essay_no_result": "El estudiante no ha enviado una respuesta.",
+  "assessment_search_no_matching_result": "Sin resultado coincidente",
+  "library_label_created_by": "Created By",
+  "library_label_contains": "Contains",
+  "assessment_search_teacher_tips": "Apellido o apellido del profesor"
 }

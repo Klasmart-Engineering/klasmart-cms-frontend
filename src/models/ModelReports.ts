@@ -1,11 +1,7 @@
 import { orderByASC } from "@utilities/dataUtilities";
 import { ReactNode } from "react";
-import { Class, School, Status, User } from "../api/api-ko-schema.auto";
-import {
-  EntityClassesAssignmentsUnattendedStudentsView,
-  EntityReportListTeachingLoadItem,
-  EntityStudentAchievementReportCategoryItem,
-} from "../api/api.auto";
+import { Class, School, Status } from "../api/api-ko-schema.auto";
+import { EntityReportListTeachingLoadItem, EntityStudentAchievementReportCategoryItem } from "../api/api.auto";
 import { HorizontalBarStackDataItem } from "../components/Chart/HorizontalBarStackChart";
 import { d } from "../locale/LocaleManager";
 import { UserType } from "../pages/ReportLearningSummary/types";
@@ -155,37 +151,37 @@ export function getAchievementDetailEmptyStatus(data: EntityStudentAchievementRe
   return data && data.length ? data.every((item) => !item.achieved_items && !item.not_achieved_items && !item.not_attempted_items) : false;
 }
 
-export function deDuplicate(arr: Pick<User, "user_id" | "user_name">[]) {
-  let obj: { [key: string]: boolean } = {};
-  return arr.reduce<Pick<User, "user_id" | "user_name">[]>((item, next) => {
-    if (!obj[next.user_id]) {
-      item.push(next);
-      obj[next.user_id] = true;
-    }
-    return item;
-  }, []);
-}
+// export function deDuplicate(arr: Pick<User, "user_id" | "user_name">[]) {
+//   let obj: { [key: string]: boolean } = {};
+//   return arr.reduce<Pick<User, "user_id" | "user_name">[]>((item, next) => {
+//     if (!obj[next.user_id]) {
+//       item.push(next);
+//       obj[next.user_id] = true;
+//     }
+//     return item;
+//   }, []);
+// }
 
 export function getTimeOffSecond() {
   const timeOff = new Date().getTimezoneOffset();
   return -timeOff * 60;
 }
-type studentItem = Pick<User, "user_id" | "user_name">;
+// type studentItem = Pick<User, "user_id" | "user_name">;
 
-// @ts-ignore
-export interface IClassesAssignmentsUnattendedWithStudentNameItem extends EntityClassesAssignmentsUnattendedStudentsView {
-  student_name?: studentItem["user_name"];
-}
+// // @ts-ignore
+// export interface IClassesAssignmentsUnattendedWithStudentNameItem extends EntityClassesAssignmentsUnattendedStudentsView {
+//   student_name?: studentItem["user_name"];
+// }
 
-export const getClassesAssignmentsUnattendedWithStudentName = (
-  classesAssignmentsUnattended: EntityClassesAssignmentsUnattendedStudentsView[],
-  studentList?: studentItem[]
-): IClassesAssignmentsUnattendedWithStudentNameItem[] => {
-  return classesAssignmentsUnattended.map((item) => {
-    const student_name = studentList?.find((student) => student.user_id === item.student_id)?.user_name;
-    return { ...item, student_name };
-  });
-};
+// export const getClassesAssignmentsUnattendedWithStudentName = (
+//   classesAssignmentsUnattended: EntityClassesAssignmentsUnattendedStudentsView[],
+//   studentList?: studentItem[]
+// ): IClassesAssignmentsUnattendedWithStudentNameItem[] => {
+//   return classesAssignmentsUnattended.map((item) => {
+//     const student_name = studentList?.find((student) => student.user_id === item.student_id)?.user_name;
+//     return { ...item, student_name };
+//   });
+// };
 export function sortByStudentName(studentName: any) {
   return function (x: any, y: any) {
     let reg = /[a-zA-Z0-9]/;
@@ -220,17 +216,10 @@ export function getAllUsers(
     students:
       item.students?.map((item) => ({
         id: item?.user_id!,
-        name: item?.user_name!,
+        name: `${item?.given_name} ${item?.family_name}`,
       })) || [],
   }));
 
-  // let allStu: any = [];
-  // noneSchoolClasses.map(item => allStu.push(item.students?.map((item) => ({
-  //   id: item?.user_id!,
-  //   name: item?.user_name!,
-  // })) || []))
-  // freedomClass.unshift({ id: "all", name: d("All").t("report_label_all"), students: allStu});
-  // console.log("freedomClass", freedomClass);
   freedomClass.forEach((item) => {
     noSchoolAllStudents = [...noSchoolAllStudents, ...item.students];
   });
@@ -250,7 +239,7 @@ export function getAllUsers(
         students:
           item?.students?.map((item) => ({
             id: item?.user_id!,
-            name: item?.user_name!,
+            name: `${item?.given_name} ${item?.family_name}`,
           })) || [],
       })) || [],
   }));

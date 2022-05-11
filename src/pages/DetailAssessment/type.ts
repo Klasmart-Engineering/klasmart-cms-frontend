@@ -1,4 +1,5 @@
-import { DetailAssessmentStudentResult, UpdataAssessmentData } from "../ListAssessment/types";
+import { EntityIDName } from "@api/api.auto";
+import { DetailAssessmentResult, DetailAssessmentResultDiffContentStudent, DetailAssessmentResultStudent, DetailAssessmentStudentResult, UpdataAssessmentData } from "../ListAssessment/types";
 
 export type UpdateAssessmentDataOmitAction = Omit<UpdataAssessmentData, "action">;
 
@@ -134,4 +135,16 @@ export enum ResourceViewTypeValues {
   viewWritingFeedback = "ViewWritingFeedback",
   viewDrawingFeedback = "ViewDrawingFeedback",
   viewScreenshots = "ViewScreenshots",
+}
+
+export interface StudentProps extends DetailAssessmentResultStudent {
+  student_name?: string;
+}
+export interface DiffStudentProps extends DetailAssessmentResultDiffContentStudent {
+  student_name?: string;
+}
+export interface DetailAssessmentProps extends DetailAssessmentResult {
+  teachers?: EntityIDName[];
+  students?: StudentProps[];
+  diff_content_students?: DiffStudentProps[];
 }
