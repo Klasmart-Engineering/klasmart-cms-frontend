@@ -1,5 +1,5 @@
+import { useDownloadMedia, useImageMetadata } from "@kl-engineering/kidsloop-media-hooks";
 import { d } from "@locale/LocaleManager";
-import { useDownloadMedia, useImageMetadata } from "kidsloop-media-ui";
 
 export interface ScreenShortsProps {
   userId: string;
@@ -22,7 +22,8 @@ export function ScreenShorts(props: ScreenShortsProps) {
     return <p>{d("Server request failed").t("general_error_unknown")}</p>;
   }
   if (loading) return <p>Loading ...</p>;
-  if (!length) return <p>{d("Sorry, the screenshot is not available for this lesson material.").t("assessment_detail_screenshot_no_result")}</p>;
+  if (!length)
+    return <p>{d("Sorry, the screenshot is not available for this lesson material.").t("assessment_detail_screenshot_no_result")}</p>;
   return (
     <ImageView
       resourceType={resourceType}
@@ -30,7 +31,7 @@ export function ScreenShorts(props: ScreenShortsProps) {
       roomId={roomId as string}
       mimeType={mediaMetadata[0].mimeType ? mediaMetadata[0].mimeType : "image/jpeg"}
     />
-  )
+  );
 }
 
 export interface ImageViewProps {
