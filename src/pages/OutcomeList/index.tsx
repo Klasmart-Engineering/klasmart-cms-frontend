@@ -226,7 +226,6 @@ export function OutcomeList() {
     if(payload) {
       openLoFields();
     }
-    // openLoFields();
   }
   const handleOpenFieldsSelected: ThirdSearchHeaderProps["onBulkDownloadSelected"] = async () => {
     if (!selectedIds.length)
