@@ -38,7 +38,7 @@ import {
   GetStudentNameByIdQueryVariables,
   SchoolsClassesDocument,
   SchoolsClassesQuery,
-  SchoolsClassesQueryVariables,
+  SchoolsClassesQueryVariables
 } from "./api-ko.auto";
 import { EntityFolderItemInfo } from "./api.auto";
 import { apiEmitter, ApiErrorEventData, ApiEvent } from "./emitter";

@@ -58,3 +58,19 @@ export const isAllMineOutcome = (ids: string[], outcomeList: GetOutcomeDetail[],
   const index = selectedOutcome.findIndex((item) => item.author_id !== user_id);
   return !(index >= 0);
 };
+
+export function formattedNowOrTime(value?: number): string {
+  let date = value ? new Date(Number(value) * 1000) : new Date();
+  let y = date.getFullYear();
+  let MM = date.getMonth() + 1;
+  const MMs = MM < 10 ? `0${MM}` : MM;
+  let d = date.getDate();
+  const ds = d < 10 ? `0${d}` : d;
+  let h = date.getHours();
+  // const dayType = h > 12 ? "PM" : "AM";
+  // h = h > 12 ? h - 12 : h;
+  const hs = h < 10 ? `0${h}` : h;
+  let m = date.getMinutes();
+  const ms = m < 10 ? `0${m}` : m;
+  return `${y}${MMs}${ds}${hs}${ms}`;
+}
