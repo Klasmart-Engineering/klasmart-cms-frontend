@@ -118,10 +118,7 @@ export function StudentView(props: StudentViewProps) {
   const subDimensionIds = useMemo(() => {
     return subDimension.length ? subDimension.map((item) => item.id) : [];
   }, [subDimension]);
-  const initCheckArr = useMemo(() => {
-    return subDimension.map((item) => true) || [];
-  }, [subDimension]);
-  const [checkedArr, setCheckedArr] = useState<boolean[]>(initCheckArr);
+  const [checkedArr, setCheckedArr] = useState<boolean[]>(subDimension.map((item) => true));
   const isSelectAll = subDimension.findIndex((item) => item.id === "all") >= 0 ? true : false;
   const StudentHeader = () => {
     let headers: PLField[] = [
@@ -301,7 +298,7 @@ export function StudentView(props: StudentViewProps) {
                         <span
                           onClick={stopPropagation((e) => handleOpenAddStudentComment(sitem.reviewer_comment ?? "", sitem.student_id))}
                           style={{
-                            display: (checkedArr.length ? checkedArr[index] : initCheckArr[index]) ? "block" : "none",
+                            display: (checkedArr[index] === undefined) ? "block" : (checkedArr[index] ? "block" : "none"),
                             color: "rgb(0, 108, 207)",
                           }}
                         >
@@ -312,7 +309,7 @@ export function StudentView(props: StudentViewProps) {
                         <span
                           onClick={stopPropagation((e) => handleClickViewStudentComment(sitem.reviewer_comment ?? ""))}
                           style={{
-                            display: (checkedArr.length ? checkedArr[index] : initCheckArr[index]) ? "block" : "none",
+                            display: (checkedArr[index] === undefined) ? "block" : (checkedArr[index] ? "block" : "none"),
                             color: "rgb(0, 108, 207)",
                           }}
                         >

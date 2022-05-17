@@ -138,10 +138,7 @@ export function MaterialView(props: MaterialViewProps) {
   const materialViewItems = useMemo(() => {
     return ModelAssessment.getMaterialViewItems(studentViewItems);
   }, [studentViewItems]);
-  const initCheckArr = useMemo(() => {
-    return materialViewItems.map((item) => true);
-  }, [materialViewItems]);
-  const [checkedArr, setCheckedArr] = useState<boolean[]>(initCheckArr);
+  const [checkedArr, setCheckedArr] = useState<boolean[]>(materialViewItems.map((item) => true));
   const handleChangeAllAchieved = (event: ChangeEvent<HTMLInputElement>, content_id?: string, outcome_id?: string) => {
     onChangeMaterialAllAchieved(event.target.checked, content_id, outcome_id);
   };
@@ -202,11 +199,7 @@ export function MaterialView(props: MaterialViewProps) {
   };
   const toggleCheck = (index: number) => {
     const arr = cloneDeep(checkedArr);
-    if (arr[index] === undefined) {
-      arr[index] = false;
-    } else {
-      arr[index] = !checkedArr[index];
-    }
+    arr[index] = !checkedArr[index];
     setCheckedArr([...arr]);
   };
   return (
@@ -225,9 +218,7 @@ export function MaterialView(props: MaterialViewProps) {
                         {item.content_subtype ? `(${item.content_subtype})` : ""}
                       </span>
                     </div>
-                    {checkedArr[index] === undefined ? (
-                      <ArrowDropUpIcon />
-                    ) : checkedArr[index] ? (
+                    {checkedArr[index] ? (
                       <ArrowDropUpIcon />
                     ) : (
                       <ArrowDropDownIcon />
