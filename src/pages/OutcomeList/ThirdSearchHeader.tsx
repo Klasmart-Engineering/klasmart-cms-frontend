@@ -225,11 +225,14 @@ function getBulkAction(condition: OutcomeQueryCondition, perm: PermissionResult<
       if (perm.delete_published_learning_outcome_448) {
         res1.push({ label: d("Delete").t("assess_label_delete"), value: BulkAction.remove });
       }
-      const download = [
-        { label: "Download All", value: BulkAction.downloadAll },
-        { label: "Download Selected", value: BulkAction.downloadSelected}
-      ]
-      return [...res1, ...download];
+      if (perm.create_learning_outcome_421) {
+        const download = [
+          { label: "Download All", value: BulkAction.downloadAll },
+          { label: "Download Selected", value: BulkAction.downloadSelected}
+        ]
+        res1.push.apply(res1, download)
+      }
+      return res1;
     case OutcomePublishStatus.pending:
       const res2 = [];
       if (perm.approve_pending_learning_outcome_481 && !isUnpublish(condition)) {
@@ -286,6 +289,7 @@ export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
     PermissionType.reject_pending_learning_outcome_482,
     PermissionType.edit_published_learning_outcome_436,
     PermissionType.edit_my_unpublished_learning_outcome_430,
+    PermissionType.create_learning_outcome_421,
   ]);
   const handleChangeBulkAction = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.value === BulkAction.publish) onBulkPublish();
