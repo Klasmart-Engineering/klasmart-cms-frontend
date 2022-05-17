@@ -12,7 +12,7 @@ import { OutcomeOrderBy, OutcomePublishStatus } from "../../api/type";
 import LayoutBox from "../../components/LayoutBox";
 import { Permission, PermissionResult, PermissionsWrapper } from "../../components/Permission/Permission";
 import { usePermission } from "../../hooks/usePermission";
-import { d } from "../../locale/LocaleManager";
+import { d, t } from "../../locale/LocaleManager";
 import { OutcomeQueryCondition, OutcomeQueryConditionBaseProps } from "./types";
 
 const useStyles = makeStyles((theme) => ({
@@ -98,6 +98,11 @@ const useStyles = makeStyles((theme) => ({
     width: "30%",
     position: "absolute",
     left: "60%",
+  },
+  selectAll: {
+    color: "#666",
+    // marginRight: 30,
+    fontSize: 14,
   },
 }));
 export const UNPUB = "UNPUB";
@@ -201,6 +206,8 @@ enum BulkAction {
   approve = "approve",
   reject = "reject",
   addSet = "addSet",
+  downloadAll = "downloadAll",
+  downloadSelected = "downloadSelected"
 }
 
 interface BulkActionOption {
@@ -218,7 +225,11 @@ function getBulkAction(condition: OutcomeQueryCondition, perm: PermissionResult<
       if (perm.delete_published_learning_outcome_448) {
         res1.push({ label: d("Delete").t("assess_label_delete"), value: BulkAction.remove });
       }
-      return res1;
+      const download = [
+        { label: "Download All", value: BulkAction.downloadAll },
+        { label: "Download Selected", value: BulkAction.downloadSelected}
+      ]
+      return [...res1, ...download];
     case OutcomePublishStatus.pending:
       const res2 = [];
       if (perm.approve_pending_learning_outcome_481 && !isUnpublish(condition)) {
@@ -253,15 +264,18 @@ const sortOptions = () => {
 };
 
 export interface ThirdSearchHeaderProps extends OutcomeQueryConditionBaseProps {
+  selectedIdsLength: number;
   onBulkPublish: () => any;
   onBulkDelete: () => any;
   onBulkApprove: () => any;
   onBulkReject: () => any;
   onBulkAddSet: () => any;
+  onBulkDownloadAll: () => any;
+  onBulkDownloadSelected: () => any;
 }
 export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
   const classes = useStyles();
-  const { value, onChange, onBulkDelete, onBulkPublish, onBulkApprove, onBulkReject, onBulkAddSet } = props;
+  const { value, selectedIdsLength, onChange, onBulkDelete, onBulkPublish, onBulkApprove, onBulkReject, onBulkAddSet, onBulkDownloadAll, onBulkDownloadSelected } = props;
   const perm = usePermission([
     PermissionType.delete_published_learning_outcome_448,
     PermissionType.delete_org_pending_learning_outcome_447,
@@ -279,6 +293,8 @@ export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
     if (event.target.value === BulkAction.approve) onBulkApprove();
     if (event.target.value === BulkAction.reject) onBulkReject();
     if (event.target.value === BulkAction.addSet) onBulkAddSet();
+    if (event.target.value === BulkAction.downloadAll) onBulkDownloadAll();
+    if (event.target.value === BulkAction.downloadSelected) onBulkDownloadSelected();
   };
   const handleChangeOrder = (event: ChangeEvent<HTMLInputElement>) => {
     const order_by = event.target.value as OutcomeOrderBy | undefined;
@@ -305,7 +321,7 @@ export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
         <Hidden only={["xs", "sm"]}>
           <Divider />
           <Grid container spacing={3} alignItems="center" style={{ marginTop: "6px" }}>
-            <Grid item sm={6} xs={6} md={3}>
+            <Grid item sm={6} xs={6} md={3} style={{display: "flex", alignItems: "center"}}>
               {bulkOptions.length > 0 && (
                 <TextField
                   size="small"
@@ -319,6 +335,7 @@ export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
                   {bulkOptions}
                 </TextField>
               )}
+              <span className={classes.selectAll}>{t("library_label_files_selected", { value: selectedIdsLength.toString() })}</span>
             </Grid>
             <Grid item md={6}>
               <SubLearningOutcome value={value} onChange={onChange} />
@@ -345,7 +362,7 @@ export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
 
 export function ThirdSearchHeaderMb(props: ThirdSearchHeaderProps) {
   const classes = useStyles();
-  const { value, onChange, onBulkDelete, onBulkPublish, onBulkApprove, onBulkReject, onBulkAddSet } = props;
+  const { value, onChange, onBulkDelete, onBulkPublish, onBulkApprove, onBulkReject, onBulkAddSet, onBulkDownloadAll, onBulkDownloadSelected } = props;
   const perm = usePermission([
     PermissionType.delete_published_learning_outcome_448,
     PermissionType.delete_org_pending_learning_outcome_447,
@@ -369,6 +386,8 @@ export function ThirdSearchHeaderMb(props: ThirdSearchHeaderProps) {
     if (bulkaction === BulkAction.approve) onBulkApprove();
     if (bulkaction === BulkAction.reject) onBulkReject();
     if (bulkaction === BulkAction.addSet) onBulkAddSet();
+    if (event.target.value === BulkAction.downloadAll) onBulkDownloadAll();
+    if (event.target.value === BulkAction.downloadSelected) onBulkDownloadSelected();
   };
   const handleClose = () => {
     setAnchorElLeft(null);

@@ -8,7 +8,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Tooltip,
+  Tooltip
 } from "@material-ui/core";
 import { makeStyles, Theme, withStyles } from "@material-ui/core/styles";
 import { CheckBox, CheckBoxOutlineBlank } from "@material-ui/icons";
@@ -363,7 +363,7 @@ export function OutcomeTable(props: OutcomeTableProps) {
   const amountPerPage = props.amountPerPage ?? 20;
   // const allValue = useMemo(() => list.map((outcome) => outcome.outcome_id as string), [list]);
   const allValue = useMemo(
-    () => list.map((outcome) => (outcome.locked_by && outcome.locked_by !== "-" ? "" : (outcome.outcome_id as string))),
+    () => list.filter((outcome) => (!outcome.locked_by || outcome.locked_by === "-")).map(item => item.outcome_id!),
     [list]
   );
   const { control } = formMethods;

@@ -460,7 +460,7 @@ export function StudentView(props: StudentViewProps) {
                               {sitem.attempted
                                 ? `${sitem.results
                                     ?.filter((item) => item.file_type !== FileTypes.HasChildContainer)
-                                    .reduce((pre, cur) => pre + Number(cur?.score), 0)}
+                                    .reduce((pre, cur) => pre + Number(cur?.score), 0).toFixed(1)}
                                    / 
                                   ${sitem.results
                                     ?.filter((item) => item.file_type !== FileTypes.HasChildContainer && item.attempted)
