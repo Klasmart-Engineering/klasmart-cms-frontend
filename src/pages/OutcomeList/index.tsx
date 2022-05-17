@@ -111,7 +111,6 @@ export function OutcomeList() {
     () => perm.view_my_unpublished_learning_outcome_410 === undefined,
     [perm.view_my_unpublished_learning_outcome_410]
   );
-  
   const [showSetList, setShowSetList] = React.useState(false);
   const [selectedOutcomeSet, setSelectedOutcomeSet] = React.useState<OutcomeSetResult>([]);
   const { addSetActive, openAddSet, closeAddSet } = useAddSet();
@@ -227,7 +226,6 @@ export function OutcomeList() {
     if(payload) {
       openLoFields();
     }
-    // openLoFields();
   }
   const handleOpenFieldsSelected: ThirdSearchHeaderProps["onBulkDownloadSelected"] = async () => {
     if (!selectedIds.length)

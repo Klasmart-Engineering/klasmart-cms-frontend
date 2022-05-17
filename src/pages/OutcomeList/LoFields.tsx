@@ -85,8 +85,8 @@ export function LoFields(props: LoFieldsProps) {
         <div className={css.fieldsCon}>
           <Typography>
             {"Selected which items to include"}
-            {list?.length}
-            {`("There are to download")`}
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span style={{color: "#666"}}>{`(There are ${list?.length} to download)`}</span>
           </Typography>
           <Controller
             name={FIELDS}
