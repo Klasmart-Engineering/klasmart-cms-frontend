@@ -48,7 +48,7 @@ export function LoFields(props: LoFieldsProps) {
       { label: d("Short Code").t("assess_label_short_code"), value: "shortcode", checked: true, readonly: false },
       { label: d("Assumed").t("assess_label_assumed"), value: "assumed", checked: false, readonly: false },
       { label: d("Score Threshold").t("learning_outcome_label_threshold"), value: "score_threshold", checked: true, readonly: false },
-      { label: d("Created On").t("library_label_created_on"), value: "created_at", checked: true, readonly: false },
+      { label: d("Created On").t("library_label_created_on"), value: "update_at", checked: true, readonly: false },
       { label: d("Author").t("library_label_author"), value: "author", checked: false, readonly: false },
       { label: d("Program").t("assess_label_program"), value: "program", checked: true, readonly: true },
       { label: d("Subject").t("assess_label_subject"), value: "subject", checked: true, readonly: true },
@@ -83,9 +83,9 @@ export function LoFields(props: LoFieldsProps) {
       <DialogContent>
         <div className={css.fieldsCon}>
           <Typography>
-            {"Selected which items to include"}
+            {"Select which columns to include:"}
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <span style={{color: "#666"}}>{`(There are ${list?.length} to download)`}</span>
+            <span style={{color: "#666"}}>{`(There are ${list?.length} rows to download)`}</span>
           </Typography>
           <Controller
             name={FIELDS}
@@ -168,7 +168,7 @@ export function ExportListToCSVBtn(props: ExportListToCSVBtnProps) {
     let title: string  = "";
     fields.forEach((item) => {
       if(item.checked) {
-        title += `${item.label},\t`;
+        title += `${item.label},`;
       }
     });
     const data = 
@@ -190,13 +190,13 @@ export function ExportListToCSVBtn(props: ExportListToCSVBtnProps) {
       keys.forEach(kItem => {
         const values = item[kItem];
         if(values instanceof Array) {
-          str += `\t${values.join(";")},\t`
-        } else if (kItem === "created_at") {
-          str += `\t${timestampToTime(values)},\t`
+          str += `"${values.join(";")}",`
+        } else if (kItem === "update_at") {
+          str += `\t${timestampToTime(values)},`
         } else if (kItem === "score_threshold") {
-          str += `\t${(values*100).toFixed(0)}%,\t`
+          str += `${(values*100).toFixed(0)}%,`
         } else {
-          str += `\t${values.toString()},\t`
+          str += `"\t${values}",`
         }
       })
       str += "\n";

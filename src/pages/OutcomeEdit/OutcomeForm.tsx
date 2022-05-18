@@ -253,7 +253,6 @@ export function OutcomeForm(props: OutcomeFormProps) {
                     // as={TextField}
                     defaultValue={timestampToTime(outcomeDetail.update_at)}
                     fullWidth
-                    // label={d("Created On").t("assess_label_created_on")}
                     disabled
                     size="small"
                     render={() => (
