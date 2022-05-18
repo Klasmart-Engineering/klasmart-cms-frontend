@@ -5,6 +5,7 @@ import { OutcomeSet } from "@components/OutSet";
 import { d, t } from "@locale/LocaleManager";
 import { Box, Checkbox, CheckboxProps, Chip, Grid, InputAdornment, makeStyles, MenuItem, TextField } from "@material-ui/core";
 import ClearRoundedIcon from "@material-ui/icons/ClearRounded";
+import { timestampToTime } from "@models/ModelOutcomeDetailForm";
 import { LinkedMockOptionsItem } from "@reducers/contentEdit/programsHandler";
 import { ResultGetNewOptions } from "@reducers/outcome";
 import { useMemo, useState } from "react";
@@ -123,19 +124,6 @@ export function OutcomeForm(props: OutcomeFormProps) {
       return "";
     }
   }, [outcomeDetail]);
-  const timestampToTime = (timestamp: number | undefined, type: string = "default") => {
-    const date = new Date(Number(timestamp) * 1000);
-    const dateNumFun = (num: number) => (num < 10 ? `0${num}` : num);
-    const [Y, M, D, h, m] = [
-      date.getFullYear(),
-      dateNumFun(date.getMonth() + 1),
-      dateNumFun(date.getDate()),
-      dateNumFun(date.getHours()),
-      dateNumFun(date.getMinutes()),
-      dateNumFun(date.getSeconds()),
-    ];
-    return `${Y}-${M}-${D} ${h}:${m}`;
-  };
   const shortCodeValidate = (value: string) => {
     const re = /^[0-9A-Z]+$/;
     const newValue = value.trim();

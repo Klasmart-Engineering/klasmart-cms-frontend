@@ -325,7 +325,7 @@ export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
         <Hidden only={["xs", "sm"]}>
           <Divider />
           <Grid container spacing={3} alignItems="center" style={{ marginTop: "6px" }}>
-            <Grid item sm={6} xs={6} md={3} style={{display: "flex", alignItems: "center"}}>
+            <Grid item sm={6} xs={6} md={4} style={{display: "flex", alignItems: "center"}}>
               {bulkOptions.length > 0 && (
                 <TextField
                   size="small"
@@ -341,10 +341,10 @@ export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
               )}
               <span className={classes.selectAll}>{t("library_label_files_selected", { value: selectedIdsLength.toString() })}</span>
             </Grid>
-            <Grid item md={6}>
+            <Grid item md={4}>
               <SubLearningOutcome value={value} onChange={onChange} />
             </Grid>
-            <Grid container direction="row" justifyContent="flex-end" alignItems="center" item sm={6} xs={6} md={3}>
+            <Grid container direction="row" justifyContent="flex-end" alignItems="center" item sm={6} xs={6} md={4}>
               <TextField
                 size="small"
                 style={{ width: 200 }}
