@@ -1,8 +1,7 @@
 import { CheckboxGroup, CheckboxGroupContext } from "@components/CheckboxGroup";
 import { d } from "@locale/LocaleManager";
 import { Button, Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, FormControlLabel, makeStyles, Typography } from "@material-ui/core";
-import { formattedTime } from "@models/ModelContentDetailForm";
-import { formattedNowOrTime } from "@models/ModelOutcomeDetailForm";
+import { formattedNowOrTime, timestampToTime } from "@models/ModelOutcomeDetailForm";
 import { ChangeEvent, DOMAttributes, useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { DownloadOutcomeItemResult, DownloadOutcomeListResult, FieldsProps } from "./types";
@@ -193,7 +192,7 @@ export function ExportListToCSVBtn(props: ExportListToCSVBtnProps) {
         if(values instanceof Array) {
           str += `\t${values.join(";")},\t`
         } else if (kItem === "created_at") {
-          str += `\t${formattedTime(values)},\t`
+          str += `\t${timestampToTime(values)},\t`
         } else if (kItem === "score_threshold") {
           str += `\t${(values*100).toFixed(0)}%,\t`
         } else {

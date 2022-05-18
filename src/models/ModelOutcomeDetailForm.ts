@@ -74,3 +74,17 @@ export function formattedNowOrTime(value?: number): string {
   const ms = m < 10 ? `0${m}` : m;
   return `${y}${MMs}${ds}${hs}${ms}`;
 }
+
+export const timestampToTime = (timestamp: number | undefined, type: string = "default") => {
+  const date = new Date(Number(timestamp) * 1000);
+  const dateNumFun = (num: number) => (num < 10 ? `0${num}` : num);
+  const [Y, M, D, h, m] = [
+    date.getFullYear(),
+    dateNumFun(date.getMonth() + 1),
+    dateNumFun(date.getDate()),
+    dateNumFun(date.getHours()),
+    dateNumFun(date.getMinutes()),
+    dateNumFun(date.getSeconds()),
+  ];
+  return `${Y}-${M}-${D} ${h}:${m}`;
+};
