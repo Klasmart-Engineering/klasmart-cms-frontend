@@ -1,7 +1,7 @@
 [
   {
     "id": "material010201",
-    "name": "Genius Tracingwords",
+    "name": "Tracing Words",
     "no": 1,
     "thumbnail": "https://badanamu-app-web.s3.ap-northeast-2.amazonaws.com/esl/stm_poc/thumbnails/09_genius_tracingwords.png",
     "description": "",
@@ -10,7 +10,7 @@
   },
   {
     "id": "material010202",
-    "name": "Genius StickerQuiz Shapes",
+    "name": "Sticker Quiz (Shapes)",
     "no": 2,
     "thumbnail": "https://badanamu-app-web.s3.ap-northeast-2.amazonaws.com/esl/stm_poc/thumbnails/01_genius_stickerquiz_shapes.png",
     "description": "",
@@ -19,7 +19,7 @@
   },
   {
     "id": "material010203",
-    "name": "Genius Blendsyllables",
+    "name": "Blend Syllables",
     "no": 3,
     "thumbnail": "https://badanamu-app-web.s3.ap-northeast-2.amazonaws.com/esl/stm_poc/thumbnails/08_genius_blendsyllables.png",
     "description": "",
@@ -28,7 +28,7 @@
   },
   {
     "id": "material010204",
-    "name": "Sound Memorygame",
+    "name": "Memory Game",
     "no": 4,
     "thumbnail": "https://badanamu-app-web.s3.ap-northeast-2.amazonaws.com/esl/stm_poc/thumbnails/11_sound_memorygame.png",
     "description": "",
@@ -37,7 +37,7 @@
   },
   {
     "id": "material010205",
-    "name": "Sound Tapanecco",
+    "name": "Tap an Ecco",
     "no": 5,
     "thumbnail": "https://badanamu-app-web.s3.ap-northeast-2.amazonaws.com/esl/stm_poc/thumbnails/10_read_tapanecco.png",
     "description": "",
