@@ -48,7 +48,7 @@ export function LoFields(props: LoFieldsProps) {
       { label: d("Short Code").t("assess_label_short_code"), value: "shortcode", checked: true, readonly: false },
       { label: d("Assumed").t("assess_label_assumed"), value: "assumed", checked: false, readonly: false },
       { label: d("Score Threshold").t("learning_outcome_label_threshold"), value: "score_threshold", checked: true, readonly: false },
-      { label: d("Created On").t("library_label_created_on"), value: "update_at", checked: true, readonly: false },
+      { label: d("Created On").t("library_label_created_on"), value: "updated_at", checked: true, readonly: false },
       { label: d("Author").t("library_label_author"), value: "author", checked: false, readonly: false },
       { label: d("Program").t("assess_label_program"), value: "program", checked: true, readonly: true },
       { label: d("Subject").t("assess_label_subject"), value: "subject", checked: true, readonly: true },
@@ -191,7 +191,7 @@ export function ExportListToCSVBtn(props: ExportListToCSVBtnProps) {
         const values = item[kItem];
         if(values instanceof Array) {
           str += `"${values.join(";")}",`
-        } else if (kItem === "update_at") {
+        } else if (kItem === "updated_at") {
           str += `\t${timestampToTime(values)},`
         } else if (kItem === "score_threshold") {
           str += `${(values*100).toFixed(0)}%,`

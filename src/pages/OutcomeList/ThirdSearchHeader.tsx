@@ -101,8 +101,8 @@ const useStyles = makeStyles((theme) => ({
   },
   selectAll: {
     color: "#666",
-    // marginRight: 30,
     fontSize: 14,
+    marginLeft: 5,
   },
 }));
 export const UNPUB = "UNPUB";
