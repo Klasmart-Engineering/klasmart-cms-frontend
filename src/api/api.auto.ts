@@ -544,7 +544,7 @@ export interface EntityExportOutcomeView {
   shortcode?: string;
   subcategory?: string[];
   subject?: string[];
-  update_at?: number;
+  updated_at?: number;
 }
 
 export interface EntityFeedbackAssignmentView {
