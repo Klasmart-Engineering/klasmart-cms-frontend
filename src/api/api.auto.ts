@@ -571,6 +571,13 @@ export interface EntityFolderItemInfo {
   thumbnail?: string;
   update_at?: number;
 }
+export interface EntityTreeResponse {
+  children?: EntityTreeResponse[];
+  dir_path?: string;
+  id?: string;
+  item_count?: number;
+  name?: string;
+}
 
 export interface EntityFolderShareRecord {
   folder_id?: string;
@@ -3318,6 +3325,20 @@ export class Api<SecurityDataType = any> extends HttpClient<SecurityDataType> {
      */
     shareFolders: (content: EntityShareFoldersRequest, params?: RequestParams) =>
       this.request<string, ApiBadRequestResponse | ApiInternalServerErrorResponse>(`/folders/share`, "PUT", params, content),
+
+    /**
+     * @tags folder
+     * @name getTree
+     * @summary getTree
+     * @request GET:/folders/tree
+     * @description get tree
+     */
+    getTree: (query: { key: string; type: number; only_for_me: number }, params?: RequestParams) =>
+      this.request<EntityTreeResponse, ApiBadRequestResponse | ApiForbiddenResponse | ApiInternalServerErrorResponse>(
+        `/folders/tree${this.addQueryParams(query)}`,
+        "GET",
+        params
+      ),
   };
   grades = {
     /**
