@@ -3,6 +3,7 @@ import React, { ReactNode } from "react";
 
 interface LayoutBoxProps {
   className?: string;
+  mainStyle?: React.CSSProperties;
   mainBase: number;
   holderMin: number;
   holderBase: number;
@@ -30,7 +31,9 @@ export default function LayoutBox(props: LayoutBoxProps) {
   return (
     <Box display="flex" className={props.className}>
       <Box className={css.holder} />
-      <Box className={css.main}>{props.children}</Box>
+      <Box className={css.main} style={props.mainStyle}>
+        {props.children}
+      </Box>
       <Box className={css.holder} />
     </Box>
   );
