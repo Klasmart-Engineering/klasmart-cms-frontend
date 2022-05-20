@@ -1,4 +1,4 @@
-import { Checkbox, Divider, FormControlLabel, Grid, Menu, MenuItem, TextField } from "@material-ui/core";
+import { Checkbox, FormControlLabel, Grid, Menu, MenuItem, TextField } from "@material-ui/core";
 import Hidden from "@material-ui/core/Hidden";
 import { makeStyles } from "@material-ui/core/styles";
 import Tab from "@material-ui/core/Tab";
@@ -13,7 +13,6 @@ import { EntityFolderContentData } from "../../api/api.auto";
 import PermissionType from "../../api/PermissionType";
 import { Author, OrderBy, PublishStatus, SearchContentsRequestContentType } from "../../api/type";
 import { ExportCSVBtn, ExportCSVBtnProps } from "../../components/ExportCSVBtn";
-import LayoutBox from "../../components/LayoutBox";
 import { PermissionResult } from "../../components/Permission";
 import { usePermission } from "../../hooks/usePermission";
 import { d, t } from "../../locale/LocaleManager";
@@ -527,94 +526,91 @@ export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
   ));
   return (
     <div className={classes.root}>
-      <LayoutBox holderMin={40} holderBase={202} mainBase={1517}>
-        <Hidden only={["xs", "sm"]}>
-          <Divider />
-          <Grid
-            container
-            spacing={3}
-            alignItems="center"
-            style={{
-              marginTop: "6px",
-            }}
-          >
-            {!value.program_group && (
-              <div className={unpublish ? classes.unpubCon : classes.notUnpubCon}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      icon={<CheckBoxOutlineBlank viewBox="3 3 18 18"></CheckBoxOutlineBlank>}
-                      checkedIcon={<CheckBox viewBox="3 3 18 18"></CheckBox>}
-                      size="small"
-                      color="primary"
-                      checked={ids.length > 0 && ids.length === contentList.length}
-                      onChange={(e) => {
-                        setValue(ContentListFormKey.CHECKED_CONTENT_IDS, e.target.checked ? contentList.map((item) => item.id) : []);
-                      }}
-                    />
-                  }
-                  label={d("Select All").t("schedule_detail_select_all")}
-                />
-                <span className={classes.selectAll}>{t("library_label_files_selected", { value: ids.length.toString() })}</span>
-                {bulkOptions.length > 0 && (
-                  <TextField
-                    className={classes.bulkActionCon}
-                    style={{
-                      width: 170,
-                    }}
+      <Hidden only={["xs", "sm"]}>
+        <Grid
+          container
+          spacing={3}
+          alignItems="center"
+          style={{
+            marginTop: "6px",
+          }}
+        >
+          {!value.program_group && (
+            <div className={unpublish ? classes.unpubCon : classes.notUnpubCon}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    icon={<CheckBoxOutlineBlank viewBox="3 3 18 18"></CheckBoxOutlineBlank>}
+                    checkedIcon={<CheckBox viewBox="3 3 18 18"></CheckBox>}
                     size="small"
-                    onChange={handleChangeBulkAction}
-                    label={d("Bulk Actions").t("library_label_bulk_actions")}
-                    value=""
-                    select
-                    SelectProps={{
-                      MenuProps: {
-                        transformOrigin: {
-                          vertical: -40,
-                          horizontal: "left",
-                        },
-                      },
+                    color="primary"
+                    checked={ids.length > 0 && ids.length === contentList.length}
+                    onChange={(e) => {
+                      setValue(ContentListFormKey.CHECKED_CONTENT_IDS, e.target.checked ? contentList.map((item) => item.id) : []);
                     }}
-                  >
-                    {bulkOptions}
-                  </TextField>
-                )}
-              </div>
-            )}
-            {unpublish && (
-              <div style={{ width: "324px", padding: "12px", boxSizing: "border-box" }}>
-                <SubUnpublished value={value} onChange={onChange} />
-              </div>
-            )}
-
-            <div
-              className={unpublish ? classes.unpubCon : classes.notUnpubCon}
-              style={{ textAlign: "right", width: value.program_group ? "100%" : "" }}
-            >
-              <TextField
-                size="small"
-                style={{
-                  width: 200,
-                }}
-                onChange={handleChangeOrder}
-                label={d("Sort By").t("library_label_sort_by")}
-                value={value.order_by}
-                select
-                SelectProps={{
-                  MenuProps: {
-                    transformOrigin: {
-                      vertical: -40,
-                      horizontal: "left",
+                  />
+                }
+                label={d("Select All").t("schedule_detail_select_all")}
+              />
+              <span className={classes.selectAll}>{t("library_label_files_selected", { value: ids.length.toString() })}</span>
+              {bulkOptions.length > 0 && (
+                <TextField
+                  className={classes.bulkActionCon}
+                  style={{
+                    width: 170,
+                  }}
+                  size="small"
+                  onChange={handleChangeBulkAction}
+                  label={d("Bulk Actions").t("library_label_bulk_actions")}
+                  value=""
+                  select
+                  SelectProps={{
+                    MenuProps: {
+                      transformOrigin: {
+                        vertical: -40,
+                        horizontal: "left",
+                      },
                     },
-                  },
-                }}
-              >
-                {orderbyOptions}
-              </TextField>
+                  }}
+                >
+                  {bulkOptions}
+                </TextField>
+              )}
             </div>
-          </Grid>
-        </Hidden>
-      </LayoutBox>
+          )}
+          {unpublish && (
+            <div style={{ width: "324px", padding: "12px", boxSizing: "border-box" }}>
+              <SubUnpublished value={value} onChange={onChange} />
+            </div>
+          )}
+
+          <div
+            className={unpublish ? classes.unpubCon : classes.notUnpubCon}
+            style={{ textAlign: "right", width: value.program_group ? "100%" : "" }}
+          >
+            <TextField
+              size="small"
+              style={{
+                width: 200,
+              }}
+              onChange={handleChangeOrder}
+              label={d("Sort By").t("library_label_sort_by")}
+              value={value.order_by}
+              select
+              SelectProps={{
+                MenuProps: {
+                  transformOrigin: {
+                    vertical: -40,
+                    horizontal: "left",
+                  },
+                },
+              }}
+            >
+              {orderbyOptions}
+            </TextField>
+          </div>
+        </Grid>
+      </Hidden>
     </div>
   );
 }
@@ -706,89 +702,82 @@ export function ThirdSearchHeaderMb(props: ThirdSearchHeaderProps) {
 
   return (
     <div className={classes.root}>
-      <LayoutBox holderMin={40} holderBase={202} mainBase={1517}>
-        <Hidden only={["md", "lg", "xl"]}>
-          <Divider />
-          <Grid
-            container
-            alignItems="center"
-            style={{
-              marginTop: "6px",
-              position: "relative",
-            }}
-          >
-            <Grid item sm={9} xs={9}>
-              {!value.program_group && (
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      icon={<CheckBoxOutlineBlank viewBox="3 3 18 18"></CheckBoxOutlineBlank>}
-                      checkedIcon={<CheckBox viewBox="3 3 18 18"></CheckBox>}
-                      size="small"
-                      color="primary"
-                      checked={ids.length > 0 && ids.length === contentList.length}
-                      onChange={(e) => {
-                        setValue(ContentListFormKey.CHECKED_CONTENT_IDS, e.target.checked ? contentList.map((item) => item.id) : []);
-                      }}
-                    />
-                  }
-                  label={d("Select All").t("schedule_detail_select_all")}
-                />
-              )}
-              {!value.program_group && (
-                <span className={classes.selectAll}>{t("library_label_files_selected", { value: ids.length.toString() })}</span>
-              )}
-              {unpublish && <SubUnpublished value={value} onChange={onChange} />}
-            </Grid>
-            <Grid container justify="flex-end" alignItems="center" item sm={3} xs={3}>
-              {value.content_type !== SearchContentsRequestContentType.assetsandfolder && !value.program_group && (
-                <FilterListIcon onClick={handleClickFilterIcon} />
-              )}
-              <Menu anchorEl={anchorFilter} keepMounted open={Boolean(anchorFilter)} onClose={handleFilterClose}>
-                {filterOptions(value).map((item, index) => (
-                  <MenuItem
-                    key={item.label}
-                    selected={value.content_type === item.value}
-                    onClick={(event) => handleClickFilterItem(event, item.value)}
-                  >
-                    {item.label}
-                  </MenuItem>
-                ))}
-              </Menu>
-              {actions.length > 0 && <MoreHoriz onClick={handleClickBulkActionButton} />}
-              <Menu anchorEl={anchorElLeft} keepMounted open={Boolean(anchorElLeft)} onClose={handleClose}>
-                {actions.map((item, index) => (
-                  <MenuItem key={item.label} onClick={(event) => handleClickActionItem(event, item.value)}>
-                    {item.value !== BulkAction.exportCsv ? (
-                      item.label
-                    ) : (
-                      <ExportCSVBtn
-                        name={"Export result"}
-                        title={"Content Id"}
-                        data={collectedIds}
-                        label={item.label}
-                        onClick={onExportCSV}
-                      />
-                    )}
-                  </MenuItem>
-                ))}
-              </Menu>
-              <ImportExportIcon onClick={showSort} />
-              <Menu anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleSortClose}>
-                {sortOptions().map((item, index) => (
-                  <MenuItem
-                    key={item.label}
-                    selected={value.order_by === item.value}
-                    onClick={(e) => handleClickOrderbyItem(e, item.value)}
-                  >
-                    {item.label}
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Grid>
+      <Hidden only={["md", "lg", "xl"]}>
+        <Grid
+          container
+          alignItems="center"
+          style={{
+            marginTop: "6px",
+            position: "relative",
+          }}
+        >
+          <Grid item sm={9} xs={9}>
+            {!value.program_group && (
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    icon={<CheckBoxOutlineBlank viewBox="3 3 18 18"></CheckBoxOutlineBlank>}
+                    checkedIcon={<CheckBox viewBox="3 3 18 18"></CheckBox>}
+                    size="small"
+                    color="primary"
+                    checked={ids.length > 0 && ids.length === contentList.length}
+                    onChange={(e) => {
+                      setValue(ContentListFormKey.CHECKED_CONTENT_IDS, e.target.checked ? contentList.map((item) => item.id) : []);
+                    }}
+                  />
+                }
+                label={d("Select All").t("schedule_detail_select_all")}
+              />
+            )}
+            {!value.program_group && (
+              <span className={classes.selectAll}>{t("library_label_files_selected", { value: ids.length.toString() })}</span>
+            )}
+            {unpublish && <SubUnpublished value={value} onChange={onChange} />}
           </Grid>
-        </Hidden>
-      </LayoutBox>
+          <Grid container justify="flex-end" alignItems="center" item sm={3} xs={3}>
+            {value.content_type !== SearchContentsRequestContentType.assetsandfolder && !value.program_group && (
+              <FilterListIcon onClick={handleClickFilterIcon} />
+            )}
+            <Menu anchorEl={anchorFilter} keepMounted open={Boolean(anchorFilter)} onClose={handleFilterClose}>
+              {filterOptions(value).map((item, index) => (
+                <MenuItem
+                  key={item.label}
+                  selected={value.content_type === item.value}
+                  onClick={(event) => handleClickFilterItem(event, item.value)}
+                >
+                  {item.label}
+                </MenuItem>
+              ))}
+            </Menu>
+            {actions.length > 0 && <MoreHoriz onClick={handleClickBulkActionButton} />}
+            <Menu anchorEl={anchorElLeft} keepMounted open={Boolean(anchorElLeft)} onClose={handleClose}>
+              {actions.map((item, index) => (
+                <MenuItem key={item.label} onClick={(event) => handleClickActionItem(event, item.value)}>
+                  {item.value !== BulkAction.exportCsv ? (
+                    item.label
+                  ) : (
+                    <ExportCSVBtn
+                      name={"Export result"}
+                      title={"Content Id"}
+                      data={collectedIds}
+                      label={item.label}
+                      onClick={onExportCSV}
+                    />
+                  )}
+                </MenuItem>
+              ))}
+            </Menu>
+            <ImportExportIcon onClick={showSort} />
+            <Menu anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleSortClose}>
+              {sortOptions().map((item, index) => (
+                <MenuItem key={item.label} selected={value.order_by === item.value} onClick={(e) => handleClickOrderbyItem(e, item.value)}>
+                  {item.label}
+                </MenuItem>
+              ))}
+            </Menu>
+          </Grid>
+        </Grid>
+      </Hidden>
     </div>
   );
 }

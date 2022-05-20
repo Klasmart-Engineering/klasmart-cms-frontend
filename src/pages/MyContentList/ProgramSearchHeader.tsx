@@ -7,7 +7,6 @@ import WidgetsOutlinedIcon from "@material-ui/icons/WidgetsOutlined";
 import clsx from "clsx";
 import React from "react";
 import { OrderBy } from "../../api/type";
-import LayoutBox from "../../components/LayoutBox";
 import { d } from "../../locale/LocaleManager";
 import { BadaEslBlueIcon, BadaEslIcon } from "../OutcomeList/Icons";
 import { QueryCondition, QueryConditionBaseProps } from "./types";
@@ -92,42 +91,40 @@ export default function ProgramSearchHeader(props: ProgramSearchHeaderProps) {
 
   return (
     <div className={css.root}>
-      <LayoutBox holderMin={40} holderBase={202} mainBase={1517}>
-        <Hidden only={["xs", "sm"]}>
-          <Grid container spacing={3}>
-            <Grid item md={3} lg={5} xl={7}></Grid>
-            <Grid container direction="row" justify="flex-end" alignItems="center" item md={9} lg={7} xl={5}>
-              <Button
-                onClick={createHandleClick(ProgramGroup.badaEsl)}
-                className={clsx(css.nav, {
-                  [css.actives]: value?.program_group === ProgramGroup.badaEsl,
-                })}
-                startIcon={value?.program_group === ProgramGroup.badaEsl ? <BadaEslBlueIcon /> : <BadaEslIcon />}
-              >
-                {d("Badanamu ESL").t("library_label_program_esl")}
-              </Button>
-              <Button
-                onClick={createHandleClick(ProgramGroup.badaSteam)}
-                className={clsx(css.nav, {
-                  [css.actives]: value?.program_group === ProgramGroup.badaSteam,
-                })}
-                startIcon={<WidgetsOutlinedIcon />}
-              >
-                {d("Bada STEAM").t("library_label_program_steam")}
-              </Button>
-              <Button
-                onClick={createHandleClick(ProgramGroup.more)}
-                className={clsx(css.nav, {
-                  [css.actives]: value?.program_group === ProgramGroup.more,
-                })}
-                startIcon={<Sort />}
-              >
-                {d("More").t("library_label_more")}
-              </Button>
-            </Grid>
+      <Hidden only={["xs", "sm"]}>
+        <Grid container spacing={3}>
+          <Grid item md={3} lg={5} xl={7}></Grid>
+          <Grid container direction="row" justify="flex-end" alignItems="center" item md={9} lg={7} xl={5}>
+            <Button
+              onClick={createHandleClick(ProgramGroup.badaEsl)}
+              className={clsx(css.nav, {
+                [css.actives]: value?.program_group === ProgramGroup.badaEsl,
+              })}
+              startIcon={value?.program_group === ProgramGroup.badaEsl ? <BadaEslBlueIcon /> : <BadaEslIcon />}
+            >
+              {d("Badanamu ESL").t("library_label_program_esl")}
+            </Button>
+            <Button
+              onClick={createHandleClick(ProgramGroup.badaSteam)}
+              className={clsx(css.nav, {
+                [css.actives]: value?.program_group === ProgramGroup.badaSteam,
+              })}
+              startIcon={<WidgetsOutlinedIcon />}
+            >
+              {d("Bada STEAM").t("library_label_program_steam")}
+            </Button>
+            <Button
+              onClick={createHandleClick(ProgramGroup.more)}
+              className={clsx(css.nav, {
+                [css.actives]: value?.program_group === ProgramGroup.more,
+              })}
+              startIcon={<Sort />}
+            >
+              {d("More").t("library_label_more")}
+            </Button>
           </Grid>
-        </Hidden>
-      </LayoutBox>
+        </Grid>
+      </Hidden>
     </div>
   );
 }

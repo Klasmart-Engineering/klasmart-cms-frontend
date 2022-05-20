@@ -137,7 +137,7 @@ export function BackToPrevPage(props: BackToPrevePageProps) {
   };
   return (
     <>
-      <Grid container spacing={2} style={{ borderBottom: "1px solid #e0e0e0", marginBottom: 10 }}>
+      <Grid container spacing={2} style={{ borderBottom: "1px solid #e0e0e0", marginBottom: 10, width: "96%" }}>
         <Hidden only={["xs"]}>
           <Grid item xs={12} sm={6} md={4} lg={3} xl={3}>
             <div className={css.card}>

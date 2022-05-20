@@ -33,7 +33,6 @@ import { EntityFolderContentData, EntityFolderItemInfo, EntityOrganizationProper
 import PermissionType from "../../api/PermissionType";
 import { Author, ContentType, PublishStatus, SearchContentsRequestContentType } from "../../api/type";
 import { CheckboxGroup, CheckboxGroupContext } from "../../components/CheckboxGroup";
-import LayoutBox from "../../components/LayoutBox";
 import { LButton, LButtonProps } from "../../components/LButton";
 import { Permission } from "../../components/Permission";
 import { Thumbnail } from "../../components/Thumbnail";
@@ -598,9 +597,10 @@ export function ContentCardList(props: ContentCardListProps) {
   const handleChangePageSize = (event: React.ChangeEvent<{ value: unknown }>) => {
     onChangePageSize(event.target.value as number);
   };
+  const showFolderTree = !queryCondition.program_group && queryCondition.publish_status === PublishStatus.published;
   const pageSizes = [20, 100, 500];
   return (
-    <LayoutBox holderMin={40} holderBase={202} mainBase={1517}>
+    <div>
       <Controller
         name={ContentListFormKey.CHECKED_CONTENT_IDS}
         control={control}
@@ -622,7 +622,7 @@ export function ContentCardList(props: ContentCardListProps) {
                       />
                     )}
                   {list.map((item, idx) => (
-                    <Grid key={item.id} item xs={12} sm={6} md={4} lg={3} xl={3}>
+                    <Grid key={item.id} item xs={12} sm={6} md={showFolderTree ? 6 : 4} lg={showFolderTree ? 4 : 3} xl={3}>
                       <ContentCard
                         content={item}
                         {...{
@@ -667,6 +667,6 @@ export function ContentCardList(props: ContentCardListProps) {
           </Select>
         </FormControl>
       </div>
-    </LayoutBox>
+    </div>
   );
 }

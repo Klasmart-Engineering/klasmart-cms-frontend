@@ -9,7 +9,6 @@ import clsx from "clsx";
 import React from "react";
 import PermissionType from "../../api/PermissionType";
 import { Author, OrderBy, PublishStatus, SearchContentsRequestContentType } from "../../api/type";
-import LayoutBox from "../../components/LayoutBox";
 import { Permission, PermissionOr } from "../../components/Permission";
 import { usePermission } from "../../hooks/usePermission";
 import { d } from "../../locale/LocaleManager";
@@ -146,122 +145,120 @@ export default function FirstSearchHeader(props: FirstSearchHeaderProps) {
   };
   return (
     <div className={css.root}>
-      <LayoutBox holderMin={40} holderBase={202} mainBase={1517}>
-        <Hidden only={["xs", "sm"]}>
-          <Grid container spacing={3}>
-            <Grid item md={2} lg={4} xl={5}>
-              <PermissionOr
-                value={[
-                  PermissionType.create_content_page_201,
-                  PermissionType.create_lesson_material_220,
-                  PermissionType.create_lesson_plan_221,
-                ]}
-              >
-                {(value.publish_status === PublishStatus.published ||
-                  value.content_type === SearchContentsRequestContentType.assetsandfolder) && (
-                  <Button
-                    onClick={handleClickCreate}
-                    variant="contained"
-                    color="primary"
-                    className={css.createBtn}
-                    endIcon={<ArrowDropDownOutlinedIcon />}
+      <Hidden only={["xs", "sm"]}>
+        <Grid container spacing={3}>
+          <Grid item md={2} lg={4} xl={5}>
+            <PermissionOr
+              value={[
+                PermissionType.create_content_page_201,
+                PermissionType.create_lesson_material_220,
+                PermissionType.create_lesson_plan_221,
+              ]}
+            >
+              {(value.publish_status === PublishStatus.published ||
+                value.content_type === SearchContentsRequestContentType.assetsandfolder) && (
+                <Button
+                  onClick={handleClickCreate}
+                  variant="contained"
+                  color="primary"
+                  className={css.createBtn}
+                  endIcon={<ArrowDropDownOutlinedIcon />}
+                >
+                  {d("Create").t("library_label_create")}
+                </Button>
+              )}
+            </PermissionOr>
+            <StyledMenu anchorEl={anchorCreate} keepMounted open={Boolean(anchorCreate)} onClose={handleCreateClose}>
+              {value.publish_status === PublishStatus.published && (
+                <>
+                  <MenuItem
+                    onClick={() => {
+                      value.content_type = SearchContentsRequestContentType.material;
+                      onCreateContent();
+                    }}
                   >
-                    {d("Create").t("library_label_create")}
-                  </Button>
-                )}
-              </PermissionOr>
-              <StyledMenu anchorEl={anchorCreate} keepMounted open={Boolean(anchorCreate)} onClose={handleCreateClose}>
-                {value.publish_status === PublishStatus.published && (
-                  <>
-                    <MenuItem
-                      onClick={() => {
-                        value.content_type = SearchContentsRequestContentType.material;
-                        onCreateContent();
-                      }}
-                    >
-                      {d("Lesson Material").t("library_label_lesson_material")}
-                    </MenuItem>
-                    <MenuItem
-                      onClick={() => {
-                        value.content_type = SearchContentsRequestContentType.plan;
-                        onCreateContent();
-                      }}
-                    >
-                      {d("Lesson Plan").t("library_label_lesson_plan")}
-                    </MenuItem>
-                  </>
-                )}
-                {value.content_type === SearchContentsRequestContentType.assetsandfolder && (
-                  <MenuItem onClick={onCreateContent}>{d("Assets").t("library_label_assets")}</MenuItem>
-                )}
-                <Permission value={PermissionType.create_folder_289}>
-                  <MenuItem onClick={handleClickNewFolder}>{d("New Folder").t("library_label_new_folder")}</MenuItem>
-                </Permission>
-              </StyledMenu>
-            </Grid>
-            <Grid container direction="row" justify="flex-end" alignItems="center" item md={10} lg={8} xl={7}>
-              <Permission value={PermissionType.published_content_page_204}>
-                <Button
-                  onClick={createHandleClick(PublishStatus.published)}
-                  className={clsx(css.nav, {
-                    [css.actives]: value?.publish_status === PublishStatus.published,
-                  })}
-                  startIcon={<PublishOutlined />}
-                >
-                  {d("Published").t("library_label_published")}
-                </Button>
+                    {d("Lesson Material").t("library_label_lesson_material")}
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      value.content_type = SearchContentsRequestContentType.plan;
+                      onCreateContent();
+                    }}
+                  >
+                    {d("Lesson Plan").t("library_label_lesson_plan")}
+                  </MenuItem>
+                </>
+              )}
+              {value.content_type === SearchContentsRequestContentType.assetsandfolder && (
+                <MenuItem onClick={onCreateContent}>{d("Assets").t("library_label_assets")}</MenuItem>
+              )}
+              <Permission value={PermissionType.create_folder_289}>
+                <MenuItem onClick={handleClickNewFolder}>{d("New Folder").t("library_label_new_folder")}</MenuItem>
               </Permission>
-
-              <Permission value={PermissionType.pending_content_page_203}>
-                <Button
-                  onClick={createHandleClick(PublishStatus.pending)}
-                  className={clsx(css.nav, {
-                    [css.actives]: value?.publish_status === PublishStatus.pending && value.author !== Author.self,
-                  })}
-                  startIcon={value?.publish_status === "pending" && value.author !== Author.self ? <PendingBlueIcon /> : <PendingIcon />}
-                >
-                  {d("Pending").t("library_label_pending")}
-                </Button>
-              </Permission>
-
-              <Permission value={PermissionType.unpublished_content_page_202}>
-                <Button
-                  onClick={createHandleClick(PublishStatus.draft)}
-                  className={clsx(css.nav, {
-                    [css.actives]: unpublish,
-                  })}
-                  startIcon={unpublish ? <UnPubBlueIcon /> : <UnPubIcon />}
-                >
-                  {d("Unpublished").t("library_label_unpublished")}
-                </Button>
-              </Permission>
-
-              <Permission value={PermissionType.archived_content_page_205}>
-                <Button
-                  onClick={createHandleClick(PublishStatus.archive)}
-                  className={clsx(css.nav, {
-                    [css.actives]: value?.publish_status === PublishStatus.archive,
-                  })}
-                  startIcon={<ArchiveOutlined />}
-                >
-                  {d("Archived").t("library_label_archived")}
-                </Button>
-              </Permission>
-              <Permission value={PermissionType.create_asset_page_301}>
-                <Button
-                  onClick={assetsHandleClick(SearchContentsRequestContentType.assetsandfolder)}
-                  className={clsx(css.nav, {
-                    [css.actives]: value?.content_type === SearchContentsRequestContentType.assetsandfolder,
-                  })}
-                  startIcon={<PermMediaOutlined />}
-                >
-                  {d("Assets").t("library_label_assets")}
-                </Button>
-              </Permission>
-            </Grid>
+            </StyledMenu>
           </Grid>
-        </Hidden>
-      </LayoutBox>
+          <Grid container direction="row" justify="flex-end" alignItems="center" item md={10} lg={8} xl={7}>
+            <Permission value={PermissionType.published_content_page_204}>
+              <Button
+                onClick={createHandleClick(PublishStatus.published)}
+                className={clsx(css.nav, {
+                  [css.actives]: value?.publish_status === PublishStatus.published,
+                })}
+                startIcon={<PublishOutlined />}
+              >
+                {d("Published").t("library_label_published")}
+              </Button>
+            </Permission>
+
+            <Permission value={PermissionType.pending_content_page_203}>
+              <Button
+                onClick={createHandleClick(PublishStatus.pending)}
+                className={clsx(css.nav, {
+                  [css.actives]: value?.publish_status === PublishStatus.pending && value.author !== Author.self,
+                })}
+                startIcon={value?.publish_status === "pending" && value.author !== Author.self ? <PendingBlueIcon /> : <PendingIcon />}
+              >
+                {d("Pending").t("library_label_pending")}
+              </Button>
+            </Permission>
+
+            <Permission value={PermissionType.unpublished_content_page_202}>
+              <Button
+                onClick={createHandleClick(PublishStatus.draft)}
+                className={clsx(css.nav, {
+                  [css.actives]: unpublish,
+                })}
+                startIcon={unpublish ? <UnPubBlueIcon /> : <UnPubIcon />}
+              >
+                {d("Unpublished").t("library_label_unpublished")}
+              </Button>
+            </Permission>
+
+            <Permission value={PermissionType.archived_content_page_205}>
+              <Button
+                onClick={createHandleClick(PublishStatus.archive)}
+                className={clsx(css.nav, {
+                  [css.actives]: value?.publish_status === PublishStatus.archive,
+                })}
+                startIcon={<ArchiveOutlined />}
+              >
+                {d("Archived").t("library_label_archived")}
+              </Button>
+            </Permission>
+            <Permission value={PermissionType.create_asset_page_301}>
+              <Button
+                onClick={assetsHandleClick(SearchContentsRequestContentType.assetsandfolder)}
+                className={clsx(css.nav, {
+                  [css.actives]: value?.content_type === SearchContentsRequestContentType.assetsandfolder,
+                })}
+                startIcon={<PermMediaOutlined />}
+              >
+                {d("Assets").t("library_label_assets")}
+              </Button>
+            </Permission>
+          </Grid>
+        </Grid>
+      </Hidden>
     </div>
   );
 }
