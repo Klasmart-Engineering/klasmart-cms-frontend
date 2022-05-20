@@ -180,7 +180,7 @@ function OutomeRow(props: OutcomeProps) {
   const score_threshold = outcome.score_threshold ? Math.floor(outcome.score_threshold * 100) : 0;
   return (
     <TableRow className={isLocked ? css.disableTableRow : ""} onClick={(e) => onClickOutcome(outcome.outcome_id)}>
-      <TableCell className={isLocked ? css.disableTableCell : ""} style={{ width: 100 }} align="center" padding="checkbox">
+      <TableCell onClick={stopPropagation()} className={isLocked ? css.disableTableCell : ""} style={{ width: 100 }} align="center" padding="checkbox">
         {isLocked && (
           <LightTooltip
             title={
