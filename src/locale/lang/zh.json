@@ -1150,5 +1150,14 @@
   "assessment_search_no_matching_result": "无匹配结果",
   "library_label_created_by": "创建者",
   "library_label_contains": "包含",
-  "assessment_search_teacher_tips": "老师的姓或名"
+  "assessment_search_teacher_tips": "老师的姓或名",
+  "library_label_hierarchy_root_folder": "根目录",
+  "schedue_button_schedule_class": "排课",
+  "assessment_lo_download": "下载",
+  "assessment_lo_download_all": "下载全部",
+  "assessment_lo_download_selected": "下载已选行",
+  "assessment_lo_download_quantity": "已选{number}行",
+  "assessment_lo_download_column_title": "选择要包含的列",
+  "assessment_lo_download_object_quantity": "({quantity}行可下载)",
+  "schedule_msg_no_permission_to_be_redirected": "您没有此权限。跳转中.."
 }
