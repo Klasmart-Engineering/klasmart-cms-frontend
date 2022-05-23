@@ -1156,8 +1156,8 @@
   "assessment_lo_download": "다운로드",
   "assessment_lo_download_all": "모두 다운로드",
   "assessment_lo_download_selected": "선택한 행 다운로드",
-  "assessment_lo_download_quantity": "{number} 개 항목 선택됨",
-  "assessment_lo_download_column_title": "포함할 열 선택",
+  "assessment_lo_download_quantity": "({number} 개 항목 선택됨)",
+  "assessment_lo_download_column_title": "포함할 열 선택:",
   "assessment_lo_download_object_quantity": "(다운로드할 {quantity}개의 행이 있습니다.)",
   "schedule_msg_no_permission_to_be_redirected": "권한이 없습니다. 리디렉션..."
 }

@@ -1154,10 +1154,10 @@
   "library_label_hierarchy_root_folder": "Root Folder",
   "schedue_button_schedule_class": "Jadwal kelas",
   "assessment_lo_download": "Download",
-  "assessment_lo_download_all": "Download All",
+  "assessment_lo_download_all": "Download All Rows",
   "assessment_lo_download_selected": "Download Selected Rows",
-  "assessment_lo_download_quantity": "{number} items selected",
-  "assessment_lo_download_column_title": "Select which columns to include",
+  "assessment_lo_download_quantity": "({number} rows selected)",
+  "assessment_lo_download_column_title": "Select which columns to include:",
   "assessment_lo_download_object_quantity": "(There are {quantity} rows to download)",
   "schedule_msg_no_permission_to_be_redirected": "You do not have permission. Redirecting..."
 }
