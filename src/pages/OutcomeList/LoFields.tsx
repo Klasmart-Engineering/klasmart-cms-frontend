@@ -83,7 +83,7 @@ export function LoFields(props: LoFieldsProps) {
       <DialogContent>
         <div className={css.fieldsCon}>
           <Typography>
-            {d("Select which columns to include").t("assessment_lo_download_column_title")}
+            {d("Select which columns to include:").t("assessment_lo_download_column_title")}
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <span style={{color: "#666"}}>{t("assessment_lo_download_object_quantity", { quantity: list.length.toString() })}</span>
           </Typography>
