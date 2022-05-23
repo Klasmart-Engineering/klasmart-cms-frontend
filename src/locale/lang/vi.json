@@ -1153,11 +1153,11 @@
   "assessment_search_teacher_tips": "Tên của giáo viên hoặc họ",
   "library_label_hierarchy_root_folder": "Root Folder",
   "schedue_button_schedule_class": "Thời Khóa Biểu",
-  "assessment_lo_download": "Download",
-  "assessment_lo_download_all": "Download All",
-  "assessment_lo_download_selected": "Download Selected Rows",
-  "assessment_lo_download_quantity": "{number} items selected",
-  "assessment_lo_download_column_title": "Select which columns to include",
-  "assessment_lo_download_object_quantity": "(There are {quantity} rows to download)",
-  "schedule_msg_no_permission_to_be_redirected": "You do not have permission. Redirecting..."
+  "assessment_lo_download": "Tải xuống",
+  "assessment_lo_download_all": "Tải xuống Tất cả Hàng",
+  "assessment_lo_download_selected": "Tải xuống những hàng đã lựa chọn",
+  "assessment_lo_download_quantity": "(Đã chọn {number})",
+  "assessment_lo_download_column_title": "Chọn các cột cần thiết:",
+  "assessment_lo_download_object_quantity": "(Có tổng cộng {quantity} hàng sẽ được tải xuống)",
+  "schedule_msg_no_permission_to_be_redirected": "Bạn không được phép truy cập tính năng này. Đang điều hướng..."
 }
