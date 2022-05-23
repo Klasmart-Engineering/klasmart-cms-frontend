@@ -12,7 +12,7 @@ import { OutcomeOrderBy, OutcomePublishStatus } from "../../api/type";
 import LayoutBox from "../../components/LayoutBox";
 import { Permission, PermissionResult, PermissionsWrapper } from "../../components/Permission/Permission";
 import { usePermission } from "../../hooks/usePermission";
-import { d } from "../../locale/LocaleManager";
+import { d, t } from "../../locale/LocaleManager";
 import { OutcomeQueryCondition, OutcomeQueryConditionBaseProps } from "./types";
 
 const useStyles = makeStyles((theme) => ({
@@ -227,8 +227,8 @@ function getBulkAction(condition: OutcomeQueryCondition, perm: PermissionResult<
       }
       if (perm.create_learning_outcome_421) {
         const download = [
-          { label: "Download All Rows", value: BulkAction.downloadAll },
-          { label: "Download Selected Rows", value: BulkAction.downloadSelected}
+          { label: d("Download All Rows").t("assessment_lo_download_all"), value: BulkAction.downloadAll },
+          { label: d("Download Selected Rows").t("assessment_lo_download_selected"), value: BulkAction.downloadSelected}
         ]
         res1.push.apply(res1, download)
       }
@@ -339,7 +339,7 @@ export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
                   {bulkOptions}
                 </TextField>
               )}
-              <span className={classes.selectAll}>{`(${selectedIdsLength} rows selected)`}</span>
+              <span className={classes.selectAll}>{t("assessment_lo_download_quantity", {number: selectedIdsLength.toString()})}</span>
             </Grid>
             <Grid item md={4}>
               <SubLearningOutcome value={value} onChange={onChange} />
