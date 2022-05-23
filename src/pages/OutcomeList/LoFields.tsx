@@ -1,5 +1,5 @@
 import { CheckboxGroup, CheckboxGroupContext } from "@components/CheckboxGroup";
-import { d } from "@locale/LocaleManager";
+import { d, t } from "@locale/LocaleManager";
 import { Button, Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, FormControlLabel, makeStyles, Typography } from "@material-ui/core";
 import { formattedNowOrTime, timestampToTime } from "@models/ModelOutcomeDetailForm";
 import { ChangeEvent, DOMAttributes, useMemo, useState } from "react";
@@ -78,14 +78,14 @@ export function LoFields(props: LoFieldsProps) {
   return (
     <Dialog open={open} fullWidth maxWidth={"sm"}>
       <DialogTitle className={css.title}>
-        {"Download"}
+        {d("Download").t("assessment_lo_download")}
       </DialogTitle>
       <DialogContent>
         <div className={css.fieldsCon}>
           <Typography>
-            {"Select which columns to include:"}
+            {d("Select which columns to include").t("assessment_lo_download_column_title")}
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <span style={{color: "#666"}}>{`(There are ${list?.length} rows to download)`}</span>
+            <span style={{color: "#666"}}>{t("assessment_lo_download_object_quantity", { quantity: list.length.toString() })}</span>
           </Typography>
           <Controller
             name={FIELDS}

@@ -1814,7 +1814,20 @@ A new ‘Auto review’ lesson will appear on students’ calendar once our plat
   | { id: "assessment_search_no_matching_result"; description: `No Matching Result`; values: undefined }
   | { id: "library_label_created_by"; description: `Created By`; values: undefined }
   | { id: "library_label_contains"; description: `Contains`; values: undefined }
-  | { id: "assessment_search_teacher_tips"; description: `Teacher's given or family name`; values: undefined};
+  | { id: "assessment_search_teacher_tips"; description: `Teacher's given or family name`; values: undefined }
+  | { id: "library_label_hierarchy_root_folder"; description: `Root Folder`; values: undefined }
+  | { id: "schedue_button_schedule_class"; description: `Schedule Class`; values: undefined }
+  | { id: "assessment_lo_download"; description: `Download`; values: undefined }
+  | { id: "assessment_lo_download_all"; description: `Download All Rows`; values: undefined }
+  | { id: "assessment_lo_download_selected"; description: `Download Selected Rows`; values: undefined }
+  | { id: "assessment_lo_download_quantity"; description: `({number} rows selected)`; values: { number: string | number } }
+  | { id: "assessment_lo_download_column_title"; description: `Select which columns to include:`; values: undefined }
+  | {
+      id: "assessment_lo_download_object_quantity";
+      description: `(There are {quantity} rows to download)`;
+      values: { quantity: string | number };
+    }
+  | { id: "schedule_msg_no_permission_to_be_redirected"; description: `You do not have permission. Redirecting...`; values: undefined };
 
 export type LangRecordId = LangRecord["id"];
 export type LangRecodeDescription = LangRecord["description"];
