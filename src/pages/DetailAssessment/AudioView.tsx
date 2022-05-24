@@ -13,20 +13,15 @@ interface AudioViewProps {
 }
 
 export const AudioView = ({ userId, roomId, h5pId, h5pSubId, resourceType }: AudioViewProps) => {
-  const isSafari = navigator.userAgent.indexOf("Safari") > -1 && navigator.userAgent.indexOf("Chrome") < 0;
+  const { userAgent } = navigator; 
+  const isSafari = userAgent.indexOf("Safari") > -1 && userAgent.indexOf("Chrome") < 0 && userAgent.indexOf("CriOS") < 0;
   const { loading, error, mediaMetadata } = useAudioMetadata({
     userId,
     roomId,
     h5pId,
     h5pSubId: h5pSubId ? h5pSubId : undefined,
   });
-  if (isSafari) return (
-    <>
-      <p>{d("Please use another browser (Chrome) for a better experience.").t("assessment_audio_suggest_browser")}</p>;
-      <p>{navigator.userAgent}</p>
-    </>
-  )
-  // if (isSafari) return <p>{d("Please use another browser (Chrome) for a better experience.").t("assessment_audio_suggest_browser")}</p>;
+  if (isSafari) return <p>{d("Please use another browser (Chrome) for a better experience.").t("assessment_audio_suggest_browser")}</p>;
   if (error) {
     return <p>{d("Server request failed").t("general_error_unknown")}</p>;
   }
