@@ -10,7 +10,7 @@ import {
   TableCell,
   TableContainer,
   TableRow,
-  Tooltip
+  Tooltip,
 } from "@material-ui/core";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
@@ -118,10 +118,7 @@ export function StudentView(props: StudentViewProps) {
   const subDimensionIds = useMemo(() => {
     return subDimension.length ? subDimension.map((item) => item.id) : [];
   }, [subDimension]);
-  const initCheckArr = useMemo(() => {
-    return subDimension.map((item) => true) || [];
-  }, [subDimension]);
-  const [checkedArr, setCheckedArr] = useState<boolean[]>(initCheckArr);
+  const [checkedArr, setCheckedArr] = useState<boolean[]>(subDimension.map((item) => true));
   const isSelectAll = subDimension.findIndex((item) => item.id === "all") >= 0 ? true : false;
   const StudentHeader = () => {
     let headers: PLField[] = [
@@ -234,8 +231,7 @@ export function StudentView(props: StudentViewProps) {
                 ...rItem,
                 score,
               };
-            } else
-            if (rItem.content_id === contentId) {
+            } else if (rItem.content_id === contentId) {
               return {
                 ...rItem,
                 score,
@@ -296,12 +292,14 @@ export function StudentView(props: StudentViewProps) {
                   <Box className={css.tableBar} onClick={(e) => toggleCheck(index)}>
                     <div style={{ color: checkedArr[index] ? "black" : "#666666" }}>
                       <AccountCircleIcon />
-                      <span style={{ padding: "0 18px 0 18px" }}>{sitem.student_name ? sitem.student_name : d("Unknown User").t("assessment_summary_label_attendance_unknown")}</span>
+                      <span style={{ padding: "0 18px 0 18px" }}>
+                        {sitem.student_name ? sitem.student_name : d("Unknown User").t("assessment_summary_label_attendance_unknown")}
+                      </span>
                       {editable && is_anyone_attempted && (
                         <span
                           onClick={stopPropagation((e) => handleOpenAddStudentComment(sitem.reviewer_comment ?? "", sitem.student_id))}
                           style={{
-                            display: (checkedArr.length ? checkedArr[index] : initCheckArr[index]) ? "block" : "none",
+                            display: checkedArr[index] === undefined ? "block" : checkedArr[index] ? "block" : "none",
                             color: "rgb(0, 108, 207)",
                           }}
                         >
@@ -312,7 +310,7 @@ export function StudentView(props: StudentViewProps) {
                         <span
                           onClick={stopPropagation((e) => handleClickViewStudentComment(sitem.reviewer_comment ?? ""))}
                           style={{
-                            display: (checkedArr.length ? checkedArr[index] : initCheckArr[index]) ? "block" : "none",
+                            display: checkedArr[index] === undefined ? "block" : checkedArr[index] ? "block" : "none",
                             color: "rgb(0, 108, 207)",
                           }}
                         >
@@ -377,8 +375,7 @@ export function StudentView(props: StudentViewProps) {
                                       )}
                                   </TableCell>
                                   <TableCell align="center">
-                                    {
-                                    ritem.file_type !== FileTypes.HasChildContainer &&
+                                    {ritem.file_type !== FileTypes.HasChildContainer &&
                                       ritem.attempted &&
                                       showScreenShort(ritem.content_subtype, ritem.h5p_sub_id) && (
                                         <span
@@ -460,7 +457,7 @@ export function StudentView(props: StudentViewProps) {
                               {sitem.attempted
                                 ? `${sitem.results
                                     ?.filter((item) => item.file_type !== FileTypes.HasChildContainer)
-                                    .reduce((pre, cur) => pre + Number(cur?.score), 0)}
+                                    .reduce((pre, cur) => (pre * 100 + Number(cur?.score) * 100) / 100, 0)}
                                    / 
                                   ${sitem.results
                                     ?.filter((item) => item.file_type !== FileTypes.HasChildContainer && item.attempted)

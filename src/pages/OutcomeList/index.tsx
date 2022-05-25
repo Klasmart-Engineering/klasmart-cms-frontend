@@ -1,5 +1,6 @@
 import useQueryCms from "@hooks/useQueryCms";
-import { unwrapResult } from "@reduxjs/toolkit";
+import { AsyncTrunkReturned } from "@reducers/type";
+import { PayloadAction, unwrapResult } from "@reduxjs/toolkit";
 import { clearNull, toQueryString } from "@utilities/urlUtilities";
 import produce from "immer";
 import { cloneDeep } from "lodash";
@@ -25,13 +26,17 @@ import {
   bulkReject,
   createOutcomeSet,
   deleteOutcome,
+  exportOutcomes,
   newReject,
   onLoadOutcomeList,
   publishOutcome,
   pullOutcomeSet,
+  resetSelectedIds,
+  setSelectedIds,
 } from "../../reducers/outcome";
 import CreateOutcomings from "../OutcomeEdit";
 import { AddSet, AddSetProps, useAddSet } from "./AddSet";
+import { LoFields, LoFieldsProps, useLoFields } from "./LoFields";
 import { OutcomeTable, OutcomeTableProps } from "./OutcomeTable";
 import { SecondSearchHeader, SecondSearchHeaderMb } from "./SecondSearchHeader";
 import { ThirdSearchHeader, ThirdSearchHeaderMb, ThirdSearchHeaderProps } from "./ThirdSearchHeader";
@@ -74,13 +79,35 @@ function useRefreshWithDispatch() {
 export function OutcomeList() {
   const condition = useQuery();
   const history = useHistory();
+  const dispatch = useDispatch<AppDispatch>();
   const { refreshKey, refreshWithDispatch } = useRefreshWithDispatch();
   const formMethods = useForm<BulkListForm>();
   const { watch, reset, getValues } = formMethods;
   const ids = watch(BulkListFormKey.CHECKED_BULK_IDS);
-  const { outcomeList, total, user_id, outcomeSetList, defaultSelectOutcomeset } = useSelector<RootState, RootState["outcome"]>(
-    (state) => state.outcome
-  );
+  const { outcomeList, total, user_id, outcomeSetList, defaultSelectOutcomeset, selectedIdsMap, downloadOutcomes } = useSelector<
+    RootState,
+    RootState["outcome"]
+  >((state) => state.outcome);
+  const selectedIds = useMemo(() => {
+    const currIds = outcomeList.map((item) => item.outcome_id);
+    let idsMap: Record<string, boolean> = cloneDeep(selectedIdsMap);
+    currIds.forEach((item) => {
+      idsMap[item!] = ids ? !!(ids.indexOf(item!) >= 0) : false;
+    });
+    dispatch(setSelectedIds(idsMap));
+    return Object.keys(idsMap).filter((item) => idsMap[item]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ids, outcomeList]);
+  const [initFields, setInitFields] = useState([
+    "outcome_name",
+    "shortcode",
+    "score_threshold",
+    "updated_at",
+    "program",
+    "subject",
+    "category",
+    "subcategory",
+  ]);
   const perm = usePermission([
     PermissionType.view_my_unpublished_learning_outcome_410,
     PermissionType.view_org_unpublished_learning_outcome_411,
@@ -99,28 +126,35 @@ export function OutcomeList() {
   const [showSetList, setShowSetList] = React.useState(false);
   const [selectedOutcomeSet, setSelectedOutcomeSet] = React.useState<OutcomeSetResult>([]);
   const { addSetActive, openAddSet, closeAddSet } = useAddSet();
-  const dispatch = useDispatch<AppDispatch>();
+  const { loFieldsActive, openLoFields, closeLoFields } = useLoFields();
   const handlePublish: OutcomeTableProps["onPublish"] = (id) => {
+    dispatch(resetSelectedIds({}));
     return refreshWithDispatch(dispatch(publishOutcome(id)).then(unwrapResult));
   };
   const handleBulkPublish: ThirdSearchHeaderProps["onBulkPublish"] = () => {
-    // const ids = getValues()[BulkListFormKey.CHECKED_BULK_IDS];
+    dispatch(resetSelectedIds({}));
     return refreshWithDispatch(dispatch(bulkPublishOutcome(ids)).then(unwrapResult));
   };
   const handleDelete: OutcomeTableProps["onDelete"] = (id) => {
+    dispatch(resetSelectedIds({}));
     return refreshWithDispatch(dispatch(deleteOutcome(id)).then(unwrapResult));
   };
   const handleBulkDelete: ThirdSearchHeaderProps["onBulkDelete"] = () => {
-    // const ids = getValues()[BulkListFormKey.CHECKED_BULK_IDS];
+    dispatch(resetSelectedIds({}));
     return refreshWithDispatch(dispatch(bulkDeleteOutcome(ids)).then(unwrapResult));
   };
-  const handleChangePage: OutcomeTableProps["onChangePage"] = (page) => history.push({ search: toQueryString({ ...condition, page }) });
-  const handleClickOutcome: OutcomeTableProps["onClickOutcome"] = (outcome_id) =>
+  const handleChangePage: OutcomeTableProps["onChangePage"] = (page) => {
+    history.push({ search: toQueryString({ ...condition, page }) });
+  };
+  const handleClickOutcome: OutcomeTableProps["onClickOutcome"] = (outcome_id) => {
+    dispatch(resetSelectedIds({}));
     history.push({
       pathname: CreateOutcomings.routeBasePath,
       search: toQueryString(clearNull({ outcome_id, is_unpub: condition.is_unpub })),
     });
+  };
   const handleChange: ThirdSearchHeaderProps["onChange"] = (value) => {
+    dispatch(resetSelectedIds({}));
     const newValue = produce(value, (draft) => {
       const searchText = getValues()[BulkListFormKey.SEARCH_TEXT_KEY];
       searchText ? (draft.search_key = searchText) : delete draft.search_key;
@@ -131,15 +165,19 @@ export function OutcomeList() {
   };
 
   const handleBulkApprove: ThirdSearchHeaderProps["onBulkApprove"] = () => {
+    dispatch(resetSelectedIds({}));
     return refreshWithDispatch(dispatch(bulkApprove(ids)).then(unwrapResult));
   };
   const handleBulkReject: ThirdSearchHeaderProps["onBulkReject"] = () => {
+    dispatch(resetSelectedIds({}));
     return refreshWithDispatch(dispatch(bulkReject(ids)).then(unwrapResult));
   };
   const handleApprove: OutcomeTableProps["onApprove"] = (id) => {
+    dispatch(resetSelectedIds({}));
     return refreshWithDispatch(dispatch(approve(id)).then(unwrapResult));
   };
   const handleReject: OutcomeTableProps["onReject"] = (id) => {
+    dispatch(resetSelectedIds({}));
     return refreshWithDispatch(dispatch(newReject({ id: id })).then(unwrapResult));
   };
   const handleBulkAddSet: ThirdSearchHeaderProps["onBulkAddSet"] = () => {
@@ -153,6 +191,7 @@ export function OutcomeList() {
     setShowSetList(false);
   };
   const handleClickAddSetConfirmBtn: AddSetProps["onAddSet"] = async () => {
+    dispatch(resetSelectedIds({}));
     const set_ids = selectedOutcomeSet.map((item) => item.set_id);
     await refreshWithDispatch(dispatch(bulkBindOutcomeSet({ outcome_ids: ids, set_ids: set_ids as string[] })).then(unwrapResult));
     closeAddSet();
@@ -187,6 +226,49 @@ export function OutcomeList() {
     newSets.splice(index, 1);
     setSelectedOutcomeSet(newSets);
   };
+  const handleBulkDownloadAll: ThirdSearchHeaderProps["onBulkDownloadAll"] = async () => {
+    const query = {
+      is_locked: false,
+      page: 1,
+      page_size: 50,
+    };
+    const { payload } = (await dispatch(exportOutcomes({ ...query, metaLoading: true }))) as unknown as PayloadAction<
+      AsyncTrunkReturned<typeof exportOutcomes>
+    >;
+    if (payload) {
+      openLoFields();
+    }
+  };
+  const handleOpenFieldsSelected: ThirdSearchHeaderProps["onBulkDownloadSelected"] = async () => {
+    if (!selectedIds.length)
+      return dispatch(actWarning(d("At least one learning outcome should be selected.").t("assess_msg_remove_select_one")));
+    const query = {
+      outcome_ids: selectedIds,
+      is_locked: false,
+      page: 1,
+      page_size: 50,
+    };
+    const { payload } = (await dispatch(exportOutcomes({ ...query, metaLoading: true }))) as unknown as PayloadAction<
+      AsyncTrunkReturned<typeof exportOutcomes>
+    >;
+    if (payload) {
+      openLoFields();
+    }
+  };
+  const handleBulkDownload: LoFieldsProps["onBulkDownload"] = () => {
+    dispatch(resetSelectedIds({}));
+    const resetBulkListForm = {
+      [BulkListFormKey.CHECKED_BULK_IDS]: [],
+      [BulkListFormKey.SEARCH_TEXT_KEY]: condition.search_key,
+      [BulkListFormKey.EXECT_SEARCH]: condition.exect_search,
+    };
+    reset(resetBulkListForm);
+    closeLoFields();
+    return true;
+  };
+  const handleChangeFields: LoFieldsProps["onChangeFields"] = (fields: string[]) => {
+    setInitFields(fields);
+  };
   useEffect(() => {
     let page = condition.page;
     if (outcomeList.length === 0 && total && total > 1) {
@@ -198,8 +280,17 @@ export function OutcomeList() {
   useEffect(() => {
     (async () => {
       await dispatch(onLoadOutcomeList({ ...condition, metaLoading: true }));
-      setTimeout(reset, 500);
+      const selectedIds = Object.keys(selectedIdsMap).filter((item) => selectedIdsMap[item]);
+      const initBulkListForm = {
+        [BulkListFormKey.CHECKED_BULK_IDS]: selectedIds,
+        [BulkListFormKey.SEARCH_TEXT_KEY]: "",
+        [BulkListFormKey.EXECT_SEARCH]: OutcomeListExectSearch.all,
+      };
+      setTimeout(() => {
+        reset(initBulkListForm);
+      }, 100);
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [condition, reset, dispatch, refreshKey]);
 
   return (
@@ -212,21 +303,27 @@ export function OutcomeList() {
           <SecondSearchHeaderMb formMethods={formMethods} value={condition} onChange={handleChange} />
           <ThirdSearchHeader
             value={condition}
+            selectedIdsLength={selectedIds.length}
             onChange={handleChange}
             onBulkPublish={handleBulkPublish}
             onBulkDelete={handleBulkDelete}
             onBulkApprove={handleBulkApprove}
             onBulkReject={handleBulkReject}
             onBulkAddSet={handleBulkAddSet}
+            onBulkDownloadAll={handleBulkDownloadAll}
+            onBulkDownloadSelected={handleOpenFieldsSelected}
           />
           <ThirdSearchHeaderMb
             value={condition}
+            selectedIdsLength={selectedIds.length}
             onChange={handleChange}
             onBulkPublish={handleBulkPublish}
             onBulkDelete={handleBulkDelete}
             onBulkApprove={handleBulkApprove}
             onBulkReject={handleBulkReject}
             onBulkAddSet={handleBulkAddSet}
+            onBulkDownloadAll={handleBulkDownloadAll}
+            onBulkDownloadSelected={handleOpenFieldsSelected}
           />
         </>
       )}
@@ -268,6 +365,14 @@ export function OutcomeList() {
         onDeleteSet={handleClickDelete}
         defaultSelectOutcomeset={defaultSelectOutcomeset}
         onInputChange={handleOnInputChange}
+      />
+      <LoFields
+        open={loFieldsActive}
+        list={downloadOutcomes ?? []}
+        defaultFields={initFields}
+        onClose={closeLoFields}
+        onBulkDownload={handleBulkDownload}
+        onChangeFields={handleChangeFields}
       />
     </div>
   );

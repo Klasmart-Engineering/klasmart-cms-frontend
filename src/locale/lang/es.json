@@ -1150,5 +1150,14 @@
   "assessment_search_no_matching_result": "Sin resultado coincidente",
   "library_label_created_by": "Created By",
   "library_label_contains": "Contains",
-  "assessment_search_teacher_tips": "Apellido o apellido del profesor"
+  "assessment_search_teacher_tips": "Apellido o apellido del profesor",
+  "library_label_hierarchy_root_folder": "Root Folder",
+  "schedue_button_schedule_class": "Programar clase",
+  "assessment_lo_download": "Descargar",
+  "assessment_lo_download_all": "Descargar todas las filas",
+  "assessment_lo_download_selected": "Descargar filas seleccionadas",
+  "assessment_lo_download_quantity": "({number} filas seleccionadas)",
+  "assessment_lo_download_column_title": "Seleccione las columnas que desea incluir:",
+  "assessment_lo_download_object_quantity": "(Hay {quantity} filas para descargar)",
+  "schedule_msg_no_permission_to_be_redirected": "No tiene permiso. Redirigiendo..."
 }

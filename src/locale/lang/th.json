@@ -1150,5 +1150,14 @@
   "assessment_search_no_matching_result": "ไม่มีผลลัพธ์ที่ตรงกัน",
   "library_label_created_by": "สร้างโดย",
   "library_label_contains": "ประกอบด้วย",
-  "assessment_search_teacher_tips": "ชื่อครูหรือนามสกุล"
+  "assessment_search_teacher_tips": "ชื่อครูหรือนามสกุล",
+  "library_label_hierarchy_root_folder": "Root Folder",
+  "schedue_button_schedule_class": "ตารางเรียน",
+  "assessment_lo_download": "ดาวน์โหลด",
+  "assessment_lo_download_all": "ดาวน์โหลดแถวทั้งหมด",
+  "assessment_lo_download_selected": "ดาวน์โหลดแถวที่เลือก",
+  "assessment_lo_download_quantity": "(เลือก {number} รายการ)",
+  "assessment_lo_download_column_title": "เลือกคอลัมน์ที่จะรวม:",
+  "assessment_lo_download_object_quantity": "(มี {quantity} แถวให้ดาวน์โหลด)",
+  "schedule_msg_no_permission_to_be_redirected": "คุณไม่ได้รับอนุญาต. กำลังเปลี่ยนเส้นทาง..."
 }

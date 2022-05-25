@@ -6,7 +6,7 @@ import { GetOutcomeDetail, GetOutcomeList, GetOutcomeListResult, OutcomePublishS
 import { LangRecordId } from "@locale/lang/type";
 import { d } from "@locale/LocaleManager";
 import { isUnpublish } from "@pages/OutcomeList/ThirdSearchHeader";
-import { OutcomeQueryCondition } from "@pages/OutcomeList/types";
+import { DownloadOutcomeListResult, OutcomeQueryCondition } from "@pages/OutcomeList/types";
 import { createAsyncThunk, createSlice, PayloadAction, unwrapResult } from "@reduxjs/toolkit";
 import { actAsyncConfirm, ConfirmDialogType } from "./confirm";
 import programsHandler, { getDevelopmentalAndSkills, LinkedMockOptionsItem } from "./contentEdit/programsHandler";
@@ -26,6 +26,8 @@ interface IOutcomeState extends IPermissionState {
   outcomeSetList: ApiPullOutcomeSetResponse["sets"];
   defaultSelectOutcomeset: string;
   shortCode: string;
+  selectedIdsMap: Record<string, boolean>;
+  downloadOutcomes: IQueryDownloadOutcomesResult;
 }
 
 interface RootState {
@@ -106,6 +108,8 @@ export const initialState: IOutcomeState = {
   outcomeSetList: [],
   defaultSelectOutcomeset: "",
   shortCode: "",
+  selectedIdsMap: {},
+  downloadOutcomes: [],
 };
 
 interface ParamsGetNewOptions {
@@ -226,6 +230,53 @@ export const onLoadOutcomeList = createAsyncThunk<IQueryOnLoadOutcomeListResult,
       resObj.outcomeRes = await api.learningOutcomes.searchLearningOutcomes(params);
     }
     return resObj;
+  }
+);
+
+export const recursiveGetOutcomes = async (
+  query: IQueryDownloadOutcomesParams,
+  outcomes: DownloadOutcomeListResult,
+  oIds?: string[]
+): Promise<DownloadOutcomeListResult> => {
+  const { page, outcome_ids } = query;
+  let downloadOutcomes = outcomes ? [...outcomes] : [];
+  if (oIds && outcome_ids) {
+    const length = oIds.length;
+    const { data } = await api.learningOutcomes.exportLearningOutcomes({ ...query, page: 1, outcome_ids: outcome_ids.slice(0, 50) });
+    if (data) {
+      downloadOutcomes = [...downloadOutcomes, ...data];
+      if (length > downloadOutcomes.length) {
+        const start = page! * 50;
+        const end = (page! + 1) * 50;
+        // const end = pageEnd > length ? length : pageEnd;
+        console.log(start, end);
+        return recursiveGetOutcomes({ ...query, page: page! + 1, outcome_ids: oIds?.slice(start, end) }, downloadOutcomes, oIds);
+      }
+    }
+    return new Promise((resolve) => {
+      resolve(downloadOutcomes);
+    });
+  } else {
+    const { data, total_count } = await api.learningOutcomes.exportLearningOutcomes(query);
+    if (data) {
+      downloadOutcomes = [...downloadOutcomes, ...data];
+      if (total_count && total_count > downloadOutcomes.length) {
+        const page = downloadOutcomes.length / 50 + 1;
+        return recursiveGetOutcomes({ ...query, page }, downloadOutcomes);
+      }
+    }
+    return new Promise((resolve) => {
+      resolve(downloadOutcomes);
+    });
+  }
+};
+
+type IQueryDownloadOutcomesParams = Parameters<typeof api.learningOutcomes.exportLearningOutcomes>[0] & LoadingMetaPayload;
+type IQueryDownloadOutcomesResult = AsyncReturnType<typeof recursiveGetOutcomes>;
+export const exportOutcomes = createAsyncThunk<IQueryDownloadOutcomesResult, IQueryDownloadOutcomesParams>(
+  "outcome/exportOutcomes",
+  (query) => {
+    return recursiveGetOutcomes(query, [], query.outcome_ids);
   }
 );
 
@@ -426,6 +477,12 @@ const { actions, reducer } = createSlice({
     resetShortCode: (state, { payload }: PayloadAction<string>) => {
       state.shortCode = payload;
     },
+    setSelectedIds: (state, { payload }: PayloadAction<Record<string, boolean>>) => {
+      state.selectedIdsMap = payload;
+    },
+    resetSelectedIds: (state, { payload }: PayloadAction<Record<string, boolean>>) => {
+      state.selectedIdsMap = payload;
+    },
   },
   extraReducers: {
     [actOutcomeList.fulfilled.type]: (state, { payload }: PayloadAction<any>) => {
@@ -572,7 +629,10 @@ const { actions, reducer } = createSlice({
     [generateShortcode.fulfilled.type]: (state, { payload }: PayloadAction<AsyncTrunkReturned<typeof generateShortcode>>) => {
       state.shortCode = payload.shortcode || "";
     },
+    [exportOutcomes.fulfilled.type]: (state, { payload }: PayloadAction<AsyncTrunkReturned<typeof exportOutcomes>>) => {
+      state.downloadOutcomes = payload;
+    },
   },
 });
-export const { resetShortCode } = actions;
+export const { resetShortCode, setSelectedIds, resetSelectedIds } = actions;
 export default reducer;

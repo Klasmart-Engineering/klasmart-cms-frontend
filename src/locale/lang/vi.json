@@ -1150,5 +1150,14 @@
   "assessment_search_no_matching_result": "Không có kết quả phù hợp",
   "library_label_created_by": "Created By",
   "library_label_contains": "Contains",
-  "assessment_search_teacher_tips": "Tên của giáo viên hoặc họ"
+  "assessment_search_teacher_tips": "Tên của giáo viên hoặc họ",
+  "library_label_hierarchy_root_folder": "Root Folder",
+  "schedue_button_schedule_class": "Thời Khóa Biểu",
+  "assessment_lo_download": "Tải xuống",
+  "assessment_lo_download_all": "Tải xuống Tất cả Hàng",
+  "assessment_lo_download_selected": "Tải xuống những hàng đã lựa chọn",
+  "assessment_lo_download_quantity": "(Đã chọn {number})",
+  "assessment_lo_download_column_title": "Chọn các cột cần thiết:",
+  "assessment_lo_download_object_quantity": "(Có tổng cộng {quantity} hàng sẽ được tải xuống)",
+  "schedule_msg_no_permission_to_be_redirected": "Bạn không được phép truy cập tính năng này. Đang điều hướng..."
 }

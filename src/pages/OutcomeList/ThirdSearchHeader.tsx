@@ -12,7 +12,7 @@ import { OutcomeOrderBy, OutcomePublishStatus } from "../../api/type";
 import LayoutBox from "../../components/LayoutBox";
 import { Permission, PermissionResult, PermissionsWrapper } from "../../components/Permission/Permission";
 import { usePermission } from "../../hooks/usePermission";
-import { d } from "../../locale/LocaleManager";
+import { d, t } from "../../locale/LocaleManager";
 import { OutcomeQueryCondition, OutcomeQueryConditionBaseProps } from "./types";
 
 const useStyles = makeStyles((theme) => ({
@@ -98,6 +98,11 @@ const useStyles = makeStyles((theme) => ({
     width: "30%",
     position: "absolute",
     left: "60%",
+  },
+  selectAll: {
+    color: "#666",
+    fontSize: 14,
+    marginLeft: 5,
   },
 }));
 export const UNPUB = "UNPUB";
@@ -201,6 +206,8 @@ enum BulkAction {
   approve = "approve",
   reject = "reject",
   addSet = "addSet",
+  downloadAll = "downloadAll",
+  downloadSelected = "downloadSelected",
 }
 
 interface BulkActionOption {
@@ -217,6 +224,13 @@ function getBulkAction(condition: OutcomeQueryCondition, perm: PermissionResult<
       }
       if (perm.delete_published_learning_outcome_448) {
         res1.push({ label: d("Delete").t("assess_label_delete"), value: BulkAction.remove });
+      }
+      if (perm.create_learning_outcome_421) {
+        const download = [
+          { label: d("Download All Rows").t("assessment_lo_download_all"), value: BulkAction.downloadAll },
+          { label: d("Download Selected Rows").t("assessment_lo_download_selected"), value: BulkAction.downloadSelected },
+        ];
+        res1.push.apply(res1, download);
       }
       return res1;
     case OutcomePublishStatus.pending:
@@ -253,15 +267,29 @@ const sortOptions = () => {
 };
 
 export interface ThirdSearchHeaderProps extends OutcomeQueryConditionBaseProps {
+  selectedIdsLength: number;
   onBulkPublish: () => any;
   onBulkDelete: () => any;
   onBulkApprove: () => any;
   onBulkReject: () => any;
   onBulkAddSet: () => any;
+  onBulkDownloadAll: () => any;
+  onBulkDownloadSelected: () => any;
 }
 export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
   const classes = useStyles();
-  const { value, onChange, onBulkDelete, onBulkPublish, onBulkApprove, onBulkReject, onBulkAddSet } = props;
+  const {
+    value,
+    selectedIdsLength,
+    onChange,
+    onBulkDelete,
+    onBulkPublish,
+    onBulkApprove,
+    onBulkReject,
+    onBulkAddSet,
+    onBulkDownloadAll,
+    onBulkDownloadSelected,
+  } = props;
   const perm = usePermission([
     PermissionType.delete_published_learning_outcome_448,
     PermissionType.delete_org_pending_learning_outcome_447,
@@ -272,6 +300,7 @@ export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
     PermissionType.reject_pending_learning_outcome_482,
     PermissionType.edit_published_learning_outcome_436,
     PermissionType.edit_my_unpublished_learning_outcome_430,
+    PermissionType.create_learning_outcome_421,
   ]);
   const handleChangeBulkAction = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.value === BulkAction.publish) onBulkPublish();
@@ -279,6 +308,8 @@ export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
     if (event.target.value === BulkAction.approve) onBulkApprove();
     if (event.target.value === BulkAction.reject) onBulkReject();
     if (event.target.value === BulkAction.addSet) onBulkAddSet();
+    if (event.target.value === BulkAction.downloadAll) onBulkDownloadAll();
+    if (event.target.value === BulkAction.downloadSelected) onBulkDownloadSelected();
   };
   const handleChangeOrder = (event: ChangeEvent<HTMLInputElement>) => {
     const order_by = event.target.value as OutcomeOrderBy | undefined;
@@ -305,7 +336,7 @@ export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
         <Hidden only={["xs", "sm"]}>
           <Divider />
           <Grid container spacing={3} alignItems="center" style={{ marginTop: "6px" }}>
-            <Grid item sm={6} xs={6} md={3}>
+            <Grid item sm={6} xs={6} md={4} style={{ display: "flex", alignItems: "center" }}>
               {bulkOptions.length > 0 && (
                 <TextField
                   size="small"
@@ -319,11 +350,12 @@ export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
                   {bulkOptions}
                 </TextField>
               )}
+              <span className={classes.selectAll}>{t("assessment_lo_download_quantity", { number: selectedIdsLength.toString() })}</span>
             </Grid>
-            <Grid item md={6}>
+            <Grid item md={4}>
               <SubLearningOutcome value={value} onChange={onChange} />
             </Grid>
-            <Grid container direction="row" justifyContent="flex-end" alignItems="center" item sm={6} xs={6} md={3}>
+            <Grid container direction="row" justifyContent="flex-end" alignItems="center" item sm={6} xs={6} md={4}>
               <TextField
                 size="small"
                 style={{ width: 200 }}
@@ -345,7 +377,17 @@ export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
 
 export function ThirdSearchHeaderMb(props: ThirdSearchHeaderProps) {
   const classes = useStyles();
-  const { value, onChange, onBulkDelete, onBulkPublish, onBulkApprove, onBulkReject, onBulkAddSet } = props;
+  const {
+    value,
+    onChange,
+    onBulkDelete,
+    onBulkPublish,
+    onBulkApprove,
+    onBulkReject,
+    onBulkAddSet,
+    onBulkDownloadAll,
+    onBulkDownloadSelected,
+  } = props;
   const perm = usePermission([
     PermissionType.delete_published_learning_outcome_448,
     PermissionType.delete_org_pending_learning_outcome_447,
@@ -356,6 +398,7 @@ export function ThirdSearchHeaderMb(props: ThirdSearchHeaderProps) {
     PermissionType.reject_pending_learning_outcome_482,
     PermissionType.edit_published_learning_outcome_436,
     PermissionType.edit_my_unpublished_learning_outcome_430,
+    PermissionType.create_learning_outcome_421,
   ]);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [anchorElLeft, setAnchorElLeft] = React.useState<null | HTMLElement>(null);
@@ -369,6 +412,8 @@ export function ThirdSearchHeaderMb(props: ThirdSearchHeaderProps) {
     if (bulkaction === BulkAction.approve) onBulkApprove();
     if (bulkaction === BulkAction.reject) onBulkReject();
     if (bulkaction === BulkAction.addSet) onBulkAddSet();
+    if (bulkaction === BulkAction.downloadAll) onBulkDownloadAll();
+    if (bulkaction === BulkAction.downloadSelected) onBulkDownloadSelected();
   };
   const handleClose = () => {
     setAnchorElLeft(null);

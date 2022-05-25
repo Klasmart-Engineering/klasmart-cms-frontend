@@ -8,8 +8,11 @@ import Tabs from "@material-ui/core/Tabs";
 import FlagOutlinedIcon from "@material-ui/icons/FlagOutlined";
 import TimelineOutlinedIcon from "@material-ui/icons/TimelineOutlined";
 import TuneOutlinedIcon from "@material-ui/icons/TuneOutlined";
+import CreateOutcomings from "@pages/OutcomeEdit";
+import { resetSelectedIds } from "@reducers/outcome";
 import clsx from "clsx";
 import React from "react";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import PermissionType from "../../api/PermissionType";
 import { usePermission } from "../../hooks/usePermission";
@@ -19,7 +22,6 @@ import { d } from "../../locale/LocaleManager";
 import { ListAssessment } from "../../pages/ListAssessment";
 import MilestoneEdit from "../../pages/MilestoneEdit";
 import MilestonesList from "../../pages/MilestoneList";
-import CreateOutcomings from "../../pages/OutcomeEdit";
 import { OutcomeList } from "../../pages/OutcomeList";
 import { LoBlueIcon, LoIcon } from "../../pages/OutcomeList/Icons";
 // import { StudyAssessmentList } from "../../pages/StudyAssessmentList";
@@ -97,11 +99,9 @@ const useStyles = makeStyles((theme) => ({
 export function FirstSearchHeader() {
   const css = useStyles();
   const history = useHistory();
+  const dispatch = useDispatch();
   const pathname = history.location.pathname;
   const hightLightAssessment = pathname.indexOf(ListAssessment.routeBasePath) >= 0;
-  //  ||
-  // pathname.indexOf(HomeFunAssessmentList.routeBasePath) >= 0 ||
-  // pathname.indexOf(StudyAssessmentList.routeBasePath) >= 0;
   return (
     <div className={css.root}>
       <LayoutBox holderMin={40} holderBase={202} mainBase={1517}>
@@ -110,7 +110,15 @@ export function FirstSearchHeader() {
             <Grid item md={3} lg={5} xl={7}>
               {pathname.indexOf(OutcomeList.routeBasePath) >= 0 && (
                 <Permission value={PermissionType.create_learning_outcome_421}>
-                  <Button href={`#${CreateOutcomings.routeBasePath}`} variant="contained" color="primary" className={css.createBtn}>
+                  <Button
+                    onClick={() => {
+                      dispatch(resetSelectedIds({}));
+                      history.push(CreateOutcomings.routeBasePath);
+                    }}
+                    variant="contained"
+                    color="primary"
+                    className={css.createBtn}
+                  >
                     {d("Create").t("assess_label_create")} +
                   </Button>
                 </Permission>
@@ -135,7 +143,10 @@ export function FirstSearchHeader() {
               </Permission>
               <Permission value={PermissionType.milestones_page_405}>
                 <Button
-                  onClick={() => history.push(MilestonesList.routeRedirectDefault)}
+                  onClick={() => {
+                    dispatch(resetSelectedIds({}));
+                    history.push(MilestonesList.routeRedirectDefault);
+                  }}
                   className={clsx(css.nav, { [css.actives]: pathname.indexOf(MilestonesList.routeBasePath) >= 0 })}
                   startIcon={<FlagOutlinedIcon />}
                 >
@@ -149,7 +160,10 @@ export function FirstSearchHeader() {
               </Permission>
               <Permission value={PermissionType.assessments_page_406}>
                 <Button
-                  onClick={() => history.push(ListAssessment.routeRedirectDefault)}
+                  onClick={() => {
+                    dispatch(resetSelectedIds({}));
+                    history.push(ListAssessment.routeRedirectDefault);
+                  }}
                   className={clsx(css.nav, { [css.actives]: hightLightAssessment })}
                   startIcon={<TimelineOutlinedIcon />}
                 >
@@ -167,16 +181,13 @@ export function FirstSearchHeader() {
 export function FirstSearchHeaderMb() {
   const classes = useStyles();
   const history = useHistory();
+  const dispatch = useDispatch();
   const pathname = history.location.pathname;
   const perm = usePermission([
     PermissionType.learning_outcome_page_404,
     PermissionType.assessments_page_406,
     PermissionType.milestones_page_405,
   ]);
-  // const isLiveList = pathname.indexOf(AssessmentList.routeBasePath) >= 0;
-  // const isStudyList = pathname.indexOf(StudyAssessmentList.routeBasePath) >= 0;
-  // const isHomeFunList = pathname.indexOf(assessmentTypes) >= 0;
-  // const notHomeFunList = pathname.indexOf(ListAssessment.routeBasePath) >= 0;
   return (
     <div className={classes.root}>
       <Hidden only={["md", "lg", "xl"]}>
@@ -206,7 +217,10 @@ export function FirstSearchHeaderMb() {
                     value={MilestonesList.routeBasePath}
                     label={d("Milestones").t("assess_label_milestone")}
                     className={classes.capitalize}
-                    onClick={() => history.push(MilestonesList.routeBasePath)}
+                    onClick={() => {
+                      dispatch(resetSelectedIds({}));
+                      history.push(MilestonesList.routeBasePath);
+                    }}
                   />
                 )}
                 <Tab
@@ -219,44 +233,11 @@ export function FirstSearchHeaderMb() {
                   value={ListAssessment.routeBasePath}
                   label={d("Assessments").t("assess_label_assessments")}
                   className={classes.capitalize}
-                  onClick={() => history.push(ListAssessment.routeRedirectDefault)}
+                  onClick={() => {
+                    dispatch(resetSelectedIds({}));
+                    history.push(ListAssessment.routeRedirectDefault);
+                  }}
                 />
-                {/* {perm.assessments_page_406 && !isLiveList && !isStudyList && !isHomeFunList && (
-                  <Tab
-                    component={Button}
-                    value={AssessmentList.routeBasePath}
-                    label={d("Assessments").t("assess_label_assessments")}
-                    className={classes.capitalize}
-                    onClick={() => history.push(AssessmentList.routeRedirectDefault)}
-                  />
-                )} */}
-                {/* {isLiveList && perm.assessments_page_406 && (
-                  <Tab
-                    component={Button}
-                    value={AssessmentList.routeBasePath}
-                    label={d("Assessments").t("assess_label_assessments")}
-                    className={classes.capitalize}
-                    onClick={() => history.push(AssessmentList.routeRedirectDefault)}
-                  />
-                )} */}
-                {/* {notHomeFunList && perm.assessments_page_406 && (
-                  <Tab
-                    component={Button}
-                    value={ListAssessment.routeBasePath}
-                    label={d("Assessments").t("assess_label_assessments")}
-                    className={classes.capitalize}
-                    onClick={() => history.push(ListAssessment.routeRedirectDefault)}
-                  />
-                )}
-                {isHomeFunList && perm.assessments_page_406 && (
-                  <Tab
-                    component={Button}
-                    value={HomeFunAssessmentList.routeBasePath}
-                    label={d("Assessments").t("assess_label_assessments")}
-                    className={classes.capitalize}
-                    onClick={() => history.push(ListAssessment.routeRedirectDefault)}
-                  />
-                )} */}
               </Tabs>
             </AppBar>
           </Grid>

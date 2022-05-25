@@ -1,3 +1,4 @@
+import { AsyncReturnType } from "@reducers/type";
 import api from "../../../api";
 
 type NonOnlyNull<T> = T extends null ? never : T;
@@ -35,6 +36,9 @@ export interface BulkListForm {
   [BulkListFormKey.EXECT_SEARCH]: string;
 }
 
+export type DownloadOutcomeListResult = NonNullable<AsyncReturnType<typeof api.learningOutcomes.exportLearningOutcomes>["data"]>;
+export type DownloadOutcomeItemResult = NonNullable<DownloadOutcomeListResult>[0];
+
 export enum HeaderCategory {
   assessment = "assessments",
   outcome = "outcome",
@@ -50,4 +54,30 @@ export enum OutcomeListExectSearch {
   loSet = "set_name",
   keyWord = "keywords",
   description = "description",
+}
+
+export interface DownLoadOutcomeTitleProps {
+  outcome_name: string;
+  shortcode: string;
+  assumed: string;
+  score_threshold: string;
+  created_at: string;
+  author_name: string;
+  program: string;
+  subject: string;
+  developmental: string;
+  skills: string;
+  age: string;
+  grade: string;
+  sets: string;
+  keywords: string;
+  milestones: string;
+  description: string;
+}
+
+export interface FieldsProps {
+  label: string;
+  value: string;
+  checked: boolean;
+  readonly: boolean;
 }

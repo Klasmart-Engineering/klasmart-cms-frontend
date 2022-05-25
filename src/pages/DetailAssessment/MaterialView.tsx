@@ -8,7 +8,7 @@ import {
   TableBody,
   TableCell,
   TableContainer,
-  TableRow
+  TableRow,
 } from "@material-ui/core";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
@@ -32,7 +32,7 @@ import {
   StudentParticipate,
   StudentProps,
   StudentViewItemsProps,
-  SubDimensionOptions
+  SubDimensionOptions,
 } from "./type";
 const useStyles = makeStyles({
   tableBar: {
@@ -138,10 +138,7 @@ export function MaterialView(props: MaterialViewProps) {
   const materialViewItems = useMemo(() => {
     return ModelAssessment.getMaterialViewItems(studentViewItems);
   }, [studentViewItems]);
-  const initCheckArr = useMemo(() => {
-    return materialViewItems.map((item) => true);
-  }, [materialViewItems]);
-  const [checkedArr, setCheckedArr] = useState<boolean[]>(initCheckArr);
+  const [checkedArr, setCheckedArr] = useState<boolean[]>(materialViewItems.map((item) => true));
   const handleChangeAllAchieved = (event: ChangeEvent<HTMLInputElement>, content_id?: string, outcome_id?: string) => {
     onChangeMaterialAllAchieved(event.target.checked, content_id, outcome_id);
   };
@@ -172,12 +169,12 @@ export function MaterialView(props: MaterialViewProps) {
   const handleClickScreenshots = (roomId?: string, h5pId?: string, h5pSubId?: string, userId?: string, content_subtype?: string) => {
     openResourceView();
     setResourceType(ResourceViewTypeValues.viewScreenshots);
-    setContentSubType(content_subtype)
+    setContentSubType(content_subtype);
     setRoom(roomId);
     setH5pId(h5pId);
     setUserId(userId);
     setH5pSubId(h5pSubId);
-  }
+  };
   const handleChangeScore = (score?: number, studentId?: string, contentId?: string) => {
     const _studentViewItems = studentViewItems?.map((sItem) => {
       if (sItem.student_id === studentId) {
@@ -202,11 +199,7 @@ export function MaterialView(props: MaterialViewProps) {
   };
   const toggleCheck = (index: number) => {
     const arr = cloneDeep(checkedArr);
-    if (arr[index] === undefined) {
-      arr[index] = false;
-    } else {
-      arr[index] = !checkedArr[index];
-    }
+    arr[index] = !checkedArr[index];
     setCheckedArr([...arr]);
   };
   return (
@@ -225,13 +218,7 @@ export function MaterialView(props: MaterialViewProps) {
                         {item.content_subtype ? `(${item.content_subtype})` : ""}
                       </span>
                     </div>
-                    {checkedArr[index] === undefined ? (
-                      <ArrowDropUpIcon />
-                    ) : checkedArr[index] ? (
-                      <ArrowDropUpIcon />
-                    ) : (
-                      <ArrowDropDownIcon />
-                    )}
+                    {checkedArr[index] ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
                   </Box>
                   <Collapse in={checkedArr[index]}>
                     <>
@@ -348,21 +335,20 @@ export function MaterialView(props: MaterialViewProps) {
                                       sItem.attempted &&
                                       showScreenShort(item.content_subtype) && (
                                         <span
-                                            style={{ color: "#006CCF", cursor: "pointer" }}
-                                            onClick={(e) =>
-                                              handleClickScreenshots(
-                                                roomId,
-                                                item.h5p_id,
-                                                item.h5p_sub_id,
-                                                sItem.student_id,
-                                                item.content_subtype
-                                              )
-                                            }
-                                          >
-                                            {d("Click to View").t("assess_detail_click_to_view")}
+                                          style={{ color: "#006CCF", cursor: "pointer" }}
+                                          onClick={(e) =>
+                                            handleClickScreenshots(
+                                              roomId,
+                                              item.h5p_id,
+                                              item.h5p_sub_id,
+                                              sItem.student_id,
+                                              item.content_subtype
+                                            )
+                                          }
+                                        >
+                                          {d("Click to View").t("assess_detail_click_to_view")}
                                         </span>
-                                      )
-                                    }
+                                      )}
                                   </TableCell>
                                   <TableCell>
                                     <EditScore
