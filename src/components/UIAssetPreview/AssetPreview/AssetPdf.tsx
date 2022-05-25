@@ -3,6 +3,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
+import fitToHeightIcon from "../../../assets/icons/fit-to-height.svg";
+import fitToWidthIcon from "../../../assets/icons/fit-to-width.svg";
 import zoomInFilledIcon from "../../../assets/icons/zoom-in-filled.svg";
 import zoomInIcon from "../../../assets/icons/zoom-in.svg";
 import zoomOutFilledIcon from "../../../assets/icons/zoom-out-filled.svg";
@@ -161,19 +163,19 @@ export default function AssetPdf(props: file) {
                   id: `tooltip.fitToWidth`,
                 })}
               >
-                <img alt="fit-to-width" onClick={handleWidthFit} className={css.zoomButton} src="fit-to-width.svg" />
+                <img alt="fit-to-width" onClick={handleWidthFit} className={css.zoomButton} src={fitToWidthIcon} />
               </Tooltip>
               <Tooltip
                 title={intl.formatMessage({
                   id: `tooltip.fitToHeight`,
                 })}
               >
-                <img alt="fit-to-height" onClick={handleHeightFit} className={css.zoomButton} src="fit-to-height.svg" />
+                <img alt="fit-to-height" onClick={handleHeightFit} className={css.zoomButton} src={fitToHeightIcon} />
               </Tooltip>
             </Typography>
           </Box>
         </Box>
-        <Document file="pdf.pdf" onLoadSuccess={onDocumentLoadSuccess}>
+        <Document file={props.src} onLoadSuccess={onDocumentLoadSuccess}>
           {Array.from(new Array(num), (el, index) => (
             <Page
               {...zoomProps}
