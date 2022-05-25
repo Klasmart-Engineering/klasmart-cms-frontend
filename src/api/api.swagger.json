@@ -162,7 +162,7 @@
           {
             "enum": ["OfflineClass", "OnlineClass", "OnlineStudy", "OfflineStudy", "home_fun_study", "ReviewStudy"],
             "type": "string",
-            "description": "type search, OfflineStudy:home_fun_study",
+            "description": "type search, the value of 'home_fun_study' is deprecated,please use 'OfflineStudy' instead",
             "name": "type",
             "in": "query",
             "required": true
@@ -202,8 +202,8 @@
               "-done_at",
               "resubmitted_at",
               "-resubmitted_at",
-              "complete_at",
-              "-complete_at"
+              "completed_at",
+              "-completed_at"
             ],
             "type": "string",
             "default": "-create_at",
@@ -3234,6 +3234,66 @@
         }
       }
     },
+    "/folders/tree": {
+      "get": {
+        "description": "get tree",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "tags": ["folder"],
+        "summary": "getTree",
+        "operationId": "getTree",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "search content key",
+            "name": "key",
+            "in": "query"
+          },
+          {
+            "enum": ["all", "name"],
+            "type": "string",
+            "description": "search key type",
+            "name": "type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": ["me", "all"],
+            "type": "string",
+            "description": "search role",
+            "name": "role",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/entity.TreeResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/api.BadRequestResponse"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/api.ForbiddenResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/api.InternalServerErrorResponse"
+            }
+          }
+        }
+      }
+    },
     "/grades": {
       "get": {
         "description": "get grade",
@@ -3719,6 +3779,59 @@
             "description": "Forbidden",
             "schema": {
               "$ref": "#/definitions/api.ForbiddenResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/api.InternalServerErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/learning_outcomes/export": {
+      "post": {
+        "description": "export learning outcome",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "tags": ["learning_outcomes"],
+        "summary": "export learning outcome",
+        "operationId": "exportLearningOutcomes",
+        "parameters": [
+          {
+            "description": "export outcome condition",
+            "name": "outcome",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/entity.ExportOutcomeRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/entity.ExportOutcomeResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/api.BadRequestResponse"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/api.ForbiddenResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/api.NotFoundResponse"
             }
           },
           "500": {
@@ -10416,6 +10529,128 @@
         }
       }
     },
+    "entity.ExportOutcomeRequest": {
+      "type": "object",
+      "properties": {
+        "is_locked": {
+          "type": "boolean"
+        },
+        "outcome_ids": {
+          "description": "Maximum array length is 50",
+          "type": "array",
+          "maxItems": 50,
+          "items": {
+            "type": "string"
+          }
+        },
+        "page": {
+          "type": "integer"
+        },
+        "page_size": {
+          "type": "integer"
+        }
+      }
+    },
+    "entity.ExportOutcomeResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/entity.ExportOutcomeView"
+          }
+        },
+        "total_count": {
+          "type": "integer"
+        }
+      }
+    },
+    "entity.ExportOutcomeView": {
+      "type": "object",
+      "properties": {
+        "age": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "assumed": {
+          "type": "boolean"
+        },
+        "author": {
+          "type": "string"
+        },
+        "category": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "created_at": {
+          "type": "integer"
+        },
+        "description": {
+          "type": "string"
+        },
+        "grade": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "keywords": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "milestones": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "outcome_id": {
+          "type": "string"
+        },
+        "outcome_name": {
+          "type": "string"
+        },
+        "program": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "score_threshold": {
+          "type": "number"
+        },
+        "sets": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "shortcode": {
+          "type": "string"
+        },
+        "subcategory": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "subject": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "updated_at": {
+          "type": "integer"
+        }
+      }
+    },
     "entity.FeedbackAssignmentView": {
       "type": "object",
       "properties": {
@@ -11368,6 +11603,9 @@
             "type": "string"
           }
         },
+        "is_locked": {
+          "type": "boolean"
+        },
         "keywords": {
           "type": "string"
         },
@@ -11552,9 +11790,6 @@
         },
         "id": {
           "type": "string"
-        },
-        "items_count": {
-          "type": "integer"
         },
         "name": {
           "type": "string"
@@ -12528,6 +12763,14 @@
         "start_at_ge": {
           "type": "integer"
         },
+        "study_types": {
+          "description": "indicates query different types of Study",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["normal", "homefun", "review"]
+          }
+        },
         "subject_ids": {
           "type": "array",
           "items": {
@@ -12618,6 +12861,12 @@
         },
         "start_at_ge": {
           "type": "integer"
+        },
+        "study_types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         },
         "subject_ids": {
           "type": "array",
@@ -13448,6 +13697,29 @@
           "items": {
             "type": "string"
           }
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "entity.TreeResponse": {
+      "type": "object",
+      "properties": {
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/entity.TreeResponse"
+          }
+        },
+        "dir_path": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "item_count": {
+          "type": "integer"
         },
         "name": {
           "type": "string"
@@ -14835,10 +15107,10 @@
             "$ref": "#/definitions/entity.IDName"
           }
         },
-        "teachers": {
+        "teacher_ids": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/entity.IDName"
+            "type": "string"
           }
         },
         "title": {
@@ -14896,13 +15168,11 @@
           "type": "string"
         },
         "status": {
+          "description": "StudentName     string                           `json:\"student_name\"`",
           "type": "string",
           "enum": ["Participate", "NotParticipate"]
         },
         "student_id": {
-          "type": "string"
-        },
-        "student_name": {
           "type": "string"
         }
       }
@@ -15041,13 +15311,11 @@
           "type": "string"
         },
         "status": {
+          "description": "StudentName     string                          `json:\"student_name\"`",
           "type": "string",
           "enum": ["Participate", "NotParticipate"]
         },
         "student_id": {
-          "type": "string"
-        },
-        "student_name": {
           "type": "string"
         }
       }

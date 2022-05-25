@@ -481,7 +481,7 @@ export default function MyContentList() {
               <FolderTreeBox
                 sm={sm}
                 folders={folderTreeData}
-                parentFolderInfo={parentFolderInfo}
+                parentFolderInfo={{ ...parentFolderInfo, available: total }}
                 defaultPath={condition.path || ROOT_PATH}
                 onClickFolderPath={handleClickFolderPath}
               />

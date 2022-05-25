@@ -1,4 +1,5 @@
 import folderIconUrl from "@assets/icons/foldericon.svg";
+import { t } from "@locale/LocaleManager";
 import { createStyles, makeStyles, Tooltip, Typography } from "@material-ui/core";
 import { Folder } from "@material-ui/icons";
 import { useState } from "react";
@@ -67,6 +68,7 @@ const useActiveBgStyles = makeStyles({
     },
   }),
 });
+const ROOT_PATH = "/";
 interface ActiveBgStylesProps {
   defaultIconPosition: TreeNodeProps["defaultIconPosition"];
   isActive: boolean;
@@ -74,20 +76,24 @@ interface ActiveBgStylesProps {
 
 export function TreeNode(props: TreeNodeProps) {
   const { defaultPath, handleLabelClick, defaultCollapseIcon, defaultExpandIcon, defaultIconPosition } = props;
-  const { children, name, dir_path, id, item_count } = props.node;
-  const [showChildren, setShowChildren] = useState(id === "");
+  const { children, name: folderName, dir_path, id, item_count } = props.node;
+  const defaultExpandIds = defaultPath.split(ROOT_PATH);
+  defaultExpandIds.pop();
+  const [showChildren, setShowChildren] = useState(defaultExpandIds.indexOf(id || "") > -1);
   const css = useStyles();
-  const path = `${dir_path === "/" ? "" : dir_path}/${id}`;
+  const path = `${dir_path === ROOT_PATH ? "" : dir_path}/${id}`;
   const bgcss = useActiveBgStyles({ isActive: path === defaultPath, defaultIconPosition });
+  const name = id === "" ? t("library_label_hierarchy_root_folder") : folderName;
+
   const Icons = (
-    <div className={css.iconBox} onClick={() => setShowChildren(!showChildren)}>
+    <div className={css.iconBox} onClick={() => !!item_count && setShowChildren(!showChildren)}>
       {!!item_count && (showChildren ? defaultCollapseIcon : defaultExpandIcon)}
     </div>
   );
   const label = (
     <>
       {name}
-      {item_count && <span style={{ color: "#4B88F5" }}> ({item_count <= 9 ? item_count : "9+"})</span>}
+      {!!item_count && <span style={{ color: "#4B88F5" }}> ({item_count <= 9 ? item_count : "9+"})</span>}
     </>
   );
   return (
@@ -97,11 +103,16 @@ export function TreeNode(props: TreeNodeProps) {
         <div
           onClick={(e) => {
             e.preventDefault();
-            handleLabelClick(path, { name, item_count, showChildren });
+            handleLabelClick(path);
           }}
           className={css.treeItemLabel}
         >
-          {showChildren ? <img src={folderIconUrl} alt="" style={{ width: 25, marginRight: 10 }} /> : <Folder className={css.folderIcon} />}
+          {name &&
+            (showChildren ? (
+              <img src={folderIconUrl} alt="" style={{ width: 25, marginRight: 10 }} />
+            ) : (
+              <Folder className={css.folderIcon} />
+            ))}
           <Tooltip placement="top" arrow title={label} classes={{ tooltip: css.tooltip, arrow: css.arrow }}>
             <Typography component="div" noWrap>
               {label}

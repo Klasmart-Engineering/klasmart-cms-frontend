@@ -159,7 +159,7 @@ export function BackToPrevPage(props: BackToPrevePageProps) {
               {folderInfo()}
             </Grid>
             {isEdit && (
-              <Grid item container justify="flex-end">
+              <Grid item container justify="flex-end" style={{ marginTop: 10 }}>
                 {perm.create_folder_289 && (
                   <Button variant="outlined" color="primary" onClick={() => onRenameFolder(parentFolderInfo)}>
                     {d("Edit").t("library_label_edit")}

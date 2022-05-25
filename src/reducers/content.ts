@@ -50,7 +50,6 @@ import {
 import { Author, ContentType, FolderPartition, OutcomePublishStatus, PublishStatus, SearchContentsRequestContentType } from "../api/type";
 import { LangRecordId } from "../locale/lang/type";
 import { d, t } from "../locale/LocaleManager";
-import mockData from "../mocks/folderTree1.json";
 import { content2FileType } from "../models/ModelEntityFolderContent";
 import { ProgramGroup } from "../pages/MyContentList/ProgramSearchHeader";
 import { ExectSearch } from "../pages/MyContentList/SecondSearchHeader";
@@ -526,8 +525,8 @@ export const onLoadContentList = createAsyncThunk<IQyertOnLoadContentListResult,
         await dispatch(
           getFolderTree({
             key: (isExectSearch ? contentNameValue : nameValue) || "",
-            type: isExectSearch ? 1 : 0,
-            only_for_me: author ? 1 : 0,
+            type: isExectSearch ? "name" : "all",
+            role: author ? "me" : "all",
           })
         );
       }
@@ -1386,7 +1385,7 @@ const { actions, reducer } = createSlice({
       state.folderTreeData = cloneDeep(initialState.folderTreeData);
     },
     [getFolderTree.fulfilled.type]: (state, { payload }: PayloadAction<AsyncTrunkReturned<typeof getFolderTree>>) => {
-      state.folderTreeData = mockData;
+      state.folderTreeData = payload;
     },
   },
 });

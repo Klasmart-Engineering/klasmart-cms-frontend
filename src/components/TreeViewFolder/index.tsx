@@ -1,6 +1,5 @@
 import { EntityTreeResponse } from "@api/api.auto";
 import React, { ReactNode } from "react";
-import treeData from "../../mocks/folderTree1.json";
 import { TreeNode } from "./TreeNode";
 
 export interface treeProps {
@@ -14,7 +13,7 @@ export interface TreeSelectProps {
 }
 export interface TreeNodeProps {
   node: EntityTreeResponse;
-  handleLabelClick: (path: string, selectNode: TreeSelectProps) => any;
+  handleLabelClick: (path: string) => any;
   defaultCollapseIcon: ReactNode;
   defaultExpandIcon: ReactNode;
   defaultIconPosition: "left" | "right";
@@ -27,20 +26,9 @@ interface IState {
 }
 
 export default function TreeViewFolder(props: TreeNodeProps) {
-  // const [state, setState] = React.useState<IState>({
-  //   path,
-  // });
-  // const handleClick = (id:string) => {
-  //   console.log("id =", id)
-  //   setState({path:id})
-  //   props.handleLabelClick(id)
-
-  // }
   return (
     <div>
-      {/* <TreeContext.Provider value={state}> */}
-      <TreeNode {...props} node={treeData} key={treeData.id} />
-      {/* </TreeContext.Provider> */}
+      <TreeNode {...props} key={props.node.id} />
     </div>
   );
 }

@@ -1150,5 +1150,7 @@
   "assessment_search_no_matching_result": "No Matching Result",
   "library_label_created_by": "Created By",
   "library_label_contains": "Contains",
-  "assessment_search_teacher_tips": "Teacher's given or family name"
+  "assessment_search_teacher_tips": "Teacher's given or family name",
+  "library_label_hierarchy_root_folder": "Folder Root",
+  "library_label_hierarchy_folder_tree": "Folder Tree"
 }

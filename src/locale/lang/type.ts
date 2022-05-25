@@ -1814,7 +1814,9 @@ A new ‘Auto review’ lesson will appear on students’ calendar once our plat
   | { id: "assessment_search_no_matching_result"; description: `No Matching Result`; values: undefined }
   | { id: "library_label_created_by"; description: `Created By`; values: undefined }
   | { id: "library_label_contains"; description: `Contains`; values: undefined }
-  | { id: "assessment_search_teacher_tips"; description: `Teacher's given or family name`; values: undefined};
+  | { id: "assessment_search_teacher_tips"; description: `Teacher's given or family name`; values: undefined }
+  | { id: "library_label_hierarchy_root_folder"; description: `Folder Root`; values: undefined }
+  | { id: "library_label_hierarchy_folder_tree"; description: `Folder Tree`; values: undefined };
 
 export type LangRecordId = LangRecord["id"];
 export type LangRecodeDescription = LangRecord["description"];

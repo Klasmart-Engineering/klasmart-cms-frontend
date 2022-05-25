@@ -3333,7 +3333,7 @@ export class Api<SecurityDataType = any> extends HttpClient<SecurityDataType> {
      * @request GET:/folders/tree
      * @description get tree
      */
-    getTree: (query: { key: string; type: number; only_for_me: number }, params?: RequestParams) =>
+    getTree: (query: { key?: string; type: "all" | "name"; role: "me" | "all" }, params?: RequestParams) =>
       this.request<EntityTreeResponse, ApiBadRequestResponse | ApiForbiddenResponse | ApiInternalServerErrorResponse>(
         `/folders/tree${this.addQueryParams(query)}`,
         "GET",
