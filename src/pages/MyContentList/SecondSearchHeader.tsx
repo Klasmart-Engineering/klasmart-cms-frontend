@@ -1,4 +1,4 @@
-import { Checkbox, FormControlLabel, Grid, Menu, MenuItem } from "@material-ui/core";
+import { Checkbox, Divider, FormControlLabel, Grid, Menu, MenuItem } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Hidden from "@material-ui/core/Hidden";
 import { makeStyles } from "@material-ui/core/styles";
@@ -11,7 +11,6 @@ import React, { ChangeEvent, MouseEventHandler, useEffect, useState } from "reac
 import { Controller, UseFormMethods } from "react-hook-form";
 import PermissionType from "../../api/PermissionType";
 import { Author, PublishStatus, SearchContentsRequestContentType } from "../../api/type";
-import LayoutBox from "../../components/LayoutBox";
 import { Permission, PermissionOr } from "../../components/Permission";
 import { d } from "../../locale/LocaleManager";
 import { StyledMenu } from "./FirstSearchHeader";
@@ -21,7 +20,10 @@ export const EXECT_SEARCH = "EXECT_SEARCH";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    marginBottom: "20px",
+  },
+
+  driver: {
+    marginTop: "20px",
   },
   createBtn: {
     width: "125px",
@@ -210,135 +212,134 @@ export function SecondSearchHeaderMb(props: SecondSearchHeaderProps) {
   }, [value.name, reset]);
   return (
     <div className={classes.root}>
-      <LayoutBox holderMin={40} holderBase={202} mainBase={1517}>
-        <Hidden only={["md", "lg", "xl"]}>
-          <Grid container spacing={3}>
-            <Grid item xs={8} sm={8}>
-              {!value.program_group && (
-                <PermissionOr
-                  value={[
-                    PermissionType.create_content_page_201,
-                    PermissionType.create_lesson_material_220,
-                    PermissionType.create_lesson_plan_221,
-                  ]}
-                >
-                  {(value.publish_status === PublishStatus.published ||
-                    value.content_type === SearchContentsRequestContentType.assetsandfolder) && (
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      className={classes.createBtn}
-                      onClick={handleClickCreate}
-                      endIcon={<ArrowDropDownOutlinedIcon />}
-                    >
-                      {d("Create").t("library_label_create")}
-                    </Button>
-                  )}
-                </PermissionOr>
-              )}
-              <StyledMenu anchorEl={anchorCreate} keepMounted open={Boolean(anchorCreate)} onClose={handleCreateClose}>
-                {value.publish_status === PublishStatus.published && (
-                  <>
-                    <MenuItem
-                      onClick={() => {
-                        value.content_type = SearchContentsRequestContentType.material;
-                        onCreateContent();
-                      }}
-                    >
-                      {d("Lesson Material").t("library_label_lesson_material")}
-                    </MenuItem>
-                    <MenuItem
-                      onClick={() => {
-                        value.content_type = SearchContentsRequestContentType.plan;
-                        onCreateContent();
-                      }}
-                    >
-                      {d("Lesson Plan").t("library_label_lesson_plan")}
-                    </MenuItem>
-                  </>
-                )}
-                {value.content_type === SearchContentsRequestContentType.assetsandfolder && (
-                  <MenuItem onClick={onCreateContent}>{d("Assets").t("library_label_assets")}</MenuItem>
-                )}
-                <Permission value={PermissionType.create_folder_289}>
-                  <MenuItem onClick={handleClickNewFolder}>{d("New Folder").t("library_label_new_folder")}</MenuItem>
-                </Permission>
-              </StyledMenu>
-            </Grid>
-            <Permission value={PermissionType.view_my_published_214}>
-              <Grid
-                container
-                item
-                xs={4}
-                sm={4}
-                justify="flex-end"
-                alignItems="center"
-                style={{
-                  fontSize: "24px",
-                }}
+      <Hidden only={["md", "lg", "xl"]}>
+        <Grid container spacing={3}>
+          <Grid item xs={8} sm={8}>
+            {!value.program_group && (
+              <PermissionOr
+                value={[
+                  PermissionType.create_content_page_201,
+                  PermissionType.create_lesson_material_220,
+                  PermissionType.create_lesson_plan_221,
+                ]}
               >
-                {value.publish_status === PublishStatus.published ||
-                value.content_type === SearchContentsRequestContentType.assetsandfolder ? (
-                  <LocalBarOutlinedIcon onClick={handleClickIconMyonly} />
-                ) : (
-                  ""
+                {(value.publish_status === PublishStatus.published ||
+                  value.content_type === SearchContentsRequestContentType.assetsandfolder) && (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.createBtn}
+                    onClick={handleClickCreate}
+                    endIcon={<ArrowDropDownOutlinedIcon />}
+                  >
+                    {d("Create").t("library_label_create")}
+                  </Button>
                 )}
-                <Menu anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
-                  <MenuItem selected={value.author === Author.self} onClick={handleItemClick}>
-                    {d("Show My Content").t("library_label_my_only")}
+              </PermissionOr>
+            )}
+            <StyledMenu anchorEl={anchorCreate} keepMounted open={Boolean(anchorCreate)} onClose={handleCreateClose}>
+              {value.publish_status === PublishStatus.published && (
+                <>
+                  <MenuItem
+                    onClick={() => {
+                      value.content_type = SearchContentsRequestContentType.material;
+                      onCreateContent();
+                    }}
+                  >
+                    {d("Lesson Material").t("library_label_lesson_material")}
                   </MenuItem>
-                </Menu>
-              </Grid>
-            </Permission>
+                  <MenuItem
+                    onClick={() => {
+                      value.content_type = SearchContentsRequestContentType.plan;
+                      onCreateContent();
+                    }}
+                  >
+                    {d("Lesson Plan").t("library_label_lesson_plan")}
+                  </MenuItem>
+                </>
+              )}
+              {value.content_type === SearchContentsRequestContentType.assetsandfolder && (
+                <MenuItem onClick={onCreateContent}>{d("Assets").t("library_label_assets")}</MenuItem>
+              )}
+              <Permission value={PermissionType.create_folder_289}>
+                <MenuItem onClick={handleClickNewFolder}>{d("New Folder").t("library_label_new_folder")}</MenuItem>
+              </Permission>
+            </StyledMenu>
+          </Grid>
+          <Permission value={PermissionType.view_my_published_214}>
             <Grid
+              container
               item
-              xs={12}
-              sm={12}
+              xs={4}
+              sm={4}
+              justify="flex-end"
+              alignItems="center"
               style={{
-                textAlign: "center",
-                padding: 0,
+                fontSize: "24px",
               }}
             >
-              <div className={classes.searchCon}>
-                <Controller
-                  as={TextField}
-                  control={control}
-                  name={EXECT_SEARCH}
-                  className={classes.exectSearchInput}
-                  size="small"
-                  defaultValue={value.exect_search || ExectSearch.all}
-                  select
-                  SelectProps={{
-                    MenuProps: {
-                      transformOrigin: {
-                        vertical: -40,
-                        horizontal: "left",
-                      },
-                    },
-                  }}
-                >
-                  {menuItemList(getExectSearch())}
-                </Controller>
-                <Controller
-                  style={{
-                    borderLeft: 0,
-                  }}
-                  as={TextField}
-                  name={SEARCH_TEXT_KEY}
-                  control={control}
-                  size="small"
-                  className={classes.searchText}
-                  placeholder={d("Search").t("library_label_search")}
-                  defaultValue={value.name || ""}
-                />
-              </div>
-              <Button variant="contained" color="primary" className={classes.searchBtn} onClick={handleClickSearch}>
-                <Search /> {d("Search").t("library_label_search")}
-              </Button>
+              {value.publish_status === PublishStatus.published ||
+              value.content_type === SearchContentsRequestContentType.assetsandfolder ? (
+                <LocalBarOutlinedIcon onClick={handleClickIconMyonly} />
+              ) : (
+                ""
+              )}
+              <Menu anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
+                <MenuItem selected={value.author === Author.self} onClick={handleItemClick}>
+                  {d("Show My Content").t("library_label_my_only")}
+                </MenuItem>
+              </Menu>
             </Grid>
+          </Permission>
+          <Grid
+            item
+            xs={12}
+            sm={12}
+            style={{
+              textAlign: "center",
+              padding: 0,
+            }}
+          >
+            <div className={classes.searchCon}>
+              <Controller
+                as={TextField}
+                control={control}
+                name={EXECT_SEARCH}
+                className={classes.exectSearchInput}
+                size="small"
+                defaultValue={value.exect_search || ExectSearch.all}
+                select
+                SelectProps={{
+                  MenuProps: {
+                    transformOrigin: {
+                      vertical: -40,
+                      horizontal: "left",
+                    },
+                  },
+                }}
+              >
+                {menuItemList(getExectSearch())}
+              </Controller>
+              <Controller
+                style={{
+                  borderLeft: 0,
+                }}
+                as={TextField}
+                name={SEARCH_TEXT_KEY}
+                control={control}
+                size="small"
+                className={classes.searchText}
+                placeholder={d("Search").t("library_label_search")}
+                defaultValue={value.name || ""}
+              />
+            </div>
+            <Button variant="contained" color="primary" className={classes.searchBtn} onClick={handleClickSearch}>
+              <Search /> {d("Search").t("library_label_search")}
+            </Button>
           </Grid>
-        </Hidden>
-      </LayoutBox>
+        </Grid>
+        <Divider className={classes.driver} />
+      </Hidden>
     </div>
   );
 }
@@ -382,95 +383,94 @@ export function SecondSearchHeader(props: SecondSearchHeaderProps) {
   }, [value.name, value.exect_search, reset]);
   return (
     <div className={classes.root}>
-      <LayoutBox holderMin={40} holderBase={202} mainBase={1517}>
-        <Hidden only={["xs", "sm"]}>
-          <Grid
-            container
-            spacing={3}
-            style={{
-              marginTop: "6px",
-            }}
-          >
-            <Grid item md={10} lg={8} xl={8}>
-              <div className={classes.searchCon}>
-                <Controller
-                  as={TextField}
-                  name={EXECT_SEARCH}
-                  control={control}
-                  className={classes.exectSearchInput}
-                  size="small"
-                  defaultValue={value.exect_search || ExectSearch.all}
-                  select
-                  SelectProps={{
-                    MenuProps: {
-                      transformOrigin: {
-                        vertical: -40,
-                        horizontal: "left",
-                      },
+      <Hidden only={["xs", "sm"]}>
+        <Grid
+          container
+          spacing={3}
+          style={{
+            marginTop: "6px",
+          }}
+        >
+          <Grid item md={10} lg={8} xl={8}>
+            <div className={classes.searchCon}>
+              <Controller
+                as={TextField}
+                name={EXECT_SEARCH}
+                control={control}
+                className={classes.exectSearchInput}
+                size="small"
+                defaultValue={value.exect_search || ExectSearch.all}
+                select
+                SelectProps={{
+                  MenuProps: {
+                    transformOrigin: {
+                      vertical: -40,
+                      horizontal: "left",
                     },
-                  }}
-                >
-                  {menuItemList(getExectSearch())}
-                </Controller>
-                <Controller
-                  style={{
-                    borderLeft: 0,
-                  }}
-                  as={TextField}
-                  name={SEARCH_TEXT_KEY}
-                  control={control}
-                  size="small"
-                  className={classes.searchText}
-                  onKeyPress={handleKeyPress}
-                  placeholder={d("Search").t("library_label_search")}
-                  defaultValue={value.name || ""}
+                  },
+                }}
+              >
+                {menuItemList(getExectSearch())}
+              </Controller>
+              <Controller
+                style={{
+                  borderLeft: 0,
+                }}
+                as={TextField}
+                name={SEARCH_TEXT_KEY}
+                control={control}
+                size="small"
+                className={classes.searchText}
+                onKeyPress={handleKeyPress}
+                placeholder={d("Search").t("library_label_search")}
+                defaultValue={value.name || ""}
+              />
+            </div>
+            <Button variant="contained" color="primary" className={classes.searchBtn} onClick={handleClickSearch}>
+              <Search /> {d("Search").t("library_label_search")}
+            </Button>
+            {value.content_type !== SearchContentsRequestContentType.assetsandfolder && !value.program_group && (
+              <TextField
+                style={{
+                  width: 160,
+                  marginLeft: 20,
+                }}
+                size="small"
+                onChange={handleChangeFilterOption}
+                label={d("Content Type").t("library_label_contentType")}
+                value={value.content_type}
+                select
+                SelectProps={{
+                  MenuProps: {
+                    transformOrigin: {
+                      vertical: -40,
+                      horizontal: "left",
+                    },
+                  },
+                }}
+              >
+                {menuItemList(filterOptions(value))}
+              </TextField>
+            )}
+          </Grid>
+          <Permission value={PermissionType.view_my_published_214}>
+            <Grid container direction="row" justify="flex-end" alignItems="center" item md={2} lg={4} xl={4}>
+              {value.publish_status === PublishStatus.published ||
+              value.content_type === SearchContentsRequestContentType.assetsandfolder ? (
+                <FormControlLabel
+                  value="end"
+                  control={<Checkbox color="primary" checked={value.author === Author.self} onChange={handleChangeMyonly} />}
+                  label={d("Show My Content").t("library_label_my_only")}
+                  labelPlacement="end"
                 />
-              </div>
-              <Button variant="contained" color="primary" className={classes.searchBtn} onClick={handleClickSearch}>
-                <Search /> {d("Search").t("library_label_search")}
-              </Button>
-              {value.content_type !== SearchContentsRequestContentType.assetsandfolder && !value.program_group && (
-                <TextField
-                  style={{
-                    width: 160,
-                    marginLeft: 20,
-                  }}
-                  size="small"
-                  onChange={handleChangeFilterOption}
-                  label={d("Content Type").t("library_label_contentType")}
-                  value={value.content_type}
-                  select
-                  SelectProps={{
-                    MenuProps: {
-                      transformOrigin: {
-                        vertical: -40,
-                        horizontal: "left",
-                      },
-                    },
-                  }}
-                >
-                  {menuItemList(filterOptions(value))}
-                </TextField>
+              ) : (
+                ""
               )}
             </Grid>
-            <Permission value={PermissionType.view_my_published_214}>
-              <Grid container direction="row" justify="flex-end" alignItems="center" item md={2} lg={4} xl={4}>
-                {value.publish_status === PublishStatus.published ||
-                value.content_type === SearchContentsRequestContentType.assetsandfolder ? (
-                  <FormControlLabel
-                    value="end"
-                    control={<Checkbox color="primary" checked={value.author === Author.self} onChange={handleChangeMyonly} />}
-                    label={d("Show My Content").t("library_label_my_only")}
-                    labelPlacement="end"
-                  />
-                ) : (
-                  ""
-                )}
-              </Grid>
-            </Permission>
-          </Grid>
-        </Hidden>
-      </LayoutBox>
+          </Permission>
+        </Grid>
+        <Divider className={classes.driver} />
+      </Hidden>
     </div>
   );
 }

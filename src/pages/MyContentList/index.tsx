@@ -1,4 +1,5 @@
 import useQueryCms from "@hooks/useQueryCms";
+import { useMediaQuery, useTheme } from "@material-ui/core";
 import {
   addFolder1,
   approveContent,
@@ -50,6 +51,7 @@ import { ContentCardList, ContentCardListProps } from "./ContentCardList";
 import FirstSearchHeader, { FirstSearchHeaderMb, FirstSearchHeaderProps } from "./FirstSearchHeader";
 import { FolderForm, useFolderForm } from "./FolderForm";
 import { FolderTree, FolderTreeProps, useFolderTree } from "./FolderTree";
+import { FolderTreeBox } from "./FolderTreeBox";
 import { OrganizationList, OrganizationListProps, useOrganizationList } from "./OrganizationList";
 import ProgramSearchHeader, { ProgramGroup, ProgramSearchHeaderMb } from "./ProgramSearchHeader";
 import {
@@ -63,9 +65,7 @@ import {
 import { SpecialOrgList } from "./SpecialOrgList";
 import { ThirdSearchHeader, ThirdSearchHeaderMb, ThirdSearchHeaderProps } from "./ThirdSearchHeader";
 import { ContentListForm, ContentListFormKey, QueryCondition } from "./types";
-
 const ROOT_PATH = "/";
-
 const useQuery = (): QueryCondition => {
   const { querys, page, publish_status, author, content_type, name, program_group, path } = useQueryCms();
   const order_by = (querys.get("order_by") as OrderBy | null) || undefined;
@@ -126,10 +126,8 @@ export default function MyContentList() {
   const conditionFormMethods = useForm<ContentListForm>();
   const { watch, reset, getValues, handleSubmit } = conditionFormMethods;
   const ids = watch(ContentListFormKey.CHECKED_CONTENT_IDS);
-  const { contentsList, total, page_size, folderTree, parentFolderInfo, orgList, selectedOrg, orgProperty, myOrgId } = useSelector<
-    RootState,
-    RootState["content"]
-  >((state) => state.content);
+  const { contentsList, total, page_size, folderTree, parentFolderInfo, orgList, selectedOrg, orgProperty, myOrgId, folderTreeData } =
+    useSelector<RootState, RootState["content"]>((state) => state.content);
   const [move, setMove] = useState(false);
   const [bulkMove, setBulkMove] = useState(false);
   const [moveId, setMoveId] = useState<string[]>([]);
@@ -147,6 +145,7 @@ export default function MyContentList() {
   const [folderForm, setFolderForm] = useState<EntityFolderContentData>();
   const [parentId, setParentId] = useState<string>();
   const [cmsPageSize, setCmsPageSize] = useState(page_size);
+  const showFolderTree = !condition.program_group && condition.publish_status === PublishStatus.published;
   const handlePublish: ContentCardListProps["onPublish"] = (id) => {
     return refreshWithDispatch(dispatch(publishContent(id)));
   };
@@ -212,7 +211,7 @@ export default function MyContentList() {
       const searchText = getValues()[SEARCH_TEXT_KEY];
       searchText ? (draft.name = searchText) : delete draft.name;
       const exect_search = getValues()[EXECT_SEARCH];
-      draft.exect_search = exect_search;
+      draft.exect_search = exect_search || "";
     });
     if (condition.path && condition.path !== ROOT_PATH) {
       history.replace({ search: toQueryString(clearNull(newValue)) });
@@ -302,7 +301,11 @@ export default function MyContentList() {
     openFolderTree();
   };
   const handleGoback: ContentCardListProps["onGoBack"] = () => {
-    history.goBack();
+    history.push({ search: toQueryString({ ...condition, name: "", path: `${parentFolderInfo.dir_path}` }) });
+    // history.goBack();
+  };
+  const handleClickFolderPath = (path: string) => {
+    history.push({ search: toQueryString({ ...condition, path }) });
   };
 
   const handleApprove: ContentCardListProps["onApprove"] = (id) => {
@@ -396,194 +399,213 @@ export default function MyContentList() {
       setTimeout(reset, 500);
     })();
   }, [condition, reset, dispatch, refreshKey, cmsPageSize]);
+  const { breakpoints } = useTheme();
+  const sm = useMediaQuery(breakpoints.down("sm"));
   return (
-    <div
-      onContextMenu={(e) => {
-        e.preventDefault();
-        return false;
-      }}
-    >
-      <PermissionsWrapper
-        value={[
-          PermissionType.create_content_page_201,
-          PermissionType.create_lesson_material_220,
-          PermissionType.create_lesson_plan_221,
-          PermissionType.create_folder_289,
-          PermissionType.published_content_page_204,
-          PermissionType.pending_content_page_203,
-          PermissionType.unpublished_content_page_202,
-          PermissionType.archived_content_page_205,
-          PermissionType.create_asset_page_301,
-          PermissionType.view_my_published_214,
-          PermissionType.create_folder_289,
-          PermissionType.delete_asset_340,
-          PermissionType.archive_published_content_273,
-          PermissionType.republish_archived_content_274,
-          PermissionType.delete_archived_content_275,
-          PermissionType.approve_pending_content_271,
-          PermissionType.reject_pending_content_272,
-          PermissionType.create_folder_289,
-          PermissionType.publish_featured_content_for_all_hub_79000,
-          PermissionType.publish_featured_content_for_all_orgs_79002,
-          PermissionType.publish_featured_content_for_specific_orgs_79001,
-        ]}
+    <LayoutBox holderMin={40} holderBase={202} mainBase={1517} mainStyle={{ width: "90%" }}>
+      <div
+        onContextMenu={(e) => {
+          e.preventDefault();
+          return false;
+        }}
       >
-        {condition.program_group && condition.program_group !== ProgramGroup.moreFeaturedContent && (
-          <ProgramSearchHeader value={condition} onChange={handleChangeTab} />
-        )}
-        {condition.program_group && condition.program_group !== ProgramGroup.moreFeaturedContent && (
-          <ProgramSearchHeaderMb value={condition} onChange={handleChangeTab} />
-        )}
-        {!condition.program_group && (
-          <FirstSearchHeader
-            value={condition}
-            onChange={handleChangeTab}
-            onChangeAssets={handleChangeAssets}
-            onCreateContent={handleCreateContent}
-            onNewFolder={handleClickAddFolderBtn}
-          />
-        )}
-        {!condition.program_group && (
-          <FirstSearchHeaderMb
-            value={condition}
-            onChange={handleChangeTab}
-            onChangeAssets={handleChangeAssets}
-            onCreateContent={handleCreateContent}
-            onNewFolder={handleClickAddFolderBtn}
-          />
-        )}
-        {hasPerm && (
-          <>
-            <SecondSearchHeader
+        <PermissionsWrapper
+          value={[
+            PermissionType.create_content_page_201,
+            PermissionType.create_lesson_material_220,
+            PermissionType.create_lesson_plan_221,
+            PermissionType.create_folder_289,
+            PermissionType.published_content_page_204,
+            PermissionType.pending_content_page_203,
+            PermissionType.unpublished_content_page_202,
+            PermissionType.archived_content_page_205,
+            PermissionType.create_asset_page_301,
+            PermissionType.view_my_published_214,
+            PermissionType.create_folder_289,
+            PermissionType.delete_asset_340,
+            PermissionType.archive_published_content_273,
+            PermissionType.republish_archived_content_274,
+            PermissionType.delete_archived_content_275,
+            PermissionType.approve_pending_content_271,
+            PermissionType.reject_pending_content_272,
+            PermissionType.create_folder_289,
+            PermissionType.publish_featured_content_for_all_hub_79000,
+            PermissionType.publish_featured_content_for_all_orgs_79002,
+            PermissionType.publish_featured_content_for_specific_orgs_79001,
+          ]}
+        >
+          {condition.program_group && condition.program_group !== ProgramGroup.moreFeaturedContent && (
+            <ProgramSearchHeader value={condition} onChange={handleChangeTab} />
+          )}
+          {condition.program_group && condition.program_group !== ProgramGroup.moreFeaturedContent && (
+            <ProgramSearchHeaderMb value={condition} onChange={handleChangeTab} />
+          )}
+          {!condition.program_group && (
+            <FirstSearchHeader
               value={condition}
-              onChange={handleChange}
+              onChange={handleChangeTab}
+              onChangeAssets={handleChangeAssets}
               onCreateContent={handleCreateContent}
-              conditionFormMethods={conditionFormMethods}
               onNewFolder={handleClickAddFolderBtn}
             />
-            <SecondSearchHeaderMb
+          )}
+          {!condition.program_group && (
+            <FirstSearchHeaderMb
               value={condition}
-              onChange={handleChange}
+              onChange={handleChangeTab}
+              onChangeAssets={handleChangeAssets}
               onCreateContent={handleCreateContent}
-              conditionFormMethods={conditionFormMethods}
               onNewFolder={handleClickAddFolderBtn}
             />
-            <ThirdSearchHeader
-              value={condition}
-              onChange={handleChange}
-              onBulkPublish={handleBulkPublish}
-              onBulkDelete={handleBulkDelete}
-              onBulkMove={handleClickBulkMove}
-              actionObj={actionObj}
-              onBulkDeleteFolder={handleBulkDeleteFolder}
-              onBulkApprove={handleBulkApprove}
-              onBulkReject={handleBulkReject}
-              onExportCSV={handleExportCSV}
-              ids={ids}
-              contentList={contentsList}
-              conditionFormMethods={conditionFormMethods}
-            />
-            <ThirdSearchHeaderMb
-              value={condition}
-              onChange={handleChange}
-              onBulkPublish={handleBulkPublish}
-              onBulkDelete={handleBulkDelete}
-              onBulkMove={handleClickBulkMove}
-              actionObj={actionObj}
-              onBulkDeleteFolder={handleBulkDeleteFolder}
-              onBulkApprove={handleBulkApprove}
-              onBulkReject={handleBulkReject}
-              onExportCSV={handleExportCSV}
-              ids={ids}
-              contentList={contentsList}
-              conditionFormMethods={conditionFormMethods}
-            />
-          </>
-        )}
-        {isPending ? (
-          ""
-        ) : hasPerm ? (
-          total === undefined ? (
-            ""
-          ) : contentsList && contentsList.length > 0 ? (
-            <ContentCardList
-              formMethods={conditionFormMethods}
-              list={contentsList}
-              total={total as number}
-              amountPerPage={cmsPageSize}
-              queryCondition={condition}
-              orgProperty={orgProperty}
-              onChangePage={handleChangePage}
-              onChangePageSize={handleChangePageSize}
-              onClickContent={handleClickConent}
-              onPublish={handlePublish}
-              onDelete={handleDelete}
-              onClickMoveBtn={handleClickMoveBtn}
-              onRenameFolder={handleClickRenameFolder}
-              onDeleteFolder={handleDeleteFolder}
-              onGoBack={handleGoback}
-              parentFolderInfo={parentFolderInfo}
-              onApprove={handleApprove}
-              onReject={handleReject}
-              onClickShareBtn={handleClickShareBtn}
-            />
-          ) : JSON.stringify(parentFolderInfo) !== "{}" &&
-            (condition.program_group ||
-              condition.publish_status === PublishStatus.published ||
-              condition.content_type === SearchContentsRequestContentType.assetsandfolder) ? (
-            <LayoutBox holderMin={40} holderBase={202} mainBase={1517}>
-              <BackToPrevPage
-                onGoBack={handleGoback}
-                parentFolderInfo={{ ...parentFolderInfo, available: total }}
-                onRenameFolder={handleClickRenameFolder}
-                isEdit={!condition.program_group}
+          )}
+          {hasPerm && (
+            <>
+              <SecondSearchHeader
+                value={condition}
+                onChange={handleChange}
+                onCreateContent={handleCreateContent}
+                conditionFormMethods={conditionFormMethods}
+                onNewFolder={handleClickAddFolderBtn}
               />
-            </LayoutBox>
+              <SecondSearchHeaderMb
+                value={condition}
+                onChange={handleChange}
+                onCreateContent={handleCreateContent}
+                conditionFormMethods={conditionFormMethods}
+                onNewFolder={handleClickAddFolderBtn}
+              />
+            </>
+          )}
+          <div style={{ display: showFolderTree && !sm ? "flex" : "block" }}>
+            {showFolderTree && (
+              <FolderTreeBox
+                sm={sm}
+                folders={folderTreeData}
+                parentFolderInfo={{ ...parentFolderInfo, available: total }}
+                defaultPath={condition.path || ROOT_PATH}
+                onClickFolderPath={handleClickFolderPath}
+              />
+            )}
+            <div style={{ flex: 1 }}>
+              {hasPerm && (
+                <>
+                  <ThirdSearchHeader
+                    value={condition}
+                    onChange={handleChange}
+                    onBulkPublish={handleBulkPublish}
+                    onBulkDelete={handleBulkDelete}
+                    onBulkMove={handleClickBulkMove}
+                    actionObj={actionObj}
+                    onBulkDeleteFolder={handleBulkDeleteFolder}
+                    onBulkApprove={handleBulkApprove}
+                    onBulkReject={handleBulkReject}
+                    onExportCSV={handleExportCSV}
+                    ids={ids}
+                    contentList={contentsList}
+                    conditionFormMethods={conditionFormMethods}
+                  />
+                  <ThirdSearchHeaderMb
+                    value={condition}
+                    onChange={handleChange}
+                    onBulkPublish={handleBulkPublish}
+                    onBulkDelete={handleBulkDelete}
+                    onBulkMove={handleClickBulkMove}
+                    actionObj={actionObj}
+                    onBulkDeleteFolder={handleBulkDeleteFolder}
+                    onBulkApprove={handleBulkApprove}
+                    onBulkReject={handleBulkReject}
+                    onExportCSV={handleExportCSV}
+                    ids={ids}
+                    contentList={contentsList}
+                    conditionFormMethods={conditionFormMethods}
+                  />
+                </>
+              )}
+              {isPending ? (
+                ""
+              ) : hasPerm ? (
+                total === undefined ? (
+                  ""
+                ) : contentsList && contentsList.length > 0 ? (
+                  <ContentCardList
+                    formMethods={conditionFormMethods}
+                    list={contentsList}
+                    total={total as number}
+                    amountPerPage={cmsPageSize}
+                    queryCondition={condition}
+                    orgProperty={orgProperty}
+                    onChangePage={handleChangePage}
+                    onChangePageSize={handleChangePageSize}
+                    onClickContent={handleClickConent}
+                    onPublish={handlePublish}
+                    onDelete={handleDelete}
+                    onClickMoveBtn={handleClickMoveBtn}
+                    onRenameFolder={handleClickRenameFolder}
+                    onDeleteFolder={handleDeleteFolder}
+                    onGoBack={handleGoback}
+                    parentFolderInfo={parentFolderInfo}
+                    onApprove={handleApprove}
+                    onReject={handleReject}
+                    onClickShareBtn={handleClickShareBtn}
+                  />
+                ) : JSON.stringify(parentFolderInfo) !== "{}" &&
+                  (condition.program_group ||
+                    condition.publish_status === PublishStatus.published ||
+                    condition.content_type === SearchContentsRequestContentType.assetsandfolder) ? (
+                  <BackToPrevPage
+                    onGoBack={handleGoback}
+                    parentFolderInfo={{ ...parentFolderInfo, available: total }}
+                    onRenameFolder={handleClickRenameFolder}
+                    isEdit={!condition.program_group}
+                  />
+                ) : (
+                  emptyTip
+                )
+              ) : (
+                permissionTip
+              )}
+            </div>
+          </div>
+          <FolderTree
+            folders={filteredFolderTree}
+            rootFolderName={condition.content_type === SearchContentsRequestContentType.assetsandfolder ? "Assets" : "Organization Content"}
+            onClose={closeFolderTree}
+            open={folderTreeActive}
+            onMove={handleMove}
+            onAddFolder={handleAddFolder}
+            key={folderTreeShowIndex}
+          />
+          {orgProperty.region === Region.vn ? (
+            <SpecialOrgList
+              orgList={filterOrgList}
+              selectedOrg={selctedOrgIds}
+              onClose={closeOrganizationList}
+              open={organizationListActive}
+              onShareFolder={handleShareFolder}
+              key={organizationListShowIndex}
+            />
           ) : (
-            emptyTip
-          )
-        ) : (
-          permissionTip
-        )}
-        <FolderTree
-          folders={filteredFolderTree}
-          rootFolderName={condition.content_type === SearchContentsRequestContentType.assetsandfolder ? "Assets" : "Organization Content"}
-          onClose={closeFolderTree}
-          open={folderTreeActive}
-          onMove={handleMove}
-          onAddFolder={handleAddFolder}
-          key={folderTreeShowIndex}
-        />
-        {orgProperty.region === Region.vn ? (
-          <SpecialOrgList
-            orgList={filterOrgList}
-            selectedOrg={selctedOrgIds}
-            onClose={closeOrganizationList}
-            open={organizationListActive}
-            onShareFolder={handleShareFolder}
-            key={organizationListShowIndex}
+            <OrganizationList
+              orgList={filterOrgList}
+              selectedOrg={selctedOrgIds}
+              onClose={closeOrganizationList}
+              open={organizationListActive}
+              onShareFolder={handleShareFolder}
+              key={organizationListShowIndex}
+              folderName={shareFolder?.name}
+            />
+          )}
+          <FolderForm
+            onClose={closeFolderForm}
+            open={folderFormActive}
+            onAddFolder={handleAddFolderFormItem}
+            onRenameFolder={handleRenameFolderItem}
+            folderForm={folderForm}
+            formMethods={conditionFormMethods}
           />
-        ) : (
-          <OrganizationList
-            orgList={filterOrgList}
-            selectedOrg={selctedOrgIds}
-            onClose={closeOrganizationList}
-            open={organizationListActive}
-            onShareFolder={handleShareFolder}
-            key={organizationListShowIndex}
-            folderName={shareFolder?.name}
-          />
-        )}
-        <FolderForm
-          onClose={closeFolderForm}
-          open={folderFormActive}
-          onAddFolder={handleAddFolderFormItem}
-          onRenameFolder={handleRenameFolderItem}
-          folderForm={folderForm}
-          formMethods={conditionFormMethods}
-        />
-      </PermissionsWrapper>
-    </div>
+        </PermissionsWrapper>
+      </div>
+    </LayoutBox>
   );
 }
 

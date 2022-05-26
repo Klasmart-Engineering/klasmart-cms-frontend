@@ -207,7 +207,7 @@ enum BulkAction {
   reject = "reject",
   addSet = "addSet",
   downloadAll = "downloadAll",
-  downloadSelected = "downloadSelected"
+  downloadSelected = "downloadSelected",
 }
 
 interface BulkActionOption {
@@ -228,9 +228,9 @@ function getBulkAction(condition: OutcomeQueryCondition, perm: PermissionResult<
       if (perm.create_learning_outcome_421) {
         const download = [
           { label: d("Download All Rows").t("assessment_lo_download_all"), value: BulkAction.downloadAll },
-          { label: d("Download Selected Rows").t("assessment_lo_download_selected"), value: BulkAction.downloadSelected}
-        ]
-        res1.push.apply(res1, download)
+          { label: d("Download Selected Rows").t("assessment_lo_download_selected"), value: BulkAction.downloadSelected },
+        ];
+        res1.push.apply(res1, download);
       }
       return res1;
     case OutcomePublishStatus.pending:
@@ -278,7 +278,18 @@ export interface ThirdSearchHeaderProps extends OutcomeQueryConditionBaseProps {
 }
 export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
   const classes = useStyles();
-  const { value, selectedIdsLength, onChange, onBulkDelete, onBulkPublish, onBulkApprove, onBulkReject, onBulkAddSet, onBulkDownloadAll, onBulkDownloadSelected } = props;
+  const {
+    value,
+    selectedIdsLength,
+    onChange,
+    onBulkDelete,
+    onBulkPublish,
+    onBulkApprove,
+    onBulkReject,
+    onBulkAddSet,
+    onBulkDownloadAll,
+    onBulkDownloadSelected,
+  } = props;
   const perm = usePermission([
     PermissionType.delete_published_learning_outcome_448,
     PermissionType.delete_org_pending_learning_outcome_447,
@@ -325,7 +336,7 @@ export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
         <Hidden only={["xs", "sm"]}>
           <Divider />
           <Grid container spacing={3} alignItems="center" style={{ marginTop: "6px" }}>
-            <Grid item sm={6} xs={6} md={4} style={{display: "flex", alignItems: "center"}}>
+            <Grid item sm={6} xs={6} md={4} style={{ display: "flex", alignItems: "center" }}>
               {bulkOptions.length > 0 && (
                 <TextField
                   size="small"
@@ -339,7 +350,7 @@ export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
                   {bulkOptions}
                 </TextField>
               )}
-              <span className={classes.selectAll}>{t("assessment_lo_download_quantity", {number: selectedIdsLength.toString()})}</span>
+              <span className={classes.selectAll}>{t("assessment_lo_download_quantity", { number: selectedIdsLength.toString() })}</span>
             </Grid>
             <Grid item md={4}>
               <SubLearningOutcome value={value} onChange={onChange} />
@@ -366,7 +377,17 @@ export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
 
 export function ThirdSearchHeaderMb(props: ThirdSearchHeaderProps) {
   const classes = useStyles();
-  const { value, onChange, onBulkDelete, onBulkPublish, onBulkApprove, onBulkReject, onBulkAddSet, onBulkDownloadAll, onBulkDownloadSelected } = props;
+  const {
+    value,
+    onChange,
+    onBulkDelete,
+    onBulkPublish,
+    onBulkApprove,
+    onBulkReject,
+    onBulkAddSet,
+    onBulkDownloadAll,
+    onBulkDownloadSelected,
+  } = props;
   const perm = usePermission([
     PermissionType.delete_published_learning_outcome_448,
     PermissionType.delete_org_pending_learning_outcome_447,

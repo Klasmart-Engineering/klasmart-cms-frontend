@@ -36,7 +36,7 @@ export interface BulkListForm {
   [BulkListFormKey.EXECT_SEARCH]: string;
 }
 
-export type DownloadOutcomeListResult = NonNullable<AsyncReturnType<typeof api.learningOutcomes.exportLearningOutcomes>["data"]>
+export type DownloadOutcomeListResult = NonNullable<AsyncReturnType<typeof api.learningOutcomes.exportLearningOutcomes>["data"]>;
 export type DownloadOutcomeItemResult = NonNullable<DownloadOutcomeListResult>[0];
 
 export enum HeaderCategory {
@@ -67,12 +67,12 @@ export interface DownLoadOutcomeTitleProps {
   subject: string;
   developmental: string;
   skills: string;
-  age: string,
-  grade: string,
-  sets: string,
-  keywords: string,
-  milestones: string,
-  description: string
+  age: string;
+  grade: string;
+  sets: string;
+  keywords: string;
+  milestones: string;
+  description: string;
 }
 
 export interface FieldsProps {

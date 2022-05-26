@@ -137,7 +137,7 @@ export function BackToPrevPage(props: BackToPrevePageProps) {
   };
   return (
     <>
-      <Grid container spacing={2} style={{ borderBottom: "1px solid #e0e0e0", marginBottom: 10 }}>
+      <Grid container spacing={2} style={{ borderBottom: "1px solid #e0e0e0", marginBottom: 10, width: "96%" }}>
         <Hidden only={["xs"]}>
           <Grid item xs={12} sm={6} md={4} lg={3} xl={3}>
             <div className={css.card}>
@@ -159,7 +159,7 @@ export function BackToPrevPage(props: BackToPrevePageProps) {
               {folderInfo()}
             </Grid>
             {isEdit && (
-              <Grid item container justify="flex-end">
+              <Grid item container justify="flex-end" style={{ marginTop: 10 }}>
                 {perm.create_folder_289 && (
                   <Button variant="outlined" color="primary" onClick={() => onRenameFolder(parentFolderInfo)}>
                     {d("Edit").t("library_label_edit")}

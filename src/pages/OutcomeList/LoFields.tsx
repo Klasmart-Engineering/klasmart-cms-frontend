@@ -1,6 +1,16 @@
 import { CheckboxGroup, CheckboxGroupContext } from "@components/CheckboxGroup";
 import { d, t } from "@locale/LocaleManager";
-import { Button, Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, FormControlLabel, makeStyles, Typography } from "@material-ui/core";
+import {
+  Button,
+  Checkbox,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormControlLabel,
+  makeStyles,
+  Typography,
+} from "@material-ui/core";
 import { formattedNowOrTime, timestampToTime } from "@models/ModelOutcomeDetailForm";
 import { ChangeEvent, DOMAttributes, useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -22,12 +32,12 @@ const useStyles = makeStyles((theme) => ({
   },
   downloadA: {
     display: "block",
-    textDecoration: "none", 
-    color: "#fff", 
-    width: "calc(100% + 16px)", 
-    height: "calc(100% + 6px)", 
-  }
-}))
+    textDecoration: "none",
+    color: "#fff",
+    width: "calc(100% + 16px)",
+    height: "calc(100% + 6px)",
+  },
+}));
 const FIELDS = "FIELDS";
 export interface LoFieldsProps {
   open: boolean;
@@ -59,33 +69,31 @@ export function LoFields(props: LoFieldsProps) {
       { label: d("Learning Outcome Set").t("assess_set_learning_outcome_set"), value: "sets", checked: false, readonly: false },
       { label: d("Keywords").t("assess_label_keywords"), value: "keywords", checked: false, readonly: false },
       { label: d("Milestones").t("assess_label_milestone"), value: "milestones", checked: false, readonly: false },
-      { label: d("Description").t("assess_label_description"), value: "description", checked: false, readonly: false}
+      { label: d("Description").t("assess_label_description"), value: "description", checked: false, readonly: false },
     ];
-  }, [])
+  }, []);
   const selectedFields = useMemo(() => {
-    return outcomeFields.map(item => {
+    return outcomeFields.map((item) => {
       const selectedValues = values ? values : defaultFields;
       return {
         ...item,
-        checked: selectedValues.indexOf(item.value) >= 0 ? true : false
-      }
-    })
+        checked: selectedValues.indexOf(item.value) >= 0 ? true : false,
+      };
+    });
   }, [defaultFields, outcomeFields, values]);
-  const handleChange = (e: ChangeEvent<HTMLInputElement>,selectedContentGroupContext: CheckboxGroupContext) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>, selectedContentGroupContext: CheckboxGroupContext) => {
     selectedContentGroupContext.registerChange(e);
     onChangeFields(watch()[FIELDS]);
-  }
+  };
   return (
     <Dialog open={open} fullWidth maxWidth={"sm"}>
-      <DialogTitle className={css.title}>
-        {d("Download").t("assessment_lo_download")}
-      </DialogTitle>
+      <DialogTitle className={css.title}>{d("Download").t("assessment_lo_download")}</DialogTitle>
       <DialogContent>
         <div className={css.fieldsCon}>
           <Typography>
             {d("Select which columns to include:").t("assessment_lo_download_column_title")}
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <span style={{color: "#666"}}>{t("assessment_lo_download_object_quantity", { quantity: list.length.toString() })}</span>
+            <span style={{ color: "#666" }}>{t("assessment_lo_download_object_quantity", { quantity: list.length.toString() })}</span>
           </Typography>
           <Controller
             name={FIELDS}
@@ -123,15 +131,10 @@ export function LoFields(props: LoFieldsProps) {
         <Button autoFocus onClick={onClose} color="primary" variant="outlined">
           {d("CANCEL").t("general_button_CANCEL")}
         </Button>
-        <ExportListToCSVBtn
-          list={list}
-          fields={selectedFields}
-          label={d("CONFIRM").t("general_button_CONFIRM")}
-          onClick={onBulkDownload}
-        />
+        <ExportListToCSVBtn list={list} fields={selectedFields} label={d("CONFIRM").t("general_button_CONFIRM")} onClick={onBulkDownload} />
       </DialogActions>
     </Dialog>
-  )
+  );
 }
 
 export function useLoFields() {
@@ -163,60 +166,52 @@ export function ExportListToCSVBtn(props: ExportListToCSVBtnProps) {
   const css = useStyles();
   const { list, fields, label, onClick } = props;
   const loName = list[0] && list[0].outcome_name?.split(" ").join("_").slice(0, 20);
-  const downloadname = `${formattedNowOrTime()}_${loName}`
+  const downloadname = `${formattedNowOrTime()}_${loName}`;
   const uri = useMemo(() => {
-    let title: string  = "";
+    let title: string = "";
     fields.forEach((item) => {
-      if(item.checked) {
+      if (item.checked) {
         title += `${item.label},`;
       }
     });
-    const data = 
-      list.map(item => {
-        const temp: Record<string, any> =  {};
-        fields.forEach(fItem => {
-          if(fItem.checked) {
-            const key = fItem.value as keyof DownloadOutcomeItemResult;
-            temp[key] = item[key];
-          }
-        })
-        return {
-          ...temp
+    const data = list.map((item) => {
+      const temp: Record<string, any> = {};
+      fields.forEach((fItem) => {
+        if (fItem.checked) {
+          const key = fItem.value as keyof DownloadOutcomeItemResult;
+          temp[key] = item[key];
         }
       });
+      return {
+        ...temp,
+      };
+    });
     let str: string = `${title}\n`;
-    data.forEach(item => {
-      const keys = Object.keys(item)
-      keys.forEach(kItem => {
+    data.forEach((item) => {
+      const keys = Object.keys(item);
+      keys.forEach((kItem) => {
         const values = item[kItem];
-        if(values instanceof Array) {
-          str += `"${values.join(";")}",`
+        if (values instanceof Array) {
+          str += `"${values.join(";")}",`;
         } else if (kItem === "updated_at") {
-          str += `\t${timestampToTime(values)},`
+          str += `\t${timestampToTime(values)},`;
         } else if (kItem === "score_threshold") {
-          str += `${(values*100).toFixed(0)}%,`
+          str += `${(values * 100).toFixed(0)}%,`;
         } else {
-          str += `"\t${values}",`
+          str += `"\t${values}",`;
         }
-      })
+      });
       str += "\n";
     });
     return "data:text/csv;charset=utf-8,\ufeff" + encodeURIComponent(str);
-  }, [fields, list])
+  }, [fields, list]);
   const handleClick: DOMAttributes<HTMLAnchorElement>["onClick"] = (e) => {
-    if(onClick()) return;
+    if (onClick()) return;
     e.preventDefault();
-  }
+  };
   return (
-    <Button
-      color="primary"
-      variant="contained"
-      className={css.okBtn}
-      href={uri}
-      download={`${downloadname}.csv`}
-      onClick={handleClick}
-      >
+    <Button color="primary" variant="contained" className={css.okBtn} href={uri} download={`${downloadname}.csv`} onClick={handleClick}>
       {label}
     </Button>
-  )
+  );
 }

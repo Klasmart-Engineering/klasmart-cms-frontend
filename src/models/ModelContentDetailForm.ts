@@ -1,9 +1,16 @@
-import { EntityContentInfoWithDetails, EntityCreateContentRequest, EntityOutcome, ModelPublishedOutcomeView } from "@api/api.auto";
+import {
+  EntityContentInfoWithDetails,
+  EntityCreateContentRequest,
+  EntityOutcome,
+  EntityTreeResponse,
+  ModelPublishedOutcomeView,
+} from "@api/api.auto";
 import { ContentFileType, ContentInputSourceType, ContentType } from "@api/type";
 import { d } from "@locale/LocaleManager";
+import { FolderTreeBoxProps } from "@pages/MyContentList/FolderTreeBox";
 import { LinkedMockOptions, LinkedMockOptionsItem } from "@reducers/contentEdit/programsHandler";
 import { ModelLessonPlan, Segment } from "./ModelLessonPlan";
-
+const ROOTPATH = "/";
 interface MyExtendedDetailForm {
   outcome_entities?: EntityContentInfoWithDetails["outcome_entities"];
 }
@@ -154,3 +161,23 @@ export const getOutcomeList = (list: ModelPublishedOutcomeView[]): EntityOutcome
       } as EntityOutcome)
   );
 };
+
+interface GetSelectLabelProps extends Pick<FolderTreeBoxProps, "defaultPath"> {
+  folders: EntityTreeResponse;
+}
+interface GetSelectLabelReturn {
+  item_count?: number;
+  name?: string;
+}
+export function getSelectLabel(props: GetSelectLabelProps): GetSelectLabelReturn {
+  const { defaultPath, folders } = props;
+  if (defaultPath === ROOTPATH) return { name: folders.name, item_count: folders.item_count };
+  const [, id, ...path] = defaultPath.split(ROOTPATH);
+  const nextNode = id ? folders?.children?.find((folder) => folder.id === id) : {};
+  const newPath = ROOTPATH + path.join(ROOTPATH);
+  if (newPath === ROOTPATH) {
+    return { name: nextNode?.name, item_count: nextNode?.item_count };
+  } else {
+    return getSelectLabel({ folders: nextNode || {}, defaultPath: newPath });
+  }
+}

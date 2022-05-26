@@ -240,36 +240,36 @@ export const recursiveGetOutcomes = async (
 ): Promise<DownloadOutcomeListResult> => {
   const { page, outcome_ids } = query;
   let downloadOutcomes = outcomes ? [...outcomes] : [];
-  if(oIds && outcome_ids) {
+  if (oIds && outcome_ids) {
     const length = oIds.length;
     const { data } = await api.learningOutcomes.exportLearningOutcomes({ ...query, page: 1, outcome_ids: outcome_ids.slice(0, 50) });
-    if(data) {
+    if (data) {
       downloadOutcomes = [...downloadOutcomes, ...data];
-      if(length > downloadOutcomes.length) {
-        const start = (page!) * 50;
+      if (length > downloadOutcomes.length) {
+        const start = page! * 50;
         const end = (page! + 1) * 50;
         // const end = pageEnd > length ? length : pageEnd;
         console.log(start, end);
-        return recursiveGetOutcomes({ ...query, page: (page! + 1), outcome_ids: oIds?.slice(start, end) }, downloadOutcomes, oIds)
+        return recursiveGetOutcomes({ ...query, page: page! + 1, outcome_ids: oIds?.slice(start, end) }, downloadOutcomes, oIds);
       }
     }
     return new Promise((resolve) => {
-      resolve(downloadOutcomes)
-    })
+      resolve(downloadOutcomes);
+    });
   } else {
     const { data, total_count } = await api.learningOutcomes.exportLearningOutcomes(query);
-    if(data) {
+    if (data) {
       downloadOutcomes = [...downloadOutcomes, ...data];
-      if(total_count && total_count > downloadOutcomes.length) {
-        const page = downloadOutcomes.length/50 + 1;
-        return recursiveGetOutcomes({ ...query, page }, downloadOutcomes)
+      if (total_count && total_count > downloadOutcomes.length) {
+        const page = downloadOutcomes.length / 50 + 1;
+        return recursiveGetOutcomes({ ...query, page }, downloadOutcomes);
       }
     }
     return new Promise((resolve) => {
-      resolve(downloadOutcomes)
-    })
+      resolve(downloadOutcomes);
+    });
   }
-}
+};
 
 type IQueryDownloadOutcomesParams = Parameters<typeof api.learningOutcomes.exportLearningOutcomes>[0] & LoadingMetaPayload;
 type IQueryDownloadOutcomesResult = AsyncReturnType<typeof recursiveGetOutcomes>;
@@ -278,7 +278,7 @@ export const exportOutcomes = createAsyncThunk<IQueryDownloadOutcomesResult, IQu
   (query) => {
     return recursiveGetOutcomes(query, [], query.outcome_ids);
   }
-)
+);
 
 type ParamDeleteLearningOutcome = Parameters<typeof api.learningOutcomes.deleteLearningOutcome>[0];
 export const deleteOutcome = createAsyncThunk<string, ParamDeleteLearningOutcome>("outcome/deleteOutcome", async (id, { dispatch }) => {
@@ -631,7 +631,7 @@ const { actions, reducer } = createSlice({
     },
     [exportOutcomes.fulfilled.type]: (state, { payload }: PayloadAction<AsyncTrunkReturned<typeof exportOutcomes>>) => {
       state.downloadOutcomes = payload;
-    }
+    },
   },
 });
 export const { resetShortCode, setSelectedIds, resetSelectedIds } = actions;

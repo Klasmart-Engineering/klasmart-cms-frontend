@@ -13,7 +13,7 @@ interface AudioViewProps {
 }
 
 export const AudioView = ({ userId, roomId, h5pId, h5pSubId, resourceType }: AudioViewProps) => {
-  const { userAgent } = navigator; 
+  const { userAgent } = navigator;
   const isSafari = userAgent.indexOf("Safari") > -1 && userAgent.indexOf("Chrome") < 0 && userAgent.indexOf("CriOS") < 0;
   const { loading, error, mediaMetadata } = useAudioMetadata({
     userId,

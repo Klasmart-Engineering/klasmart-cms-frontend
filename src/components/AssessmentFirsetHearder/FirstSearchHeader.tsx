@@ -110,14 +110,15 @@ export function FirstSearchHeader() {
             <Grid item md={3} lg={5} xl={7}>
               {pathname.indexOf(OutcomeList.routeBasePath) >= 0 && (
                 <Permission value={PermissionType.create_learning_outcome_421}>
-                  <Button 
+                  <Button
                     onClick={() => {
                       dispatch(resetSelectedIds({}));
-                      history.push(CreateOutcomings.routeBasePath)
+                      history.push(CreateOutcomings.routeBasePath);
                     }}
-                    variant="contained" 
-                    color="primary" 
-                    className={css.createBtn}>
+                    variant="contained"
+                    color="primary"
+                    className={css.createBtn}
+                  >
                     {d("Create").t("assess_label_create")} +
                   </Button>
                 </Permission>
@@ -144,7 +145,7 @@ export function FirstSearchHeader() {
                 <Button
                   onClick={() => {
                     dispatch(resetSelectedIds({}));
-                    history.push(MilestonesList.routeRedirectDefault)
+                    history.push(MilestonesList.routeRedirectDefault);
                   }}
                   className={clsx(css.nav, { [css.actives]: pathname.indexOf(MilestonesList.routeBasePath) >= 0 })}
                   startIcon={<FlagOutlinedIcon />}
@@ -161,7 +162,7 @@ export function FirstSearchHeader() {
                 <Button
                   onClick={() => {
                     dispatch(resetSelectedIds({}));
-                    history.push(ListAssessment.routeRedirectDefault)
+                    history.push(ListAssessment.routeRedirectDefault);
                   }}
                   className={clsx(css.nav, { [css.actives]: hightLightAssessment })}
                   startIcon={<TimelineOutlinedIcon />}
@@ -218,7 +219,7 @@ export function FirstSearchHeaderMb() {
                     className={classes.capitalize}
                     onClick={() => {
                       dispatch(resetSelectedIds({}));
-                      history.push(MilestonesList.routeBasePath)
+                      history.push(MilestonesList.routeBasePath);
                     }}
                   />
                 )}
@@ -234,7 +235,7 @@ export function FirstSearchHeaderMb() {
                   className={classes.capitalize}
                   onClick={() => {
                     dispatch(resetSelectedIds({}));
-                    history.push(ListAssessment.routeRedirectDefault)
+                    history.push(ListAssessment.routeRedirectDefault);
                   }}
                 />
               </Tabs>

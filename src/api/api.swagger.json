@@ -3234,6 +3234,66 @@
         }
       }
     },
+    "/folders/tree": {
+      "get": {
+        "description": "get tree",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "tags": ["folder"],
+        "summary": "getTree",
+        "operationId": "getTree",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "search content key",
+            "name": "key",
+            "in": "query"
+          },
+          {
+            "enum": ["all", "name"],
+            "type": "string",
+            "description": "search key type",
+            "name": "type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "enum": ["me", "all"],
+            "type": "string",
+            "description": "search role",
+            "name": "role",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/entity.TreeResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/api.BadRequestResponse"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/api.ForbiddenResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/api.InternalServerErrorResponse"
+            }
+          }
+        }
+      }
+    },
     "/grades": {
       "get": {
         "description": "get grade",
@@ -11540,6 +11600,9 @@
             "type": "string"
           }
         },
+        "is_locked": {
+          "type": "boolean"
+        },
         "keywords": {
           "type": "string"
         },
@@ -12697,6 +12760,14 @@
         "start_at_ge": {
           "type": "integer"
         },
+        "study_types": {
+          "description": "indicates query different types of Study",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["normal", "homefun", "review"]
+          }
+        },
         "subject_ids": {
           "type": "array",
           "items": {
@@ -12787,6 +12858,12 @@
         },
         "start_at_ge": {
           "type": "integer"
+        },
+        "study_types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         },
         "subject_ids": {
           "type": "array",
@@ -13617,6 +13694,29 @@
           "items": {
             "type": "string"
           }
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "entity.TreeResponse": {
+      "type": "object",
+      "properties": {
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/entity.TreeResponse"
+          }
+        },
+        "dir_path": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "item_count": {
+          "type": "integer"
         },
         "name": {
           "type": "string"

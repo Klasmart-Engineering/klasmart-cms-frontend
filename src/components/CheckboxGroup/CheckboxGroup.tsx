@@ -34,7 +34,7 @@ export function CheckboxGroup(props: CheckboxGroupProps) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const allValue = props.allValue ?? [];
   const hashValue = useMemo(() => toHash(value), [value]);
-  const isAllvalue = allValue.length > 0  && allValue.every(item => value.indexOf(item) >= 0);
+  const isAllvalue = allValue.length > 0 && allValue.every((item) => value.indexOf(item) >= 0);
   const registerChange = useMemo<CheckboxGroupContext["registerChange"]>(
     () => (event) => {
       const { checked, value } = event.target;

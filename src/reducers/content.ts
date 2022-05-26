@@ -35,6 +35,7 @@ import {
   EntityOutcomeCondition,
   EntityQueryContentItem,
   EntityRegionOrganizationInfo,
+  EntityTreeResponse,
   ModelPublishedOutcomeView,
   ModelSearchPublishedOutcomeResponse,
 } from "../api/api.auto";
@@ -92,6 +93,7 @@ interface IContentState {
   myOrgId: string;
   user_id: string;
   scheduleDetailsViewContentPreview: EntityContentInfoWithDetails;
+  folderTreeData: EntityTreeResponse;
 }
 
 interface RootState {
@@ -242,6 +244,7 @@ const initialState: IContentState = {
   myOrgId: "",
   user_id: "",
   scheduleDetailsViewContentPreview: {},
+  folderTreeData: {},
 };
 const UNKNOW_ERROR_LABEL: LangRecordId = "general_error_unknown";
 
@@ -518,6 +521,15 @@ export const onLoadContentList = createAsyncThunk<IQyertOnLoadContentListResult,
     if (!isExectSearch) delete params.content_name;
     if (publish_status === PublishStatus.published || content_type === String(SearchContentsRequestContentType.assetsandfolder)) {
       delete params.program_group;
+      if (content_type !== String(SearchContentsRequestContentType.assetsandfolder)) {
+        await dispatch(
+          getFolderTree({
+            key: (isExectSearch ? contentNameValue : nameValue) || "",
+            type: isExectSearch ? "name" : "all",
+            role: author ? "me" : "all",
+          })
+        );
+      }
       let folderRes = await api.contentsFolders.queryFolderContent(params);
       const authorIds: string[] = [];
 
@@ -625,6 +637,10 @@ export const onLoadContentPreview = createAsyncThunk<IQyeryOnLoadCotnentPreviewR
     const user_id = myUser?.node?.id || "";
     return { contentDetail, user_id };
   }
+);
+export const getFolderTree = createAsyncThunk<EntityTreeResponse, Parameters<typeof api.folders.getTree>[0]>(
+  "content/getFolderTree",
+  async ({ ...query }) => await api.folders.getTree(query)
 );
 export const getLiveToken = createAsyncThunk<string, IQueryOnLoadContentPreviewParams>(
   "content/getLiveToken",
@@ -1364,6 +1380,12 @@ const { actions, reducer } = createSlice({
       { payload }: PayloadAction<AsyncTrunkReturned<typeof getScheduleLiveLessonPlan>>
     ) => {
       state.contentPreview = payload;
+    },
+    [getFolderTree.pending.type]: (state, { payload }: PayloadAction<AsyncTrunkReturned<typeof getFolderTree>>) => {
+      state.folderTreeData = cloneDeep(initialState.folderTreeData);
+    },
+    [getFolderTree.fulfilled.type]: (state, { payload }: PayloadAction<AsyncTrunkReturned<typeof getFolderTree>>) => {
+      state.folderTreeData = payload;
     },
   },
 });

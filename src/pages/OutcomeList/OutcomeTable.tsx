@@ -8,7 +8,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Tooltip
+  Tooltip,
 } from "@material-ui/core";
 import { makeStyles, Theme, withStyles } from "@material-ui/core/styles";
 import { CheckBox, CheckBoxOutlineBlank } from "@material-ui/icons";
@@ -180,7 +180,13 @@ function OutomeRow(props: OutcomeProps) {
   const score_threshold = outcome.score_threshold ? Math.floor(outcome.score_threshold * 100) : 0;
   return (
     <TableRow className={isLocked ? css.disableTableRow : ""} onClick={(e) => onClickOutcome(outcome.outcome_id)}>
-      <TableCell onClick={stopPropagation()} className={isLocked ? css.disableTableCell : ""} style={{ width: 100 }} align="center" padding="checkbox">
+      <TableCell
+        onClick={stopPropagation()}
+        className={isLocked ? css.disableTableCell : ""}
+        style={{ width: 100 }}
+        align="center"
+        padding="checkbox"
+      >
         {isLocked && (
           <LightTooltip
             title={
@@ -363,7 +369,7 @@ export function OutcomeTable(props: OutcomeTableProps) {
   const amountPerPage = props.amountPerPage ?? 20;
   // const allValue = useMemo(() => list.map((outcome) => outcome.outcome_id as string), [list]);
   const allValue = useMemo(
-    () => list.filter((outcome) => (!outcome.locked_by || outcome.locked_by === "-")).map(item => item.outcome_id!),
+    () => list.filter((outcome) => !outcome.locked_by || outcome.locked_by === "-").map((item) => item.outcome_id!),
     [list]
   );
   const { control } = formMethods;
