@@ -4,6 +4,7 @@ import TreeViewFolder from "@components/TreeViewFolder";
 import { t } from "@locale/LocaleManager";
 import { createStyles, Dialog, DialogContent, DialogTitle, IconButton, makeStyles, Typography } from "@material-ui/core";
 import { ArrowDropDown, ArrowDropUp, ArrowRight, Close } from "@material-ui/icons";
+import { getSelectLabel } from "@models/ModelContentDetailForm";
 import React, { useReducer } from "react";
 
 const useStyles = makeStyles((theme) =>
@@ -30,9 +31,9 @@ const useStyles = makeStyles((theme) =>
       borderRadius: 5,
     },
     folderTree: {
-      overflowY: "scroll",
+      overflowY: "auto",
       overflowX: "hidden",
-      padding: "15px",
+      paddingTop: "15px",
 
       "&::-webkit-scrollbar": {
         width: "8px",
@@ -105,7 +106,7 @@ export function FolderTreeBox(props: FolderTreeBoxProps) {
   const css = useStyles();
   const { sm, folders, defaultPath, onClickFolderPath, parentFolderInfo } = props;
   const [open, toggle] = useReducer((open) => !open, false);
-  const total = parentFolderInfo?.available;
+  const { item_count } = getSelectLabel({ defaultPath, folders });
   return (
     <>
       {!sm && (
@@ -121,6 +122,7 @@ export function FolderTreeBox(props: FolderTreeBoxProps) {
               defaultExpandIcon={<ArrowRight />}
               defaultIconPosition="left"
               defaultPath={defaultPath}
+              paddingLeft={15}
             />
           </div>
         </div>
@@ -135,7 +137,7 @@ export function FolderTreeBox(props: FolderTreeBoxProps) {
                   <div style={{ width: "calc(100% - 35px)", display: "flex", alignItems: "center" }}>
                     <Typography component="div" noWrap>
                       {parentFolderInfo?.name || t("library_label_hierarchy_root_folder")}
-                      {!!total && <span style={{ color: "#4B88F5" }}> ({total <= 9 ? total : "9+"})</span>}
+                      {!!item_count && <span style={{ color: "#4B88F5" }}> ({item_count <= 9 ? item_count : "9+"})</span>}
                     </Typography>
                   </div>
                 </div>
@@ -164,6 +166,7 @@ export function FolderTreeBox(props: FolderTreeBoxProps) {
                   defaultExpandIcon={<ArrowDropDown />}
                   defaultIconPosition="right"
                   defaultPath={defaultPath}
+                  paddingLeft={15}
                 />
               </div>
             </DialogContent>

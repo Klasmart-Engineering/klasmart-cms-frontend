@@ -18,6 +18,7 @@ export interface TreeNodeProps {
   defaultExpandIcon: ReactNode;
   defaultIconPosition: "left" | "right";
   defaultPath: string;
+  paddingLeft: number;
 }
 export const TreeContext = React.createContext<IState>({ path: "" });
 

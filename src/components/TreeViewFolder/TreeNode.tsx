@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) =>
       lineHeight: 36 / 14,
       display: "flex",
       alignItems: "center",
+      justifyContent: "initial",
       paddingLeft: 4,
       paddingRight: 4,
     },
@@ -59,12 +60,15 @@ const useStyles = makeStyles((theme) =>
   })
 );
 const useActiveBgStyles = makeStyles({
-  treeBg: ({ defaultIconPosition, isActive }: ActiveBgStylesProps) => ({
+  treeBg: ({ defaultIconPosition, isActive, paddingLeft }: ActiveBgStylesProps) => ({
     display: "flex",
     justifyContent: defaultIconPosition === "right" ? "space-between" : "",
+    cursor: "pointer",
+    paddingLeft,
+    paddingRight: 15,
     backgroundColor: isActive ? "#ECF3FE" : "",
     "&:hover": {
-      //  backgroundColor:isActive? "#ECF3FE" : "#f0f0f0",
+      backgroundColor: isActive ? "#ECF3FE" : "#f0f0f0",
     },
   }),
 });
@@ -72,17 +76,18 @@ const ROOT_PATH = "/";
 interface ActiveBgStylesProps {
   defaultIconPosition: TreeNodeProps["defaultIconPosition"];
   isActive: boolean;
+  paddingLeft: number;
 }
 
 export function TreeNode(props: TreeNodeProps) {
-  const { defaultPath, handleLabelClick, defaultCollapseIcon, defaultExpandIcon, defaultIconPosition } = props;
+  const { defaultPath, handleLabelClick, defaultCollapseIcon, defaultExpandIcon, defaultIconPosition, paddingLeft } = props;
   const { children, name: folderName, dir_path, id, item_count } = props.node;
   const defaultExpandIds = defaultPath.split(ROOT_PATH);
   defaultExpandIds.pop();
   const [showChildren, setShowChildren] = useState(defaultExpandIds.indexOf(id || "") > -1);
   const css = useStyles();
   const path = `${dir_path === ROOT_PATH ? "" : dir_path}/${id}`;
-  const bgcss = useActiveBgStyles({ isActive: path === defaultPath, defaultIconPosition });
+  const bgcss = useActiveBgStyles({ isActive: path === defaultPath, defaultIconPosition, paddingLeft });
   const name = id === "" ? t("library_label_hierarchy_root_folder") : folderName;
 
   const Icons = (
@@ -121,8 +126,10 @@ export function TreeNode(props: TreeNodeProps) {
         </div>
         {defaultIconPosition === "right" && Icons}
       </div>
-      <div style={{ paddingLeft: "20px" }}>
-        {showChildren && children && children.map((node) => <TreeNode {...props} node={node} key={node.id} />)}
+      <div>
+        {showChildren &&
+          children &&
+          children.map((node) => <TreeNode {...props} node={node} key={node.id} paddingLeft={paddingLeft + 20} />)}
       </div>
     </div>
   );
