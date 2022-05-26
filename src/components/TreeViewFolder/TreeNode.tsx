@@ -68,7 +68,7 @@ const useActiveBgStyles = makeStyles({
     paddingRight: 15,
     backgroundColor: isActive ? "#ECF3FE" : "",
     "&:hover": {
-      backgroundColor: isActive ? "#ECF3FE" : "#f0f0f0",
+      backgroundColor: "#ECF3FE",
     },
   }),
 });
