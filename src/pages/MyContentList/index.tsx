@@ -486,7 +486,7 @@ export default function MyContentList() {
                 onClickFolderPath={handleClickFolderPath}
               />
             )}
-            <div style={{ flex: 1 }}>
+            <div style={{ width: showFolderTree && !sm ? "70%" : "100%" }}>
               {hasPerm && (
                 <>
                   <ThirdSearchHeader
