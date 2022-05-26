@@ -2168,6 +2168,7 @@ const { actions, reducer } = createSlice({
     [getLessonPlan.pending.type]: (state, action: PayloadAction<AsyncTrunkReturned<typeof getLessonPlan>>) => {
       state.reportMockOptions.lessonPlanList = [];
       state.reportMockOptions.lesson_plan_id = "";
+      state.reportList = cloneDeep(initialState.reportList);
     },
     [getLessonPlan.rejected.type]: (state, { error }: any) => {
       // alert(JSON.stringify(error));
@@ -2191,6 +2192,7 @@ const { actions, reducer } = createSlice({
     },
     [reportOnload.pending.type]: (state) => {
       state.reportMockOptions = cloneDeep(initialState.reportMockOptions);
+      state.reportList = cloneDeep(initialState.reportList);
     },
     [getLearnerWeeklyReportOverview.fulfilled.type]: (
       state,
