@@ -858,7 +858,7 @@
     "report_msg_individual_infor": "您可通过该报表查看单独学生基于学习成果的学习情况。",
     "report_msg_overall_infor": "学习成果报告可以深入了解班级在学习成果方面的表现以及学生之间的比较。单击学生姓名可查看个别学生的详细信息。\n <ul>\n <li>报告显示实时、课堂和学习评估的结果。\n </li>\n <li>在 Live 和 Class 中看到学生缺勤意味着学习者没有出席。\n </li>\n <li>研究中发现学生缺勤意味着学习者根本没有尝试。 </li>\n </ul>",
     "report_msg_no_achieve": "无有效数据",
-    "report_msg_no_plan": "该老师没有课件.",
+    "report_msg_no_plan": "该老师没有课件。",
     "report_button_create_plan": "创建课件",
     "report_label_0_hour": "0 小时 ",
     "report_achieved_lo": "达标的学习成果",
