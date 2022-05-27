@@ -858,7 +858,7 @@
     "report_msg_individual_infor": "This report offers insight into an individual student’s performance in a lesson in terms of learning outcomes.",
     "report_msg_overall_infor": "The Learning Outcome Report gives insight into the performance of a class in terms of learning outcomes, and comparisons between students. Click a student name for individual student details.\n<ul>\n  <li>The report shows results from Live, Class, and Study assessments.\n</li>\n  <li>Student absences seen in the Live and Class mean that learner wasn’t attended.\n</li>\n  <li>Student absences seen in the Study mean that the learner didn’t try at all.</li>\n</ul>",
     "report_msg_no_achieve": "No achievement data available for this lesson.",
-    "report_msg_no_plan": "There are no lesson plans for this teacher. Would you like to add one?",
+    "report_msg_no_plan": "There are no lesson plans for this teacher.",
     "report_button_create_plan": "Create a Lesson Plan",
     "report_label_0_hour": "0 Hour",
     "report_achieved_lo": "Achieved of All Learning Outcomes",
@@ -1160,5 +1160,9 @@
     "assessment_lo_download_column_title": "Select which columns to include:",
     "assessment_lo_download_object_quantity": "(There are {quantity} rows to download)",
     "schedule_msg_no_permission_to_be_redirected": "You do not have permission. Redirecting...",
-    "library_label_hierarchy_folder_tree": "Folder Tree"
+    "library_label_hierarchy_folder_tree": "Folder Tree",
+    "library_tooltip_zoom_in": "Zoom In",
+    "library_tooltip_zoom_out": "Zoom Out",
+    "library_tooltip_fit_to_width": "Fit to Width",
+    "library_tooltip_fit_to_height": "Fit to Height"
 }

@@ -858,7 +858,7 @@
     "report_msg_individual_infor": "Báo cáo này cung cấp thông tin về thành tích của cá nhân học sinh về mặt kết quả học tập trong một bài học .",
     "report_msg_overall_infor": "Báo cáo kết quả học tập cung cấp cái nhìn sâu sắc về hiệu suất của một lớp học về kết quả học tập và so sánh giữa các học sinh. Bấm vào tên học sinh để biết chi tiết từng học sinh.\n<ul>\n  <li>Báo cáo cho thấy kết quả từ các đánh giá Trực tuyến, tại lớp và bài tập về nhà.\n</li>\n  <li>Sự vắng mặt của học sinh được nhìn thấy trong lớp học trực tuyến và tại lớp có nghĩa là người học không tham dự.\n</li>\n  <li>Sự vắng mặt của học sinh được nhìn thấy trong bài tập về nhà có nghĩa là người học đã không nổ lực cố gắng.</li>\n</ul>",
     "report_msg_no_achieve": "Không có dữ liệu thành tích cho bài học này.",
-    "report_msg_no_plan": "Giáo viên này không có kế hoạch bài giảng. Bạn có muốn thêm vào không?",
+    "report_msg_no_plan": "Giáo viên này không có kế hoạch bài giảng.",
     "report_button_create_plan": "Tạo Kế hoạch bài giảng",
     "report_label_0_hour": "0 giờ",
     "report_achieved_lo": "Tất cả các kết quả học tập đã đạt được",
@@ -1160,5 +1160,9 @@
     "assessment_lo_download_column_title": "Chọn các cột cần thiết:",
     "assessment_lo_download_object_quantity": "(Có tổng cộng {quantity} hàng sẽ được tải xuống)",
     "schedule_msg_no_permission_to_be_redirected": "Bạn không được phép truy cập tính năng này. Đang điều hướng...",
-    "library_label_hierarchy_folder_tree": "Folder Tree"
+    "library_label_hierarchy_folder_tree": "Folder Tree",
+    "library_tooltip_zoom_in": "Zoom In",
+    "library_tooltip_zoom_out": "Zoom Out",
+    "library_tooltip_fit_to_width": "Fit to Width",
+    "library_tooltip_fit_to_height": "Fit to Height"
 }

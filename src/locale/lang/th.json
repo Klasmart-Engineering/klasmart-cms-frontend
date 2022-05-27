@@ -858,7 +858,7 @@
     "report_msg_individual_infor": "รายงานนี้นำเสนอข้อมูลเชิงลึกเกี่ยวกับประสิทธิภาพของนักเรียนแต่ละคนในบทเรียนในแง่ของผลการเรียนรู้",
     "report_msg_overall_infor": "รายงานผลสัมฤทธิ์ของนักเรียนโดยรวมให้ข้อมูลเชิงลึกเกี่ยวกับประสิทธิภาพของชั้นเรียนในแง่ของผลการเรียนรู้ และการเปรียบเทียบระหว่างนักเรียน คลิกชื่อนักเรียนเพื่อดูรายละเอียดนักเรียนแต่ละคน",
     "report_msg_no_achieve": "ไม่มีข้อมูลความสำเร็จสำหรับบทเรียนนี้",
-    "report_msg_no_plan": "ไม่มีแผนการสอนสำหรับครูคนนี้ คุณต้องการเพิ่มหรือไม่",
+    "report_msg_no_plan": "ไม่มีแผนการสอนสำหรับครูคนนี้",
     "report_button_create_plan": "สร้างแผนการสอน",
     "report_label_0_hour": "0 ชั่วโมง",
     "report_achieved_lo": "บรรลุผลการเรียนรู้ทั้งหมด",
@@ -1160,5 +1160,9 @@
     "assessment_lo_download_column_title": "เลือกคอลัมน์ที่จะรวม:",
     "assessment_lo_download_object_quantity": "(มี {quantity} แถวให้ดาวน์โหลด)",
     "schedule_msg_no_permission_to_be_redirected": "คุณไม่ได้รับอนุญาต. กำลังเปลี่ยนเส้นทาง...",
-    "library_label_hierarchy_folder_tree": "Folder Tree"
+    "library_label_hierarchy_folder_tree": "Folder Tree",
+    "library_tooltip_zoom_in": "Zoom In",
+    "library_tooltip_zoom_out": "Zoom Out",
+    "library_tooltip_fit_to_width": "Fit to Width",
+    "library_tooltip_fit_to_height": "Fit to Height"
 }

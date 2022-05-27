@@ -858,7 +858,7 @@
     "report_msg_individual_infor": "이 리포트는 학습 결과 측면에서 수업에서 개별 학생이 성취한 결과에 대한 통찰을 제공합니다.",
     "report_msg_overall_infor": "학습 결과 보고서는 학습 결과 및 학생들 간의 비교 측면에서 수업의 성과에 대한 통찰을 제공합니다. 개별 학생 세부 정보를 보려면 학생 이름을 클릭하십시오.",
     "report_msg_no_achieve": "이 레슨에 사용할 수 있는 학습내용 성취 데이터가 없습니다.",
-    "report_msg_no_plan": "이 교사에 대한 수업 계획이 없습니다. 추가하시겠습니까?",
+    "report_msg_no_plan": "이 교사에 대한 수업 계획이 없습니다.",
     "report_button_create_plan": "레슨 계획 만들기",
     "report_label_0_hour": "0시간",
     "report_achieved_lo": "모든 학습 결과 달성",
@@ -1160,5 +1160,9 @@
     "assessment_lo_download_column_title": "포함할 열 선택:",
     "assessment_lo_download_object_quantity": "(다운로드할 {quantity}개의 행이 있습니다.)",
     "schedule_msg_no_permission_to_be_redirected": "권한이 없습니다. 리디렉션...",
-    "library_label_hierarchy_folder_tree": "Folder Tree"
+    "library_label_hierarchy_folder_tree": "Folder Tree",
+    "library_tooltip_zoom_in": "Zoom In",
+    "library_tooltip_zoom_out": "Zoom Out",
+    "library_tooltip_fit_to_width": "Fit to Width",
+    "library_tooltip_fit_to_height": "Fit to Height"
 }
