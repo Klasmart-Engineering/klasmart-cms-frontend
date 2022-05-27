@@ -1,4 +1,15 @@
-import { Button, createStyles, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, makeStyles } from "@material-ui/core";
+import { TooltipWhite } from "@components/TreeViewFolder/TreeNode";
+import {
+  Button,
+  createStyles,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  makeStyles,
+  Typography,
+} from "@material-ui/core";
 import { AddBoxOutlined, Close, CreateNewFolderOutlined, Folder, IndeterminateCheckBoxOutlined } from "@material-ui/icons";
 import { TreeItem, TreeView } from "@material-ui/lab";
 import React, { useMemo, useState } from "react";
@@ -25,6 +36,7 @@ const useStyles = makeStyles((theme) =>
     },
     dialog: {
       minWidth: "50vw",
+      width: "100%",
     },
     dialogActions: {
       width: "100%",
@@ -67,7 +79,13 @@ export function FolderTree(props: FolderTreeProps) {
         label={
           <div className={css.treeItem}>
             <Folder className={css.folderIcon} />
-            {folder.name}
+            {folder.name && (
+              <TooltipWhite placement="top" arrow title={folder.name}>
+                <Typography component="div" noWrap>
+                  {folder.name}
+                </Typography>
+              </TooltipWhite>
+            )}
           </div>
         }
       >
