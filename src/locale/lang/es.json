@@ -858,7 +858,7 @@
     "report_msg_individual_infor": "Este informe ofrece una visión del rendimiento de un estudiante individual en una lección en términos de resultados de aprendizaje.",
     "report_msg_overall_infor": "El informe de rendimiento global de los estudiantes ofrece una visión del rendimiento de una clase en términos de resultados de aprendizaje, así como comparaciones entre los estudiantes. Haga clic en el nombre de un estudiante para ver los detalles de cada uno de ellos.",
     "report_msg_no_achieve": "No hay datos de rendimiento disponibles para esta lección.",
-    "report_msg_no_plan": "No hay planes de lecciones para este profesor. ¿Le gustaría añadir uno?",
+    "report_msg_no_plan": "No hay planes de lecciones para este profesor.",
     "report_button_create_plan": "Crear un plan de lección",
     "report_label_0_hour": "0 horas",
     "report_achieved_lo": "Conseguido de todos los resultados de aprendizaje",
@@ -1160,5 +1160,9 @@
     "assessment_lo_download_column_title": "Seleccione las columnas que desea incluir:",
     "assessment_lo_download_object_quantity": "(Hay {quantity} filas para descargar)",
     "schedule_msg_no_permission_to_be_redirected": "No tiene permiso. Redirigiendo...",
-    "library_label_hierarchy_folder_tree": "Folder Tree"
+    "library_label_hierarchy_folder_tree": "Folder Tree",
+    "library_tooltip_zoom_in": "Zoom In",
+    "library_tooltip_zoom_out": "Zoom Out",
+    "library_tooltip_fit_to_width": "Fit to Width",
+    "library_tooltip_fit_to_height": "Fit to Height"
 }

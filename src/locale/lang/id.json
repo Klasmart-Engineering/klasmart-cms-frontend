@@ -858,7 +858,7 @@
     "report_msg_individual_infor": "Laporan ini memperlihatkan informasi tentang kinerja individu siswa di pelajaran berdasarkan hasilnya.",
     "report_msg_overall_infor": "Laporan Prestasi Siswa Menyeluruh memberikan informasi mengenai kinerja kelas dalam memberikan hasil belajar, dan perbandingan antar siswa. Klik nama siswa untuk melihat rincian siswa.",
     "report_msg_no_achieve": "Tidak ada data pencapaian yang tersedia untuk pelajaran ini.",
-    "report_msg_no_plan": "Tidak ada rencana pelajaran untuk guru ini. Mau menambahkan?",
+    "report_msg_no_plan": "Tidak ada rencana pelajaran untuk guru ini.",
     "report_button_create_plan": "Buat Rencana Pelajaran",
     "report_label_0_hour": "0 Jam",
     "report_achieved_lo": "Semua Hasil Belajar Tercapai",
@@ -1160,5 +1160,9 @@
     "assessment_lo_download_column_title": "Pilih kolom yang akan disertakan:",
     "assessment_lo_download_object_quantity": "(Ada {quantity} baris untuk diunduh)",
     "schedule_msg_no_permission_to_be_redirected": "Tidak punya izin. Mengalihkan...",
-    "library_label_hierarchy_folder_tree": "Folder Tree"
+    "library_label_hierarchy_folder_tree": "Bagan Folder",
+    "library_tooltip_zoom_in": "Zoom In",
+    "library_tooltip_zoom_out": "Zoom Out",
+    "library_tooltip_fit_to_width": "Fit to Width",
+    "library_tooltip_fit_to_height": "Fit to Height"
 }
