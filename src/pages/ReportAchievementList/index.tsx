@@ -1,8 +1,7 @@
-import { enableNewGql, getDocumentUrl } from "@api/extra";
+import { enableNewGql } from "@api/extra";
 import PermissionType from "@api/PermissionType";
 import { usePermission } from "@hooks/usePermission";
 import useQueryCms from "@hooks/useQueryCms";
-import { Box, Button } from "@material-ui/core";
 import { RootState } from "@reducers/index";
 import { getAchievementList, getLessonPlan, Item, reportOnload } from "@reducers/report";
 import { AsyncTrunkReturned } from "@reducers/type";
@@ -14,7 +13,7 @@ import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { emptyTip, emptyTipAndCreate, permissionTip } from "../../components/TipImages";
-import { d, t } from "../../locale/LocaleManager";
+import { t } from "../../locale/LocaleManager";
 import { setQuery, toQueryString } from "../../models/ModelContentDetailForm";
 import { ReportAchievementDetail } from "../ReportAchievementDetail";
 import { ReportTitle } from "../ReportDashboard";
@@ -164,15 +163,6 @@ export function ReportAchievementList() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [history, reportMockOptions.teacher_id]);
 
-  const ChangeParentContainer = () => {
-    const parentContainerSrc = window.parent.document.getElementsByTagName("iframe").item(0);
-    if (parentContainerSrc) {
-      parentContainerSrc.src = getDocumentUrl("library");
-    } else {
-      window.location.href = "#/library";
-    }
-  };
-
   return (
     <>
       <ReportTitle title={t("report_label_student_achievement")} info={t("report_msg_overall_infor")}></ReportTitle>
@@ -189,20 +179,7 @@ export function ReportAchievementList() {
         ) : condition.lesson_plan_id ? (
           emptyTip
         ) : (
-          <>
-            {emptyTipAndCreate}
-            <Box style={{ textAlign: "center", padding: "2rem" }}>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => {
-                  ChangeParentContainer();
-                }}
-              >
-                {d("Create a Lesson Plan").t("report_button_create_plan")}
-              </Button>
-            </Box>
-          </>
+          emptyTipAndCreate
         )
       ) : (
         permissionTip
