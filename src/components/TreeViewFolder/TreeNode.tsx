@@ -1,6 +1,6 @@
 import folderIconUrl from "@assets/icons/foldericon.svg";
 import { t } from "@locale/LocaleManager";
-import { createStyles, makeStyles, Tooltip, Typography } from "@material-ui/core";
+import { createStyles, makeStyles, Theme, Tooltip, Typography, withStyles } from "@material-ui/core";
 import { Folder } from "@material-ui/icons";
 import { useState } from "react";
 import { TreeNodeProps } from ".";
@@ -41,22 +41,6 @@ const useStyles = makeStyles((theme) =>
       justifyContent: "center",
       alignItems: "center",
     },
-    tooltip: {
-      backgroundColor: theme.palette.common.white,
-      color: "rgba(0, 0, 0, 0.87)",
-      boxShadow: theme.shadows[1],
-      fontSize: 11,
-      margin: "10px 0",
-      padding: "6px 18px",
-    },
-    arrow: {
-      "&::before": {
-        boxShadow:
-          "rgb(0 0 0 / 20%) 0px 0px 0px 0px,rgb(0 0 0 / 20%) 0px 0px 0px 0px, rgb(0 0 0 / 14%) 0px 1px 1px 0px, rgb(0 0 0 / 14%) 0px 1px 1px 0px;",
-        backgroundColor: "#fff",
-        boxSizing: "border-box",
-      },
-    },
   })
 );
 const useActiveBgStyles = makeStyles({
@@ -91,8 +75,8 @@ export function TreeNode(props: TreeNodeProps) {
   const name = id === "" ? t("library_label_hierarchy_root_folder") : folderName;
 
   const Icons = (
-    <div className={css.iconBox} onClick={() => !!item_count && setShowChildren(!showChildren)}>
-      {!!item_count && (showChildren ? defaultCollapseIcon : defaultExpandIcon)}
+    <div className={css.iconBox} onClick={() => !!children?.length && setShowChildren(!showChildren)}>
+      {!!children?.length && (showChildren ? defaultCollapseIcon : defaultExpandIcon)}
     </div>
   );
   const label = (
@@ -118,11 +102,11 @@ export function TreeNode(props: TreeNodeProps) {
             ) : (
               <Folder className={css.folderIcon} />
             ))}
-          <Tooltip placement="top" arrow title={label} classes={{ tooltip: css.tooltip, arrow: css.arrow }}>
+          <TooltipWhite placement="top" arrow title={label}>
             <Typography component="div" noWrap>
               {label}
             </Typography>
-          </Tooltip>
+          </TooltipWhite>
         </div>
         {defaultIconPosition === "right" && Icons}
       </div>
@@ -134,3 +118,22 @@ export function TreeNode(props: TreeNodeProps) {
     </div>
   );
 }
+
+export const TooltipWhite = withStyles((theme: Theme) => ({
+  tooltip: {
+    backgroundColor: theme.palette.common.white,
+    color: "rgba(0, 0, 0, 0.87)",
+    boxShadow: theme.shadows[1],
+    fontSize: 11,
+    margin: "10px 0",
+    padding: "6px 18px",
+  },
+  arrow: {
+    "&::before": {
+      boxShadow:
+        "rgb(0 0 0 / 20%) 0px 0px 0px 0px,rgb(0 0 0 / 20%) 0px 0px 0px 0px, rgb(0 0 0 / 14%) 0px 1px 1px 0px, rgb(0 0 0 / 14%) 0px 1px 1px 0px;",
+      backgroundColor: "#fff",
+      boxSizing: "border-box",
+    },
+  },
+}))(Tooltip);

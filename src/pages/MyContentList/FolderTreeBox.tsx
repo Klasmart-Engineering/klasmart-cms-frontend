@@ -40,8 +40,6 @@ const useStyles = makeStyles((theme) =>
       },
 
       "&::-webkit-scrollbar-thumb": {
-        border: " 1px solid #000000",
-        boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
         borderRadius: "6px",
         background: "#c4c4c4",
       },
