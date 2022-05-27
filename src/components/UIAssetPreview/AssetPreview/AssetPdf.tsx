@@ -138,7 +138,7 @@ export default function AssetPdf(props: file) {
             <Typography className={css.zoomIcons} component="div">
               <Tooltip
                 title={intl.formatMessage({
-                  id: `tooltip.zoomIn`,
+                  id: `library_tooltip_zoom_in`,
                 })}
               >
                 {currentZoomType === "zoom-in" ? (
@@ -149,7 +149,7 @@ export default function AssetPdf(props: file) {
               </Tooltip>
               <Tooltip
                 title={intl.formatMessage({
-                  id: `tooltip.zoomOut`,
+                  id: `library_tooltip_zoom_out`,
                 })}
               >
                 {currentZoomType === "zoom-out" ? (
@@ -160,14 +160,15 @@ export default function AssetPdf(props: file) {
               </Tooltip>
               <Tooltip
                 title={intl.formatMessage({
-                  id: `tooltip.fitToWidth`,
+                  id: `library_tooltip_fit_to_width
+                  `,
                 })}
               >
                 <img alt="fit-to-width" onClick={handleWidthFit} className={css.zoomButton} src={fitToWidthIcon} />
               </Tooltip>
               <Tooltip
                 title={intl.formatMessage({
-                  id: `tooltip.fitToHeight`,
+                  id: `library_tooltip_fit_to_height`,
                 })}
               >
                 <img alt="fit-to-height" onClick={handleHeightFit} className={css.zoomButton} src={fitToHeightIcon} />
