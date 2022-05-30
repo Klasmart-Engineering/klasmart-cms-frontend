@@ -6,6 +6,7 @@ import Tabs from "@material-ui/core/Tabs";
 import { CheckBox, CheckBoxOutlineBlank, MoreHoriz } from "@material-ui/icons";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import ImportExportIcon from "@material-ui/icons/ImportExport";
+import clsx from "clsx";
 import produce from "immer";
 import React, { ChangeEvent, useMemo } from "react";
 import { UseFormMethods } from "react-hook-form";
@@ -19,7 +20,7 @@ import { d, t } from "../../locale/LocaleManager";
 import { content2ids } from "../../models/ModelEntityFolderContent";
 import { Action } from "../../reducers/content";
 import { isUnpublish } from "./FirstSearchHeader";
-import { filterOptions } from "./SecondSearchHeader";
+import { filterOptions, menuItemList } from "./SecondSearchHeader";
 import { ContentListForm, ContentListFormKey, QueryCondition, QueryConditionBaseProps } from "./types";
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -100,19 +101,14 @@ const useStyles = makeStyles((theme) => ({
       minWidth: 60,
     },
   },
-  unpubCon: {
+  selectBox: {
     display: "inline-block",
-    width: "calc(50% - 162px)",
-    padding: "12px",
-    boxSizing: "border-box",
-  },
-  notUnpubCon: {
-    display: "inline-block",
-    width: "50%",
     padding: "12px",
     boxSizing: "border-box",
   },
   bulkActionCon: {
+    width: 160,
+    marginRight: 20,
     "& .MuiInputLabel-outlined.MuiInputLabel-marginDense": {
       width: "calc(100% - 46px)",
       textOverflow: "ellipsis",
@@ -122,6 +118,24 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiInputLabel-outlined.MuiInputLabel-shrink": {
       width: "100%",
     },
+  },
+  badacontentSelectWidth: {
+    width: "100%",
+  },
+  publishedSelectWidthLeft: {
+    width: "70%",
+  },
+  publishedSelectWidthRight: {
+    width: "30%",
+  },
+  alignRight: {
+    textAlign: "right",
+  },
+  unpublishedSelectWidth: {
+    width: "calc(50% - 162px)",
+  },
+  ortherSelectWidth: {
+    width: "50%",
   },
 }));
 
@@ -509,6 +523,13 @@ export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
       })
     );
   };
+  const handleChangeFilterOption = (event: ChangeEvent<HTMLInputElement>) => {
+    const newValue = produce(value, (draft) => {
+      const content_type = event.target.value;
+      draft.content_type = content_type;
+    });
+    onChange({ ...newValue });
+  };
 
   const bulkOptions = getBulkAction(value, perm, actionObj).map((item) => (
     <MenuItem key={item.label} value={item.value}>
@@ -530,13 +551,18 @@ export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
         <Grid
           container
           spacing={3}
-          alignItems="center"
           style={{
             marginTop: "6px",
           }}
         >
           {!value.program_group && (
-            <div className={unpublish ? classes.unpubCon : classes.notUnpubCon}>
+            <div
+              className={clsx(classes.selectBox, {
+                [classes.publishedSelectWidthLeft]: value.publish_status === PublishStatus.published,
+                [classes.unpublishedSelectWidth]: value.publish_status !== PublishStatus.published && unpublish,
+                [classes.ortherSelectWidth]: value.publish_status !== PublishStatus.published && !unpublish,
+              })}
+            >
               <FormControlLabel
                 control={
                   <Checkbox
@@ -556,9 +582,6 @@ export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
               {bulkOptions.length > 0 && (
                 <TextField
                   className={classes.bulkActionCon}
-                  style={{
-                    width: 170,
-                  }}
                   size="small"
                   onChange={handleChangeBulkAction}
                   label={d("Bulk Actions").t("library_label_bulk_actions")}
@@ -576,6 +599,28 @@ export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
                   {bulkOptions}
                 </TextField>
               )}
+              {value.publish_status === PublishStatus.published && (
+                <TextField
+                  style={{
+                    width: 160,
+                  }}
+                  size="small"
+                  onChange={handleChangeFilterOption}
+                  label={d("Content Type").t("library_label_contentType")}
+                  value={value.content_type}
+                  select
+                  SelectProps={{
+                    MenuProps: {
+                      transformOrigin: {
+                        vertical: -40,
+                        horizontal: "left",
+                      },
+                    },
+                  }}
+                >
+                  {menuItemList(filterOptions(value))}
+                </TextField>
+              )}
             </div>
           )}
           {unpublish && (
@@ -585,13 +630,17 @@ export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
           )}
 
           <div
-            className={unpublish ? classes.unpubCon : classes.notUnpubCon}
-            style={{ textAlign: "right", width: value.program_group ? "100%" : "" }}
+            className={clsx(classes.selectBox, classes.alignRight, {
+              [classes.badacontentSelectWidth]: value.program_group,
+              [classes.publishedSelectWidthRight]: !value.program_group && value.publish_status === PublishStatus.published,
+              [classes.unpublishedSelectWidth]: !value.program_group && value.publish_status !== PublishStatus.published && unpublish,
+              [classes.ortherSelectWidth]: !value.program_group && value.publish_status !== PublishStatus.published && !unpublish,
+            })}
           >
             <TextField
               size="small"
               style={{
-                width: 200,
+                width: 160,
               }}
               onChange={handleChangeOrder}
               label={d("Sort By").t("library_label_sort_by")}
@@ -732,7 +781,6 @@ export function ThirdSearchHeaderMb(props: ThirdSearchHeaderProps) {
             {!value.program_group && (
               <span className={classes.selectAll}>{t("library_label_files_selected", { value: ids.length.toString() })}</span>
             )}
-            {unpublish && <SubUnpublished value={value} onChange={onChange} />}
           </Grid>
           <Grid container justify="flex-end" alignItems="center" item sm={3} xs={3}>
             {value.content_type !== SearchContentsRequestContentType.assetsandfolder && !value.program_group && (
@@ -777,6 +825,7 @@ export function ThirdSearchHeaderMb(props: ThirdSearchHeaderProps) {
             </Menu>
           </Grid>
         </Grid>
+        {unpublish && <SubUnpublished value={value} onChange={onChange} />}
       </Hidden>
     </div>
   );

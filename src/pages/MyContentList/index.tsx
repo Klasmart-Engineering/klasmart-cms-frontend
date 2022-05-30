@@ -183,17 +183,27 @@ export default function MyContentList() {
         condition.content_type !== SearchContentsRequestContentType.assetsandfolder
           ? SearchContentsRequestContentType.materialandplan
           : condition.content_type;
-      history.push({
-        search: toQueryString({
-          ...condition,
-          page: 1,
-          path: `${dir_path}${path}${id}`,
-          order_by: OrderBy._updated_at,
-          content_type: contentType,
-          author: "",
-          name: "",
-        }),
-      });
+      if (condition.publish_status === PublishStatus.published) {
+        history.push({
+          search: toQueryString({
+            ...condition,
+            page: 1,
+            path: `${dir_path}${path}${id}`,
+          }),
+        });
+      } else {
+        history.push({
+          search: toQueryString({
+            ...condition,
+            page: 1,
+            path: `${dir_path}${path}${id}`,
+            order_by: OrderBy._updated_at,
+            content_type: contentType,
+            author: "",
+            name: "",
+          }),
+        });
+      }
     } else {
       history.push(`/library/content-edit/lesson/assets/tab/assetDetails/rightside/assetsEdit?id=${id}`);
     }
@@ -301,7 +311,7 @@ export default function MyContentList() {
     openFolderTree();
   };
   const handleGoback: ContentCardListProps["onGoBack"] = () => {
-    history.push({ search: toQueryString({ ...condition, name: "", path: `${parentFolderInfo.dir_path}` }) });
+    history.push({ search: toQueryString({ ...condition, path: `${parentFolderInfo.dir_path}` }) });
     // history.goBack();
   };
   const handleClickFolderPath = (path: string) => {
@@ -402,7 +412,7 @@ export default function MyContentList() {
   const { breakpoints } = useTheme();
   const sm = useMediaQuery(breakpoints.down("sm"));
   return (
-    <LayoutBox holderMin={40} holderBase={202} mainBase={1517} mainStyle={{ width: "90%" }}>
+    <LayoutBox holderMin={40} holderBase={102} mainBase={1717} mainStyle={{ width: "70%" }}>
       <div
         onContextMenu={(e) => {
           e.preventDefault();
@@ -476,10 +486,10 @@ export default function MyContentList() {
               />
             </>
           )}
-          <div style={{ display: showFolderTree && !sm ? "flex" : "block" }}>
+          <div style={{ display: showFolderTree && !sm ? "flex" : "block", justifyContent: "space-between" }}>
             {showFolderTree && (
               <FolderTreeBox
-                sm={sm}
+                searchName={condition.name}
                 folders={folderTreeData}
                 parentFolderInfo={{ ...parentFolderInfo, available: total }}
                 defaultPath={condition.path || ROOT_PATH}
@@ -528,6 +538,7 @@ export default function MyContentList() {
                   ""
                 ) : contentsList && contentsList.length > 0 ? (
                   <ContentCardList
+                    scroll={showFolderTree && !sm}
                     formMethods={conditionFormMethods}
                     list={contentsList}
                     total={total as number}
@@ -552,12 +563,15 @@ export default function MyContentList() {
                   (condition.program_group ||
                     condition.publish_status === PublishStatus.published ||
                     condition.content_type === SearchContentsRequestContentType.assetsandfolder) ? (
-                  <BackToPrevPage
-                    onGoBack={handleGoback}
-                    parentFolderInfo={{ ...parentFolderInfo, available: total }}
-                    onRenameFolder={handleClickRenameFolder}
-                    isEdit={!condition.program_group}
-                  />
+                  <>
+                    <BackToPrevPage
+                      onGoBack={handleGoback}
+                      parentFolderInfo={{ ...parentFolderInfo, available: total }}
+                      onRenameFolder={handleClickRenameFolder}
+                      isEdit={!condition.program_group}
+                    />
+                    {emptyTip}
+                  </>
                 ) : (
                   emptyTip
                 )

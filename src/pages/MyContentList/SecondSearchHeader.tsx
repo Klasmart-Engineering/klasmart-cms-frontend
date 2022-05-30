@@ -142,7 +142,7 @@ export const filterOptions = (value: QueryCondition) => {
   }
 };
 
-const menuItemList = (list: options[]) =>
+export const menuItemList = (list: options[]) =>
   list.map((item) => (
     <MenuItem key={item.label} value={item.value}>
       {item.label}
@@ -429,29 +429,31 @@ export function SecondSearchHeader(props: SecondSearchHeaderProps) {
             <Button variant="contained" color="primary" className={classes.searchBtn} onClick={handleClickSearch}>
               <Search /> {d("Search").t("library_label_search")}
             </Button>
-            {value.content_type !== SearchContentsRequestContentType.assetsandfolder && !value.program_group && (
-              <TextField
-                style={{
-                  width: 160,
-                  marginLeft: 20,
-                }}
-                size="small"
-                onChange={handleChangeFilterOption}
-                label={d("Content Type").t("library_label_contentType")}
-                value={value.content_type}
-                select
-                SelectProps={{
-                  MenuProps: {
-                    transformOrigin: {
-                      vertical: -40,
-                      horizontal: "left",
+            {value.content_type !== SearchContentsRequestContentType.assetsandfolder &&
+              !value.program_group &&
+              value.publish_status !== PublishStatus.published && (
+                <TextField
+                  style={{
+                    width: 160,
+                    marginLeft: 20,
+                  }}
+                  size="small"
+                  onChange={handleChangeFilterOption}
+                  label={d("Content Type").t("library_label_contentType")}
+                  value={value.content_type}
+                  select
+                  SelectProps={{
+                    MenuProps: {
+                      transformOrigin: {
+                        vertical: -40,
+                        horizontal: "left",
+                      },
                     },
-                  },
-                }}
-              >
-                {menuItemList(filterOptions(value))}
-              </TextField>
-            )}
+                  }}
+                >
+                  {menuItemList(filterOptions(value))}
+                </TextField>
+              )}
           </Grid>
           <Permission value={PermissionType.view_my_published_214}>
             <Grid container direction="row" justify="flex-end" alignItems="center" item md={2} lg={4} xl={4}>

@@ -1,5 +1,7 @@
-import { Button, createStyles, Grid, Hidden, Tooltip, Typography } from "@material-ui/core";
-import { makeStyles, Theme, withStyles } from "@material-ui/core/styles";
+import { TooltipWhite } from "@components/TreeViewFolder/TreeNode";
+import { Button, createStyles, Grid, Hidden, IconButton, Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import React from "react";
 import { EntityFolderContentData, EntityFolderItemInfo } from "../../api/api.auto";
 import PermissionType from "../../api/PermissionType";
@@ -7,14 +9,6 @@ import folderIconUrl from "../../assets/icons/foldericon.svg";
 import prevPageUrl from "../../assets/icons/folderprev.svg";
 import { usePermission } from "../../hooks/usePermission";
 import { d } from "../../locale/LocaleManager";
-const LightTooltip = withStyles((theme: Theme) => ({
-  tooltip: {
-    backgroundColor: theme.palette.common.white,
-    color: "rgba(0, 0, 0, 0.87)",
-    boxShadow: theme.shadows[1],
-    fontSize: 12,
-  },
-}))(Tooltip);
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -31,17 +25,16 @@ const useStyles = makeStyles((theme) =>
     },
     cardMedia: {
       width: "100%",
-      paddingTop: "56.25%",
-      position: "relative",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
     },
     prevImg: {
-      position: "absolute",
-      left: "50%",
-      top: "50%",
-      transform: "translate(-50%, -50%)",
-      width: "50%",
+      width: "100%",
+      maxWidth: 160,
     },
     folderName: {
+      width: "100%",
       display: "flex",
       alignItems: "center",
       [theme.breakpoints.down("md")]: {
@@ -113,15 +106,15 @@ export function BackToPrevPage(props: BackToPrevePageProps) {
         </div>
         <div className={css.folderInfoCon}>
           <Typography className={css.despWord}>{d("Keywords").t("library_label_keywords")}:</Typography>
-          <LightTooltip placement="top" title={keywords}>
+          <TooltipWhite placement="top" arrow title={keywords}>
             <Typography className={css.infoWord}>{keywords}</Typography>
-          </LightTooltip>
+          </TooltipWhite>
         </div>
         <div className={css.folderInfoCon}>
           <Typography className={css.despWord}>{d("Description").t("library_label_description")}:</Typography>
-          <LightTooltip placement="top" title={parentFolderInfo.description || ""}>
+          <TooltipWhite placement="top" arrow title={parentFolderInfo.description || ""}>
             <Typography className={css.infoWord}>{parentFolderInfo.description}</Typography>
-          </LightTooltip>
+          </TooltipWhite>
         </div>
         {isEdit && (
           <div className={css.folderInfoCon}>
@@ -139,22 +132,24 @@ export function BackToPrevPage(props: BackToPrevePageProps) {
     <>
       <Grid container spacing={2} style={{ borderBottom: "1px solid #e0e0e0", marginBottom: 10, width: "96%" }}>
         <Hidden only={["xs"]}>
-          <Grid item xs={12} sm={6} md={4} lg={3} xl={3}>
+          <div style={{ width: "25%" }}>
             <div className={css.card}>
               <div className={css.cardMedia} style={{ marginTop: 10, cursor: "pointer" }} onClick={onGoBack}>
                 <img className={css.prevImg} src={prevPageUrl} alt="" />
               </div>
             </div>
-          </Grid>
-          <Grid item xs={12} sm container justify="center" direction="column">
-            <Grid item>
-              <div className={css.folderName}>
+          </div>
+          <div style={{ width: "75%", paddingBottom: "8px", display: "flex", justifyContent: "center", flexDirection: "column" }}>
+            <div style={{ width: "100%" }}>
+              <div className={css.folderName} style={{ display: "flex" }}>
                 <img src={folderIconUrl} alt="" style={{ width: 48, height: 48 }} />
-                <Typography variant="h6" className={css.infoWord}>
-                  {parentFolderInfo.name}
-                </Typography>
+                <TooltipWhite placement="top" arrow title={parentFolderInfo.name || ""}>
+                  <Typography component="h6" variant="h6" noWrap>
+                    {parentFolderInfo.name}
+                  </Typography>
+                </TooltipWhite>
               </div>
-            </Grid>
+            </div>
             <Grid item container>
               {folderInfo()}
             </Grid>
@@ -167,29 +162,27 @@ export function BackToPrevPage(props: BackToPrevePageProps) {
                 )}
               </Grid>
             )}
-          </Grid>
+          </div>
         </Hidden>
         <Hidden only={["sm", "md", "lg", "xl"]}>
           <Grid item style={{ width: "100%" }}>
             <div className={css.titleCon}>
               <img style={{ width: 48, height: 48, cursor: "pointer" }} src={prevPageUrl} alt="" onClick={onGoBack} />
-              <div className={css.folderName}>
+              <div className={css.folderName} style={{ width: "90%" }}>
                 <img src={folderIconUrl} alt="" style={{ width: 24, height: 24 }} />
-                <Typography variant="h6" className={css.infoWord}>
-                  {parentFolderInfo.name}
-                </Typography>
+                <TooltipWhite placement="top" arrow title={parentFolderInfo.name || ""}>
+                  <Typography variant="h6" noWrap style={{ width: "100%" }}>
+                    {parentFolderInfo.name}
+                  </Typography>
+                </TooltipWhite>
+                {isEdit && perm.create_folder_289 && (
+                  <IconButton onClick={() => onRenameFolder(parentFolderInfo)}>
+                    <EditOutlinedIcon color="primary" />
+                  </IconButton>
+                )}
               </div>
             </div>
             {folderInfo()}
-            {isEdit && (
-              <div className={css.mbBtnCon}>
-                {perm.create_folder_289 && (
-                  <Button variant="outlined" color="primary" onClick={() => onRenameFolder(parentFolderInfo)}>
-                    {d("Edit").t("library_label_edit")}
-                  </Button>
-                )}
-              </div>
-            )}
           </Grid>
         </Hidden>
       </Grid>
