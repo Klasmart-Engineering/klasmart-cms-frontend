@@ -175,7 +175,7 @@ export function BackToPrevPage(props: BackToPrevePageProps) {
                     {parentFolderInfo.name}
                   </Typography>
                 </TooltipWhite>
-                {isEdit && (
+                {isEdit && perm.create_folder_289 && (
                   <IconButton onClick={() => onRenameFolder(parentFolderInfo)}>
                     <EditOutlinedIcon color="primary" />
                   </IconButton>
