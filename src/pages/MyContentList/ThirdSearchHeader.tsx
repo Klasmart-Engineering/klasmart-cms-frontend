@@ -107,6 +107,8 @@ const useStyles = makeStyles((theme) => ({
     boxSizing: "border-box",
   },
   bulkActionCon: {
+    width: 160,
+    marginRight: 20,
     "& .MuiInputLabel-outlined.MuiInputLabel-marginDense": {
       width: "calc(100% - 46px)",
       textOverflow: "ellipsis",
@@ -120,7 +122,10 @@ const useStyles = makeStyles((theme) => ({
   badacontentSelectWidth: {
     width: "100%",
   },
-  publishedSelectWidth: {
+  publishedSelectWidthLeft: {
+    width: "70%",
+  },
+  publishedSelectWidthRight: {
     width: "30%",
   },
   alignRight: {
@@ -552,8 +557,11 @@ export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
         >
           {!value.program_group && (
             <div
-              className={classes.selectBox}
-              style={{ width: value.publish_status === PublishStatus.published ? "70%" : unpublish ? "calc(50% - 162px)" : "50%" }}
+              className={clsx(classes.selectBox, {
+                [classes.publishedSelectWidthLeft]: value.publish_status === PublishStatus.published,
+                [classes.unpublishedSelectWidth]: value.publish_status !== PublishStatus.published && unpublish,
+                [classes.ortherSelectWidth]: value.publish_status !== PublishStatus.published && !unpublish,
+              })}
             >
               <FormControlLabel
                 control={
@@ -574,10 +582,6 @@ export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
               {bulkOptions.length > 0 && (
                 <TextField
                   className={classes.bulkActionCon}
-                  style={{
-                    width: 160,
-                    marginRight: 20,
-                  }}
                   size="small"
                   onChange={handleChangeBulkAction}
                   label={d("Bulk Actions").t("library_label_bulk_actions")}
@@ -628,7 +632,7 @@ export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
           <div
             className={clsx(classes.selectBox, classes.alignRight, {
               [classes.badacontentSelectWidth]: value.program_group,
-              [classes.publishedSelectWidth]: !value.program_group && value.publish_status === PublishStatus.published,
+              [classes.publishedSelectWidthRight]: !value.program_group && value.publish_status === PublishStatus.published,
               [classes.unpublishedSelectWidth]: !value.program_group && value.publish_status !== PublishStatus.published && unpublish,
               [classes.ortherSelectWidth]: !value.program_group && value.publish_status !== PublishStatus.published && !unpublish,
             })}
