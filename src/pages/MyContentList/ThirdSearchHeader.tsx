@@ -6,6 +6,7 @@ import Tabs from "@material-ui/core/Tabs";
 import { CheckBox, CheckBoxOutlineBlank, MoreHoriz } from "@material-ui/icons";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import ImportExportIcon from "@material-ui/icons/ImportExport";
+import clsx from "clsx";
 import produce from "immer";
 import React, { ChangeEvent, useMemo } from "react";
 import { UseFormMethods } from "react-hook-form";
@@ -115,6 +116,21 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiInputLabel-outlined.MuiInputLabel-shrink": {
       width: "100%",
     },
+  },
+  badacontentSelectWidth: {
+    width: "100%",
+  },
+  publishedSelectWidth: {
+    width: "30%",
+  },
+  alignRight: {
+    textAlign: "right",
+  },
+  unpublishedSelectWidth: {
+    width: "calc(50% - 162px)",
+  },
+  ortherSelectWidth: {
+    width: "50%",
   },
 }));
 
@@ -610,17 +626,12 @@ export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
           )}
 
           <div
-            className={classes.selectBox}
-            style={{
-              textAlign: "right",
-              width: value.program_group
-                ? "100%"
-                : value.publish_status === PublishStatus.published
-                ? "30%"
-                : unpublish
-                ? "calc(50% - 162px)"
-                : "50%",
-            }}
+            className={clsx(classes.selectBox, classes.alignRight, {
+              [classes.badacontentSelectWidth]: value.program_group,
+              [classes.publishedSelectWidth]: !value.program_group && value.publish_status === PublishStatus.published,
+              [classes.unpublishedSelectWidth]: !value.program_group && value.publish_status !== PublishStatus.published && unpublish,
+              [classes.ortherSelectWidth]: !value.program_group && value.publish_status !== PublishStatus.published && !unpublish,
+            })}
           >
             <TextField
               size="small"
