@@ -266,6 +266,21 @@ const useStyles = makeStyles((theme) =>
       margin: "10px 0",
       textAlign: "right",
     },
+    scroll: {
+      height: 775,
+      overflowY: "auto",
+      overflowX: "hidden",
+      paddingLeft: 8,
+      paddingRight: 5,
+      marginBottom: 30,
+      "&::-webkit-scrollbar": {
+        width: "8px",
+      },
+      "&::-webkit-scrollbar-thumb": {
+        borderRadius: "6px",
+        background: "#c4c4c4",
+      },
+    },
   })
 );
 
@@ -568,6 +583,7 @@ export interface ContentCardListProps extends ContentActionProps {
   onGoBack: () => any;
   parentFolderInfo: EntityFolderItemInfo;
   orgProperty: EntityOrganizationProperty;
+  scroll: boolean;
 }
 export function ContentCardList(props: ContentCardListProps) {
   const css = useStyles();
@@ -622,7 +638,7 @@ export function ContentCardList(props: ContentCardListProps) {
                       />
                     )}
                   {list.map((item, idx) => (
-                    <Grid key={item.id} item xs={12} sm={6} md={showFolderTree ? 6 : 4} lg={showFolderTree ? 4 : 3} xl={3}>
+                    <Grid key={item.id} item xs={12} sm={6} md={showFolderTree ? 6 : 4} lg={3} xl={3}>
                       <ContentCard
                         content={item}
                         {...{

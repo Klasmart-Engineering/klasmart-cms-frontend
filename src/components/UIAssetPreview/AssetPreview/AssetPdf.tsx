@@ -160,8 +160,7 @@ export default function AssetPdf(props: file) {
               </Tooltip>
               <Tooltip
                 title={intl.formatMessage({
-                  id: `library_tooltip_fit_to_width
-                  `,
+                  id: `library_tooltip_fit_to_width`,
                 })}
               >
                 <img alt="fit-to-width" onClick={handleWidthFit} className={css.zoomButton} src={fitToWidthIcon} />

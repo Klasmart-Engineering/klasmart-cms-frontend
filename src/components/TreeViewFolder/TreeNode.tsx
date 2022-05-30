@@ -8,10 +8,9 @@ const useStyles = makeStyles((theme) =>
   createStyles({
     treeItemLabel: {
       width: "calc(100% - 35px)",
-      height: 36,
-      fontSize: 14,
+      height: 40,
       fontWeight: "lighter",
-      lineHeight: 36 / 14,
+      lineHeight: 40,
       display: "flex",
       alignItems: "center",
       justifyContent: "initial",
