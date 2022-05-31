@@ -83,6 +83,11 @@ const useStyles = makeStyles((theme) =>
       margin: "10px 0",
       textAlign: "right",
     },
+    folderInfoBox: {
+      borderBottom: "1px solid #e0e0e0",
+      margin: "10px 0",
+      width: "96%",
+    },
   })
 );
 
@@ -130,7 +135,7 @@ export function BackToPrevPage(props: BackToPrevePageProps) {
   };
   return (
     <>
-      <Grid container spacing={2} style={{ borderBottom: "1px solid #e0e0e0", marginBottom: 10, width: "96%" }}>
+      <Grid container spacing={2} className={css.folderInfoBox}>
         <Hidden only={["xs"]}>
           <div style={{ width: "25%" }}>
             <div className={css.card}>

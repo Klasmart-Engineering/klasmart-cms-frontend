@@ -47,13 +47,13 @@ const useStyles = makeStyles((theme) =>
   createStyles({
     gridContainer: {
       [theme.breakpoints.only("xl")]: {
-        width: calcGridWidth(4, 0.86),
+        width: calcGridWidth(4, 0.9),
       },
       [theme.breakpoints.only("lg")]: {
-        width: calcGridWidth(4, 0.86),
+        width: calcGridWidth(4, 0.9),
       },
       [theme.breakpoints.only("md")]: {
-        width: calcGridWidth(3, 0.86),
+        width: calcGridWidth(3, 0.9),
       },
       [theme.breakpoints.only("sm")]: {
         width: calcGridWidth(2, 0.9),
@@ -63,8 +63,8 @@ const useStyles = makeStyles((theme) =>
       },
     },
     card: {
-      width: "86%",
-      marginBottom: 40,
+      width: "90%",
+      marginBottom: 36,
       [theme.breakpoints.only("sm")]: {
         width: "90%",
       },

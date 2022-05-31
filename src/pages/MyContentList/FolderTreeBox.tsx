@@ -23,8 +23,10 @@ const useStyles = makeStyles((theme) =>
 
     folderBox: {
       width: "28%",
+      maxWidth: 340,
       height: 750,
       marginTop: 30,
+      marginRight: 30,
       boxShadow: theme.shadows[1],
       flexDirection: "column",
       display: "flex",
