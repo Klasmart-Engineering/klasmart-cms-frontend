@@ -1161,8 +1161,8 @@
     "assessment_lo_download_object_quantity": "(Ada {quantity} baris untuk diunduh)",
     "schedule_msg_no_permission_to_be_redirected": "Tidak punya izin. Mengalihkan...",
     "library_label_hierarchy_folder_tree": "Bagan Folder",
-    "library_tooltip_zoom_in": "Zoom In",
-    "library_tooltip_zoom_out": "Zoom Out",
-    "library_tooltip_fit_to_width": "Fit to Width",
-    "library_tooltip_fit_to_height": "Fit to Height"
+    "library_tooltip_zoom_in": "Perbesar",
+    "library_tooltip_zoom_out": "Perkecil",
+    "library_tooltip_fit_to_width": "Pepetkan Sesuai Lebar",
+    "library_tooltip_fit_to_height": "Pepetkan Sesuai Tinggi"
 }
