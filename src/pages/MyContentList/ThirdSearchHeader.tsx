@@ -25,7 +25,7 @@ import { ContentListForm, ContentListFormKey, QueryCondition, QueryConditionBase
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    marginBottom: 20 + 10,
+    marginBottom: 20,
   },
   createBtn: {
     width: "125px",
@@ -102,9 +102,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   selectBox: {
-    display: "inline-block",
     padding: "12px",
     boxSizing: "border-box",
+    display: "flex",
+    flexWrap: "wrap",
   },
   bulkActionCon: {
     width: 160,
@@ -130,12 +131,24 @@ const useStyles = makeStyles((theme) => ({
   },
   alignRight: {
     textAlign: "right",
+    alignItems: "end",
+    justifyContent: "flex-end",
   },
   unpublishedSelectWidth: {
     width: "calc(50% - 162px)",
   },
   ortherSelectWidth: {
     width: "50%",
+  },
+  checkBox: {
+    width: 260,
+    marginBottom: 5,
+  },
+  BulkActionWidth: {
+    width: 160,
+  },
+  BulkActionAndContentTypeWidth: {
+    width: 340,
   },
 }));
 
@@ -563,64 +576,73 @@ export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
                 [classes.ortherSelectWidth]: value.publish_status !== PublishStatus.published && !unpublish,
               })}
             >
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    icon={<CheckBoxOutlineBlank viewBox="3 3 18 18"></CheckBoxOutlineBlank>}
-                    checkedIcon={<CheckBox viewBox="3 3 18 18"></CheckBox>}
+              <div className={classes.checkBox}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      icon={<CheckBoxOutlineBlank viewBox="3 3 18 18"></CheckBoxOutlineBlank>}
+                      checkedIcon={<CheckBox viewBox="3 3 18 18"></CheckBox>}
+                      size="small"
+                      color="primary"
+                      checked={ids.length > 0 && ids.length === contentList.length}
+                      onChange={(e) => {
+                        setValue(ContentListFormKey.CHECKED_CONTENT_IDS, e.target.checked ? contentList.map((item) => item.id) : []);
+                      }}
+                    />
+                  }
+                  label={d("Select All").t("schedule_detail_select_all")}
+                />
+                <span className={classes.selectAll}>{t("library_label_files_selected", { value: ids.length.toString() })}</span>
+              </div>
+              <div
+                className={clsx({
+                  [classes.BulkActionWidth]: value.publish_status !== PublishStatus.published,
+                  [classes.BulkActionAndContentTypeWidth]: value.publish_status === PublishStatus.published,
+                })}
+              >
+                {bulkOptions.length > 0 && (
+                  <TextField
+                    className={classes.bulkActionCon}
                     size="small"
-                    color="primary"
-                    checked={ids.length > 0 && ids.length === contentList.length}
-                    onChange={(e) => {
-                      setValue(ContentListFormKey.CHECKED_CONTENT_IDS, e.target.checked ? contentList.map((item) => item.id) : []);
+                    onChange={handleChangeBulkAction}
+                    label={d("Bulk Actions").t("library_label_bulk_actions")}
+                    value=""
+                    select
+                    SelectProps={{
+                      MenuProps: {
+                        transformOrigin: {
+                          vertical: -40,
+                          horizontal: "left",
+                        },
+                      },
                     }}
-                  />
-                }
-                label={d("Select All").t("schedule_detail_select_all")}
-              />
-              <span className={classes.selectAll}>{t("library_label_files_selected", { value: ids.length.toString() })}</span>
-              {bulkOptions.length > 0 && (
-                <TextField
-                  className={classes.bulkActionCon}
-                  size="small"
-                  onChange={handleChangeBulkAction}
-                  label={d("Bulk Actions").t("library_label_bulk_actions")}
-                  value=""
-                  select
-                  SelectProps={{
-                    MenuProps: {
-                      transformOrigin: {
-                        vertical: -40,
-                        horizontal: "left",
+                  >
+                    {bulkOptions}
+                  </TextField>
+                )}
+                {value.publish_status === PublishStatus.published && (
+                  <TextField
+                    style={{
+                      width: 160,
+                    }}
+                    size="small"
+                    onChange={handleChangeFilterOption}
+                    label={d("Content Type").t("library_label_contentType")}
+                    value={value.content_type}
+                    select
+                    SelectProps={{
+                      MenuProps: {
+                        transformOrigin: {
+                          vertical: -40,
+                          horizontal: "left",
+                        },
                       },
-                    },
-                  }}
-                >
-                  {bulkOptions}
-                </TextField>
-              )}
-              {value.publish_status === PublishStatus.published && (
-                <TextField
-                  style={{
-                    width: 160,
-                  }}
-                  size="small"
-                  onChange={handleChangeFilterOption}
-                  label={d("Content Type").t("library_label_contentType")}
-                  value={value.content_type}
-                  select
-                  SelectProps={{
-                    MenuProps: {
-                      transformOrigin: {
-                        vertical: -40,
-                        horizontal: "left",
-                      },
-                    },
-                  }}
-                >
-                  {menuItemList(filterOptions(value))}
-                </TextField>
-              )}
+                    }}
+                  >
+                    {menuItemList(filterOptions(value))}
+                  </TextField>
+                )}
+              </div>
             </div>
           )}
           {unpublish && (

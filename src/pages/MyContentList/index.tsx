@@ -1,5 +1,5 @@
 import useQueryCms from "@hooks/useQueryCms";
-import { useMediaQuery, useTheme } from "@material-ui/core";
+import { createStyles, makeStyles, useMediaQuery, useTheme } from "@material-ui/core";
 import {
   addFolder1,
   approveContent,
@@ -27,6 +27,7 @@ import { actWarning } from "@reducers/notify";
 import { AsyncTrunkReturned } from "@reducers/type";
 import { PayloadAction, unwrapResult } from "@reduxjs/toolkit";
 import { clearNull, toQueryString } from "@utilities/urlUtilities";
+import clsx from "clsx";
 import produce from "immer";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -66,6 +67,18 @@ import { SpecialOrgList } from "./SpecialOrgList";
 import { ThirdSearchHeader, ThirdSearchHeaderMb, ThirdSearchHeaderProps } from "./ThirdSearchHeader";
 import { ContentListForm, ContentListFormKey, QueryCondition } from "./types";
 const ROOT_PATH = "/";
+const useStyles = makeStyles(() =>
+  createStyles({
+    contentList: {
+      width: "0%",
+      flexGrow: 1,
+    },
+    showFolderTreeLayout: {
+      display: "flex",
+      justifyContent: "space-between",
+    },
+  })
+);
 const useQuery = (): QueryCondition => {
   const { querys, page, publish_status, author, content_type, name, program_group, path } = useQueryCms();
   const order_by = (querys.get("order_by") as OrderBy | null) || undefined;
@@ -108,6 +121,7 @@ function useRefreshWithDispatch() {
 export default function MyContentList() {
   const condition = useQuery();
   const history = useHistory();
+  const css = useStyles();
   const perm = usePermission([
     PermissionType.published_content_page_204,
     PermissionType.pending_content_page_203,
@@ -486,7 +500,7 @@ export default function MyContentList() {
               />
             </>
           )}
-          <div style={{ display: showFolderTree && !sm ? "flex" : "block", justifyContent: "space-between" }}>
+          <div className={clsx({ [css.showFolderTreeLayout]: showFolderTree && !sm })}>
             {showFolderTree && (
               <FolderTreeBox
                 searchName={condition.name}
@@ -496,7 +510,7 @@ export default function MyContentList() {
                 onClickFolderPath={handleClickFolderPath}
               />
             )}
-            <div style={{ width: showFolderTree && !sm ? "70%" : "100%" }}>
+            <div className={clsx({ [css.contentList]: showFolderTree && !sm })}>
               {hasPerm && (
                 <>
                   <ThirdSearchHeader
