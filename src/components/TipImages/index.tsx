@@ -20,6 +20,7 @@ const useStyles = makeStyles(({ breakpoints }) => ({
   },
   emptyDesc: {
     marginBottom: "auto",
+    color: "rgba(0,0,0,.6)",
   },
   emptyContainer: {
     textAlign: "center",
@@ -74,7 +75,7 @@ export function TipImages(props: TipImagesProps) {
       <Box className={css.emptyContainer}>
         <img className={css.emptyImage} alt={type} src={src} />
         {text && (
-          <Typography className={css.emptyDesc} variant="body1" color="textSecondary">
+          <Typography className={css.emptyDesc} variant="body1">
             {t(text)}
           </Typography>
         )}

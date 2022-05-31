@@ -141,7 +141,7 @@ export function BackToPrevPage(props: BackToPrevePageProps) {
           </div>
           <div style={{ width: "75%", paddingBottom: "8px", display: "flex", justifyContent: "center", flexDirection: "column" }}>
             <div style={{ width: "100%" }}>
-              <div className={css.folderName} style={{ display: "flex" }}>
+              <div className={css.folderName}>
                 <img src={folderIconUrl} alt="" style={{ width: 48, height: 48 }} />
                 <TooltipWhite placement="top" arrow title={parentFolderInfo.name || ""}>
                   <Typography component="h6" variant="h6" noWrap>

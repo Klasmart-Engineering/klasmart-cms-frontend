@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) =>
         background: "#c4c4c4",
       },
     },
-    FolderSelect: {
+    folderSelect: {
       border: " 1px solid #979797",
       borderRadius: 4,
       display: "flex",
@@ -74,6 +74,18 @@ const useStyles = makeStyles((theme) =>
     image: {
       width: 25,
       marginRight: 10,
+      alignItems: "center",
+    },
+    empty: {
+      width: "100%",
+      textAlign: "center",
+      margin: "300px auto",
+      color: "rgba(0, 0, 0, 0.6)",
+    },
+    dropDown: {
+      width: 20,
+      display: "flex",
+      justifyContent: "center",
       alignItems: "center",
     },
   })
@@ -112,7 +124,7 @@ export function FolderTreeBox(props: FolderTreeBoxProps) {
             />
             <div>
               {folders.item_count === 0 && searchName && (
-                <div style={{ width: "100%", textAlign: "center", margin: "300px auto" }}>
+                <div className={css.empty}>
                   <p>{t("library_label_empty")}</p>
                 </div>
               )}
@@ -121,7 +133,7 @@ export function FolderTreeBox(props: FolderTreeBoxProps) {
         </div>
       </Hidden>
       <Hidden only={["md", "lg", "xl"]}>
-        <div className={css.FolderSelect} onClick={toggle}>
+        <div className={css.folderSelect} onClick={toggle}>
           {(!defaultPath || defaultPath === "/" ? true : parentFolderInfo?.name) && (
             <>
               <div className={css.treeItemLabel}>
@@ -133,7 +145,7 @@ export function FolderTreeBox(props: FolderTreeBoxProps) {
                   </Typography>
                 </div>
               </div>
-              <div style={{ width: 20, display: "flex", justifyContent: "center", alignItems: "center" }}>
+              <div className={css.dropDown}>
                 <ArrowDropDown />
               </div>
             </>
