@@ -144,10 +144,10 @@ const useStyles = makeStyles((theme) => ({
     width: 260,
     marginBottom: 5,
   },
-  BulkActionWidth: {
+  bulkActionWidth: {
     width: 160,
   },
-  BulkActionAndContentTypeWidth: {
+  bulkActionAndContentTypeWidth: {
     width: 340,
   },
 }));
@@ -596,8 +596,8 @@ export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
               </div>
               <div
                 className={clsx({
-                  [classes.BulkActionWidth]: value.publish_status !== PublishStatus.published,
-                  [classes.BulkActionAndContentTypeWidth]: value.publish_status === PublishStatus.published,
+                  [classes.bulkActionWidth]: value.publish_status !== PublishStatus.published,
+                  [classes.bulkActionAndContentTypeWidth]: value.publish_status === PublishStatus.published,
                 })}
               >
                 {bulkOptions.length > 0 && (
