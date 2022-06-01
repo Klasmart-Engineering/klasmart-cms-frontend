@@ -1,4 +1,5 @@
 import { gql } from "@apollo/client";
+import { IList } from "@pages/ReportStudentProgress/components/StudentFilter";
 import { LinkedMockOptionsItem } from "@reducers/contentEdit/programsHandler";
 import { FileLike } from "@rpldy/shared";
 import Cookies from "js-cookie";
@@ -36,6 +37,9 @@ import {
   GetStudentNameByIdDocument,
   GetStudentNameByIdQuery,
   GetStudentNameByIdQueryVariables,
+  SchoolListDocument,
+  SchoolListQuery,
+  SchoolListQueryVariables,
   SchoolsClassesDocument,
   SchoolsClassesQuery,
   SchoolsClassesQueryVariables,
@@ -828,4 +832,60 @@ export const recursiveGetStudentsName = async (
       resolve(studentNodeEdgs);
     });
   }
+};
+export interface SelectItem {
+  label: string;
+  value: string;
+}
+export const getSchoolList = async (variables: SchoolListQueryVariables): Promise<IList> => {
+  const {
+    data: { schoolsConnection },
+  } = await gqlapi.query<SchoolListQuery, SchoolListQueryVariables>({
+    query: SchoolListDocument,
+    variables,
+  });
+  const list = schoolsConnection?.edges?.map((node) => ({ value: node?.node?.id, label: node?.node?.name } as SelectItem)) || [];
+  let cursor = "";
+  if (schoolsConnection?.pageInfo?.hasNextPage) {
+    cursor = schoolsConnection?.pageInfo?.endCursor as string;
+  }
+  return new Promise((resolve) => {
+    resolve({ list, cursor });
+  });
+};
+export const getClassList = async (variables: ClassesListQueryVariables): Promise<IList> => {
+  const {
+    data: { classesConnection },
+  } = await gqlapi.query<ClassesListQuery, ClassesListQueryVariables>({
+    query: ClassesListDocument,
+    variables,
+  });
+  const list = classesConnection?.edges?.map((node) => ({ value: node?.node?.id, label: node?.node?.name } as SelectItem)) || [];
+  let cursor = "";
+  if (classesConnection?.pageInfo?.hasNextPage) {
+    cursor = classesConnection?.pageInfo?.endCursor as string;
+  }
+  return new Promise((resolve) => {
+    resolve({ list, cursor });
+  });
+};
+
+export const getClassNodeStudents = async (id: string, studentsCursor?: string): Promise<IList> => {
+  const {
+    data: { classNode },
+  } = await gqlapi.query<ClassNodeStudentsQuery, ClassNodeStudentsQueryVariables>({
+    query: ClassNodeStudentsDocument,
+    variables: { classId: id, studentsCursor },
+  });
+  const list =
+    classNode?.studentsConnection?.edges?.map(
+      (node) => ({ value: node?.node?.id, label: node?.node?.givenName + " " + node?.node?.familyName } as SelectItem)
+    ) || [];
+  let cursor = "";
+  if (classNode?.studentsConnection?.pageInfo?.hasNextPage) {
+    cursor = classNode?.studentsConnection?.pageInfo?.endCursor as string;
+  }
+  return new Promise((resolve) => {
+    resolve({ list, cursor });
+  });
 };

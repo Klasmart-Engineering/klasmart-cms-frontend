@@ -39,7 +39,7 @@ type Field = "schoolId" | "classId" | "studentId";
 
 interface IProps {
   onInitial?: (allSubjectId: string[]) => void;
-  onChange?: (classId: string, studentId: string, selectedSubjectId: string[]) => void;
+  onChange?: (classId: string, studentId: string, studentName: string, selectedSubjectId: string[]) => void;
 }
 
 export default function StudentSubjectFilter({ onInitial, onChange }: IProps) {
@@ -149,7 +149,13 @@ export default function StudentSubjectFilter({ onInitial, onChange }: IProps) {
   const changeCb = () => {
     // console.log("payload", state.studentId, state.subjectId);
     if (onChange && state.studentId && state.subjectId) {
-      onChange(state.classId, state.studentId, state.subjectId === allValue ? subjectOptions.map((opt) => opt.value) : [state.subjectId]);
+      const studentName = studentOptions?.find((val) => val.value === state.studentId)?.label || "";
+      onChange(
+        state.classId,
+        state.studentId,
+        studentName,
+        state.subjectId === allValue ? subjectOptions.map((opt) => opt.value) : [state.subjectId]
+      );
     }
   };
 

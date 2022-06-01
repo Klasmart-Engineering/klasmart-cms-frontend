@@ -4,7 +4,7 @@ import moment from "moment";
 import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { d, t } from "../../../locale/LocaleManager";
-import { parsePercent, translateMonth } from "../../../models/ModelReports";
+import { getFourWeeksMassage, parsePercent, translateMonth } from "../../../models/ModelReports";
 import { RootState } from "../../../reducers";
 import { getLearnOutcomeAchievement } from "../../../reducers/report";
 import LearningOutcomeAchievedTotalType from "../components/LearningOutcomeAchievedTotalType";
@@ -24,7 +24,7 @@ const useStyle = makeStyles((theme) =>
 export default function LearningOutcomesAchievement() {
   const [durationTime, setDurationTime] = useState(4);
   const dispatch = useDispatch();
-  const { classId, studentId, allSubjectId, selectedSubjectId: selectedSubjectID } = useContext(SelectContext);
+  const { classId, studentId, studentName, allSubjectId, selectedSubjectId: selectedSubjectID } = useContext(SelectContext);
   const selectedSubjectId: string[] =
     selectedSubjectID.length === allSubjectId.length - 1 ? selectedSubjectID.concat([""]) : selectedSubjectID;
   const unselectedSubjectId =
@@ -32,10 +32,9 @@ export default function LearningOutcomesAchievement() {
       ? []
       : allSubjectId.filter((item) => selectedSubjectID.every((val) => val !== item));
   const style = useStyle();
-  const { learnOutcomeAchievement, fourWeekslearnOutcomeAchievementMassage } = useSelector<RootState, RootState["report"]>(
-    (state) => state.report
-  );
-
+  const { learnOutcomeAchievement } = useSelector<RootState, RootState["report"]>((state) => state.report);
+  const { label_id, label_params } = learnOutcomeAchievement;
+  const fourWeekslearnOutcomeAchievementMassage = durationTime === 4 ? getFourWeeksMassage(label_id, label_params, studentName) : "";
   const colors = ["#0e78d5", "#ededed", "#bed6eb", "#a8c0ef"];
   const totalType = [
     {
