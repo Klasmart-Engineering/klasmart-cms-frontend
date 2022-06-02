@@ -11,6 +11,7 @@ import {
   bulkReject,
   deleteContent,
   deleteFolder,
+  getFolderTree,
   getOrgProperty,
   getUserSetting,
   onLoadContentList,
@@ -423,6 +424,31 @@ export default function MyContentList() {
       setTimeout(reset, 500);
     })();
   }, [condition, reset, dispatch, refreshKey, cmsPageSize]);
+  useEffect(() => {
+    if (
+      !condition.program_group &&
+      condition.publish_status === PublishStatus.published &&
+      condition.content_type !== String(SearchContentsRequestContentType.assetsandfolder)
+    ) {
+      const isExectSearch = condition.exect_search === ExectSearch.name;
+      dispatch(
+        getFolderTree({
+          key: condition.name,
+          type: isExectSearch ? "name" : "all",
+          role: condition.author ? "me" : "all",
+        })
+      );
+    }
+  }, [
+    dispatch,
+    condition.program_group,
+    condition.publish_status,
+    condition.content_type,
+    condition.exect_search,
+    condition.name,
+    condition.author,
+    refreshKey,
+  ]);
   const { breakpoints } = useTheme();
   const sm = useMediaQuery(breakpoints.down("sm"));
   return (

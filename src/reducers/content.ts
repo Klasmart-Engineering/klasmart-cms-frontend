@@ -521,15 +521,6 @@ export const onLoadContentList = createAsyncThunk<IQyertOnLoadContentListResult,
     if (!isExectSearch) delete params.content_name;
     if (publish_status === PublishStatus.published || content_type === String(SearchContentsRequestContentType.assetsandfolder)) {
       delete params.program_group;
-      if (content_type !== String(SearchContentsRequestContentType.assetsandfolder)) {
-        await dispatch(
-          getFolderTree({
-            key: (isExectSearch ? contentNameValue : nameValue) || "",
-            type: isExectSearch ? "name" : "all",
-            role: author ? "me" : "all",
-          })
-        );
-      }
       let folderRes = await api.contentsFolders.queryFolderContent(params);
       const authorIds: string[] = [];
 

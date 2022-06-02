@@ -141,7 +141,7 @@ const useStyles = makeStyles((theme) => ({
     width: "50%",
   },
   checkBox: {
-    width: 260,
+    width: 265,
     marginBottom: 5,
   },
   bulkActionWidth: {
