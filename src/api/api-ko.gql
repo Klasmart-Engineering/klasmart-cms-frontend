@@ -664,6 +664,7 @@ classesConnection(
     directionArgs: {
     cursor: $cursor
     },
+    sort: { order: ASC, field: name},
     direction: FORWARD
   ) {
     totalCount
@@ -773,7 +774,7 @@ classesConnection(
 query classNodeStudents($classId:ID!,$studentsCursor:String){
   classNode(id:$classId){
     name
-    studentsConnection(cursor:$studentsCursor){
+    studentsConnection(cursor:$studentsCursor,sort: { order: ASC, field: [givenName, familyName]}){
       totalCount
       edges{
         node{
@@ -809,4 +810,26 @@ query getUsersByName($filter: UserFilter,$directionArgs:ConnectionsDirectionArgs
       endCursor
     }
   }
+}
+query schoolList($filter:SchoolFilter, $cursor:String){
+   schoolsConnection(
+     filter: $filter,
+    directionArgs: {
+    cursor: $cursor
+    },
+    sort: { order: ASC, field: name},
+    direction: FORWARD
+  ) {
+    totalCount
+     edges {
+      node {
+       id
+       name
+      }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
 }

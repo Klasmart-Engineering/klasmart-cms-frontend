@@ -1,9 +1,15 @@
 import { orderByASC } from "@utilities/dataUtilities";
 import { ReactNode } from "react";
 import { Class, School, Status } from "../api/api-ko-schema.auto";
-import { EntityReportListTeachingLoadItem, EntityStudentAchievementReportCategoryItem } from "../api/api.auto";
+import {
+  EntityAssignmentLabelParams,
+  EntityAttedanceLabelParams,
+  EntityLearningOutcomeAchivementLabelParams,
+  EntityReportListTeachingLoadItem,
+  EntityStudentAchievementReportCategoryItem,
+} from "../api/api.auto";
 import { HorizontalBarStackDataItem } from "../components/Chart/HorizontalBarStackChart";
-import { d } from "../locale/LocaleManager";
+import { d, t } from "../locale/LocaleManager";
 import { UserType } from "../pages/ReportLearningSummary/types";
 import { teacherLoadDescription } from "../pages/ReportTeachingLoad/components/TeacherLoadChart";
 
@@ -305,4 +311,29 @@ export function getLabel(labelParams: any, labelName: any) {
 
 export function parsePercent(decimal?: number) {
   return Math.ceil((decimal || 0) * 100);
+}
+const LABEL_NAME = {
+  assignment_complete_count: "AssignmentCompleteCount",
+  assign_complete_count: "AssignCompleteCount",
+  assignment_count: "AssignmentCount",
+  assign_compare_class_3_week: "AssignCompareClass3week",
+  assign_compare_last_week: "AssignCompareLastWeek",
+  assign_compare_3_week: "AssignCompare3Week",
+  assign_compare_class: "AssignCompareClass",
+  lo_compare_class_3_week: "LOCompareClass3week",
+  lo_compare_last_week: "LOCompareLastWeek",
+  lo_review_compare_class: "LOReviewCompareClass",
+  lo_compare_last_3_week: "LOCompareLast3Week",
+  lo_compare_class: "LOCompareClass",
+  achieved_lo_count: "AchievedLoCount",
+  learnt_lo_count: "LearntLoCount",
+  attend_compare_last_week: "AttendCompareLastWeek",
+  attend_compare_last_3_week: "AttendCompareLast3Week",
+  attended_count: "AttendedCount",
+  scheduled_count: "ScheduledCount",
+};
+type LabelParams = EntityLearningOutcomeAchivementLabelParams & EntityAssignmentLabelParams & EntityAttedanceLabelParams;
+export function getFourWeeksMassage(labelId?: string, labelParams?: LabelParams, studentName?: string) {
+  if (!labelId) return "";
+  return t(labelId as any, Object.assign(getLabel(labelParams, LABEL_NAME), { Name: studentName }) as any);
 }

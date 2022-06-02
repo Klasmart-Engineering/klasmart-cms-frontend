@@ -1,18 +1,16 @@
-import { enableNewGql } from "@api/extra";
 import { uniq } from "lodash";
 import React from "react";
-import { useDispatch } from "react-redux";
 import LayoutBox from "../../components/LayoutBox";
 import TabPages from "../../components/TabPages";
 import { d, t } from "../../locale/LocaleManager";
-import { getStudentSubjectsByOrg, getStudentSubjectsByOrgNew } from "../../reducers/report";
 import { ReportTitle } from "../ReportDashboard";
-import StudentSubjectFilter from "./components/StudentSubjectFilter";
+import StudentFilter from "./components/StudentFilter";
 import { AssignmentCompletion, ClassAttendance, LearningOutcomesAchievement } from "./Tabs";
 
 interface IState {
   classId: string;
   studentId: string;
+  studentName: string;
   allSubjectId: string[];
   selectedSubjectId: string[];
 }
@@ -20,15 +18,16 @@ interface IState {
 export const SelectContext = React.createContext<IState>({
   classId: "",
   studentId: "",
+  studentName: "",
   allSubjectId: [],
   selectedSubjectId: [],
 });
 
 export default function ReportStudentProgress() {
-  const dispatch = useDispatch();
   const [state, setState] = React.useState<IState>({
     classId: "",
     studentId: "",
+    studentName: "",
     allSubjectId: [],
     selectedSubjectId: [],
   });
@@ -52,18 +51,18 @@ export default function ReportStudentProgress() {
       Component: AssignmentCompletion,
     },
   ];
-  React.useEffect(() => {
-    if (enableNewGql) {
-      dispatch(getStudentSubjectsByOrgNew({ metaLoading: true }));
-    } else {
-      dispatch(getStudentSubjectsByOrg({ metaLoading: true }));
-    }
-  }, [dispatch]);
+  // React.useEffect(() => {
+  //   if (enableNewGql) {
+  //     dispatch(getStudentSubjectsByOrgNew({ metaLoading: true }));
+  //   } else {
+  //     dispatch(getStudentSubjectsByOrg({ metaLoading: true }));
+  //   }
+  // }, [dispatch]);
   return (
     <>
       <ReportTitle title={t("report_label_student_progress_report")}></ReportTitle>
       <LayoutBox holderMin={40} holderBase={202} mainBase={1517}>
-        <StudentSubjectFilter
+        {/* <StudentSubjectFilter
           onInitial={(allSubjectId) => {
             setState({
               ...state,
@@ -71,11 +70,29 @@ export default function ReportStudentProgress() {
               allSubjectId: uniq(allSubjectId.concat([""])),
             });
           }}
-          onChange={(classId, studentId, selectedSubjectId) => {
+          onChange={(classId, studentId, studentName, selectedSubjectId) => {
             setState({
               ...state,
               classId,
               studentId,
+              studentName,
+              selectedSubjectId: uniq(selectedSubjectId),
+            });
+          }}
+        /> */}
+        <StudentFilter
+          onInitial={(allSubjectId) => {
+            setState({
+              ...state,
+              allSubjectId: uniq(allSubjectId.concat([""])),
+            });
+          }}
+          onChange={(classId, studentId, studentName, selectedSubjectId) => {
+            setState({
+              ...state,
+              classId,
+              studentId,
+              studentName,
               selectedSubjectId: uniq(selectedSubjectId),
             });
           }}

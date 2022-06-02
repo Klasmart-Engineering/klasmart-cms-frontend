@@ -882,6 +882,28 @@ export type GetUsersByNameQuery = { __typename?: "Query" } & {
   >;
 };
 
+export type SchoolListQueryVariables = Types.Exact<{
+  filter?: Types.Maybe<Types.SchoolFilter>;
+  cursor?: Types.Maybe<Types.Scalars["String"]>;
+}>;
+
+export type SchoolListQuery = { __typename?: "Query" } & {
+  schoolsConnection?: Types.Maybe<
+    { __typename?: "SchoolsConnectionResponse" } & Pick<Types.SchoolsConnectionResponse, "totalCount"> & {
+        edges?: Types.Maybe<
+          Array<
+            Types.Maybe<
+              { __typename?: "SchoolsConnectionEdge" } & {
+                node?: Types.Maybe<{ __typename?: "SchoolConnectionNode" } & Pick<Types.SchoolConnectionNode, "id" | "name">>;
+              }
+            >
+          >
+        >;
+        pageInfo?: Types.Maybe<{ __typename?: "ConnectionPageInfo" } & Pick<Types.ConnectionPageInfo, "hasNextPage" | "endCursor">>;
+      }
+  >;
+};
+
 export const UserIdNameFragmentDoc = gql`
   fragment userIdName on User {
     user_id
@@ -2204,7 +2226,7 @@ export type ClassesBySchoolIdLazyQueryHookResult = ReturnType<typeof useClassesB
 export type ClassesBySchoolIdQueryResult = Apollo.QueryResult<ClassesBySchoolIdQuery, ClassesBySchoolIdQueryVariables>;
 export const ClassesListDocument = gql`
   query classesList($cursor: String, $filter: ClassFilter) {
-    classesConnection(filter: $filter, directionArgs: { cursor: $cursor }, direction: FORWARD) {
+    classesConnection(filter: $filter, directionArgs: { cursor: $cursor }, sort: { order: ASC, field: name }, direction: FORWARD) {
       totalCount
       edges {
         node {
@@ -2390,7 +2412,7 @@ export const ClassNodeStudentsDocument = gql`
   query classNodeStudents($classId: ID!, $studentsCursor: String) {
     classNode(id: $classId) {
       name
-      studentsConnection(cursor: $studentsCursor) {
+      studentsConnection(cursor: $studentsCursor, sort: { order: ASC, field: [givenName, familyName] }) {
         totalCount
         edges {
           node {
@@ -2487,3 +2509,49 @@ export function useGetUsersByNameLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
 export type GetUsersByNameQueryHookResult = ReturnType<typeof useGetUsersByNameQuery>;
 export type GetUsersByNameLazyQueryHookResult = ReturnType<typeof useGetUsersByNameLazyQuery>;
 export type GetUsersByNameQueryResult = Apollo.QueryResult<GetUsersByNameQuery, GetUsersByNameQueryVariables>;
+export const SchoolListDocument = gql`
+  query schoolList($filter: SchoolFilter, $cursor: String) {
+    schoolsConnection(filter: $filter, directionArgs: { cursor: $cursor }, sort: { order: ASC, field: name }, direction: FORWARD) {
+      totalCount
+      edges {
+        node {
+          id
+          name
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+`;
+
+/**
+ * __useSchoolListQuery__
+ *
+ * To run a query within a React component, call `useSchoolListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSchoolListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSchoolListQuery({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *      cursor: // value for 'cursor'
+ *   },
+ * });
+ */
+export function useSchoolListQuery(baseOptions?: Apollo.QueryHookOptions<SchoolListQuery, SchoolListQueryVariables>) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<SchoolListQuery, SchoolListQueryVariables>(SchoolListDocument, options);
+}
+export function useSchoolListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SchoolListQuery, SchoolListQueryVariables>) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<SchoolListQuery, SchoolListQueryVariables>(SchoolListDocument, options);
+}
+export type SchoolListQueryHookResult = ReturnType<typeof useSchoolListQuery>;
+export type SchoolListLazyQueryHookResult = ReturnType<typeof useSchoolListLazyQuery>;
+export type SchoolListQueryResult = Apollo.QueryResult<SchoolListQuery, SchoolListQueryVariables>;

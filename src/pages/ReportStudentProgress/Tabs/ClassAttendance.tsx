@@ -4,9 +4,8 @@ import moment from "moment";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SelectContext } from "..";
-import { EntityClassAttendanceResponseItem } from "../../../api/api.auto";
 import { d, t } from "../../../locale/LocaleManager";
-import { parsePercent, translateMonth } from "../../../models/ModelReports";
+import { getFourWeeksMassage, parsePercent, translateMonth } from "../../../models/ModelReports";
 import { RootState } from "../../../reducers";
 import { getLearnOutcomeClassAttendance } from "../../../reducers/report";
 import LearningOutcomeAchievedTotalType from "../components/LearningOutcomeAchievedTotalType";
@@ -24,7 +23,7 @@ const useStyle = makeStyles(() =>
 
 export default function ClassAttendance() {
   const [durationTime, setDurationTime] = useState(4);
-  const { classId, studentId, allSubjectId, selectedSubjectId: selectedSubjectID } = useContext(SelectContext);
+  const { classId, studentId, studentName, allSubjectId, selectedSubjectId: selectedSubjectID } = useContext(SelectContext);
   const selectedSubjectId: string[] =
     selectedSubjectID.length === allSubjectId.length - 1 ? selectedSubjectID.concat([""]) : selectedSubjectID;
   const unselectedSubjectId =
@@ -34,10 +33,9 @@ export default function ClassAttendance() {
   const colors = ["#0e78d5", "#bed6eb", "#a8c0ef"];
   const css = useStyle();
   const dispatch = useDispatch();
-  const { learnOutcomeClassAttendance, fourWeeksClassAttendanceMassage } = useSelector<RootState, RootState["report"]>(
-    (state) => state.report
-  );
-  const items: EntityClassAttendanceResponseItem[] = learnOutcomeClassAttendance.items ? learnOutcomeClassAttendance.items : [];
+  const { learnOutcomeClassAttendance } = useSelector<RootState, RootState["report"]>((state) => state.report);
+  const { label_id, label_params, items = [] } = learnOutcomeClassAttendance;
+  const fourWeeksClassAttendanceMassage = durationTime === 4 ? getFourWeeksMassage(label_id, label_params, studentName) : "";
 
   const type = [
     t("report_label_student_attendance_rate"),
