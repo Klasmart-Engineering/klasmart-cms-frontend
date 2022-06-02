@@ -1,4 +1,5 @@
 import { SelectItem } from "@api/extra";
+import { t } from "@locale/LocaleManager";
 import { Button, FormControl, InputLabel, LinearProgress, MenuItem, Select } from "@material-ui/core";
 import React, { useState } from "react";
 interface ISelectMore {
@@ -41,7 +42,7 @@ export function SelectMore(props: ISelectMore) {
         ))}
         {cursor && !loading && (
           <Button fullWidth color="primary" onClick={getNextPageList}>
-            more...
+            {t("report_label_more")}
           </Button>
         )}
         {cursor && loading && <LinearProgress />}

@@ -1828,7 +1828,9 @@ A new ‘Auto review’ lesson will appear on students’ calendar once our plat
       values: { quantity: string | number };
     }
   | { id: "schedule_msg_no_permission_to_be_redirected"; description: `You do not have permission. Redirecting...`; values: undefined }
-  | { id: "library_label_hierarchy_folder_tree"; description: `Folder Tree`; values: undefined };
+  | { id: "library_label_hierarchy_folder_tree"; description: `Folder Tree`; values: undefined }
+  | { id: "report_label_more"; description: `more`; values: undefined }
+  | { id: "report_label_no_data"; description: `No Data`; values: undefined };
 
 export type LangRecordId = LangRecord["id"];
 export type LangRecodeDescription = LangRecord["description"];

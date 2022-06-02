@@ -1,3 +1,4 @@
+import { noDataTip } from "@components/TipImages";
 import { createStyles, makeStyles } from "@material-ui/styles";
 import { getFourWeeks, getLastedMonths } from "@utilities/dateUtilities";
 import moment from "moment";
@@ -111,18 +112,24 @@ export default function LearningOutcomesAchievement() {
   const label = { v1: [totalType[0].label, totalType[1].label], v2: totalType[2].label, v3: totalType[3].label };
   return (
     <div>
-      <StudentProgressReportFilter
-        durationTime={durationTime}
-        handleChange={handleChange}
-        studentProgressReportTitle={d("Learning Outcomes Achieved %").t("report_label_learning_outcomes_achieved")}
-      />
-      <div className={style.chart}>
-        <StudentProgressBarChart data={data} label={label} itemUnit={"%"} durationTime={durationTime} />
-      </div>
-      <div>
-        <LearningOutcomeAchievedTotalType totalType={totalType} colors={colors} isLearningOutcomeAchieved={true} />
-        {durationTime === 4 && <StudentProgressReportFeedback fourWeeksMassage={fourWeekslearnOutcomeAchievementMassage} />}
-      </div>
+      {!studentId ? (
+        noDataTip
+      ) : (
+        <div>
+          <StudentProgressReportFilter
+            durationTime={durationTime}
+            handleChange={handleChange}
+            studentProgressReportTitle={d("Learning Outcomes Achieved %").t("report_label_learning_outcomes_achieved")}
+          />
+          <div className={style.chart}>
+            <StudentProgressBarChart data={data} label={label} itemUnit={"%"} durationTime={durationTime} />
+          </div>
+          <div>
+            <LearningOutcomeAchievedTotalType totalType={totalType} colors={colors} isLearningOutcomeAchieved={true} />
+            {durationTime === 4 && <StudentProgressReportFeedback fourWeeksMassage={fourWeekslearnOutcomeAchievementMassage} />}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

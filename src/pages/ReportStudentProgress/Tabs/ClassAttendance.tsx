@@ -1,3 +1,4 @@
+import { noDataTip } from "@components/TipImages";
 import { createStyles, makeStyles } from "@material-ui/core";
 import { getFourWeeks, getLastedMonths } from "@utilities/dateUtilities";
 import moment from "moment";
@@ -114,18 +115,24 @@ export default function ClassAttendance() {
 
   return (
     <div>
-      <StudentProgressReportFilter
-        durationTime={durationTime}
-        handleChange={handleChange}
-        studentProgressReportTitle={d("Class Attendance Rate (Live only)").t("report_label_class_attendance_rate")}
-      />
-      <div className={css.chart}>
-        <StudentProgressBarChart data={chartData} label={label} itemUnit={"%"} durationTime={durationTime} />
-      </div>
-      <div>
-        <LearningOutcomeAchievedTotalType totalType={totalType} colors={colors} isLearningOutcomeAchieved={false} />
-        {durationTime === 4 && <StudentProgressReportFeedback fourWeeksMassage={fourWeeksClassAttendanceMassage} />}
-      </div>
+      {!studentId ? (
+        noDataTip
+      ) : (
+        <div>
+          <StudentProgressReportFilter
+            durationTime={durationTime}
+            handleChange={handleChange}
+            studentProgressReportTitle={d("Class Attendance Rate (Live only)").t("report_label_class_attendance_rate")}
+          />
+          <div className={css.chart}>
+            <StudentProgressBarChart data={chartData} label={label} itemUnit={"%"} durationTime={durationTime} />
+          </div>
+          <div>
+            <LearningOutcomeAchievedTotalType totalType={totalType} colors={colors} isLearningOutcomeAchieved={false} />
+            {durationTime === 4 && <StudentProgressReportFeedback fourWeeksMassage={fourWeeksClassAttendanceMassage} />}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
