@@ -42,6 +42,7 @@ export type TextLabel =
   | "library_error_no_permissions"
   | "report_msg_no_data"
   | "report_msg_no_plan"
+  | "report_label_no_data"
   | "report_label_no_report";
 interface TipImagesProps {
   type: TipImagesType;
@@ -86,6 +87,7 @@ export function TipImages(props: TipImagesProps) {
 }
 export const permissionTip = <TipImages type={TipImagesType.noPermission} text="library_error_no_permissions" />;
 export const emptyTip = <TipImages type={TipImagesType.empty} text="library_label_empty" />;
+export const noDataTip = <TipImages type={TipImagesType.empty} text="report_label_no_data" />;
 export const comingsoonTip = <TipImages type={TipImagesType.commingSoon} text="library_msg_coming_soon" />;
 export const resultsTip = <TipImages type={TipImagesType.noResults} text="library_msg_no_results_found" />;
 export const achievementEmpty = <TipImages type={TipImagesType.achievementEmpty} text="report_msg_no_data" />;

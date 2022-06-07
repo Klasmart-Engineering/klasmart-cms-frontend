@@ -1164,5 +1164,7 @@
   "library_tooltip_zoom_in": "放大",
   "library_tooltip_zoom_out": "缩小",
   "library_tooltip_fit_to_width": "适合宽度",
-  "library_tooltip_fit_to_height": "适合高度"
+  "library_tooltip_fit_to_height": "适合高度",
+  "report_label_more": "更多",
+  "report_label_no_data": "暂无数据"
 }

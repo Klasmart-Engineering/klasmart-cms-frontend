@@ -42,7 +42,8 @@ interface IState {
 interface IUserInfo {
   user: { value: string; label: string };
   isTeacher: boolean;
-  isStudent: Boolean;
+  isStudent: boolean;
+  isSchoolAdmin?: boolean;
 }
 export interface IList {
   list: SelectItem[];
@@ -147,6 +148,7 @@ export default function StudentFilter({ onChange, onInitial }: IProps) {
       !perm.report_student_progress_school_659 &&
       perm.report_student_progress_student_661
     );
+    const isSchoolAdmin = perm.report_student_progress_school_659 && !perm.report_student_progress_organization_658;
     if (isTeacher || isStudent) {
       const {
         data: { myUser },
@@ -156,7 +158,7 @@ export default function StudentFilter({ onChange, onInitial }: IProps) {
       value = myUser?.node?.id || "";
       label = `${myUser?.node?.givenName} ${myUser?.node?.familyName}`;
     }
-    const newUserInfo: IUserInfo = { user: { value, label }, isTeacher, isStudent };
+    const newUserInfo: IUserInfo = { user: { value, label }, isTeacher, isStudent, isSchoolAdmin };
     setUserInfo(newUserInfo);
     const [{ list: schools, cursor: schoolCursor }, { list: classes, cursor: classCursor }, subjects] = await Promise.all([
       getSchoolList({ filter: { organizationId } }),
@@ -168,10 +170,7 @@ export default function StudentFilter({ onChange, onInitial }: IProps) {
       classId && isStudent ? { list: [{ value, label }], cursor: "" } : await getStudentList(classId);
     dispatch(actSetLoading(false));
 
-    const newSchools = selectAllOption.concat(schools);
     const studentId = students[0]?.value || "";
-    const isSchool = perm.report_student_progress_school_659 && !perm.report_student_progress_organization_658;
-    const schoolsByPerm = isSchool ? newSchools : newSchools.concat(selectNoneSchoolOption);
     setState({
       schoolId: allValue,
       classId,
@@ -180,7 +179,7 @@ export default function StudentFilter({ onChange, onInitial }: IProps) {
       schoolCursor,
       classCursor,
       studentCursor,
-      schools: schoolsByPerm,
+      schools: selectAllOption.concat(schools),
       classes,
       students,
       subjects,
@@ -234,7 +233,7 @@ export default function StudentFilter({ onChange, onInitial }: IProps) {
     onInitial && onInitial(subjects.map((opt) => opt.value));
   };
   const changeCb = () => {
-    if (onChange && studentId && subjectId) {
+    if (onChange && subjectId) {
       const studentName = students?.find((val) => val.value === studentId)?.label || "";
       onChange(classId, studentId, studentName, subjectId === allValue ? subjects.map((opt) => opt.value) : [subjectId]);
     }
@@ -259,7 +258,7 @@ export default function StudentFilter({ onChange, onInitial }: IProps) {
       <Box className={css.select}>
         <SelectMore
           label={t("report_filter_school")}
-          list={schools}
+          list={userInfo?.isSchoolAdmin ? schools : schools.concat(selectNoneSchoolOption)}
           value={schoolId ?? ""}
           onChange={handleChangeSchool}
           cursor={schoolCursor}

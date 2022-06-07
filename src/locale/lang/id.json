@@ -1164,5 +1164,7 @@
   "library_tooltip_zoom_in": "Perbesar",
   "library_tooltip_zoom_out": "Perkecil",
   "library_tooltip_fit_to_width": "Pepetkan Sesuai Lebar",
-  "library_tooltip_fit_to_height": "Pepetkan Sesuai Tinggi"
+  "library_tooltip_fit_to_height": "Pepetkan Sesuai Tinggi",
+  "report_label_more": "More",
+  "report_label_no_data": "No Data"
 }

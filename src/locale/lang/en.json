@@ -1164,5 +1164,7 @@
   "library_tooltip_zoom_in": "Zoom In",
   "library_tooltip_zoom_out": "Zoom Out",
   "library_tooltip_fit_to_width": "Fit to Width",
-  "library_tooltip_fit_to_height": "Fit to Height"
+  "library_tooltip_fit_to_height": "Fit to Height",
+  "report_label_more": "More",
+  "report_label_no_data": "No Data"
 }
