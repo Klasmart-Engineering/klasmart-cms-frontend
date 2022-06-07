@@ -160,7 +160,8 @@ export default function MyContentList() {
   const [folderForm, setFolderForm] = useState<EntityFolderContentData>();
   const [parentId, setParentId] = useState<string>();
   const [cmsPageSize, setCmsPageSize] = useState(page_size);
-  const showFolderTree = !condition.program_group && condition.publish_status === PublishStatus.published;
+  // const showFolderTree = !condition.program_group && condition.publish_status === PublishStatus.published;
+  const showFolderTree = false;
   const handlePublish: ContentCardListProps["onPublish"] = (id) => {
     return refreshWithDispatch(dispatch(publishContent(id)));
   };
@@ -198,7 +199,7 @@ export default function MyContentList() {
         condition.content_type !== SearchContentsRequestContentType.assetsandfolder
           ? SearchContentsRequestContentType.materialandplan
           : condition.content_type;
-      if (condition.publish_status === PublishStatus.published) {
+      if (showFolderTree) {
         history.push({
           search: toQueryString({
             ...condition,
@@ -326,8 +327,8 @@ export default function MyContentList() {
     openFolderTree();
   };
   const handleGoback: ContentCardListProps["onGoBack"] = () => {
-    history.push({ search: toQueryString({ ...condition, path: `${parentFolderInfo.dir_path}` }) });
-    // history.goBack();
+    // history.push({ search: toQueryString({ ...condition, path: `${parentFolderInfo.dir_path}` }) });
+    history.goBack();
   };
   const handleClickFolderPath = (path: string) => {
     history.push({ search: toQueryString({ ...condition, path }) });
@@ -424,12 +425,9 @@ export default function MyContentList() {
       setTimeout(reset, 500);
     })();
   }, [condition, reset, dispatch, refreshKey, cmsPageSize]);
+
   useEffect(() => {
-    if (
-      !condition.program_group &&
-      condition.publish_status === PublishStatus.published &&
-      condition.content_type !== String(SearchContentsRequestContentType.assetsandfolder)
-    ) {
+    if (showFolderTree) {
       const isExectSearch = condition.exect_search === ExectSearch.name;
       dispatch(
         getFolderTree({
@@ -439,16 +437,8 @@ export default function MyContentList() {
         })
       );
     }
-  }, [
-    dispatch,
-    condition.program_group,
-    condition.publish_status,
-    condition.content_type,
-    condition.exect_search,
-    condition.name,
-    condition.author,
-    refreshKey,
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, condition.exect_search, condition.name, condition.author, showFolderTree, refreshKey]);
   const { breakpoints } = useTheme();
   const sm = useMediaQuery(breakpoints.down("sm"));
   return (
