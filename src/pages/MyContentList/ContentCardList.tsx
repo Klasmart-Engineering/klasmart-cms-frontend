@@ -47,13 +47,13 @@ const useStyles = makeStyles((theme) =>
   createStyles({
     gridContainer: {
       [theme.breakpoints.only("xl")]: {
-        width: calcGridWidth(4, 0.9),
+        width: calcGridWidth(4, 0.86),
       },
       [theme.breakpoints.only("lg")]: {
-        width: calcGridWidth(4, 0.9),
+        width: calcGridWidth(4, 0.86),
       },
       [theme.breakpoints.only("md")]: {
-        width: calcGridWidth(3, 0.9),
+        width: calcGridWidth(3, 0.86),
       },
       [theme.breakpoints.only("sm")]: {
         width: calcGridWidth(2, 0.9),
@@ -63,8 +63,8 @@ const useStyles = makeStyles((theme) =>
       },
     },
     card: {
-      width: "90%",
-      marginBottom: 36,
+      width: "86%",
+      marginBottom: 40,
       [theme.breakpoints.only("sm")]: {
         width: "90%",
       },
@@ -613,7 +613,6 @@ export function ContentCardList(props: ContentCardListProps) {
   const handleChangePageSize = (event: React.ChangeEvent<{ value: unknown }>) => {
     onChangePageSize(event.target.value as number);
   };
-  const showFolderTree = !queryCondition.program_group && queryCondition.publish_status === PublishStatus.published;
   const pageSizes = [20, 100, 500];
   return (
     <div>
@@ -638,7 +637,7 @@ export function ContentCardList(props: ContentCardListProps) {
                       />
                     )}
                   {list.map((item, idx) => (
-                    <Grid key={item.id} item xs={12} sm={6} md={showFolderTree ? 6 : 4} lg={3} xl={3}>
+                    <Grid key={item.id} item xs={12} sm={6} md={4} lg={3} xl={3}>
                       <ContentCard
                         content={item}
                         {...{
