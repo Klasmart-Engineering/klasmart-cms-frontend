@@ -68,8 +68,8 @@ export default function CreateOutcomings() {
     getValues,
     formState: { isDirty },
     setValue,
+    watch,
   } = formMethods;
-
   const handleChangeProgram = React.useMemo(
     () =>
       ([programId]: string[]) => {
@@ -137,6 +137,7 @@ export default function CreateOutcomings() {
             AsyncTrunkReturned<typeof generateShortcode>
           >;
           value.shortcode = resultInfo.payload.shortcode;
+          setValue("shortcode", resultInfo.payload.shortcode)
         }
         setValue("assumed", isAssumed);
         const { score_threshold, ...restValue } = value;
@@ -351,7 +352,8 @@ export default function CreateOutcomings() {
         setValue("skills", []);
       }
       if (condition === "default") {
-        const detail = shortCode ? { ...outcomeDetail, shortcode: shortCode } : outcomeDetail;
+        const finalShortCode = watch()["shortcode"];
+        const detail = { ...outcomeDetail, shortcode: finalShortCode  } 
         const { program, subject, developmental } = outcomeDetail;
         const _program = program?.filter((pItem) => newOptions.program.find((item) => item.id === pItem.program_id));
         const _subject = subject ? subject?.filter((sItem) => newOptions.subject.find((item) => item.id === sItem.subject_id)) : [];
@@ -374,7 +376,7 @@ export default function CreateOutcomings() {
       }
       return;
     }
-    if (condition === "default") {
+    if (!outcome_id && condition === "default") {
       reset(nextValue);
     }
     if (condition === "program") {
