@@ -20,7 +20,7 @@ import {
   reject,
   resetShortCode,
   save,
-  updateOutcome,
+  updateOutcome
 } from "@reducers/outcome";
 import { AsyncTrunkReturned } from "@reducers/type";
 import { PayloadAction } from "@reduxjs/toolkit";
@@ -132,7 +132,7 @@ export default function CreateOutcomings() {
   const handleSave = React.useMemo(
     () =>
       handleSubmit(async (value: ModelOutcomeCreateView) => {
-        if (value.shortcode && !value.shortcode.trim()) {
+        if (!value.shortcode?.trim()) {
           const resultInfo = (await dispatch(generateShortcode({ kind: "outcomes" }))) as unknown as PayloadAction<
             AsyncTrunkReturned<typeof generateShortcode>
           >;
