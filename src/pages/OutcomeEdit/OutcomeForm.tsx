@@ -106,7 +106,7 @@ export function OutcomeForm(props: OutcomeFormProps) {
     outcomeSetList,
     onDeleteSet,
     defaultSelectOutcomeset,
-    shortCode,
+    // shortCode,
     onInputChange,
   } = props;
   const classes = useStyles();
