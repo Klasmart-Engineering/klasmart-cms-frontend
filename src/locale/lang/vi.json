@@ -157,7 +157,7 @@
     "library_label_files_selected": "( {value} tệp được chọn )",
     "library_label_more": "Thêm",
     "library_error_plan_duration": "Thời lượng giáo án phải lớn hơn tổng thời lượng của các học liệu",
-    "library_label_uploadInfo1": "Hỗ trợ định dạng: PDF, JPG, JPEG, PNG, GIF, BMP, AVI, MP4, MP3, WAV",
+    "library_label_uploadInfo1": "Hỗ trợ định dạng: PDF, JPG, JPEG, PNG, GIF, BMP, MP4, MP3, WAV",
     "library_label_uploadInfo2": "(Đối với tài liệu Office, chúng tôi khuyên bạn nên chuyển đổi sang PDF sau đó tải lên hoặc sử dụng chia sẻ màn hình trong giờ học)",
     "library_error_include_archived_lesson_material": "Giáo án này bao gồm tài liệu bài học đã lưu trữ, vui lòng xóa giáo án và thử công bố lại.",
     "assess_tab_assessments": "Đánh Giá",

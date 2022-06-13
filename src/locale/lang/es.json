@@ -157,7 +157,7 @@
     "library_label_files_selected": "( {value} archivos seleccionados )",
     "library_label_more": "Más",
     "library_error_plan_duration": "La duración del plan debe ser mayor a la suma de los materiales de la lección",
-    "library_label_uploadInfo1": "Formatos compatibles: PDF, JPG, JPEG, PNG, GIF, BMP, AVI, MP4, MP3, WAV",
+    "library_label_uploadInfo1": "Formatos compatibles: PDF, JPG, JPEG, PNG, GIF, BMP, MP4, MP3, WAV",
     "library_label_uploadInfo2": "(para los documentos de Office, sugerimos convertirlos a PDF y cargarlos después, o utilizar la función de compartir pantalla durante la clase)",
     "library_error_include_archived_lesson_material": "Este plan de la lección incluye material archivado; quita este material y vuelve a intentar publicarlo.",
     "assess_tab_assessments": "Evaluaciones",

@@ -157,7 +157,7 @@
     "library_label_files_selected": "( 已选中 {value} 个项目 )",
     "library_label_more": "更多",
     "library_error_plan_duration": "课件的时长必须大于课件素材的总和",
-    "library_label_uploadInfo1": "支持格式：PDF, JPG, JPEG, PNG, GIF, BMP, AVI, MP4, MP3, WAV",
+    "library_label_uploadInfo1": "支持格式：PDF, JPG, JPEG, PNG, GIF, BMP, MP4, MP3, WAV",
     "library_label_uploadInfo2": "我们建议您把Office文档转换成PDF后上传，\n或在课堂上使用屏幕共享功能",
     "library_error_include_archived_lesson_material": "这个教学课件包含回收站的素材，请先移除再尝试发布",
     "assess_tab_assessments": "学习评估",

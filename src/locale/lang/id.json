@@ -157,7 +157,7 @@
     "library_label_files_selected": "( {value} berkas dipilih )",
     "library_label_more": "Selengkapnya",
     "library_error_plan_duration": "Durasi jadwal harus lebih panjang dari materi pelajaran",
-    "library_label_uploadInfo1": "Format didukung: PDF, JPG, JPEG, PNG, GIF, BMP, AVI, MP4, MP3, WAV",
+    "library_label_uploadInfo1": "Format didukung: PDF, JPG, JPEG, PNG, GIF, BMP, MP4, MP3, WAV",
     "library_label_uploadInfo2": "(Untuk dokumen Office, kami menyarankan konversi ke PDF untuk diunggah, atau bagikan layar Anda saat kelas).",
     "library_error_include_archived_lesson_material": "Terdapat materi yang diarsip di rencana pembelajaran ini, silakan hapus terlebih dahulu sebelum menerbitkannya.",
     "assess_tab_assessments": "Penilaian",
