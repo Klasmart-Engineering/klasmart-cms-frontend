@@ -562,9 +562,9 @@ const { actions, reducer } = createSlice({
     [getOutcomeDetail.fulfilled.type]: (state, { payload }: PayloadAction<any>) => {
       state.outcomeDetail = payload;
     },
-    // [getOutcomeDetail.pending.type]: (state, { payload }: PayloadAction<any>) => {
-    //   state.outcomeDetail = initialState.outcomeDetail;
-    // },
+    [getOutcomeDetail.pending.type]: (state, { payload }: PayloadAction<any>) => {
+      state.outcomeDetail = initialState.outcomeDetail;
+    },
     [getOutcomeDetail.rejected.type]: (state, { error }: any) => {
       throw error;
     },
@@ -628,6 +628,7 @@ const { actions, reducer } = createSlice({
     },
     [generateShortcode.fulfilled.type]: (state, { payload }: PayloadAction<AsyncTrunkReturned<typeof generateShortcode>>) => {
       state.shortCode = payload.shortcode || "";
+      state.outcomeDetail.shortcode = payload.shortcode;
     },
     [exportOutcomes.fulfilled.type]: (state, { payload }: PayloadAction<AsyncTrunkReturned<typeof exportOutcomes>>) => {
       state.downloadOutcomes = payload;
