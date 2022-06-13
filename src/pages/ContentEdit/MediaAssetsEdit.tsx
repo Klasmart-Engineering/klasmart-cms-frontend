@@ -77,7 +77,6 @@ const useUploadBoxStyles = makeStyles(({ shadows }) => ({
 export const fileFormat = {
   video: [".avi", ".mp4"],
   image: [".jpg", ".jpeg", ".png", ".gif", ".bmp"],
-  document: [".ppt", ".pptx"],
   audio: [".mp3", ".wav"],
   pdf: [".pdf"],
 };
@@ -176,16 +175,12 @@ function AssetEdit(props: AssetEditProps) {
     if (assetLibraryId === ContentFileType.audio) {
       return fileFormat.audio.join();
     }
-    if (assetLibraryId === ContentFileType.doc) {
-      return fileFormat.document.join();
-    }
     if (assetLibraryId === ContentFileType.pdf) {
       return fileFormat.pdf.join();
     }
     if (assetLibraryId === ContentFileType.video) {
       return fileFormat.video.join();
-    } else
-      return `${fileFormat.pdf.join()},${fileFormat.image.join()},${fileFormat.video.join()},${fileFormat.audio.join()},${fileFormat.document.join()},`;
+    } else return `${fileFormat.pdf.join()},${fileFormat.image.join()},${fileFormat.video.join()},${fileFormat.audio.join()}`;
   };
   return (
     <div ref={fileRef} className={uploadCss.uploadBox}>
