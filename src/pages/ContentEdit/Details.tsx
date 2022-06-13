@@ -252,7 +252,6 @@ export default function Details(props: DetailsProps) {
     onChangeSubject,
     disabled,
   } = props;
-  console.log(linkedMockOptions);
   const css = useStyles();
   const { lesson } = useParams<ContentEditRouteParams>();
   const { id } = useQueryCms();
