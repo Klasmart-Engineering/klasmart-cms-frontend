@@ -75,7 +75,7 @@ interface file {
 interface ImageProps {
   src: string | undefined;
   width?: string | number;
-  zoomProps?: string | number;
+  zoomProps?: Object;
   height?: string | number;
 }
 async function getPdfMetadata(pdfPath: string | undefined) {

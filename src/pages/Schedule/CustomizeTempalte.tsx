@@ -213,9 +213,9 @@ interface InfoProps {
 interface InfoMbProps extends InfoProps {
   handleEditSchedule: (scheduleInfo: EntityScheduleViewDetail) => void;
   handleHide: () => void;
-  disableDelete: () => void;
+  disableDelete: () => boolean | undefined;
   deleteHandle: () => void;
-  showDelete: () => void;
+  showDelete: () => boolean;
   textEllipsis: (characterCount: number, values?: string) => string;
   timestampToTime: (timestamp: number, is_yaer: boolean, is_month?: boolean) => string;
   multiStructure: (item?: EntityScheduleShortInfo[]) => string[] | undefined;
