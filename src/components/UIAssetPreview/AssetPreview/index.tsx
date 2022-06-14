@@ -24,6 +24,7 @@ export function AssetPreview(props: PreviewProps) {
       flexDirection="column"
       alignItems="center"
       className={className}
+      id="viewContainer"
       width="100%"
       height={isHeight ? "100vh" : "100%"}
       onContextMenu={(e) => {
