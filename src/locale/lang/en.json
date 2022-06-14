@@ -157,7 +157,7 @@
     "library_label_files_selected": "( {value} files selected )",
     "library_label_more": "More",
     "library_error_plan_duration": "Plan's duration should be greater than lesson materials' sum",
-    "library_label_uploadInfo1": "Supported format: PDF, JPG, JPEG, PNG, GIF, BMP, AVI, MP4, MP3, WAV",
+    "library_label_uploadInfo1": "Supported format: PDF, JPG, JPEG, PNG, GIF, BMP, MP4, MP3, WAV",
     "library_label_uploadInfo2": "(For Office documents, we suggest converting to PDF then upload, or using screen-sharing during class time)",
     "library_error_include_archived_lesson_material": "This lesson plan includes archived lesson material, please remove it and try publishing again.",
     "assess_tab_assessments": "Assessments",

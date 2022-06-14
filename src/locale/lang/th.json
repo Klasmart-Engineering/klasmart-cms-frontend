@@ -157,7 +157,7 @@
     "library_label_files_selected": "( {value} ไฟล์ที่เลือก )",
     "library_label_more": "มากกว่า",
     "library_error_plan_duration": "ระยะเวลาของแผนควรมากกว่าผลรวมของเนื้อหาบทเรียน",
-    "library_label_uploadInfo1": "รูปแบบที่รองรับ: PDF, JPG, JPEG, PNG, GIF, BMP, AVI, MP4, MP3, WAV",
+    "library_label_uploadInfo1": "รูปแบบที่รองรับ: PDF, JPG, JPEG, PNG, GIF, BMP, MP4, MP3, WAV",
     "library_label_uploadInfo2": "(สำหรับเอกสาร Office เราแนะนำให้แปลงเป็น PDF แล้วอัปโหลด หรือใช้การแชร์หน้าจอระหว่างเวลาเรียน)",
     "library_error_include_archived_lesson_material": "แผนการสอนนี้มีเนื้อหาบทเรียนที่เก็บถาวร โปรดลบออกแล้วลองเผยแพร่อีกครั้ง",
     "assess_tab_assessments": "การประเมินผล",
