@@ -87,6 +87,7 @@ export const SingleUploader = forwardRef<HTMLDivElement, SingleUploaderProps>((p
             const { payload } = (await dispatch(getContentResourceUploadPath({ partition, extension }))) as unknown as PayloadAction<
               AsyncTrunkReturned<typeof getContentResourceUploadPath>
             >;
+            if (!payload) return false;
             const { path, resource_id } = payload;
             setRid(resource_id);
             setFile(file);
