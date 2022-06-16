@@ -40,6 +40,7 @@ import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { ContentEditRouteParams } from ".";
 import { HtmlTooltip } from "../Schedule/ScheduleAttachment";
+import { fileFormat } from "./MediaAssetsEdit";
 
 const useStyles = makeStyles(({ breakpoints, palette }) => ({
   details: {
@@ -401,7 +402,7 @@ export default function Details(props: DetailsProps) {
               render={({ crop }) => (
                 <SingleUploader
                   partition="thumbnail"
-                  accept="image/*"
+                  accept={fileFormat.image.join()}
                   transformFile={crop}
                   {...props}
                   render={({ uploady, item, btnRef, value, isUploading }) => (

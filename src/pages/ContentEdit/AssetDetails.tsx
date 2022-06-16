@@ -12,6 +12,7 @@ import { d } from "../../locale/LocaleManager";
 import { ContentDetailForm } from "../../models/ModelContentDetailForm";
 import { CreateAllDefaultValueAndKeyResult } from "../../models/ModelMockOptions";
 import { ProgressWithText } from "./Details";
+import { fileFormat } from "./MediaAssetsEdit";
 
 const useStyles = makeStyles(({ breakpoints, shadows, palette }) => ({
   fieldset: {
@@ -138,7 +139,7 @@ export default function AssetsDetails(props: AssetDetailsProps) {
                 render={({ crop }) => (
                   <SingleUploader
                     partition="thumbnail"
-                    accept="image/*"
+                    accept={fileFormat.image.join()}
                     transformFile={crop}
                     {...props}
                     render={({ uploady, item, btnRef, value, isUploading }) => (
