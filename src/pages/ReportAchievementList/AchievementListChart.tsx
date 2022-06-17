@@ -12,8 +12,8 @@ import React, { useMemo } from "react";
 import { EntityStudentAchievementReportItem } from "../../api/api.auto";
 import LayoutBox from "../../components/LayoutBox";
 import { useChartScale } from "../../hooks/useChartScale";
-import { ReportFilter, StatusColor } from "./types";
 import { d, t } from "../../locale/LocaleManager";
+import { ReportFilter, StatusColor } from "./types";
 
 const useStyle = makeStyles({
   chart: {
@@ -113,7 +113,7 @@ const COUNT_KEYS = {
 
 const ratioKey2countKey = (ratioKey: RatioKey): CountKey => {
   const [filter] = Object.entries(RATIO_KEYS).find(([k, v]) => v === ratioKey) || [];
-  const result = COUNT_KEYS[(filter as unknown) as keyof typeof COUNT_KEYS];
+  const result = COUNT_KEYS[filter as unknown as keyof typeof COUNT_KEYS];
   return result;
 };
 
@@ -121,10 +121,9 @@ const isAttend = (studentId: string | undefined, data: EntityStudentAchievementR
   return data.find((item) => item.student_id === studentId)?.attend || false;
 };
 
-type RatioExtendedEntityStudentAchievementReportItem = EntityStudentAchievementReportItem &
-  {
-    [key in RatioKey | "sum"]: number;
-  };
+type RatioExtendedEntityStudentAchievementReportItem = EntityStudentAchievementReportItem & {
+  [key in RatioKey | "sum"]: number;
+};
 const mapRatio = (data: EntityStudentAchievementReportItem[]): RatioExtendedEntityStudentAchievementReportItem[] => {
   return data.map((item) => {
     // const { achieved_count = 0, not_achieved_count = 0, not_attempted_count = 0 } = item;
@@ -132,11 +131,13 @@ const mapRatio = (data: EntityStudentAchievementReportItem[]): RatioExtendedEnti
     const not_achieved_count = item.not_achieved_count ?? 0;
     const not_attempted_count = item.not_attempted_count ?? 0;
     const sum = achieved_count + not_achieved_count + not_attempted_count;
+    const achievedRatio = sum === 0 ? 0 : Math.round((100 * achieved_count) / sum);
+    const notAttemptedRatio = sum === 0 ? 0 : Math.round((100 * not_attempted_count) / sum);
     return {
       ...item,
-      [RATIO_KEYS[ReportFilter.achieved]]: sum === 0 ? 0 : (100 * achieved_count) / sum,
-      [RATIO_KEYS[ReportFilter.not_achieved]]: sum === 0 ? 0 : (100 * not_achieved_count) / sum,
-      [RATIO_KEYS[ReportFilter.not_attempted]]: sum === 0 ? 0 : (100 * not_attempted_count) / sum,
+      [RATIO_KEYS[ReportFilter.achieved]]: achievedRatio,
+      [RATIO_KEYS[ReportFilter.not_attempted]]: notAttemptedRatio,
+      [RATIO_KEYS[ReportFilter.not_achieved]]: sum === 0 ? 0 : 100 - achievedRatio - notAttemptedRatio,
       sum,
     };
   });
@@ -183,9 +184,10 @@ export function AchievementListStaticChart(props: AchievementListStaticChartProp
   const css = useStyle();
   const pixels = useMemo(() => getPixels(px), [px]);
   const inlineStyles = useMemo(() => getInlineStyles(px), [px]);
-  const { data, xScale, xAxiosScale, yScale, colorScale, getY, ratioKeys, barStacksHeight, viewPort } = useMemo(() => computed(props), [
-    props,
-  ]);
+  const { data, xScale, xAxiosScale, yScale, colorScale, getY, ratioKeys, barStacksHeight, viewPort } = useMemo(
+    () => computed(props),
+    [props]
+  );
   const { tooltipOpen, tooltipData, tooltipTop, tooltipLeft, showTooltip, hideTooltip } = useTooltip<TBar>();
 
   const rectList = (barStacks: TBarStack[], px: number) =>
