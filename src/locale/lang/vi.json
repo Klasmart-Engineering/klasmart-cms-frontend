@@ -880,7 +880,7 @@
     "report_tab_live_classes": "Lớp học trực tuyến",
     "report_liveclass_attended": "Tham dự",
     "report_liveclass_absent": "Vắng",
-    "report_tab_assignments": "Bài tập",
+    "report_tab_assignments": "Bài tập về nhà",
     "report_pie_completed": "Hoàn thành",
     "report_pie_incomplete": "Chưa hoàn thành",
     "report_learning_outcomes_covered": "Kết quả học tập được đề cập",
@@ -944,7 +944,7 @@
     "report_student_usage_missed_home_fun": "Danh sách học sinh bỏ lỡ nhiệm vụ về nhà",
     "report_student_usage_of": "{value} của {total}",
     "report_label_lessons": "Các bài học",
-    "report_label_assignments": "Bài tập",
+    "report_label_assignments": "Bài Tập Về Nhà",
     "report_label_lesson_load": "Tải bài học 7 ngày tiếp theo",
     "report_label_total_lessons": "Tổng số bài học (Trực tuyến và trên lớp) đã lên lịch",
     "report_label_hrs": "Giờ",
@@ -1035,7 +1035,7 @@
     "report_label_total_reachieved_lo": "Tổng kết quả học tập đạt được lần nữa",
     "report_label_total_achieved_lo_class_average": "Tổng kết quả học tập đạt được trung bình của lớp học",
     "report_label_total_achieved_lo_subject_average": "Tổng kết quả học tập đạt được trung bình của môn học",
-    "report_label_class_attendance_rate": "Tỷ lệ tham gia lớp học (Trực tuyến)",
+    "report_label_class_attendance_rate": "Tỷ lệ tham gia lớp học",
     "report_label_student_attendance_rate": "Tỷ lệ tham dự trung bình của học sinh cho các môn học",
     "report_label_class_average_attendance_rate": "Tỷ lệ trung bình tham gia lớp học",
     "report_label_subject_average_attendance_rate": "Tỷ lệ trung bình tham gia môn học",
@@ -1166,5 +1166,6 @@
     "library_tooltip_fit_to_width": "Fit to Width",
     "library_tooltip_fit_to_height": "Fit to Height",
     "report_label_more": "Nhiều hơn",
-    "report_label_no_data": "Không có Dữ liệu"
+    "report_label_no_data": "Không có Dữ liệu",
+    "library_error_folder_name_empty": "Tên cặp không thể trống"
 }

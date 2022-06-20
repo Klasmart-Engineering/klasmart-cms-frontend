@@ -880,7 +880,7 @@
     "report_tab_live_classes": "Kelas Live",
     "report_liveclass_attended": "Hadir",
     "report_liveclass_absent": "Tidak Hadir",
-    "report_tab_assignments": "Tugas",
+    "report_tab_assignments": "Belajar",
     "report_pie_completed": "Selesai",
     "report_pie_incomplete": "Belum Selesai",
     "report_learning_outcomes_covered": "Cakupan Hasil Belajar",
@@ -944,7 +944,7 @@
     "report_student_usage_missed_home_fun": "Daftar siswa yang melewatkan home fun",
     "report_student_usage_of": "{value} dari {total}",
     "report_label_lessons": "Pelajaran",
-    "report_label_assignments": "Tugas",
+    "report_label_assignments": "Belajar",
     "report_label_lesson_load": "Banyak Pelajaran 7 Hari Ke Depan",
     "report_label_total_lessons": "Total Pelajaran (Live dan Di Kelas) Terjadwal",
     "report_label_hrs": "Jam",
@@ -1035,7 +1035,7 @@
     "report_label_total_reachieved_lo": "Total Hasil Belajar yang Dicapai Kembali",
     "report_label_total_achieved_lo_class_average": "Total Hasil Belajar yang Dicapai untuk Rata-Rata Kelas",
     "report_label_total_achieved_lo_subject_average": "Total Hasil Belajar yang Dicapai untuk Rata-Rata Subjek",
-    "report_label_class_attendance_rate": "Tingkat Kehadiran Kelas (Hanya Live)",
+    "report_label_class_attendance_rate": "Tingkat Kehadiran Kelas",
     "report_label_student_attendance_rate": "Tingkat Kehadiran Siswa",
     "report_label_class_average_attendance_rate": "Tingkat Kehadiran Rata-Rata Kelas",
     "report_label_subject_average_attendance_rate": "Tingkat Kehadiran Rata-rata Subjek",
@@ -1166,5 +1166,6 @@
     "library_tooltip_fit_to_width": "Pepetkan Sesuai Lebar",
     "library_tooltip_fit_to_height": "Pepetkan Sesuai Tinggi",
     "report_label_more": "Selengkapnya",
-    "report_label_no_data": "Tidak Ada Data"
+    "report_label_no_data": "Tidak Ada Data",
+    "library_error_folder_name_empty": "Nama folder tidak bisa kosong"
 }

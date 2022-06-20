@@ -880,7 +880,7 @@
     "report_tab_live_classes": "เรียนสด",
     "report_liveclass_attended": "เข้าร่วม",
     "report_liveclass_absent": "ไม่มา",
-    "report_tab_assignments": "การมอบหมาย",
+    "report_tab_assignments": "การบ้าน",
     "report_pie_completed": "สมบูรณ์",
     "report_pie_incomplete": "ไม่สมบูรณ์",
     "report_learning_outcomes_covered": "ครอบคลุมผลลัพธ์การเรียนรู้",
@@ -944,7 +944,7 @@
     "report_student_usage_missed_home_fun": "รายชื่อนักเรียนที่พลาดโฮมฟัน",
     "report_student_usage_of": "{value} จาก {total}",
     "report_label_lessons": "บทเรียน",
-    "report_label_assignments": "การมอบหมาย",
+    "report_label_assignments": "การบ้าน",
     "report_label_lesson_load": "โหลดบทเรียน 7 วันถัดไป",
     "report_label_total_lessons": "บทเรียนทั้งหมด (สดและในชั้นเรียน) ที่กำหนดไว้",
     "report_label_hrs": "ชั่วโมง",
@@ -1035,7 +1035,7 @@
     "report_label_total_reachieved_lo": "ผลลัพธ์การเรียนรู้ที่ได้รับใหม่ทั้งหมด",
     "report_label_total_achieved_lo_class_average": "ผลการเรียนรู้ที่บรรลุผลรวมสำหรับค่าเฉลี่ยของชั้นเรียน",
     "report_label_total_achieved_lo_subject_average": "ผลการเรียนที่บรรลุผลรวมของวิชา ค่าเฉลี่ย",
-    "report_label_class_attendance_rate": "อัตราการเข้าเรียน (สดเท่านั้น)",
+    "report_label_class_attendance_rate": "อัตราการเข้าเรียน",
     "report_label_student_attendance_rate": "อัตราการเข้าเรียนเฉลี่ยของนักเรียนสำหรับวิชา",
     "report_label_class_average_attendance_rate": "อัตราการเข้าเรียนโดยเฉลี่ย",
     "report_label_subject_average_attendance_rate": "อัตราการเข้าเรียนเฉลี่ย",
@@ -1166,5 +1166,6 @@
     "library_tooltip_fit_to_width": "Fit to Width",
     "library_tooltip_fit_to_height": "Fit to Height",
     "report_label_more": "อีก",
-    "report_label_no_data": "ไม่มีข้อมูล"
+    "report_label_no_data": "ไม่มีข้อมูล",
+    "library_error_folder_name_empty": "ชื่อโฟลเดอร์ไม่สามารถเว้นว่างได้"
 }
