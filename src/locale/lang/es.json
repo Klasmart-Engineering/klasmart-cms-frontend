@@ -880,7 +880,7 @@
     "report_tab_live_classes": "Clases en vivo",
     "report_liveclass_attended": "Atendido",
     "report_liveclass_absent": "Ausente",
-    "report_tab_assignments": "Asignaciones",
+    "report_tab_assignments": "Estudiar",
     "report_pie_completed": "Completado",
     "report_pie_incomplete": "Sin completar",
     "report_learning_outcomes_covered": "Resultados de aprendizaje cubiertos",
@@ -944,7 +944,7 @@
     "report_student_usage_missed_home_fun": "Lista de estudiantes que se perdieron la diversión en casa",
     "report_student_usage_of": "{value} de {total}",
     "report_label_lessons": "Lecciones",
-    "report_label_assignments": "Asignaciones",
+    "report_label_assignments": "Estudiar",
     "report_label_lesson_load": "Carga de la lección de los próximos 7 días",
     "report_label_total_lessons": "Total de lecciones (en vivo y en clase) programadas",
     "report_label_hrs": "hrs",
@@ -1035,7 +1035,7 @@
     "report_label_total_reachieved_lo": "Resultados de aprendizaje recuperados totales",
     "report_label_total_achieved_lo_class_average": "Resultados de aprendizaje totales logrados para el promedio de la clase",
     "report_label_total_achieved_lo_subject_average": "Resultados de aprendizaje totales logrados para el promedio de asignaturas",
-    "report_label_class_attendance_rate": "Tasa de asistencia a clase (solo en vivo)",
+    "report_label_class_attendance_rate": "Tasa de asistencia a clase",
     "report_label_student_attendance_rate": "Tasa de asistencia promedio de estudiantes por asignaturas",
     "report_label_class_average_attendance_rate": "Tasa de asistencia promedio a clase",
     "report_label_subject_average_attendance_rate": "Tasa de asistencia promedio del sujeto",
@@ -1166,5 +1166,6 @@
     "library_tooltip_fit_to_width": "Fit to Width",
     "library_tooltip_fit_to_height": "Fit to Height",
     "report_label_more": "Más",
-    "report_label_no_data": "Sin datos"
+    "report_label_no_data": "Sin datos",
+    "library_error_folder_name_empty": "El nombre de la carpeta no puede estar vacío"
 }

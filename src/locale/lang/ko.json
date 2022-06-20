@@ -880,7 +880,7 @@
     "report_tab_live_classes": "라이브 수업",
     "report_liveclass_attended": "출석",
     "report_liveclass_absent": "결석",
-    "report_tab_assignments": "과제",
+    "report_tab_assignments": "스터디",
     "report_pie_completed": "완료됨",
     "report_pie_incomplete": "미완료",
     "report_learning_outcomes_covered": "포함된 학습 결과",
@@ -944,7 +944,7 @@
     "report_student_usage_missed_home_fun": "홈펀스터디를 완료하지 않은 학생 목록",
     "report_student_usage_of": "{total} 개 중 {value}",
     "report_label_lessons": "수업",
-    "report_label_assignments": "과제",
+    "report_label_assignments": "스터디",
     "report_label_lesson_load": "다음 7일간 수업 로드",
     "report_label_total_lessons": "일정에 등록된 수업",
     "report_label_hrs": "시간",
@@ -1035,7 +1035,7 @@
     "report_label_total_reachieved_lo": "복습하여 달성한 학습 결과 총 갯수",
     "report_label_total_achieved_lo_class_average": "학급 평균 달성한 학습 결과 수",
     "report_label_total_achieved_lo_subject_average": "과목 평균 달성한 학습 결과 수",
-    "report_label_class_attendance_rate": "수업 출석률 (라이브 수업만 포함)",
+    "report_label_class_attendance_rate": "수업 출석률",
     "report_label_student_attendance_rate": "학생 출석률",
     "report_label_class_average_attendance_rate": "학급 평균 출석률",
     "report_label_subject_average_attendance_rate": "과목 평균 출석률",
@@ -1166,5 +1166,6 @@
     "library_tooltip_fit_to_width": "Fit to Width",
     "library_tooltip_fit_to_height": "Fit to Height",
     "report_label_more": "더",
-    "report_label_no_data": "데이터 없음"
+    "report_label_no_data": "데이터 없음",
+    "library_error_folder_name_empty": "폴더 이름은 비워둘 수 없습니다."
 }

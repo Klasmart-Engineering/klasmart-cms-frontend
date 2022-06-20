@@ -1035,7 +1035,7 @@
     "report_label_total_reachieved_lo": "重新达成的学习成果总数",
     "report_label_total_achieved_lo_class_average": "班级平均达成的学习成果总数",
     "report_label_total_achieved_lo_subject_average": "学科平均达成的学习成果总数",
-    "report_label_class_attendance_rate": "出勤率（仅限线上课）",
+    "report_label_class_attendance_rate": "出勤率",
     "report_label_student_attendance_rate": "学生出勤率",
     "report_label_class_average_attendance_rate": "班级平均出勤率",
     "report_label_subject_average_attendance_rate": "学科平均出勤率",
@@ -1166,5 +1166,6 @@
     "library_tooltip_fit_to_width": "适合宽度",
     "library_tooltip_fit_to_height": "适合高度",
     "report_label_more": "更多",
-    "report_label_no_data": "暂无数据"
+    "report_label_no_data": "暂无数据",
+    "library_error_folder_name_empty": "文件夹名称不能为空"
 }
