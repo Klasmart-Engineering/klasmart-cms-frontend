@@ -1,6 +1,7 @@
 import { Box, makeStyles, Tooltip, Typography } from "@material-ui/core";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import ScrollContainer from "react-indiana-drag-scroll";
 import { useIntl } from "react-intl";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import fitToHeightIcon from "../../../assets/icons/fit-to-height.svg";
@@ -208,9 +209,13 @@ export default function AssetPdf(props: file) {
             </Tooltip>
           </Typography>
         </Box>
-        {pdfImages.map((item, key) => (
-          <PdfImage zoomProps={zoomProps} src={item} key={key} />
-        ))}
+        <ScrollContainer>
+          <Box maxHeight={"100vh"}>
+            {pdfImages.map((item, key) => (
+              <PdfImage zoomProps={zoomProps} src={item} key={key} />
+            ))}
+          </Box>
+        </ScrollContainer>
       </Box>
     </>
   );
