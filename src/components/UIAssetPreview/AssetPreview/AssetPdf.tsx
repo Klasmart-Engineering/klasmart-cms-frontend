@@ -179,7 +179,6 @@ export default function AssetPdf(props: file) {
     <>
       <Box
         style={{
-          overflow: "auto",
           width: "100%",
           height: "100%",
           display: "block",
@@ -209,7 +208,8 @@ export default function AssetPdf(props: file) {
             </Tooltip>
           </Typography>
         </Box>
-        <ScrollContainer>
+
+        <ScrollContainer hideScrollbars={false}>
           <Box maxHeight={"100vh"}>
             {pdfImages.map((item, key) => (
               <PdfImage zoomProps={zoomProps} src={item} key={key} />
