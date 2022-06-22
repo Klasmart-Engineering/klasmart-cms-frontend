@@ -73,8 +73,14 @@ const useStyles = makeStyles((theme) =>
 
 const REMARK = "REMARK";
 const KEYWORDS = "KEYWORDS";
+
+export enum FolderFormType {
+  create = "create",
+  edit = "edit",
+}
 export interface FolderFormProps {
   open: boolean;
+  type: FolderFormType;
   onClose: () => any;
   onAddFolder: LButtonProps["onClick"];
   onRenameFolder: LButtonProps["onClick"];
@@ -84,12 +90,12 @@ export interface FolderFormProps {
 }
 export function FolderForm(props: FolderFormProps) {
   const css = useStyles();
-  const { open, onClose, onAddFolder, onRenameFolder, folderForm, formMethods, rules } = props;
+  const { open, type, onClose, onAddFolder, onRenameFolder, folderForm, formMethods, rules } = props;
   const { control, errors } = formMethods;
   return (
     <Dialog open={open} fullWidth={true} className={css.dialog}>
       <DialogTitle>
-        {folderForm?.name ? d("Edit Folder").t("library_label_edit_folder") : d("New Folder").t("library_label_new_folder")}
+        {type === FolderFormType.edit ? d("Edit Folder").t("library_label_edit_folder") : d("New Folder").t("library_label_new_folder")}
       </DialogTitle>
       <DialogContent dividers className={css.dialogContent}>
         <div className={css.form}>
@@ -150,7 +156,12 @@ export function FolderForm(props: FolderFormProps) {
           <Button color="primary" variant="outlined" onClick={onClose}>
             {d("Cancel").t("library_label_cancel")}
           </Button>
-          <LButton color="primary" variant="contained" className={css.okBtn} onClick={folderForm?.name ? onRenameFolder : onAddFolder}>
+          <LButton
+            color="primary"
+            variant="contained"
+            className={css.okBtn}
+            onClick={type === FolderFormType.edit ? onRenameFolder : onAddFolder}
+          >
             {d("OK").t("library_label_ok")}
           </LButton>
         </div>
@@ -158,19 +169,23 @@ export function FolderForm(props: FolderFormProps) {
     </Dialog>
   );
 }
+
 export function useFolderForm() {
   const [active, setActive] = useState(false);
   const [folderFormShowIndex, setFolderFormShowIndex] = useState(2);
+  const [type, setType] = useState(FolderFormType.create);
   return useMemo(
     () => ({
       folderFormShowIndex,
       folderFormActive: active,
+      type,
+      setType,
       openFolderForm: () => {
         setFolderFormShowIndex(folderFormShowIndex + 1);
         setActive(true);
       },
       closeFolderForm: () => setActive(false),
     }),
-    [setActive, active, folderFormShowIndex, setFolderFormShowIndex]
+    [setActive, active, type, folderFormShowIndex, setFolderFormShowIndex]
   );
 }

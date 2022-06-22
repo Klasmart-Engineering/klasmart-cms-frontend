@@ -208,6 +208,7 @@ export default function AssetPdf(props: file) {
             </Tooltip>
           </Typography>
         </Box>
+
         <ScrollContainer hideScrollbars={false}>
           <Box maxHeight={"100vh"}>
             {pdfImages.map((item, key) => (
