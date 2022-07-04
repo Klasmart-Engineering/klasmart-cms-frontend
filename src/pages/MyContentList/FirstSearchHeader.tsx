@@ -12,7 +12,7 @@ import { Author, OrderBy, PublishStatus, SearchContentsRequestContentType } from
 import { Permission, PermissionOr } from "../../components/Permission";
 import { usePermission } from "../../hooks/usePermission";
 import { d } from "../../locale/LocaleManager";
-import { PendingBlueIcon, PendingIcon, UnPubBlueIcon, UnPubIcon } from "../OutcomeList/Icons";
+import { PendingBlueIcon, PendingIcon, UnPubBlueIcon, UnPubIcon } from "./Icons";
 import { QueryCondition, QueryConditionBaseProps } from "./types";
 export const StyledMenu = withStyles({
   paper: {

@@ -1,5 +1,5 @@
 import { Box, makeStyles, Typography } from "@material-ui/core";
-import React, { Fragment, ReactNode } from "react";
+import { Fragment, ReactNode } from "react";
 import AnyTimeNoData from "../../assets/icons/any_time_no_data.png";
 import comingsoonIconUrl from "../../assets/icons/coming soon.svg";
 import emptyIconUrl from "../../assets/icons/empty.svg";
@@ -24,6 +24,9 @@ const useStyles = makeStyles(({ breakpoints }) => ({
   },
   emptyContainer: {
     textAlign: "center",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
 }));
 

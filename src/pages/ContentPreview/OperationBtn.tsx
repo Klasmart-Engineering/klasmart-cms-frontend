@@ -1,4 +1,4 @@
-import { Box, fade, IconButton, makeStyles } from "@material-ui/core";
+import { Box, alpha, IconButton, makeStyles } from "@material-ui/core";
 import { Palette, PaletteColor } from "@material-ui/core/styles/createPalette";
 import ClearIcon from "@material-ui/icons/Clear";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
@@ -25,7 +25,7 @@ const createOutlinedColor = (paletteColor: PaletteColor, palette: Palette) => ({
   borderColor: paletteColor.light,
   "&:hover": {
     borderColor: paletteColor.main,
-    backgroundColor: fade(paletteColor.main, palette.action.hoverOpacity),
+    backgroundColor: alpha(paletteColor.main, palette.action.hoverOpacity),
   },
 });
 const useStyles = makeStyles(({ palette }) => ({

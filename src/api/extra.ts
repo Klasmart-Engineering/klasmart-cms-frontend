@@ -1,12 +1,13 @@
 import { gql } from "@apollo/client";
+import { LangRecordId } from "@locale/lang/type";
 import { IList } from "@pages/ReportStudentProgress/components/StudentFilter";
 import { LinkedMockOptionsItem } from "@reducers/contentEdit/programsHandler";
+import { store } from "@reducers/index";
 import { FileLike } from "@rpldy/shared";
 import Cookies from "js-cookie";
 import uniq from "lodash/uniq";
 import api, { gqlapi } from ".";
-// import requireContentType from "../../scripts/contentType.macro";
-import { LangRecordId } from "../locale/lang/type";
+// import requireContentType from "../../scripts/contentType.macro"; import { LangRecordId } from "../locale/lang/type";
 import { ICacheData } from "../services/permissionCahceService";
 import { UsersConnectionEdge, UsersConnectionResponse, UuidFilter } from "./api-ko-schema.auto";
 import {
@@ -184,8 +185,8 @@ export const apiDownloadPageUrl = (href?: string, fileName?: string) => {
 };
 
 export const apiOrganizationOfPage = () => {
-  const searchParams = new URLSearchParams(window.location.search);
-  return searchParams.get(ORG_ID_KEY);
+  const org_id = store.getState().common.organization_id;
+  return org_id;
 };
 
 export const getDocumentUrl = (router: string) => {

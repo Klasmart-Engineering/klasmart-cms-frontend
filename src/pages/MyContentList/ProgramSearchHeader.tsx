@@ -8,7 +8,7 @@ import clsx from "clsx";
 import React from "react";
 import { OrderBy } from "../../api/type";
 import { d } from "../../locale/LocaleManager";
-import { BadaEslBlueIcon, BadaEslIcon } from "../OutcomeList/Icons";
+import { BadaEslBlueIcon, BadaEslIcon } from "./Icons";
 import { QueryCondition, QueryConditionBaseProps } from "./types";
 const useStyles = makeStyles((theme) => ({
   root: {
