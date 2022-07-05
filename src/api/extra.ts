@@ -185,10 +185,9 @@ export const apiDownloadPageUrl = (href?: string, fileName?: string) => {
 };
 
 export const apiOrganizationOfPage = () => {
-  const org_id = store.getState().common.organization_id;
-  return org_id;
+  const searchParams = new URLSearchParams(window.location.search);
+  return store.getState().common.organization_id || searchParams.get(ORG_ID_KEY);
 };
-
 export const getDocumentUrl = (router: string) => {
   const { origin, search } = document.location;
   return `${origin}/${search}#/${router}`;
