@@ -2,7 +2,7 @@ import { useDndContext, useDraggable, useDroppable } from "@dnd-kit/core";
 import { Box, Button, ButtonGroup, Card, CardContent, makeStyles, SvgIconProps, Theme, Typography, useTheme } from "@material-ui/core";
 import { CancelRounded, Close, DashboardOutlined, Done, FlagOutlined, Spellcheck, SvgIconComponent } from "@material-ui/icons";
 import clsx from "clsx";
-import React, { forwardRef, HTMLAttributes, LegacyRef, useCallback, useMemo } from "react";
+import { forwardRef, HTMLAttributes, LegacyRef, useCallback, useMemo } from "react";
 import { ArcherContainer, ArcherElement, Relation } from "react-archer";
 import { NavLink } from "react-router-dom";
 import PermissionType from "../../api/PermissionType";
@@ -462,8 +462,7 @@ export const PlanComposeGraphic = forwardRef<HTMLDivElement, PlanComposeGraphicP
             svgContainerStyle={{ zIndex: -1 }}
             strokeColor={palette.grey[700]}
             strokeWidth={1}
-            arrowThickness={9}
-            arrowLength={9}
+            endShape={{ arrow: { arrowThickness: 9, arrowLength: 9 } }}
             noCurves
             key={archerRepaintKey}
           >
