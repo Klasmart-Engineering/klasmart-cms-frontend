@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { t } from "@locale/LocaleManager";
 import { createStyles, makeStyles, Theme } from "@material-ui/core";
+import MyContentList from "@pages/MyContentList";
 import { Link, useLocation } from "react-router-dom";
 import Tabs, { Tab } from "./tabs";
 
@@ -46,11 +47,11 @@ const ContentLibraryLayout: React.VFC<ContentLibraryLayoutProps> = (props) => {
       {
         id: `Organization Content`,
         programGroup: "",
-        path: `${basePath}/my-content-list?publish_status=published&page=1`,
+        path: MyContentList.routeRedirectDefault,
       },
       {
         id: `Badanamu Content`,
-        programGroup: "BadaESL",
+        programGroup: "BadaESL,BadaSTEAM,More",
         path: `${basePath}/my-content-list?program_group=BadaESL&order_by=-update_at&page=1`,
       },
       {
@@ -65,10 +66,16 @@ const ContentLibraryLayout: React.VFC<ContentLibraryLayoutProps> = (props) => {
     url: tab.path,
   }));
 
+  const value = tabs.find((v) => {
+    const groupTypes = v.value?.split(",") ?? [];
+    const programGroup = search.get("program_group") ?? "";
+    return groupTypes.indexOf(programGroup) > -1;
+  })?.value;
+
   if (location.pathname.endsWith(basePath)) return <Link replace to={tabs[0].value ?? ``} />;
 
   if (location.pathname.startsWith(basePath)) {
-    return <Tabs className={classes.tabs} tabs={tabs} value={tabs.find((v) => v.value === search.get("program_group"))?.value} />;
+    return <Tabs className={classes.tabs} tabs={tabs} value={value} />;
   }
   return <></>;
 };

@@ -58,7 +58,7 @@ function App() {
                       <ContentPreview />
                     </Route>
                     <Route exact path={"/"}>
-                      <Redirect to={MyContentList.routeBasePath} />
+                      <Redirect to={MyContentList.routeRedirectDefault} />
                     </Route>
                     {/* report */}
                     <Route path={ReportAchievementList.routeBasePath}>
@@ -92,7 +92,7 @@ function App() {
                       <Redirect to={ReportDashboard.routeBasePath} />
                     </Route>
                     <Route path="/library">
-                      <Redirect to={MyContentList.routeBasePath + "?publish_status=published&page=1"} />
+                      <Redirect to={MyContentList.routeRedirectDefault} />
                     </Route>
                   </Switch>
                   <Notification />

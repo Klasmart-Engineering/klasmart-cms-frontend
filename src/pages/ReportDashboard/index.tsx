@@ -30,17 +30,16 @@ import TeacherUsageTab from "./components/TeacherUasgeTab";
 
 const useStyles = makeStyles(({ shadows, breakpoints }) => ({
   layoutBoxWrapper: {
-    height: "100%",
+    minHeight: "100vh",
     display: "flex",
     flexDirection: "column",
-    background: "#F2F3F8",
-    overflowY: "auto",
   },
   layoutBoxMain: {
     background: "#F2F3F8",
     flexGrow: 1,
     minHeight: "100%",
     paddingTop: 24,
+    paddingBottom: 134,
   },
 
   reportTitle: {
@@ -128,9 +127,6 @@ const useStyles = makeStyles(({ shadows, breakpoints }) => ({
   rightIcon: {
     width: 10,
     height: 22,
-  },
-  top: {
-    background: "#fff",
   },
   rightIconImg: {},
 }));
@@ -224,7 +220,7 @@ export function ReportDashboard() {
 
   return (
     <Box className={css.layoutBoxWrapper}>
-      <LayoutBox holderMin={40} holderBase={202} mainBase={1517} className={css.top}>
+      <LayoutBox holderMin={40} holderBase={202} mainBase={1517}>
         <div className={css.reportTitle}>
           <Typography className={css.reportItemTitleTop}>{t("report_label_report_list")}</Typography>
         </div>
@@ -319,6 +315,5 @@ export const ReportTitle = (props: { title: string; info?: string }) => {
 export default function ReportPage() {
   return <ReportDashboard />;
 }
-
 ReportDashboard.routeBasePath = "/report/achievement-list";
 ReportDashboard.routeRedirectDefault = `/report/achievement-list`;

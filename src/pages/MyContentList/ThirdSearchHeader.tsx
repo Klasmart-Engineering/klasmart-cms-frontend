@@ -84,6 +84,7 @@ const useStyles = makeStyles((theme) => ({
   tabs: {
     minHeight: "42px",
     height: "42px",
+    position: "absolute",
   },
   addFloderBtn: {
     width: 160,
@@ -93,7 +94,7 @@ const useStyles = makeStyles((theme) => ({
   },
   selectAll: {
     color: "#666",
-    marginRight: 30,
+    marginRight: 10,
     fontSize: 14,
   },
   tabCon: {

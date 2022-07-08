@@ -109,7 +109,7 @@ const DOMAIN = getWebsocketApi();
 
 export const apiResourcePathById = (resource_id?: string) => {
   if (!resource_id) return;
-  return `${process.env.REACT_APP_BASE_API}/contents_resources/${resource_id}`;
+  return `${process.env.REACT_APP_BASE_DOMAIN}/v1/contents_resources/${resource_id}`;
 };
 
 export const apiWebSocketValidatePDFById = (source: string, onChangePercentage?: (percentage: number) => any) => {

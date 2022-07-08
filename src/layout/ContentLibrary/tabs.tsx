@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) =>
       minWidth: `inherit`,
       paddingLeft: theme.spacing(2),
       paddingRight: theme.spacing(2),
+      letterSpacing: "-0.5px",
     },
     tabIndicator: {
       height: 4,
@@ -23,6 +24,9 @@ const useStyles = makeStyles((theme) =>
       },
       "& .MuiTab-root": {
         backgroundColor: `transparent !important`,
+      },
+      "& .Mui-selected": {
+        color: "rgb(90, 134, 238)",
       },
     },
   })

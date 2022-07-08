@@ -8,7 +8,7 @@ import { BarStack } from "@visx/shape/lib/types";
 import { Text } from "@visx/text";
 import { Tooltip, useTooltip } from "@visx/tooltip";
 import { UseTooltipParams } from "@visx/tooltip/lib/hooks/useTooltip";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { EntityStudentAchievementReportItem } from "../../api/api.auto";
 import LayoutBox from "../../components/LayoutBox";
 import { useChartScale } from "../../hooks/useChartScale";
@@ -255,7 +255,7 @@ export function AchievementListStaticChart(props: AchievementListStaticChartProp
                 </Text>
               ) : (
                 [
-                  <Text {...tickTextProps} {...inlineStyles.yAxiosTickLabel__disable}>
+                  <Text {...tickTextProps} {...inlineStyles.yAxiosTickLabel__disable} dy={-6}>
                     {studentId2studentName(formattedValue as string, data)}
                   </Text>,
                   <Text {...tickTextProps} {...inlineStyles.yAxiosTickLabelSub}>
