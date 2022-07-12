@@ -6,7 +6,7 @@ import { Pie } from "@visx/shape";
 import { PieArcDatum, ProvidedProps } from "@visx/shape/lib/shapes/Pie";
 import { Text } from "@visx/text";
 import { Tooltip, useTooltip } from "@visx/tooltip";
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { EntityTeacherReportCategory } from "../../api/api.auto";
 import LayoutBox from "../../components/LayoutBox";
 import { useChartScale } from "../../hooks/useChartScale";
@@ -108,7 +108,7 @@ const getInlineStyles = (px: number) => ({
     padding: 12 * px,
   },
   tooltipContent: {
-    width: 240 * px,
+    width: 300 * px,
     fontSize: 14 * px,
     lineHeight: 20 / 14,
   },
