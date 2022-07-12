@@ -11,6 +11,7 @@ import {
   bulkReject,
   deleteContent,
   deleteFolder,
+  getFolderTree,
   getOrgProperty,
   getUserSetting,
   onLoadContentList,
@@ -50,7 +51,7 @@ import ContentPreview from "../ContentPreview";
 import { BackToPrevPage } from "./BackToPrevPage";
 import { ContentCardList, ContentCardListProps } from "./ContentCardList";
 import FirstSearchHeader, { FirstSearchHeaderMb, FirstSearchHeaderProps } from "./FirstSearchHeader";
-import { FolderForm, useFolderForm } from "./FolderForm";
+import { FolderForm, FolderFormType, useFolderForm } from "./FolderForm";
 import { FolderTree, FolderTreeProps, useFolderTree } from "./FolderTree";
 import { FolderTreeBox } from "./FolderTreeBox";
 import { OrganizationList, OrganizationListProps, useOrganizationList } from "./OrganizationList";
@@ -155,11 +156,12 @@ export default function MyContentList() {
   const filterOrgList = useMemo(() => excludeMyOrg(orgList, myOrgId), [myOrgId, orgList]);
   const { organizationListActive, closeOrganizationList, openOrganizationList, organizationListShowIndex, shareFolder, setShareFolder } =
     useOrganizationList();
-  const { folderFormActive, closeFolderForm, openFolderForm } = useFolderForm();
+  const { folderFormActive, type, setType, closeFolderForm, openFolderForm } = useFolderForm();
   const [folderForm, setFolderForm] = useState<EntityFolderContentData>();
   const [parentId, setParentId] = useState<string>();
   const [cmsPageSize, setCmsPageSize] = useState(page_size);
-  const showFolderTree = !condition.program_group && condition.publish_status === PublishStatus.published;
+  // const showFolderTree = !condition.program_group && condition.publish_status === PublishStatus.published;
+  const showFolderTree = false;
   const handlePublish: ContentCardListProps["onPublish"] = (id) => {
     return refreshWithDispatch(dispatch(publishContent(id)));
   };
@@ -197,7 +199,7 @@ export default function MyContentList() {
         condition.content_type !== SearchContentsRequestContentType.assetsandfolder
           ? SearchContentsRequestContentType.materialandplan
           : condition.content_type;
-      if (condition.publish_status === PublishStatus.published) {
+      if (showFolderTree) {
         history.push({
           search: toQueryString({
             ...condition,
@@ -281,15 +283,18 @@ export default function MyContentList() {
   };
 
   const handleClickRenameFolder = (content: EntityFolderContentData) => {
+    setType(FolderFormType.edit);
     setFolderForm(content);
     openFolderForm();
   };
   const handleAddFolder: FolderTreeProps["onAddFolder"] = async (parent_id) => {
+    setType(FolderFormType.create);
     setParentId(parent_id);
     setFolderForm({});
     openFolderForm();
   };
   const handleClickAddFolderBtn: SecondSearchHeaderProps["onNewFolder"] = async () => {
+    setType(FolderFormType.create);
     setParentId("");
     setFolderForm({});
     openFolderForm();
@@ -325,8 +330,8 @@ export default function MyContentList() {
     openFolderTree();
   };
   const handleGoback: ContentCardListProps["onGoBack"] = () => {
-    history.push({ search: toQueryString({ ...condition, path: `${parentFolderInfo.dir_path}` }) });
-    // history.goBack();
+    // history.push({ search: toQueryString({ ...condition, path: `${parentFolderInfo.dir_path}` }) });
+    history.goBack();
   };
   const handleClickFolderPath = (path: string) => {
     history.push({ search: toQueryString({ ...condition, path }) });
@@ -423,6 +428,20 @@ export default function MyContentList() {
       setTimeout(reset, 500);
     })();
   }, [condition, reset, dispatch, refreshKey, cmsPageSize]);
+
+  useEffect(() => {
+    if (showFolderTree) {
+      const isExectSearch = condition.exect_search === ExectSearch.name;
+      dispatch(
+        getFolderTree({
+          key: condition.name,
+          type: isExectSearch ? "name" : "all",
+          role: condition.author ? "me" : "all",
+        })
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, condition.exect_search, condition.name, condition.author, showFolderTree, refreshKey]);
   const { breakpoints } = useTheme();
   const sm = useMediaQuery(breakpoints.down("sm"));
   return (
@@ -624,6 +643,7 @@ export default function MyContentList() {
             />
           )}
           <FolderForm
+            type={type}
             onClose={closeFolderForm}
             open={folderFormActive}
             onAddFolder={handleAddFolderFormItem}

@@ -1,11 +1,13 @@
 import { gql } from "@apollo/client";
+import { LangRecordId } from "@locale/lang/type";
+import { IList } from "@pages/ReportStudentProgress/components/StudentFilter";
 import { LinkedMockOptionsItem } from "@reducers/contentEdit/programsHandler";
+import { store } from "@reducers/index";
 import { FileLike } from "@rpldy/shared";
 import Cookies from "js-cookie";
 import uniq from "lodash/uniq";
 import api, { gqlapi } from ".";
-// import requireContentType from "../../scripts/contentType.macro";
-import { LangRecordId } from "../locale/lang/type";
+// import requireContentType from "../../scripts/contentType.macro"; import { LangRecordId } from "../locale/lang/type";
 import { ICacheData } from "../services/permissionCahceService";
 import { UsersConnectionEdge, UsersConnectionResponse, UuidFilter } from "./api-ko-schema.auto";
 import {
@@ -36,6 +38,9 @@ import {
   GetStudentNameByIdDocument,
   GetStudentNameByIdQuery,
   GetStudentNameByIdQueryVariables,
+  SchoolListDocument,
+  SchoolListQuery,
+  SchoolListQueryVariables,
   SchoolsClassesDocument,
   SchoolsClassesQuery,
   SchoolsClassesQueryVariables,
@@ -104,7 +109,7 @@ const DOMAIN = getWebsocketApi();
 
 export const apiResourcePathById = (resource_id?: string) => {
   if (!resource_id) return;
-  return `${process.env.REACT_APP_BASE_API}/contents_resources/${resource_id}`;
+  return `${process.env.REACT_APP_BASE_DOMAIN}/v1/contents_resources/${resource_id}`;
 };
 
 export const apiWebSocketValidatePDFById = (source: string, onChangePercentage?: (percentage: number) => any) => {
@@ -181,9 +186,8 @@ export const apiDownloadPageUrl = (href?: string, fileName?: string) => {
 
 export const apiOrganizationOfPage = () => {
   const searchParams = new URLSearchParams(window.location.search);
-  return searchParams.get(ORG_ID_KEY);
+  return store.getState().common.organization_id || searchParams.get(ORG_ID_KEY);
 };
-
 export const getDocumentUrl = (router: string) => {
   const { origin, search } = document.location;
   return `${origin}/${search}#/${router}`;
@@ -828,4 +832,60 @@ export const recursiveGetStudentsName = async (
       resolve(studentNodeEdgs);
     });
   }
+};
+export interface SelectItem {
+  label: string;
+  value: string;
+}
+export const getSchoolList = async (variables: SchoolListQueryVariables): Promise<IList> => {
+  const {
+    data: { schoolsConnection },
+  } = await gqlapi.query<SchoolListQuery, SchoolListQueryVariables>({
+    query: SchoolListDocument,
+    variables,
+  });
+  const list = schoolsConnection?.edges?.map((node) => ({ value: node?.node?.id, label: node?.node?.name } as SelectItem)) || [];
+  let cursor = "";
+  if (schoolsConnection?.pageInfo?.hasNextPage) {
+    cursor = schoolsConnection?.pageInfo?.endCursor as string;
+  }
+  return new Promise((resolve) => {
+    resolve({ list, cursor });
+  });
+};
+export const getClassList = async (variables: ClassesListQueryVariables): Promise<IList> => {
+  const {
+    data: { classesConnection },
+  } = await gqlapi.query<ClassesListQuery, ClassesListQueryVariables>({
+    query: ClassesListDocument,
+    variables,
+  });
+  const list = classesConnection?.edges?.map((node) => ({ value: node?.node?.id, label: node?.node?.name } as SelectItem)) || [];
+  let cursor = "";
+  if (classesConnection?.pageInfo?.hasNextPage) {
+    cursor = classesConnection?.pageInfo?.endCursor as string;
+  }
+  return new Promise((resolve) => {
+    resolve({ list, cursor });
+  });
+};
+
+export const getClassNodeStudents = async (id: string, studentsCursor?: string): Promise<IList> => {
+  const {
+    data: { classNode },
+  } = await gqlapi.query<ClassNodeStudentsQuery, ClassNodeStudentsQueryVariables>({
+    query: ClassNodeStudentsDocument,
+    variables: { classId: id, studentsCursor },
+  });
+  const list =
+    classNode?.studentsConnection?.edges?.map(
+      (node) => ({ value: node?.node?.id, label: node?.node?.givenName + " " + node?.node?.familyName } as SelectItem)
+    ) || [];
+  let cursor = "";
+  if (classNode?.studentsConnection?.pageInfo?.hasNextPage) {
+    cursor = classNode?.studentsConnection?.pageInfo?.endCursor as string;
+  }
+  return new Promise((resolve) => {
+    resolve({ list, cursor });
+  });
 };

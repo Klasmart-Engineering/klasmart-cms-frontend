@@ -1,3 +1,4 @@
+import { noDataTip } from "@components/TipImages";
 import { createStyles, makeStyles } from "@material-ui/core";
 import { getFourWeeks, getLastedMonths } from "@utilities/dateUtilities";
 import moment from "moment";
@@ -5,7 +6,7 @@ import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SelectContext } from "..";
 import { d, t } from "../../../locale/LocaleManager";
-import { parsePercent, translateMonth } from "../../../models/ModelReports";
+import { getFourWeeksMassage, parsePercent, translateMonth } from "../../../models/ModelReports";
 import { RootState } from "../../../reducers";
 import { getAssignmentsCompletion } from "../../../reducers/report";
 import LearningOutcomeAchievedTotalType from "../components/LearningOutcomeAchievedTotalType";
@@ -23,7 +24,7 @@ const useStyle = makeStyles(() =>
 
 export default function AssignmentCompletion() {
   const [durationTime, setDurationTime] = useState(4);
-  const { classId, studentId, allSubjectId, selectedSubjectId: selectedSubjectID } = useContext(SelectContext);
+  const { classId, studentId, studentName, allSubjectId, selectedSubjectId: selectedSubjectID } = useContext(SelectContext);
   const selectedSubjectId: string[] =
     selectedSubjectID.length === allSubjectId.length - 1 ? selectedSubjectID.concat([""]) : selectedSubjectID;
   const unselectedSubjectId =
@@ -33,10 +34,9 @@ export default function AssignmentCompletion() {
   const colors = ["#0e78d5", "#bed6eb", "#a8c0ef"];
   const dispatch = useDispatch();
   const css = useStyle();
-  const {
-    assignmentsCompletion: { assignments = [] },
-    fourWeeksAssignmentsCompletionMassage,
-  } = useSelector<RootState, RootState["report"]>((state) => state.report);
+  const { assignmentsCompletion } = useSelector<RootState, RootState["report"]>((state) => state.report);
+  const { assignments = [], label_id, label_params } = assignmentsCompletion;
+  const fourWeeksAssignmentsCompletionMassage = durationTime === 4 ? getFourWeeksMassage(label_id, label_params, studentName) : "";
   const type = [
     t("report_label_student_assignments_completion_rate"),
     t("report_label_class_average_assignments_completion_rate"),
@@ -109,18 +109,24 @@ export default function AssignmentCompletion() {
 
   return (
     <div>
-      <StudentProgressReportFilter
-        durationTime={durationTime}
-        handleChange={handleChange}
-        studentProgressReportTitle={d("Assignments Completion Rate").t("report_label_assignments_completion_rate")}
-      />
-      <div className={css.chart}>
-        <StudentProgressBarChart itemUnit={"%"} data={chartData} label={label} durationTime={durationTime} />
-      </div>
-      <div>
-        <LearningOutcomeAchievedTotalType totalType={totalType} colors={colors} isLearningOutcomeAchieved={false} />
-        {durationTime === 4 && <StudentProgressReportFeedback fourWeeksMassage={fourWeeksAssignmentsCompletionMassage} />}
-      </div>
+      {!studentId ? (
+        noDataTip
+      ) : (
+        <div>
+          <StudentProgressReportFilter
+            durationTime={durationTime}
+            handleChange={handleChange}
+            studentProgressReportTitle={d("Assignments Completion Rate").t("report_label_assignments_completion_rate")}
+          />
+          <div className={css.chart}>
+            <StudentProgressBarChart itemUnit={"%"} data={chartData} label={label} durationTime={durationTime} />
+          </div>
+          <div>
+            <LearningOutcomeAchievedTotalType totalType={totalType} colors={colors} isLearningOutcomeAchieved={false} />
+            {durationTime === 4 && <StudentProgressReportFeedback fourWeeksMassage={fourWeeksAssignmentsCompletionMassage} />}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

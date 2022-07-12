@@ -1,4 +1,5 @@
 import {
+  alpha,
   Box,
   Button,
   ButtonProps,
@@ -6,7 +7,6 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  fade,
   FormControlLabel,
   Hidden,
   IconButton,
@@ -20,7 +20,7 @@ import {
 import { Palette, PaletteColor } from "@material-ui/core/styles/createPalette";
 import { ArrowBack, Cancel, CancelOutlined, DeleteOutlineOutlined, Publish, Save } from "@material-ui/icons";
 import clsx from "clsx";
-import React, { forwardRef, Fragment, useReducer } from "react";
+import { forwardRef, Fragment, useReducer } from "react";
 import { Controller, useForm, UseFormMethods } from "react-hook-form";
 import { EntityContentInfoWithDetails } from "../../api/api.auto";
 import PermissionType from "../../api/PermissionType";
@@ -43,7 +43,7 @@ const createOutlinedColor = (paletteColor: PaletteColor, palette: Palette) => ({
   borderColor: paletteColor.light,
   "&:hover": {
     borderColor: paletteColor.main,
-    backgroundColor: fade(paletteColor.main, palette.action.hoverOpacity),
+    backgroundColor: alpha(paletteColor.main, palette.action.hoverOpacity),
   },
 });
 
@@ -150,7 +150,7 @@ export function ContentHeader(props: HeaderProps) {
     <Fragment>
       <Box display="flex" alignItems="center" pl={sm ? 2 : 3} pr={10} height={72} boxShadow={3}>
         <IconButton size="small" className={css.arrowBack} onClick={onBack}>
-          <ArrowBack fontSize={sm ? "small" : "default"} />
+          <ArrowBack fontSize={sm ? "small" : "medium"} />
         </IconButton>
         <Typography variant="h6" className={css.title}>
           {sm ? d("Create New Content").t("library_label_create_new_content") : d("For Organizations").t("library_label_for_organizations")}

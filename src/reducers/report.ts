@@ -79,8 +79,8 @@ import {
 } from "../api/extra";
 import PermissionType from "../api/PermissionType";
 import { IParamQueryRemainFilter } from "../api/type";
-import { d, t } from "../locale/LocaleManager";
-import { formatTimeToMonDay, getAllUsers, getLabel, getTimeOffSecond, sortByStudentName } from "../models/ModelReports";
+import { d } from "../locale/LocaleManager";
+import { formatTimeToMonDay, getAllUsers, getTimeOffSecond, sortByStudentName } from "../models/ModelReports";
 import { ReportFilter, ReportOrderBy } from "../pages/ReportAchievementList/types";
 import { IWeeks } from "../pages/ReportLearningSummary";
 import {
@@ -2407,104 +2407,18 @@ const { actions, reducer } = createSlice({
     },
     [getAssignmentsCompletion.fulfilled.type]: (state, { payload }: PayloadAction<AsyncTrunkReturned<typeof getAssignmentsCompletion>>) => {
       state.assignmentsCompletion = payload;
-      const stuList = [{ id: "", name: "" }];
-      let data = [] as any;
-      data = data.concat(state.schoolClassesStudentsSubjects.classList, state.schoolClassesStudentsSubjects.noneSchoolClassList);
-      data.map((item: any) =>
-        item.students?.map((val: any) =>
-          stuList.push({
-            id: val?.user_id!,
-            name: `${val?.given_name} ${val?.family_name}`,
-          })
-        )
-      );
-      const studentName = stuList?.find((val) => val.id === payload.assignments![0].student_id)?.name || "";
-
-      const labelName = {
-        assignment_complete_count: "AssignmentCompleteCount",
-        assign_complete_count: "AssignCompleteCount",
-        assignment_count: "AssignmentCount",
-        assign_compare_class_3_week: "AssignCompareClass3week",
-        assign_compare_last_week: "AssignCompareLastWeek",
-        assign_compare_3_week: "AssignCompare3Week",
-        assign_compare_class: "AssignCompareClass",
-      };
-
-      if (payload?.assignments?.length === 4) {
-        state.fourWeeksAssignmentsCompletionMassage = t(
-          payload.label_id as any,
-          Object.assign(getLabel(payload?.label_params, labelName), { Name: studentName }) as any
-        );
-      }
     },
     [getLearnOutcomeClassAttendance.fulfilled.type]: (
       state,
       { payload }: PayloadAction<AsyncTrunkReturned<typeof getLearnOutcomeClassAttendance>>
     ) => {
       state.learnOutcomeClassAttendance = payload;
-      const stuList = [{ id: "", name: "" }];
-      let data = [] as any;
-      data = data.concat(state.schoolClassesStudentsSubjects.classList, state.schoolClassesStudentsSubjects.noneSchoolClassList);
-      data.map((item: any) =>
-        item.students?.map((val: any) =>
-          stuList.push({
-            id: val?.user_id!,
-            name: `${val?.given_name} ${val?.family_name}`,
-          })
-        )
-      );
-      const studentName = stuList?.find((val) => val.id === payload?.request_student_id)?.name || "";
-
-      const labelName = {
-        lo_compare_class_3_week: "LOCompareClass3week",
-        attend_compare_last_week: "AttendCompareLastWeek",
-        attend_compare_last_3_week: "AttendCompareLast3Week",
-        lo_compare_class: "LOCompareClass",
-        attended_count: "AttendedCount",
-        scheduled_count: "ScheduledCount",
-      };
-
-      if (payload?.items?.length === 4) {
-        state.fourWeeksClassAttendanceMassage = t(
-          payload.label_id as any,
-          Object.assign(getLabel(payload?.label_params, labelName), { Name: studentName }) as any
-        );
-      }
     },
     [getLearnOutcomeAchievement.fulfilled.type]: (
       state,
       { payload }: PayloadAction<AsyncTrunkReturned<typeof getLearnOutcomeAchievement>>
     ) => {
       state.learnOutcomeAchievement = payload;
-      const stuList = [{ id: "", name: "" }];
-      let data = [] as any;
-      data = data.concat(state.schoolClassesStudentsSubjects.classList, state.schoolClassesStudentsSubjects.noneSchoolClassList);
-      data.map((item: any) =>
-        item.students?.map((val: any) =>
-          stuList.push({
-            id: val?.user_id!,
-            name: `${val?.given_name} ${val?.family_name}`,
-          })
-        )
-      );
-      const studentName = stuList?.find((val) => val.id === payload?.request?.student_id)?.name || "";
-
-      const labelName = {
-        lo_compare_class_3_week: "LOCompareClass3week",
-        lo_compare_last_week: "LOCompareLastWeek",
-        lo_review_compare_class: "LOReviewCompareClass",
-        lo_compare_last_3_week: "LOCompareLast3Week",
-        lo_compare_class: "LOCompareClass",
-        achieved_lo_count: "AchievedLoCount",
-        learnt_lo_count: "LearntLoCount",
-      };
-
-      if (payload?.items?.length === 4) {
-        state.fourWeekslearnOutcomeAchievementMassage = t(
-          payload.label_id as any,
-          Object.assign(getLabel(payload?.label_params, labelName), { Name: studentName }) as any
-        );
-      }
     },
   },
 });

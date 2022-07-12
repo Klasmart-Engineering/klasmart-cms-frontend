@@ -27,6 +27,8 @@ import {
   useMediaQuery,
   useTheme,
 } from "@material-ui/core";
+import { Theme, withStyles } from "@material-ui/core/styles";
+import Tooltip from "@material-ui/core/Tooltip";
 import { AccessTime, CancelRounded, CloudUploadOutlined, InfoOutlined } from "@material-ui/icons";
 import { Autocomplete } from "@material-ui/lab";
 import { ContentDetailForm, formattedTime, toMapGroup } from "@models/ModelContentDetailForm";
@@ -39,7 +41,8 @@ import { Controller, UseFormMethods } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { ContentEditRouteParams } from ".";
-import { HtmlTooltip } from "../Schedule/ScheduleAttachment";
+// import { HtmlTooltip } from "../Schedule/ScheduleAttachment";
+import { fileFormat } from "./MediaAssetsEdit";
 
 const useStyles = makeStyles(({ breakpoints, palette }) => ({
   details: {
@@ -136,6 +139,16 @@ const useStyles = makeStyles(({ breakpoints, palette }) => ({
     paddingLeft: 16,
   },
 }));
+
+const HtmlTooltip = withStyles((theme: Theme) => ({
+  tooltip: {
+    backgroundColor: "#FFFFFF",
+    maxWidth: 260,
+    fontSize: theme.typography.pxToRem(12),
+    border: "1px solid #dadde9",
+  },
+}))(Tooltip);
+
 export function ProgressWithText(props: CircularProgressProps) {
   const css = useStyles();
   return (
@@ -252,7 +265,6 @@ export default function Details(props: DetailsProps) {
     onChangeSubject,
     disabled,
   } = props;
-  console.log(linkedMockOptions);
   const css = useStyles();
   const { lesson } = useParams<ContentEditRouteParams>();
   const { id } = useQueryCms();
@@ -402,7 +414,7 @@ export default function Details(props: DetailsProps) {
               render={({ crop }) => (
                 <SingleUploader
                   partition="thumbnail"
-                  accept="image/*"
+                  accept={fileFormat.image.join()}
                   transformFile={crop}
                   {...props}
                   render={({ uploady, item, btnRef, value, isUploading }) => (

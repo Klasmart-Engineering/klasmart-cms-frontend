@@ -87,6 +87,7 @@ export const SingleUploader = forwardRef<HTMLDivElement, SingleUploaderProps>((p
             const { payload } = (await dispatch(getContentResourceUploadPath({ partition, extension }))) as unknown as PayloadAction<
               AsyncTrunkReturned<typeof getContentResourceUploadPath>
             >;
+            if (!payload) return false;
             const { path, resource_id } = payload;
             setRid(resource_id);
             setFile(file);
@@ -104,7 +105,7 @@ export const SingleUploader = forwardRef<HTMLDivElement, SingleUploaderProps>((p
       },
       [UPLOADER_EVENTS.ITEM_FINISH]() {
         if (onChange) onChange(rid);
-        if (onChangeFile) onChangeFile(Object.assign(file, { id: rid }));
+        if (onChangeFile && file) onChangeFile(Object.assign(file, { id: rid }));
       },
     }),
     [transformFile, beforeUpload, dispatch, partition, onChange, rid, onChangeFile, file]

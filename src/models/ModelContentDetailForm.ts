@@ -56,7 +56,7 @@ export function formattedTime(value: number | undefined): string {
     let d = date.getDate();
     const ds = d < 10 ? `0${d}` : d;
     let h = date.getHours();
-    const dayType = h > 12 ? "PM" : "AM";
+    const dayType = h >= 12 ? "PM" : "AM";
     h = h > 12 ? h - 12 : h;
     const hs = h < 10 ? `0${h}` : h;
     let m = date.getMinutes();

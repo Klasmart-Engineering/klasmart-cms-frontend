@@ -4,7 +4,6 @@ import { apiResourcePathById } from "../../../api/extra";
 import { d } from "../../../locale/LocaleManager";
 import { fileFormat } from "../../../pages/ContentEdit/MediaAssetsEdit";
 import AssetAudio from "./AssetAudio";
-import AssetFile from "./AssetFile";
 import AssetImg from "./AssetImg";
 import AssetPdf from "./AssetPdf";
 import AssetVideo from "./AssetVideo";
@@ -18,13 +17,14 @@ export function AssetPreview(props: PreviewProps) {
   const source = typeof resourceId === "object" ? resourceId["source"] : resourceId;
 
   const path = apiResourcePathById(source);
-  const isHeight = fileFormat.document.indexOf(`.${getSuffix(source)}`) >= 0 || fileFormat.pdf.indexOf(`.${getSuffix(source)}`) >= 0;
+  const isHeight = fileFormat.pdf.indexOf(`.${getSuffix(source)}`) >= 0;
   return (
     <Box
       display="flex"
       flexDirection="column"
       alignItems="center"
       className={className}
+      id="viewContainer"
       width="100%"
       height={isHeight ? "100vh" : "100%"}
       onContextMenu={(e) => {
@@ -35,7 +35,6 @@ export function AssetPreview(props: PreviewProps) {
       {fileFormat.image.indexOf(`.${getSuffix(source)}`) >= 0 && <AssetImg key={source} src={path} />}
       {fileFormat.video.indexOf(`.${getSuffix(source)}`) >= 0 && <AssetVideo key={source} src={path} />}
       {fileFormat.audio.indexOf(`.${getSuffix(source)}`) >= 0 && <AssetAudio key={source} src={path} />}
-      {fileFormat.document.indexOf(`.${getSuffix(source)}`) >= 0 && <AssetFile key={source} src={source} />}
       {fileFormat.pdf.indexOf(`.${getSuffix(source)}`) >= 0 && <AssetPdf key={source} src={path} />}
       {!isHideFileType && (
         <Typography variant="body1" style={{ marginTop: "20px" }}>

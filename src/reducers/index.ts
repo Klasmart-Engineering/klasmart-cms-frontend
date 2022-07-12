@@ -1,12 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import assessments from "./assessments";
+import common from "./common";
 import confirm from "./confirm";
 import content from "./content";
 import loading, { actSetLoading } from "./loading";
 import { createLoadingMiddleware } from "./middleware/loadingMiddleware";
-import milestone from "./milestone";
 import notify from "./notify";
-import outcome from "./outcome";
 import report from "./report";
 import schedule from "./schedule";
 
@@ -18,14 +16,12 @@ const loadingMiddleware = createLoadingMiddleware({
 export const store = configureStore({
   reducer: {
     loading,
+    common,
     confirm,
     notify,
     content,
-    outcome,
     schedule,
-    assessments,
     report,
-    milestone,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(loadingMiddleware),
 });

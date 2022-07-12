@@ -1,10 +1,11 @@
+import { noDataTip } from "@components/TipImages";
 import { createStyles, makeStyles } from "@material-ui/styles";
 import { getFourWeeks, getLastedMonths } from "@utilities/dateUtilities";
 import moment from "moment";
 import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { d, t } from "../../../locale/LocaleManager";
-import { parsePercent, translateMonth } from "../../../models/ModelReports";
+import { getFourWeeksMassage, parsePercent, translateMonth } from "../../../models/ModelReports";
 import { RootState } from "../../../reducers";
 import { getLearnOutcomeAchievement } from "../../../reducers/report";
 import LearningOutcomeAchievedTotalType from "../components/LearningOutcomeAchievedTotalType";
@@ -24,7 +25,7 @@ const useStyle = makeStyles((theme) =>
 export default function LearningOutcomesAchievement() {
   const [durationTime, setDurationTime] = useState(4);
   const dispatch = useDispatch();
-  const { classId, studentId, allSubjectId, selectedSubjectId: selectedSubjectID } = useContext(SelectContext);
+  const { classId, studentId, studentName, allSubjectId, selectedSubjectId: selectedSubjectID } = useContext(SelectContext);
   const selectedSubjectId: string[] =
     selectedSubjectID.length === allSubjectId.length - 1 ? selectedSubjectID.concat([""]) : selectedSubjectID;
   const unselectedSubjectId =
@@ -32,10 +33,9 @@ export default function LearningOutcomesAchievement() {
       ? []
       : allSubjectId.filter((item) => selectedSubjectID.every((val) => val !== item));
   const style = useStyle();
-  const { learnOutcomeAchievement, fourWeekslearnOutcomeAchievementMassage } = useSelector<RootState, RootState["report"]>(
-    (state) => state.report
-  );
-
+  const { learnOutcomeAchievement } = useSelector<RootState, RootState["report"]>((state) => state.report);
+  const { label_id, label_params } = learnOutcomeAchievement;
+  const fourWeekslearnOutcomeAchievementMassage = durationTime === 4 ? getFourWeeksMassage(label_id, label_params, studentName) : "";
   const colors = ["#0e78d5", "#ededed", "#bed6eb", "#a8c0ef"];
   const totalType = [
     {
@@ -112,18 +112,24 @@ export default function LearningOutcomesAchievement() {
   const label = { v1: [totalType[0].label, totalType[1].label], v2: totalType[2].label, v3: totalType[3].label };
   return (
     <div>
-      <StudentProgressReportFilter
-        durationTime={durationTime}
-        handleChange={handleChange}
-        studentProgressReportTitle={d("Learning Outcomes Achieved %").t("report_label_learning_outcomes_achieved")}
-      />
-      <div className={style.chart}>
-        <StudentProgressBarChart data={data} label={label} itemUnit={"%"} durationTime={durationTime} />
-      </div>
-      <div>
-        <LearningOutcomeAchievedTotalType totalType={totalType} colors={colors} isLearningOutcomeAchieved={true} />
-        {durationTime === 4 && <StudentProgressReportFeedback fourWeeksMassage={fourWeekslearnOutcomeAchievementMassage} />}
-      </div>
+      {!studentId ? (
+        noDataTip
+      ) : (
+        <div>
+          <StudentProgressReportFilter
+            durationTime={durationTime}
+            handleChange={handleChange}
+            studentProgressReportTitle={d("Learning Outcomes Achieved %").t("report_label_learning_outcomes_achieved")}
+          />
+          <div className={style.chart}>
+            <StudentProgressBarChart data={data} label={label} itemUnit={"%"} durationTime={durationTime} />
+          </div>
+          <div>
+            <LearningOutcomeAchievedTotalType totalType={totalType} colors={colors} isLearningOutcomeAchieved={true} />
+            {durationTime === 4 && <StudentProgressReportFeedback fourWeeksMassage={fourWeekslearnOutcomeAchievementMassage} />}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

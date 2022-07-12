@@ -1,6 +1,5 @@
 import { Box, createStyles, makeStyles, Paper, Theme } from "@material-ui/core";
 import clsx from "clsx";
-import React from "react";
 import PercentCircle from "../../../components/Chart/PercentCircle";
 
 interface IProps {
@@ -34,14 +33,15 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     text: {
       width: "60%",
-      overflow: "hidden",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
     },
     title: {
       fontSize: 16,
     },
     value: {
       fontSize: 26,
-      marginTop: 18,
       fontWeight: "bold",
     },
     chart: {

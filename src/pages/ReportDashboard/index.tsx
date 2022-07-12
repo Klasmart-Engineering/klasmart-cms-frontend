@@ -39,6 +39,7 @@ const useStyles = makeStyles(({ shadows, breakpoints }) => ({
     flexGrow: 1,
     minHeight: "100%",
     paddingTop: 24,
+    paddingBottom: 134,
   },
 
   reportTitle: {
@@ -54,7 +55,6 @@ const useStyles = makeStyles(({ shadows, breakpoints }) => ({
 
   gridItemWithBg: {
     background: "#FFFFFF",
-    marginTop: 24,
   },
 
   navContainer: {
@@ -123,7 +123,6 @@ const useStyles = makeStyles(({ shadows, breakpoints }) => ({
     fontWeight: 600,
     display: "flex",
     alignItems: "center",
-    position: "absolute",
   },
   rightIcon: {
     width: 10,
@@ -313,5 +312,8 @@ export const ReportTitle = (props: { title: string; info?: string }) => {
   );
 };
 
+export default function ReportPage() {
+  return <ReportDashboard />;
+}
 ReportDashboard.routeBasePath = "/report/achievement-list";
 ReportDashboard.routeRedirectDefault = `/report/achievement-list`;

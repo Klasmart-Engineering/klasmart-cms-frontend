@@ -11,7 +11,7 @@ import PermissionType from "../../api/PermissionType";
 import LayoutBox from "../../components/LayoutBox";
 import { Permission } from "../../components/Permission";
 import { d, t } from "../../locale/LocaleManager";
-import { LoInCategoryBlueIcon, LoInCategoryIcon, SaBlueIcon, SaIcon } from "../OutcomeList/Icons";
+import { LoInCategoryBlueIcon, LoInCategoryIcon, SaBlueIcon, SaIcon } from "../MyContentList/Icons";
 const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: 20,

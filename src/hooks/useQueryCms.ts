@@ -1,4 +1,3 @@
-import { OutcomeListExectSearch } from "@pages/OutcomeList/types";
 import { updateURLSearch } from "@utilities/urlUtilities";
 import { useLocation } from "react-router-dom";
 import { paramsWithDefault, queryParams } from "./queryParams";
@@ -23,7 +22,7 @@ const useQueryCms = () => {
   const scheduleId = querys.get("schedule_id") || "";
   const isShare = querys.get("isShare") || "org";
   const exactSerch = querys.get("exactSerch") || "all";
-  const exect_search = querys.get("exect_search") || OutcomeListExectSearch.all;
+  const exect_search = querys.get("exect_search");
   const assumed = querys.get("assumed") === "true";
   const first_save = querys.get("first_save") === "true";
   const filterOutcomes = querys.get("filterOutcomes") || "all";

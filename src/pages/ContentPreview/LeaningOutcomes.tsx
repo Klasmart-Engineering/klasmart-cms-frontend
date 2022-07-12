@@ -5,7 +5,6 @@ import React from "react";
 import { EntityOutcome } from "../../api/api.auto";
 import { emptyTip } from "../../components/TipImages";
 import { d } from "../../locale/LocaleManager";
-import CreateOutcomings from "../OutcomeEdit";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -32,8 +31,9 @@ interface OutcomeProps {
 function OutComeRow(props: OutcomeProps) {
   const css = useStyles();
   const { outcome } = props;
+  const CreateOutcomingsRouteBasePath = "/assessments/outcome-edit";
   const handleClickOutcome = () => {
-    window.open(`#${CreateOutcomings.routeBasePath}?outcome_id=${outcome.outcome_id}&readonly=true`);
+    window.open(`#${CreateOutcomingsRouteBasePath}?outcome_id=${outcome.outcome_id}&readonly=true`);
   };
   return (
     <TableRow>
