@@ -1,5 +1,7 @@
 // copy form @kl-engineering/kidsloop-px
-import { createStyles, makeStyles, Tab as MaterialTab, Tabs as MaterialTabs } from "@material-ui/core";
+import { Tab as MaterialTab, Tabs as MaterialTabs } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 import clsx from "clsx";
 import React from "react";
 

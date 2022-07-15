@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core";
+import makeStyles from "@mui/styles/makeStyles";
 import { ParentSize } from "@visx/responsive";
 import React, { ReactNode } from "react";
 import { useChartScale } from "../../hooks/useChartScale";
@@ -27,22 +27,22 @@ export function ChartLayout(props: ChartLayoutProps) {
     const px = scale(window.innerWidth / chartWidth);
     return (
       // <LayoutBox holderMin={40} holderBase={202} mainBase={1517}>
-        <div className={css.chartLayout} style={{ height: chartHeight * px, overflowX: "scroll" }}>
-          <div className={css.chartLayoutContent}>{render(px)}</div>
-        </div>
+      <div className={css.chartLayout} style={{ height: chartHeight * px, overflowX: "scroll" }}>
+        <div className={css.chartLayoutContent}>{render(px)}</div>
+      </div>
       // </LayoutBox>
     );
   }
   return (
     // <LayoutBox holderMin={40} holderBase={202} mainBase={1517}>
-      <div className={css.chartLayout} style={{ paddingBottom: `${(100 * chartHeight) / chartWidth}%` }}>
-        <ParentSize>
-          {(info) => {
-            const px = info.width / chartWidth;
-            return !px ? null : <div className={css.chartLayoutContent}>{render(px)}</div>;
-          }}
-        </ParentSize>
-      </div>
+    <div className={css.chartLayout} style={{ paddingBottom: `${(100 * chartHeight) / chartWidth}%` }}>
+      <ParentSize>
+        {(info) => {
+          const px = info.width / chartWidth;
+          return !px ? null : <div className={css.chartLayoutContent}>{render(px)}</div>;
+        }}
+      </ParentSize>
+    </div>
     // </LayoutBox>
   );
 }

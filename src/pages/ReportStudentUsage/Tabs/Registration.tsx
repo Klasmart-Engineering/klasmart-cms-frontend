@@ -1,6 +1,7 @@
-import { Box, Grid, Paper, Typography } from "@material-ui/core";
-import Button from "@material-ui/core/Button";
-import { createStyles, makeStyles } from "@material-ui/core/styles";
+import { Box, Grid, Paper, Typography } from "@mui/material";
+import Button from "@mui/material/Button";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 import React from "react";
 import PercentCircle from "../../../components/Chart/PercentCircle";
 import ReportRegistrationTrendChart from "../../../components/Chart/ReportRegistrationTrendChart";

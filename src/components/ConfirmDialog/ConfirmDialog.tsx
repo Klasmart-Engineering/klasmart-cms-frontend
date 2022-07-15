@@ -8,7 +8,7 @@ import {
   DialogTitle,
   FormControlLabel,
   TextField,
-} from "@material-ui/core";
+} from "@mui/material";
 import React, { useCallback, useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";

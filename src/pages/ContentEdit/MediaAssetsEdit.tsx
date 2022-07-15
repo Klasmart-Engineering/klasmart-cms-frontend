@@ -1,8 +1,9 @@
 import { apiWebSocketValidatePDF, apiWebSocketValidatePDFById } from "@api/extra";
 import { useDroppable } from "@dnd-kit/core";
-import { Box, IconButton, makeStyles, Typography } from "@material-ui/core";
-import Button from "@material-ui/core/Button";
-import CloseIcon from "@material-ui/icons/Close";
+import { Box, IconButton, Typography } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
+import Button from "@mui/material/Button";
+import CloseIcon from "@mui/icons-material/Close";
 import { actError } from "@reducers/notify";
 import { FileLike } from "@rpldy/shared";
 import clsx from "clsx";

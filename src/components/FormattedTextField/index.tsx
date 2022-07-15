@@ -1,4 +1,4 @@
-import { TextField, TextFieldProps } from "@material-ui/core";
+import { TextField, TextFieldProps } from "@mui/material";
 import React, { ChangeEvent, forwardRef, ForwardRefRenderFunction, useMemo } from "react";
 
 interface FormatedTextFieldProps<T> extends Omit<TextFieldProps, "onChange" | "value" | "defaultValue" | "variant"> {

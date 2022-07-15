@@ -1,5 +1,7 @@
-import { Grid, Tooltip } from "@material-ui/core";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { Grid, Tooltip } from "@mui/material";
+import { Theme } from "@mui/material/styles";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 import React, { ReactElement } from "react";
 import { EntityContentUsage } from "../../../api/api.auto";
 import { d } from "../../../locale/LocaleManager";
@@ -60,13 +62,13 @@ export default function MaterialUsageTooltip(props: Props) {
           <Grid container direction={"column"}>
             {props.content.map((item, key) => {
               return (
-                <Grid container justify={"space-between"} className={classes.item} key={key}>
+                <Grid container justifyContent={"space-between"} className={classes.item} key={key}>
                   {MaterialUsageConData.find((v) => v.value === item.type)?.label}
                   <label>{item.count}</label>
                 </Grid>
               );
             })}
-            <Grid container justify={"space-between"} className={classes.item} style={{ margin: 0 }}>
+            <Grid container justifyContent={"space-between"} className={classes.item} style={{ margin: 0 }}>
               {d("Total").t("report_student_usage_total")}
               <label>{count}</label>
             </Grid>

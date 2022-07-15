@@ -1,7 +1,8 @@
 import { TooltipWhite } from "@components/TreeViewFolder/TreeNode";
-import { Button, createStyles, Grid, Hidden, IconButton, Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
+import { Button, Grid, Hidden, IconButton, Typography } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import React from "react";
 import { EntityFolderContentData, EntityFolderItemInfo } from "../../api/api.auto";
 import PermissionType from "../../api/PermissionType";
@@ -159,7 +160,7 @@ export function BackToPrevPage(props: BackToPrevePageProps) {
               {folderInfo()}
             </Grid>
             {isEdit && (
-              <Grid item container justify="flex-end" style={{ marginTop: 10 }}>
+              <Grid item container justifyContent="flex-end" style={{ marginTop: 10 }}>
                 {perm.create_folder_289 && (
                   <Button variant="outlined" color="primary" onClick={() => onRenameFolder(parentFolderInfo)}>
                     {d("Edit").t("library_label_edit")}

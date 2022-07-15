@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core";
+import makeStyles from "@mui/styles/makeStyles";
 import { AxisBottom, AxisLeft, TickRendererProps } from "@visx/axis";
 import { Group } from "@visx/group";
 import { scaleBand, scaleLinear, scaleOrdinal } from "@visx/scale";

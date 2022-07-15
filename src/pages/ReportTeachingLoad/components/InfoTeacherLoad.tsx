@@ -1,4 +1,5 @@
-import { Box, makeStyles } from "@material-ui/core";
+import { Box } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
 import clsx from "clsx";
 import React from "react";
 import { d } from "../../../locale/LocaleManager";
@@ -58,14 +59,14 @@ export function InfoTeacherLoad() {
   ];
   return (
     // <LayoutBox holderMin={40} holderBase={202} mainBase={1517}>
-      <Box className={clsx(css.rightContainer, css.flexRight)}>
-        {infoList.map((infoItem) => (
-          <Box key={infoItem.title} className={clsx(css.rightContainer, css.marginItem)}>
-            <div className={css.colorPart} style={{ backgroundColor: infoItem.color }}></div>
-            <span>{infoItem.title}</span>
-          </Box>
-        ))}
-      </Box>
+    <Box className={clsx(css.rightContainer, css.flexRight)}>
+      {infoList.map((infoItem) => (
+        <Box key={infoItem.title} className={clsx(css.rightContainer, css.marginItem)}>
+          <div className={css.colorPart} style={{ backgroundColor: infoItem.color }}></div>
+          <span>{infoItem.title}</span>
+        </Box>
+      ))}
+    </Box>
     // </LayoutBox>
   );
 }

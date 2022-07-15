@@ -10,15 +10,15 @@ import {
   FormControlLabel,
   Hidden,
   IconButton,
-  makeStyles,
   Radio,
   RadioGroup,
   Typography,
   useMediaQuery,
   useTheme,
-} from "@material-ui/core";
-import { Palette, PaletteColor } from "@material-ui/core/styles/createPalette";
-import { ArrowBack, Cancel, CancelOutlined, DeleteOutlineOutlined, Publish, Save } from "@material-ui/icons";
+} from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
+import { Palette, PaletteColor } from "@mui/material/styles";
+import { ArrowBack, Cancel, CancelOutlined, DeleteOutlineOutlined, Publish, Save } from "@mui/icons-material";
 import clsx from "clsx";
 import { forwardRef, Fragment, useReducer } from "react";
 import { Controller, useForm, UseFormMethods } from "react-hook-form";

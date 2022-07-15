@@ -1,7 +1,9 @@
 import { noReportTip } from "@components/TipImages";
-import { Box, Button, Grid, makeStyles, Tooltip, Typography } from "@material-ui/core";
-import { Theme, withStyles } from "@material-ui/core/styles";
-import { InfoOutlined, KeyboardBackspace } from "@material-ui/icons";
+import { Box, Button, Grid, Tooltip, Typography } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
+import { Theme } from "@mui/material/styles";
+import withStyles from "@mui/styles/withStyles";
+import { InfoOutlined, KeyboardBackspace } from "@mui/icons-material";
 import { RootState } from "@reducers/index";
 import {
   getAchievementOverview,

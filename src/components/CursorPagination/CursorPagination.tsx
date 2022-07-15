@@ -1,7 +1,9 @@
 import { ConnectionDirection, ConnectionPageInfo } from "@api/api-ko-schema.auto";
 import { t } from "@locale/LocaleManager";
-import { createStyles, FormControl, IconButton, makeStyles, MenuItem, Select } from "@material-ui/core";
-import { ChevronLeft, ChevronRight, FirstPage, LastPage } from "@material-ui/icons";
+import { FormControl, IconButton, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import { ChevronLeft, ChevronRight, FirstPage, LastPage } from "@mui/icons-material";
 import { CursorListProps, CursorType } from "@pages/MyContentList/OrganizationList";
 import React from "react";
 const useStyles = makeStyles(() =>
@@ -33,7 +35,7 @@ export default function CursorPagination(props: IPagination) {
   const { pageDesc, total, pageInfo, onChange, rowsPerPages, pageSize, onChangePageSize, disabled } = props;
   const css = useStyles();
   const { hasNextPage, hasPreviousPage, startCursor, endCursor } = pageInfo;
-  const handleChangePageSize = (event: React.ChangeEvent<{ value: unknown }>) => {
+  const handleChangePageSize = (event: SelectChangeEvent<number>) => {
     onChangePageSize?.(event.target.value as number);
     onChange({ direction: ConnectionDirection.Forward, count: Number(event.target.value) });
   };

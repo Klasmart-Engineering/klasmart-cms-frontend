@@ -1,5 +1,6 @@
 import { t } from "@locale/LocaleManager";
-import { Box, Grid, makeStyles } from "@material-ui/core";
+import { Box, Grid } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
 import { ReportAchievementList } from "@pages/ReportAchievementList";
 import { RootState } from "@reducers/index";
 import { ParentSize } from "@visx/responsive";

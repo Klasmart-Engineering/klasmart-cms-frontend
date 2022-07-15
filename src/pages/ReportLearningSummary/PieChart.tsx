@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core";
+import makeStyles from "@mui/styles/makeStyles";
 import { Group } from "@visx/group";
 import { scaleOrdinal } from "@visx/scale";
 import Pie, { PieArcDatum, ProvidedProps } from "@visx/shape/lib/shapes/Pie";
@@ -148,10 +148,7 @@ const computed = (props: PieChartProps) => {
   const { px, data } = props;
   const pixels = getPixels(px);
   const viewPort = [
-    0,
-    0,
-    300,
-    300,
+    0, 0, 300, 300,
     // 2 * (pixels.viewMargin + pixels.tooltipWidth + pixels.tooltipMargin + pixels.outerRadius),
     // 2 * (pixels.viewMargin + pixels.outerRadius),
   ];

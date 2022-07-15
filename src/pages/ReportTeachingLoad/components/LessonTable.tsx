@@ -1,4 +1,6 @@
-import { createStyles, makeStyles, Table, TableBody, TableCell, TableHead, TableRow } from "@material-ui/core";
+import { Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 import moment from "moment";
 import React from "react";
 import { EntityTeacherLoadMissedLessonsResponse } from "../../../api/api.auto";

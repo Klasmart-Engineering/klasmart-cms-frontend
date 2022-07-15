@@ -1,10 +1,11 @@
-import { Grid, Menu, MenuItem, MenuProps, Tab, Tabs } from "@material-ui/core";
-import AppBar from "@material-ui/core/AppBar/AppBar";
-import Button from "@material-ui/core/Button";
-import Hidden from "@material-ui/core/Hidden";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
-import { ArchiveOutlined, PermMediaOutlined, PublishOutlined } from "@material-ui/icons";
-import ArrowDropDownOutlinedIcon from "@material-ui/icons/ArrowDropDownOutlined";
+import { Grid, Menu, MenuItem, MenuProps, Tab, Tabs } from "@mui/material";
+import AppBar from "@mui/material/AppBar/AppBar";
+import Button from "@mui/material/Button";
+import Hidden from "@mui/material/Hidden";
+import makeStyles from "@mui/styles/makeStyles";
+import withStyles from "@mui/styles/withStyles";
+import { ArchiveOutlined, PermMediaOutlined, PublishOutlined } from "@mui/icons-material";
+import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
 import clsx from "clsx";
 import React from "react";
 import PermissionType from "../../api/PermissionType";
@@ -21,7 +22,6 @@ export const StyledMenu = withStyles({
 })((props: MenuProps) => (
   <Menu
     elevation={0}
-    getContentAnchorEl={null}
     anchorOrigin={{
       vertical: "bottom",
       horizontal: "center",
@@ -52,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "3px",
     textTransform: "capitalize",
     marginLeft: 20,
+    color: "#212121",
   },
   searchBtn: {
     width: "111px",
@@ -197,7 +198,7 @@ export default function FirstSearchHeader(props: FirstSearchHeaderProps) {
               </Permission>
             </StyledMenu>
           </Grid>
-          <Grid container direction="row" justify="flex-end" alignItems="center" item md={10} lg={8} xl={7}>
+          <Grid container direction="row" justifyContent="flex-end" alignItems="center" item md={10} lg={8} xl={7}>
             <Permission value={PermissionType.published_content_page_204}>
               <Button
                 onClick={createHandleClick(PublishStatus.published)}
@@ -299,7 +300,8 @@ export function FirstSearchHeaderMb(props: FirstSearchHeaderProps) {
                 value={value?.publish_status || value.content_type}
                 onChange={handleChange}
                 variant="scrollable"
-                scrollButtons="on"
+                scrollButtons
+                allowScrollButtonsMobile
                 indicatorColor="primary"
                 textColor="primary"
               >

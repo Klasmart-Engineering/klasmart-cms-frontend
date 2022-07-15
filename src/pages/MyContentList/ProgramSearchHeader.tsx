@@ -1,9 +1,9 @@
-import { AppBar, Grid, Tab, Tabs } from "@material-ui/core";
-import Button from "@material-ui/core/Button";
-import Hidden from "@material-ui/core/Hidden";
-import { makeStyles } from "@material-ui/core/styles";
-import { Sort } from "@material-ui/icons";
-import WidgetsOutlinedIcon from "@material-ui/icons/WidgetsOutlined";
+import { AppBar, Grid, Tab, Tabs } from "@mui/material";
+import Button from "@mui/material/Button";
+import Hidden from "@mui/material/Hidden";
+import makeStyles from "@mui/styles/makeStyles";
+import { Sort } from "@mui/icons-material";
+import WidgetsOutlinedIcon from "@mui/icons-material/WidgetsOutlined";
 import clsx from "clsx";
 import React from "react";
 import { OrderBy } from "../../api/type";
@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
     marginRight: "3px",
     textTransform: "capitalize",
+    color: "#212121",
   },
   searchBtn: {
     width: "111px",
@@ -94,7 +95,7 @@ export default function ProgramSearchHeader(props: ProgramSearchHeaderProps) {
       <Hidden only={["xs", "sm"]}>
         <Grid container spacing={3}>
           <Grid item md={3} lg={5} xl={7}></Grid>
-          <Grid container direction="row" justify="flex-end" alignItems="center" item md={9} lg={7} xl={5}>
+          <Grid container direction="row" justifyContent="flex-end" alignItems="center" item md={9} lg={7} xl={5}>
             <Button
               onClick={createHandleClick(ProgramGroup.badaEsl)}
               className={clsx(css.nav, {
@@ -150,7 +151,8 @@ export function ProgramSearchHeaderMb(props: ProgramSearchHeaderProps) {
                 value={value?.program_group}
                 onChange={handleChange}
                 variant="scrollable"
-                scrollButtons="on"
+                scrollButtons
+                allowScrollButtonsMobile
                 indicatorColor="primary"
                 textColor="primary"
               >

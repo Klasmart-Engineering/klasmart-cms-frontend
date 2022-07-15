@@ -1,16 +1,7 @@
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  makeStyles,
-  Theme,
-  Tooltip,
-  Typography,
-  withStyles,
-} from "@material-ui/core";
-import { ChangeHistoryOutlined, CheckOutlined, ClearOutlined, InfoOutlined } from "@material-ui/icons";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Theme, Tooltip, Typography } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
+import withStyles from "@mui/styles/withStyles";
+import { ChangeHistoryOutlined, CheckOutlined, ClearOutlined, InfoOutlined } from "@mui/icons-material";
 import { RootState } from "@reducers/index";
 import { queryOutcomesByAssessmentId } from "@reducers/report";
 import clsx from "clsx";
@@ -30,7 +21,7 @@ import {
   ReportInfoBaseProps,
   ReportType,
 } from "./types";
-const useStyles = makeStyles(({ breakpoints, props }) => ({
+const useStyles = makeStyles(({ breakpoints }) => ({
   scrollCss: {
     "&::-webkit-scrollbar": {
       width: "4px",

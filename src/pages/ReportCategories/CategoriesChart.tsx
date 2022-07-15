@@ -1,4 +1,5 @@
-import { makeStyles, useMediaQuery, useTheme } from "@material-ui/core";
+import { useMediaQuery, useTheme } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
 import { Group } from "@visx/group";
 import { ParentSize } from "@visx/responsive";
 import { scaleOrdinal } from "@visx/scale";

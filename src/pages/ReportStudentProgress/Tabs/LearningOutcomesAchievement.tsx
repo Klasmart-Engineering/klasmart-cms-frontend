@@ -1,5 +1,5 @@
 import { noDataTip } from "@components/TipImages";
-import { createStyles, makeStyles } from "@material-ui/styles";
+import { createStyles, makeStyles } from "@mui/styles";
 import { getFourWeeks, getLastedMonths } from "@utilities/dateUtilities";
 import moment from "moment";
 import React, { useContext, useEffect, useState } from "react";

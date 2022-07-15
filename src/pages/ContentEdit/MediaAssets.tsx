@@ -1,6 +1,7 @@
 import { DragOverlay, useDndContext, useDraggable } from "@dnd-kit/core";
-import { Box, makeStyles, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@material-ui/core";
-import { Pagination } from "@material-ui/lab";
+import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
+import { Pagination } from "@mui/material";
 import clsx from "clsx";
 import React, { useCallback } from "react";
 import { createPortal } from "react-dom";

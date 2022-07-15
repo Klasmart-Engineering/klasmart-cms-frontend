@@ -1,5 +1,6 @@
 import rightArrow from "@assets/icons/rightArrow.svg";
-import { Icon, Link, makeStyles } from "@material-ui/core";
+import { Icon, Link } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
 import { CSSProperties } from "react";
 import { Link as RouterLink } from "react-router-dom";
 

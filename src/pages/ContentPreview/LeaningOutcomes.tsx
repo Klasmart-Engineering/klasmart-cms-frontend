@@ -1,5 +1,7 @@
-import { Box, createStyles, makeStyles, Table, TableBody, TableCell, TableHead, TableRow } from "@material-ui/core";
-import TableContainer from "@material-ui/core/TableContainer/TableContainer";
+import { Box, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import TableContainer from "@mui/material/TableContainer/TableContainer";
 import clsx from "clsx";
 import React from "react";
 import { EntityOutcome } from "../../api/api.auto";

@@ -1,9 +1,9 @@
-import { Grid, Tab, Tabs } from "@material-ui/core";
-import AppBar from "@material-ui/core/AppBar/AppBar";
-import Button from "@material-ui/core/Button";
-import Hidden from "@material-ui/core/Hidden";
-import { makeStyles } from "@material-ui/core/styles";
-import ShowChartIcon from "@material-ui/icons/ShowChart";
+import { Grid, Tab, Tabs } from "@mui/material";
+import AppBar from "@mui/material/AppBar/AppBar";
+import Button from "@mui/material/Button";
+import Hidden from "@mui/material/Hidden";
+import makeStyles from "@mui/styles/makeStyles";
+import ShowChartIcon from "@mui/icons-material/ShowChart";
 import clsx from "clsx";
 import React from "react";
 import { apiIsEnableReport } from "../../api/extra";
@@ -99,7 +99,7 @@ export default function FirstSearchHeader(props: FirstSearchHeaderProps) {
               <Hidden only={["xs", "sm"]}>
                 <Grid container spacing={3}>
                   <Grid item md={3} lg={5} xl={7}></Grid>
-                  <Grid container direction="row" justify="flex-end" alignItems="center" item md={9} lg={7} xl={5}>
+                  <Grid container direction="row" justifyContent="flex-end" alignItems="center" item md={9} lg={7} xl={5}>
                     <Button
                       onClick={createHandleClick(Category.archived)}
                       className={clsx(css.nav, {
@@ -164,7 +164,8 @@ export function FirstSearchHeaderMb(props: FirstSearchHeaderProps) {
                       value={value}
                       onChange={handleChange}
                       variant="scrollable"
-                      scrollButtons="on"
+                      scrollButtons
+                      allowScrollButtonsMobile
                       indicatorColor="primary"
                       textColor="primary"
                     >

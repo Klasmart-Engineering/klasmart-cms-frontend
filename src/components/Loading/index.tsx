@@ -1,4 +1,6 @@
-import { Backdrop, CircularProgress, createStyles, makeStyles } from "@material-ui/core";
+import { Backdrop, CircularProgress } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../reducers";

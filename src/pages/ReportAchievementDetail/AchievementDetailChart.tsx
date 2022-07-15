@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core";
+import makeStyles from "@mui/styles/makeStyles";
 import { AxisBottom, AxisLeft } from "@visx/axis";
 import { Group } from "@visx/group";
 import { ParentSize } from "@visx/responsive";
@@ -99,13 +99,12 @@ const DETAIL_KEYS = {
 
 const ratioKey2DetailKey = (ratioKey: RatioKey): DetailKey => {
   const [filter] = Object.entries(RATIO_KEYS).find(([k, v]) => v === ratioKey) || [];
-  return DETAIL_KEYS[(filter as unknown) as keyof typeof DETAIL_KEYS];
+  return DETAIL_KEYS[filter as unknown as keyof typeof DETAIL_KEYS];
 };
 
-type RatioExtendedCategory = EntityStudentAchievementReportCategoryItem &
-  {
-    [key in RatioKey | "sum"]: number;
-  };
+type RatioExtendedCategory = EntityStudentAchievementReportCategoryItem & {
+  [key in RatioKey | "sum"]: number;
+};
 const mapRatio = (data: EntityStudentAchievementReportCategoryItem[]): RatioExtendedCategory[] => {
   return data.map((item) => {
     const achieved_items = item.achieved_items || [];
@@ -158,9 +157,10 @@ export function AchievementDetailStaticChart(props: AchievementDetailStaticChart
   const css = useStyle();
   const pixels = useMemo(() => getPixels(px), [px]);
   const inlineStyles = useMemo(() => getInlineStyles(px), [px]);
-  const { data, xScale, yScale, yAxiosScale, colorScale, getX, ratioKeys, xAxiosLabelWidth, viewPort } = useMemo(() => computed(props), [
-    props,
-  ]);
+  const { data, xScale, yScale, yAxiosScale, colorScale, getX, ratioKeys, xAxiosLabelWidth, viewPort } = useMemo(
+    () => computed(props),
+    [props]
+  );
   const { tooltipOpen, tooltipData, tooltipTop, tooltipLeft, showTooltip, hideTooltip } = useTooltip<TBar>();
 
   const rectList = (barStacks: TBarStack[]) =>

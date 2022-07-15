@@ -1,4 +1,5 @@
-import { Box, Divider, makeStyles } from "@material-ui/core";
+import { Box, Divider } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
 import clsx from "clsx";
 import React from "react";
 import { useHistory } from "react-router-dom";

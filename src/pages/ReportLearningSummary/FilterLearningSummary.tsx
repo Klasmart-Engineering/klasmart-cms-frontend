@@ -1,4 +1,5 @@
-import { Divider, makeStyles, MenuItem, TextField } from "@material-ui/core";
+import { Divider, MenuItem, TextField } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
 // import produce from "immer";
 import React, { ChangeEvent } from "react";
 import { IWeeks } from ".";
@@ -99,7 +100,6 @@ export function FilterLearningSummary(props: FilterLearningSummaryProps) {
                 label={t("report_filter_school")}
                 value={value.school_id}
                 select
-                SelectProps={{ MenuProps: { transformOrigin: { vertical: -40, horizontal: "left" } } }}
               >
                 {getInfos(schools || [])}
               </TextField>
@@ -110,7 +110,6 @@ export function FilterLearningSummary(props: FilterLearningSummaryProps) {
                 label={t("report_filter_class")}
                 value={value.class_id}
                 select
-                SelectProps={{ MenuProps: { transformOrigin: { vertical: -40, horizontal: "left" } } }}
               >
                 {getInfos(classes || [])}
               </TextField>
@@ -121,7 +120,6 @@ export function FilterLearningSummary(props: FilterLearningSummaryProps) {
                 label={t("report_filter_student")}
                 value={value.student_id}
                 select
-                SelectProps={{ MenuProps: { transformOrigin: { vertical: -40, horizontal: "left" } } }}
               >
                 {getInfos(students || [])}
               </TextField>
@@ -135,7 +133,6 @@ export function FilterLearningSummary(props: FilterLearningSummaryProps) {
             label={t("report_filter_subject")}
             value={value.subject_id}
             select
-            SelectProps={{ MenuProps: { transformOrigin: { vertical: -40, horizontal: "left" } } }}
           >
             {getInfos(subjects || [])}
           </TextField>
@@ -149,7 +146,6 @@ export function FilterLearningSummary(props: FilterLearningSummaryProps) {
             label={t("report_filter_year")}
             value={value.year || ""}
             select
-            SelectProps={{ MenuProps: { transformOrigin: { vertical: -40, horizontal: "left" } } }}
           >
             {getYear()}
           </TextField>
@@ -160,7 +156,6 @@ export function FilterLearningSummary(props: FilterLearningSummaryProps) {
             label={t("report_filter_week")}
             value={defaultWeeksValue || ""}
             select
-            SelectProps={{ MenuProps: { transformOrigin: { vertical: -40, horizontal: "left" } } }}
           >
             {getWeekElement()}
           </TextField>

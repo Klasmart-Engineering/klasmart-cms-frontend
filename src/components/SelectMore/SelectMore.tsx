@@ -1,6 +1,6 @@
 import { SelectItem } from "@api/extra";
 import { t } from "@locale/LocaleManager";
-import { Button, FormControl, InputLabel, LinearProgress, MenuItem, Select } from "@material-ui/core";
+import { Button, FormControl, InputLabel, LinearProgress, MenuItem, Select } from "@mui/material";
 import React, { useState } from "react";
 interface ISelectMore {
   value: string;

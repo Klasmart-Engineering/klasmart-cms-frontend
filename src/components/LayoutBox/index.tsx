@@ -1,4 +1,5 @@
-import { Box, BoxProps, makeStyles } from "@material-ui/core";
+import { Box } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
 import React, { ReactNode } from "react";
 
 interface LayoutBoxProps {
@@ -7,7 +8,7 @@ interface LayoutBoxProps {
   mainBase: number;
   holderMin: number;
   holderBase: number;
-  overflowX?: BoxProps["overflow"];
+  overflowX?: any;
   children: ReactNode;
 }
 

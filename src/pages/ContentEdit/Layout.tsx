@@ -1,5 +1,6 @@
-import { Box, BoxProps, makeStyles } from "@material-ui/core";
-import { Breakpoint } from "@material-ui/core/styles/createBreakpoints";
+import { Box, BoxProps } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
+import { Breakpoint } from "@mui/material/styles";
 import clsx from "clsx";
 import React, { Children, ReactNode } from "react";
 

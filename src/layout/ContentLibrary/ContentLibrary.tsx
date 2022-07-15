@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 import { t } from "@locale/LocaleManager";
-import { createStyles, makeStyles, Theme } from "@material-ui/core";
+import { Theme } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 import MyContentList from "@pages/MyContentList";
 import { Link, useLocation } from "react-router-dom";
 import Tabs, { Tab } from "./tabs";

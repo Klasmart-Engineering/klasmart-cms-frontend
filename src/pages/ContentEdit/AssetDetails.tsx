@@ -1,5 +1,6 @@
-import { Box, Button, createMuiTheme, makeStyles, MenuItem, TextField, ThemeProvider, useMediaQuery, useTheme } from "@material-ui/core";
-import { CloudUploadOutlined } from "@material-ui/icons";
+import { Box, Button, MenuItem, TextField, ThemeProvider, useMediaQuery, useTheme, createTheme } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
+import { CloudUploadOutlined } from "@mui/icons-material";
 import { LinkedMockOptions } from "@reducers/contentEdit/programsHandler";
 import React from "react";
 import { Controller, FieldError, UseFormMethods } from "react-hook-form";
@@ -80,7 +81,7 @@ export default function AssetsDetails(props: AssetDetailsProps) {
   const defaultTheme = useTheme();
   const sm = useMediaQuery(defaultTheme.breakpoints.down("sm"));
   const size = sm ? "small" : "medium";
-  const theme = createMuiTheme(defaultTheme, {
+  const theme = createTheme(defaultTheme, {
     props: {
       MuiTextField: {
         size,
@@ -119,6 +120,7 @@ export default function AssetsDetails(props: AssetDetailsProps) {
             control={control}
             name="name"
             label={d("Asset Name").t("library_label_asset_name")}
+            fullWidth
             required
             encode={frontTrim}
             decode={frontTrim}
@@ -176,6 +178,7 @@ export default function AssetsDetails(props: AssetDetailsProps) {
               <TextField
                 select
                 className={css.fieldset}
+                fullWidth
                 label={d("Program").t("library_label_program")}
                 {...props}
                 onChange={(e) => {
@@ -216,6 +219,7 @@ export default function AssetsDetails(props: AssetDetailsProps) {
                 SelectProps={{
                   multiple: true,
                 }}
+                fullWidth
                 className={css.fieldset}
                 label={d("Subject").t("library_label_subject")}
                 disabled={isIdExist()}
@@ -318,6 +322,7 @@ export default function AssetsDetails(props: AssetDetailsProps) {
             as={TextField}
             control={control}
             name="description"
+            fullWidth
             className={css.fieldset}
             label={d("Description").t("library_label_description")}
             defaultValue={allDefaultValueAndKey.description?.value}
@@ -328,6 +333,7 @@ export default function AssetsDetails(props: AssetDetailsProps) {
             as={FormattedTextField}
             control={control}
             name="keywords"
+            fullWidth
             decode={decodeArray}
             className={css.fieldset}
             label={d("Keywords").t("library_label_keywords")}

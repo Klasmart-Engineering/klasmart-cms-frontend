@@ -1,6 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Box } from "@material-ui/core";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { Box } from "@mui/material";
+import { Theme } from "@mui/material/styles";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 import { getLastedMonths } from "@utilities/dateUtilities";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";

@@ -1,5 +1,6 @@
-import { Grid, MenuItem, OutlinedInput, Select } from "@material-ui/core";
-import { createStyles, makeStyles } from "@material-ui/core/styles";
+import { Grid, MenuItem, OutlinedInput, Select } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 import React from "react";
 import { t } from "../../../locale/LocaleManager";
 
@@ -25,7 +26,7 @@ export default function StudentProgressReportFilter(props: IStudentProgressRepor
   const css = useStyle();
   const { studentProgressReportTitle, durationTime, handleChange } = props;
   return (
-    <Grid container justify={"space-between"} className={css.filter}>
+    <Grid container justifyContent={"space-between"} className={css.filter}>
       <Grid item>{studentProgressReportTitle}</Grid>
       <Select
         value={durationTime}

@@ -1,22 +1,22 @@
 import React, { useRef, forwardRef, useImperativeHandle, useMemo } from "react";
 import { SketchField, Tools } from "react-sketch-master";
-import { Box } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import Slider from "@material-ui/core/Slider";
-import CreateIcon from "@material-ui/icons/Create";
-import DeleteIcon from "@material-ui/icons/Delete";
-import TouchAppIcon from "@material-ui/icons/TouchApp";
-import RedoIcon from "@material-ui/icons/Redo";
-import UndoIcon from "@material-ui/icons/Undo";
-import OpenWithIcon from "@material-ui/icons/OpenWith";
-import TextFieldsIcon from "@material-ui/icons/TextFields";
-import Divider from "@material-ui/core/Divider";
-import CheckIcon from "@material-ui/icons/Check";
-import CloseIcon from "@material-ui/icons/Close";
-import Tooltip from "@material-ui/core/Tooltip";
-import TextField from "@material-ui/core/TextField";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import { Box } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
+import Typography from "@mui/material/Typography";
+import Slider from "@mui/material/Slider";
+import CreateIcon from "@mui/icons-material/Create";
+import DeleteIcon from "@mui/icons-material/Delete";
+import TouchAppIcon from "@mui/icons-material/TouchApp";
+import RedoIcon from "@mui/icons-material/Redo";
+import UndoIcon from "@mui/icons-material/Undo";
+import OpenWithIcon from "@mui/icons-material/OpenWith";
+import TextFieldsIcon from "@mui/icons-material/TextFields";
+import Divider from "@mui/material/Divider";
+import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
+import Tooltip from "@mui/material/Tooltip";
+import TextField from "@mui/material/TextField";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const useStyles = makeStyles(({ shadows }) => ({
   sliderBox: {

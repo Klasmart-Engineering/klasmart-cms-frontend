@@ -1,4 +1,4 @@
-import { SvgIcon } from "@material-ui/core";
+import { SvgIcon } from "@mui/material";
 import React from "react";
 import { ReactComponent as AssessmentsBlueIconUrl } from "../../assets/icons/assessment-24px-blue.svg";
 import { ReactComponent as AssessmentsIconUrl } from "../../assets/icons/assessments-24px.svg";

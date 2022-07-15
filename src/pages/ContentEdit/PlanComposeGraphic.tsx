@@ -1,8 +1,9 @@
 import { useDndContext, useDraggable, useDroppable } from "@dnd-kit/core";
-import { Box, Button, ButtonGroup, Card, CardContent, makeStyles, SvgIconProps, Theme, Typography, useTheme } from "@material-ui/core";
-import { CancelRounded, Close, DashboardOutlined, Done, FlagOutlined, Spellcheck, SvgIconComponent } from "@material-ui/icons";
+import { Box, Button, ButtonGroup, Card, CardContent, SvgIconProps, Theme, Typography, useTheme } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
+import { CancelRounded, Close, DashboardOutlined, Done, FlagOutlined, Spellcheck, SvgIconComponent } from "@mui/icons-material";
 import clsx from "clsx";
-import { forwardRef, HTMLAttributes, LegacyRef, useCallback, useMemo } from "react";
+import { forwardRef, HTMLAttributes, Ref, useCallback, useMemo } from "react";
 import { ArcherContainer, ArcherElement, Relation } from "react-archer";
 import { NavLink } from "react-router-dom";
 import PermissionType from "../../api/PermissionType";
@@ -406,7 +407,7 @@ const doNothing = (arg: any): any => {};
 interface PlanComposeGraphicProps {
   value?: Segment;
   onChange?: (value: Segment) => any;
-  nodeRef?: LegacyRef<HTMLElement>;
+  nodeRef?: Ref<unknown>;
 }
 export const PlanComposeGraphic = forwardRef<HTMLDivElement, PlanComposeGraphicProps>((props, forwardedref) => {
   const { nodeRef: ref } = props;

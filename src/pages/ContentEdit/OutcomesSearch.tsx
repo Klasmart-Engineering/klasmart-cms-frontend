@@ -1,8 +1,9 @@
 import { GroupSelect } from "@components/GroupSelect/GroupSelect";
 import { SearchItems } from "@components/SearchcmsList";
 import { d } from "@locale/LocaleManager";
-import { Box, Button, Checkbox, FormControlLabel, Grid, makeStyles, MenuItem, TextField, TextFieldProps } from "@material-ui/core";
-import { Search } from "@material-ui/icons";
+import { Box, Button, Checkbox, FormControlLabel, Grid, MenuItem, TextField, TextFieldProps } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
+import { Search } from "@mui/icons-material";
 import { LinkedMockOptions, LinkedMockOptionsItem } from "@reducers/contentEdit/programsHandler";
 import clsx from "clsx";
 import React, { ReactNode } from "react";

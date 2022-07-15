@@ -1,6 +1,6 @@
-import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core/styles";
-import { Close } from "@material-ui/icons";
+import Button from "@mui/material/Button";
+import makeStyles from "@mui/styles/makeStyles";
+import { Close } from "@mui/icons-material";
 import React from "react";
 import { useHistory } from "react-router-dom";
 
@@ -74,7 +74,7 @@ function CloseButton() {
     history.goBack();
   };
   return (
-    <Button color="default" startIcon={<Close />} className={css.closeButton} onClick={close}>
+    <Button startIcon={<Close />} className={css.closeButton} onClick={close}>
       Preview
     </Button>
   );

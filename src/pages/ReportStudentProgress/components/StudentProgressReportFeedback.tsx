@@ -1,5 +1,6 @@
-import { createStyles, makeStyles } from "@material-ui/core/styles";
-import { CheckCircle } from "@material-ui/icons";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import { CheckCircle } from "@mui/icons-material";
 import React from "react";
 
 const useStyle = makeStyles(({ palette }) =>

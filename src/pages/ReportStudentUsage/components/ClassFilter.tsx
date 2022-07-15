@@ -1,5 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Box, createStyles, makeStyles, MenuItem, TextField, Theme } from "@material-ui/core";
+import { Box, MenuItem, TextField, Theme } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 import { orderByASC } from "@utilities/dataUtilities";
 import uniqBy from "lodash/uniqBy";
 import React from "react";

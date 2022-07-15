@@ -1,5 +1,6 @@
-import { FormControl, InputLabel, makeStyles, MenuItem, Paper, Typography } from "@material-ui/core";
-import { ArrowDropDown, ArrowRight } from "@material-ui/icons";
+import { FormControl, InputLabel, MenuItem, Paper, Typography } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
+import { ArrowDropDown, ArrowRight } from "@mui/icons-material";
 import { LinkedMockOptionsItem } from "@reducers/contentEdit/programsHandler";
 import clsx from "clsx";
 import React, { forwardRef } from "react";

@@ -1,4 +1,5 @@
-import { Box, makeStyles, Typography } from "@material-ui/core";
+import { Box, Typography } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
 import { Fragment, ReactNode } from "react";
 import AnyTimeNoData from "../../assets/icons/any_time_no_data.png";
 import comingsoonIconUrl from "../../assets/icons/coming soon.svg";

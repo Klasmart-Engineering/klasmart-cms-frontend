@@ -7,18 +7,22 @@ import { SingleUploader } from "@components/SingleUploader";
 import useQueryCms from "@hooks/useQueryCms";
 import { LangRecordId } from "@locale/lang/type";
 import { d, t } from "@locale/LocaleManager";
+import { ContentDetailForm, formattedTime, toMapGroup } from "@models/ModelContentDetailForm";
+import { ModelLessonPlan, Segment } from "@models/ModelLessonPlan";
+import { CreateAllDefaultValueAndKeyResult } from "@models/ModelMockOptions";
+import { AccessTime, CancelRounded, CloudUploadOutlined, InfoOutlined } from "@mui/icons-material";
+import { Autocomplete } from "@mui/lab";
 import {
   Box,
   Button,
   Checkbox,
   CircularProgress,
   CircularProgressProps,
-  createMuiTheme,
+  createTheme,
   FormControl,
   FormControlLabel,
   InputLabel,
   LinearProgress,
-  makeStyles,
   MenuItem,
   OutlinedInput,
   TextField,
@@ -26,14 +30,11 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
-} from "@material-ui/core";
-import { Theme, withStyles } from "@material-ui/core/styles";
-import Tooltip from "@material-ui/core/Tooltip";
-import { AccessTime, CancelRounded, CloudUploadOutlined, InfoOutlined } from "@material-ui/icons";
-import { Autocomplete } from "@material-ui/lab";
-import { ContentDetailForm, formattedTime, toMapGroup } from "@models/ModelContentDetailForm";
-import { ModelLessonPlan, Segment } from "@models/ModelLessonPlan";
-import { CreateAllDefaultValueAndKeyResult } from "@models/ModelMockOptions";
+} from "@mui/material";
+import { Theme } from "@mui/material/styles";
+import Tooltip from "@mui/material/Tooltip";
+import makeStyles from "@mui/styles/makeStyles";
+import withStyles from "@mui/styles/withStyles";
 import { LinkedMockOptions, LinkedMockOptionsItem } from "@reducers/contentEdit/programsHandler";
 import { actError } from "@reducers/notify";
 import React, { forwardRef, useCallback, useMemo, useState } from "react";
@@ -201,6 +202,7 @@ const SuggestTime = forwardRef<HTMLDivElement, SuggestTimeProps>((props, ref) =>
     <TextField
       ref={ref}
       type="number"
+      fullWidth
       className={css.fieldset}
       label={lesson === "plan" ? t("library_label_plan_duration") : t("library_label_duration")}
       disabled={disabled}
@@ -349,7 +351,7 @@ export default function Details(props: DetailsProps) {
     [isDirty, min, watch]
   );
   const size = sm ? "small" : "medium";
-  const theme = createMuiTheme(defaultTheme, {
+  const theme = createTheme(defaultTheme, {
     props: {
       MuiTextField: {
         size,
@@ -390,6 +392,7 @@ export default function Details(props: DetailsProps) {
           as={FormattedTextField}
           control={control}
           name="name"
+          fullWidth
           label={lesson === "material" ? d("Material Name").t("library_label_material_name") : d("Plan Name").t("library_label_plan_name")}
           required
           encode={frontTrim}
@@ -496,6 +499,7 @@ export default function Details(props: DetailsProps) {
                   onChangeProgram(e.target.value);
                   props.onChange(e.target.value);
                 }}
+                fullWidth={sm}
                 required
               >
                 {menuItemList(linkedMockOptions.program || [])}
@@ -644,8 +648,8 @@ export default function Details(props: DetailsProps) {
           id="grouped-demo"
           multiple
           options={visibility_settings}
-          groupBy={(option) => toMapGroup(option.group) as string}
-          getOptionLabel={(option) => option.name as string}
+          groupBy={(option: LinkedMockOptionsItem) => toMapGroup(option.group) as string}
+          getOptionLabel={(option: LinkedMockOptionsItem) => option.name as string}
           onChange={(e: any, newValue) => {
             console.log(newValue);
             setValue(
@@ -678,6 +682,7 @@ export default function Details(props: DetailsProps) {
           <Controller
             as={TextField}
             select
+            fullWidth
             className={css.fieldset}
             label={d("Lesson Type").t("library_label_lesson_type")}
             disabled={disabled}
@@ -764,6 +769,7 @@ export default function Details(props: DetailsProps) {
           as={TextField}
           control={control}
           name="description"
+          fullWidth
           multiline
           defaultValue={allDefaultValueAndKey.description?.value}
           key={allDefaultValueAndKey.description?.key}
@@ -775,6 +781,7 @@ export default function Details(props: DetailsProps) {
           as={FormattedTextField}
           control={control}
           name="keywords"
+          fullWidth
           decode={decodeArray}
           defaultValue={allDefaultValueAndKey.keywords?.value}
           key={allDefaultValueAndKey.keywords?.key}
@@ -786,6 +793,7 @@ export default function Details(props: DetailsProps) {
           <Controller
             control={control}
             name="teacher_manual_batch"
+            fullWidth
             defaultValue={allDefaultValueAndKey.teacher_manual_batch?.value}
             key={allDefaultValueAndKey.teacher_manual_batch?.key}
             render={({ ref, ...props }) => (

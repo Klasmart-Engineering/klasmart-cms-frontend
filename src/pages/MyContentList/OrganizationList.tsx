@@ -6,22 +6,22 @@ import { resultsTip } from "@components/TipImages";
 import {
   Button,
   Checkbox,
-  createStyles,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   FormControlLabel,
-  makeStyles,
   Radio,
   RadioGroup,
   TextFieldProps,
   Theme,
   Tooltip,
   Typography,
-  withStyles,
-} from "@material-ui/core";
-import { InfoOutlined, Search } from "@material-ui/icons";
+} from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import withStyles from "@mui/styles/withStyles";
+import { InfoOutlined, Search } from "@mui/icons-material";
 import { getOrgList } from "@reducers/content";
 import { RootState } from "@reducers/index";
 import { AsyncTrunkReturned } from "@reducers/type";

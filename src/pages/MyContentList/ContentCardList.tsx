@@ -6,26 +6,27 @@ import {
   CardMedia,
   Checkbox,
   Collapse,
-  createStyles,
   FormControl,
   Grid,
   IconButton,
   MenuItem,
   Select,
+  SelectChangeEvent,
   styled,
   Typography,
-} from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import { CheckBox, CheckBoxOutlineBlank, ExpandMore } from "@material-ui/icons";
-import ClearIcon from "@material-ui/icons/Clear";
-import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
-import DoneIcon from "@material-ui/icons/Done";
-import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
-import FolderOpenIcon from "@material-ui/icons/FolderOpen";
-import PublishOutlinedIcon from "@material-ui/icons/PublishOutlined";
-import RemoveCircleOutlineIcon from "@material-ui/icons/RemoveCircleOutline";
-import ShareIcon from "@material-ui/icons/Share";
-import { Pagination } from "@material-ui/lab";
+} from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import { CheckBox, CheckBoxOutlineBlank, ExpandMore } from "@mui/icons-material";
+import ClearIcon from "@mui/icons-material/Clear";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import DoneIcon from "@mui/icons-material/Done";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import FolderOpenIcon from "@mui/icons-material/FolderOpen";
+import PublishOutlinedIcon from "@mui/icons-material/PublishOutlined";
+import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
+import ShareIcon from "@mui/icons-material/Share";
+import { Pagination } from "@mui/material";
 import clsx from "clsx";
 import React, { Fragment, useState } from "react";
 import { Controller, UseFormMethods } from "react-hook-form";
@@ -610,7 +611,7 @@ export function ContentCardList(props: ContentCardListProps) {
   } = props;
   const { control } = formMethods;
   const handleChangePage = (event: object, page: number) => onChangePage(page);
-  const handleChangePageSize = (event: React.ChangeEvent<{ value: unknown }>) => {
+  const handleChangePageSize = (event: SelectChangeEvent<number>) => {
     onChangePageSize(event.target.value as number);
   };
   const pageSizes = [20, 100, 500];
@@ -672,7 +673,7 @@ export function ContentCardList(props: ContentCardListProps) {
           count={Math.ceil(total / amountPerPage)}
           color="primary"
         />
-        <FormControl>
+        <FormControl variant="standard">
           <Select value={amountPerPage} onChange={handleChangePageSize}>
             {pageSizes.map((item) => (
               <MenuItem value={item} key={item}>

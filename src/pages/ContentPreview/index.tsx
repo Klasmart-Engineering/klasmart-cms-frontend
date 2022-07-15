@@ -5,7 +5,7 @@ import { ContentType } from "@api/type";
 import { usePermission } from "@hooks/usePermission";
 import useQueryCms from "@hooks/useQueryCms";
 import { t } from "@locale/LocaleManager";
-import { Box, useMediaQuery, useTheme } from "@material-ui/core";
+import { Box, useMediaQuery, useTheme } from "@mui/material";
 import {
   approveContent,
   deleteContent,

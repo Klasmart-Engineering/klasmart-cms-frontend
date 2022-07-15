@@ -1,4 +1,4 @@
-import { Box, BoxProps, Typography } from "@material-ui/core";
+import { Box, BoxProps, Typography } from "@mui/material";
 import React from "react";
 import { apiResourcePathById } from "../../../api/extra";
 import { d } from "../../../locale/LocaleManager";

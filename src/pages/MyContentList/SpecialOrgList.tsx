@@ -1,16 +1,6 @@
-import {
-  Button,
-  Checkbox,
-  createStyles,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  FormControlLabel,
-  makeStyles,
-  Radio,
-  RadioGroup,
-} from "@material-ui/core";
+import { Button, Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, FormControlLabel, Radio, RadioGroup } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 import React, { useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { CheckboxGroup } from "../../components/CheckboxGroup";

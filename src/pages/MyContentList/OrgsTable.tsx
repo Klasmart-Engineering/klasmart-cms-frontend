@@ -1,17 +1,7 @@
 import { OrganizationSortBy } from "@api/api-ko-schema.auto";
 import { t } from "@locale/LocaleManager";
-import {
-  Checkbox,
-  makeStyles,
-  SvgIcon,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from "@material-ui/core";
+import { Checkbox, SvgIcon, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
 import clsx from "clsx";
 import React, { ReactNode } from "react";
 import { ReactComponent as SortSvg } from "../../assets/icons/sort.svg";

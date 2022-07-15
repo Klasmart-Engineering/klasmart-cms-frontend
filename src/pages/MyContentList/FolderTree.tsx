@@ -1,17 +1,9 @@
 import { TooltipWhite } from "@components/TreeViewFolder/TreeNode";
-import {
-  Button,
-  createStyles,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  IconButton,
-  makeStyles,
-  Typography,
-} from "@material-ui/core";
-import { AddBoxOutlined, Close, CreateNewFolderOutlined, Folder, IndeterminateCheckBoxOutlined } from "@material-ui/icons";
-import { TreeItem, TreeView } from "@material-ui/lab";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import { AddBoxOutlined, Close, CreateNewFolderOutlined, Folder, IndeterminateCheckBoxOutlined } from "@mui/icons-material";
+import { TreeItem, TreeView } from "@mui/lab";
 import React, { useMemo, useState } from "react";
 import { RecursiveFolderItem } from "../../api/extra";
 import PermissionType from "../../api/PermissionType";

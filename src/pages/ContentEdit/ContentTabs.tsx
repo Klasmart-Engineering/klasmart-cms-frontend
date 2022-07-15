@@ -1,5 +1,6 @@
-import { makeStyles, Paper, Tab, Tabs, useMediaQuery, useTheme } from "@material-ui/core";
-import { TabContext } from "@material-ui/lab";
+import { Paper, Tab, Tabs, useMediaQuery, useTheme } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
+import { TabContext } from "@mui/lab";
 import clsx from "clsx";
 import React, { Children, ReactNode } from "react";
 import { FieldError } from "react-hook-form";
@@ -9,7 +10,7 @@ import { d } from "../../locale/LocaleManager";
 
 const useStyles = makeStyles(({ breakpoints, shadows, palette }) => ({
   paper: {
-    position: 'relative',
+    position: "relative",
     zIndex: 1,
   },
   tabs: {
@@ -59,7 +60,7 @@ interface ContentTabsProps {
   error?: FieldError | (FieldError | undefined)[];
 }
 export default function ContentTabs(props: ContentTabsProps) {
-  const { tab, children, onChangeTab, error, addedLOLength=0 } = props;
+  const { tab, children, onChangeTab, error, addedLOLength = 0 } = props;
   const css = useStyles();
   const { lesson } = useParams<ContentEditRouteParams>();
   const { breakpoints } = useTheme();
@@ -86,7 +87,11 @@ export default function ContentTabs(props: ContentTabsProps) {
           onChange={(e, value) => onChangeTab(value)}
         >
           <Tab className={clsx(css.tab, error && css.errorTab)} label={d("Details").t("library_label_details")} value={VALUES[0]} />
-          <Tab className={css.tab} label={`${d("Learning Outcomes").t("library_label_learning_outcomes")}(${addedLOLength})`} value={VALUES[1]} />
+          <Tab
+            className={css.tab}
+            label={`${d("Learning Outcomes").t("library_label_learning_outcomes")}(${addedLOLength})`}
+            value={VALUES[1]}
+          />
           <Tab
             className={css.tab}
             label={lesson === "material" ? d("Assets").t("library_label_assets") : d("Lesson Material").t("library_label_lesson_material")}

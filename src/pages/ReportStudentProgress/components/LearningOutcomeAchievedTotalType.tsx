@@ -1,5 +1,6 @@
-import { Grid } from "@material-ui/core";
-import { createStyles, makeStyles } from "@material-ui/core/styles";
+import { Grid } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 import React from "react";
 
 const useStyle = makeStyles(() =>
@@ -64,7 +65,7 @@ export default function LearningOutcomeAchievedTotalType(props: ITotalType) {
   };
   return (
     <div>
-      <Grid container wrap={"nowrap"} justify={"space-around"} className={css.totalType}>
+      <Grid container wrap={"nowrap"} justifyContent={"space-around"} className={css.totalType}>
         {totalType.map((item) => {
           return renderLineFooterBlock(item.label, item.data, item.idx);
         })}

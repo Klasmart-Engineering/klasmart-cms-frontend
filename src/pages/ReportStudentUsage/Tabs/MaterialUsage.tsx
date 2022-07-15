@@ -1,9 +1,11 @@
 // 9-15 14:22
-import { Box, createStyles, Grid, IconButton, makeStyles } from "@material-ui/core";
-import FirstPageIcon from "@material-ui/icons/FirstPage";
-import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
-import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
-import LastPageIcon from "@material-ui/icons/LastPage";
+import { Box, Grid, IconButton } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import FirstPageIcon from "@mui/icons-material/FirstPage";
+import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
+import LastPageIcon from "@mui/icons-material/LastPage";
 import clsx from "clsx";
 import { sortBy } from "lodash";
 import moment, { Moment } from "moment";
@@ -354,7 +356,7 @@ export default function MaterialUsage() {
     };
 
     return (
-      <Grid container wrap={"nowrap"} justify={"center"} alignItems={"center"}>
+      <Grid container wrap={"nowrap"} justifyContent={"center"} alignItems={"center"}>
         <label className={style.paginationLabel}>
           {t("report_student_usage_of", {
             total: `${getClassesList().length}`,
@@ -391,7 +393,7 @@ export default function MaterialUsage() {
           {d("Content total viewed (latest 3 months)").t("report_content_total_viewed")}：{totalView}
         </span>
       </Grid>
-      <Grid container justify={"flex-end"} className={style.total}>
+      <Grid container justifyContent={"flex-end"} className={style.total}>
         <Box
           style={{
             position: "relative",
@@ -403,14 +405,14 @@ export default function MaterialUsage() {
         </Box>
       </Grid>
       {renderBarChart()}
-      <Grid container justify={"flex-end"}>
-        <Grid item container justify={"center"} className={style.date}>
+      <Grid container justifyContent={"flex-end"}>
+        <Grid item container justifyContent={"center"} className={style.date}>
           {months[timeRangeList[0].format("MMMM")]}
         </Grid>
-        <Grid item container justify={"center"} className={style.date}>
+        <Grid item container justifyContent={"center"} className={style.date}>
           {months[timeRangeList[1].format("MMMM")]}
         </Grid>
-        <Grid item container justify={"center"} className={style.date}>
+        <Grid item container justifyContent={"center"} className={style.date}>
           {months[timeRangeList[2].format("MMMM")]}
         </Grid>
       </Grid>
@@ -425,7 +427,7 @@ export default function MaterialUsage() {
           })}
         </Grid>
       </Grid>
-      <Grid container justify={"center"} item>
+      <Grid container justifyContent={"center"} item>
         {TablePaginationActions()}
       </Grid>
     </div>

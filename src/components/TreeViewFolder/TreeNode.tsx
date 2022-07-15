@@ -1,7 +1,10 @@
 import folderIconUrl from "@assets/icons/foldericon.svg";
 import { t } from "@locale/LocaleManager";
-import { createStyles, makeStyles, Theme, Tooltip, Typography, withStyles } from "@material-ui/core";
-import { Folder } from "@material-ui/icons";
+import { Theme, Tooltip, Typography } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import withStyles from "@mui/styles/withStyles";
+import { Folder } from "@mui/icons-material";
 import { useState } from "react";
 import { TreeNodeProps } from ".";
 const useStyles = makeStyles((theme) =>

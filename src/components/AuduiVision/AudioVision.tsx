@@ -1,6 +1,8 @@
-import { createStyles, makeStyles, Slider } from "@material-ui/core";
-import PauseCircleFilledIcon from "@material-ui/icons/PauseCircleFilled";
-import PlayCircleFilledOutlinedIcon from "@material-ui/icons/PlayCircleFilledOutlined";
+import { Slider } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import PauseCircleFilledIcon from "@mui/icons-material/PauseCircleFilled";
+import PlayCircleFilledOutlinedIcon from "@mui/icons-material/PlayCircleFilledOutlined";
 import { useEffect, useReducer, useRef, useState } from "react";
 import getDrawMethod from "./draw";
 import Visualizer from "./visualizer";

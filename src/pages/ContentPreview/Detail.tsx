@@ -1,6 +1,6 @@
-import { Box, Checkbox, Chip, FormControlLabel, Grid, InputAdornment, TextField, Typography } from "@material-ui/core";
-import makeStyles from "@material-ui/core/styles/makeStyles";
-import { CloudDownloadOutlined } from "@material-ui/icons";
+import { Box, Checkbox, Chip, FormControlLabel, Grid, InputAdornment, TextField, Typography } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
+import { CloudDownloadOutlined } from "@mui/icons-material";
 import React from "react";
 import { EntityContentInfoWithDetails } from "../../api/api.auto";
 import { apiResourcePathById } from "../../api/extra";

@@ -1,8 +1,9 @@
-import { Box, Hidden, makeStyles, Menu, MenuItem, TextField } from "@material-ui/core";
-import { ClassOutlined, LocalBarOutlined } from "@material-ui/icons";
-import ImportExportIcon from "@material-ui/icons/ImportExport";
-import PeopleOutlineOutlinedIcon from "@material-ui/icons/PeopleOutlineOutlined";
-import PersonOutlinedIcon from "@material-ui/icons/PersonOutlined";
+import { Box, Hidden, Menu, MenuItem, TextField } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
+import { ClassOutlined, LocalBarOutlined } from "@mui/icons-material";
+import ImportExportIcon from "@mui/icons-material/ImportExport";
+import PeopleOutlineOutlinedIcon from "@mui/icons-material/PeopleOutlineOutlined";
+import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import { GetReportMockOptionsResponse } from "@reducers/report";
 import clsx from "clsx";
 import React, { forwardRef } from "react";
@@ -145,7 +146,6 @@ export function FilterAchievementReport(props: FilterAchievementReportProps) {
                   value={value.teacher_id}
                   select
                   disabled={teachers.length <= 0}
-                  SelectProps={{ MenuProps: { transformOrigin: { vertical: -40, horizontal: "left" } } }}
                 >
                   {getOptions(reportMockOptions.teacherList)}
                 </TextField>
@@ -157,7 +157,6 @@ export function FilterAchievementReport(props: FilterAchievementReportProps) {
                 label={d("Class").t("report_label_class")}
                 value={value.class_id}
                 select
-                SelectProps={{ MenuProps: { transformOrigin: { vertical: -40, horizontal: "left" } } }}
                 disabled={classs.length <= 0}
               >
                 {getOptions(reportMockOptions.classList)}
@@ -169,7 +168,6 @@ export function FilterAchievementReport(props: FilterAchievementReportProps) {
                 label={d("Lesson Plan").t("report_label_lesson_plan")}
                 value={value.lesson_plan_id}
                 select
-                SelectProps={{ MenuProps: { transformOrigin: { vertical: -40, horizontal: "left" } } }}
                 disabled={planIsDisabled}
               >
                 {getOptions(reportMockOptions.lessonPlanList)}
@@ -182,7 +180,6 @@ export function FilterAchievementReport(props: FilterAchievementReportProps) {
                 onChange={(e) => onChange(e.target.value, "status")}
                 value={value.status}
                 select
-                SelectProps={{ MenuProps: { transformOrigin: { vertical: -40, horizontal: "left" } } }}
               >
                 {getOptions(statusList())}
               </TextField>
@@ -194,7 +191,6 @@ export function FilterAchievementReport(props: FilterAchievementReportProps) {
                 label={d("Sort By Outcomes").t("report_label_sort_by")}
                 value={value.sort_by}
                 select
-                SelectProps={{ MenuProps: { transformOrigin: { vertical: -40, horizontal: "left" } } }}
               >
                 {getOptions(sortOptions())}
               </TextField>

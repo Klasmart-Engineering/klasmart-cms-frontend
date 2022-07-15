@@ -1,11 +1,11 @@
-import { Checkbox, FormControlLabel, Grid, Menu, MenuItem, TextField } from "@material-ui/core";
-import Hidden from "@material-ui/core/Hidden";
-import { makeStyles } from "@material-ui/core/styles";
-import Tab from "@material-ui/core/Tab";
-import Tabs from "@material-ui/core/Tabs";
-import { CheckBox, CheckBoxOutlineBlank, MoreHoriz } from "@material-ui/icons";
-import FilterListIcon from "@material-ui/icons/FilterList";
-import ImportExportIcon from "@material-ui/icons/ImportExport";
+import { Checkbox, FormControlLabel, Grid, Menu, MenuItem, TextField } from "@mui/material";
+import Hidden from "@mui/material/Hidden";
+import makeStyles from "@mui/styles/makeStyles";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
+import { CheckBox, CheckBoxOutlineBlank, MoreHoriz } from "@mui/icons-material";
+import FilterListIcon from "@mui/icons-material/FilterList";
+import ImportExportIcon from "@mui/icons-material/ImportExport";
 import clsx from "clsx";
 import produce from "immer";
 import React, { ChangeEvent, useMemo } from "react";
@@ -103,7 +103,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   selectBox: {
-    padding: "12px",
+    padding: "12px 0 12px 24px",
+    // padding: "12px",
     boxSizing: "border-box",
     display: "flex",
     flexWrap: "wrap",
@@ -609,14 +610,6 @@ export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
                     label={d("Bulk Actions").t("library_label_bulk_actions")}
                     value=""
                     select
-                    SelectProps={{
-                      MenuProps: {
-                        transformOrigin: {
-                          vertical: -40,
-                          horizontal: "left",
-                        },
-                      },
-                    }}
                   >
                     {bulkOptions}
                   </TextField>
@@ -631,14 +624,6 @@ export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
                     label={d("Content Type").t("library_label_contentType")}
                     value={value.content_type}
                     select
-                    SelectProps={{
-                      MenuProps: {
-                        transformOrigin: {
-                          vertical: -40,
-                          horizontal: "left",
-                        },
-                      },
-                    }}
                   >
                     {menuItemList(filterOptions(value))}
                   </TextField>
@@ -669,14 +654,6 @@ export function ThirdSearchHeader(props: ThirdSearchHeaderProps) {
               label={d("Sort By").t("library_label_sort_by")}
               value={value.order_by}
               select
-              SelectProps={{
-                MenuProps: {
-                  transformOrigin: {
-                    vertical: -40,
-                    horizontal: "left",
-                  },
-                },
-              }}
             >
               {orderbyOptions}
             </TextField>
@@ -805,7 +782,7 @@ export function ThirdSearchHeaderMb(props: ThirdSearchHeaderProps) {
               <span className={classes.selectAll}>{t("library_label_files_selected", { value: ids.length.toString() })}</span>
             )}
           </Grid>
-          <Grid container justify="flex-end" alignItems="center" item sm={3} xs={3}>
+          <Grid container justifyContent="flex-end" alignItems="center" item sm={3} xs={3}>
             {value.content_type !== SearchContentsRequestContentType.assetsandfolder && !value.program_group && (
               <FilterListIcon onClick={handleClickFilterIcon} />
             )}

@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core";
+import makeStyles from "@mui/styles/makeStyles";
 import { ReactNode, useEffect, useState } from "react";
 import api from "../../api";
 import { apiGenH5pResourceByToken } from "../../api/extra";

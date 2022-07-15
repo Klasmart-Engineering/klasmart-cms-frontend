@@ -1,6 +1,6 @@
 import { EntityLearnerUsageResponse } from "@api/api.auto";
 import { t } from "@locale/LocaleManager";
-import { makeStyles } from "@material-ui/core";
+import makeStyles from "@mui/styles/makeStyles";
 import ReportStudentUsage from "@pages/ReportStudentUsage";
 import React from "react";
 import BottomButton from "./BottomButton";

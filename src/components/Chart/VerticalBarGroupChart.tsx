@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core";
+import makeStyles from "@mui/styles/makeStyles";
 import { AxisBottom, AxisLeft, TickRendererProps } from "@visx/axis";
 import { Group } from "@visx/group";
 import { scaleBand, scaleLinear, scaleOrdinal } from "@visx/scale";
@@ -196,18 +196,10 @@ export function VerticalBarGroupChart(props: VerticalBarGroupChartProps) {
   const inlineStyles = useMemo(() => getInlineStyles(px), [px]);
   const { toggle } = useTooltipTriggerClick();
   const isTooltipTriggerClick = tooltipTriggerEvent === TooltipTriggerEventName.click;
-  const {
-    chartData,
-    categoryNames,
-    categoryScale,
-    xScale,
-    yScale,
-    yAxiosScale,
-    colorScale,
-    getX,
-    xAxiosLabelWidth,
-    viewPort,
-  } = useMemo(() => computed({ px, data }), [data, px]);
+  const { chartData, categoryNames, categoryScale, xScale, yScale, yAxiosScale, colorScale, getX, xAxiosLabelWidth, viewPort } = useMemo(
+    () => computed({ px, data }),
+    [data, px]
+  );
   const { tooltipOpen, tooltipData, tooltipTop, tooltipLeft, showTooltip, hideTooltip } = useTooltip<TooltipData>();
   const handleClickBar = (bar: BarGroupBar<string>, barGroup: TBarGroup) => {
     const open = toggle(bar.index, barGroup.index);

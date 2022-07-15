@@ -1,5 +1,6 @@
-import { Box, Button, makeStyles } from "@material-ui/core";
-import { Pagination } from "@material-ui/lab";
+import { Box, Button } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
+import { Pagination } from "@mui/material";
 import { getOutcomesOptionCategorys, getOutcomesOptions, getOutcomesOptionSkills } from "@reducers/content";
 import { LinkedMockOptions } from "@reducers/contentEdit/programsHandler";
 import React, { forwardRef, useMemo } from "react";

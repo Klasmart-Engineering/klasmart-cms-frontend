@@ -1,6 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { enableNewGql } from "@api/extra";
-import { Box, createStyles, makeStyles, MenuItem, TextField, Theme } from "@material-ui/core";
+import { Box, MenuItem, TextField, Theme } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 import { orderByASC } from "@utilities/dataUtilities";
 import clsx from "clsx";
 import React from "react";

@@ -1,10 +1,10 @@
-import { makeStyles } from "@material-ui/core";
-import Box from "@material-ui/core/Box";
-import Slider from "@material-ui/core/Slider";
-import FastForwardOutlinedIcon from "@material-ui/icons/FastForwardOutlined";
-import FastRewindOutlinedIcon from "@material-ui/icons/FastRewindOutlined";
-import PauseCircleFilledIcon from "@material-ui/icons/PauseCircleFilled";
-import PlayCircleFilledOutlinedIcon from "@material-ui/icons/PlayCircleFilledOutlined";
+import makeStyles from "@mui/styles/makeStyles";
+import Box from "@mui/material/Box";
+import Slider from "@mui/material/Slider";
+import FastForwardOutlinedIcon from "@mui/icons-material/FastForwardOutlined";
+import FastRewindOutlinedIcon from "@mui/icons-material/FastRewindOutlined";
+import PauseCircleFilledIcon from "@mui/icons-material/PauseCircleFilled";
+import PlayCircleFilledOutlinedIcon from "@mui/icons-material/PlayCircleFilledOutlined";
 import React, { useEffect, useReducer, useRef } from "react";
 import AssetLoading from "./AssetLoading";
 

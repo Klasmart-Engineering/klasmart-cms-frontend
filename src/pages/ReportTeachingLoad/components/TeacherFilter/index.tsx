@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { enableNewGql, IClassTeachers } from "@api/extra";
-import { Box, MenuItem, TextField, Theme } from "@material-ui/core";
-import { createStyles, makeStyles } from "@material-ui/styles";
+import { Box, MenuItem, TextField, Theme } from "@mui/material";
+import { createStyles, makeStyles } from "@mui/styles";
 import { orderByASC } from "@utilities/dataUtilities";
 import clsx from "clsx";
 import { uniqBy } from "lodash";

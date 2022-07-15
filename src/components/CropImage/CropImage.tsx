@@ -1,4 +1,5 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, makeStyles } from "@material-ui/core";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
 import { FileLike } from "@rpldy/shared";
 import "cropperjs/dist/cropper.css";
 import React, { ReactNode, useCallback, useMemo, useState } from "react";
@@ -29,7 +30,7 @@ const getUrlFromFile = (file: FileLike): Promise<string> => {
   return new Promise((resolve) => {
     const reader = new FileReader();
     reader.onload = () => resolve(reader.result as string);
-    reader.readAsDataURL((file as unknown) as Blob);
+    reader.readAsDataURL(file as unknown as Blob);
   });
 };
 
@@ -37,7 +38,7 @@ const getFileFromCanvas = (canvas: HTMLCanvasElement, file: FileLike): Promise<F
   return new Promise((resolve, reject) => {
     canvas.toBlob((blob) => {
       if (blob) {
-        const result = (blob as unknown) as FileLike;
+        const result = blob as unknown as FileLike;
         result.name = file.name;
         result.lastModified = file.lastModified;
         resolve(result);

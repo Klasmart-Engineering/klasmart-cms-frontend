@@ -1,18 +1,8 @@
-import {
-  makeStyles,
-  MenuItem,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  TextField,
-  Tooltip,
-  Typography,
-} from "@material-ui/core";
-import { Theme, withStyles } from "@material-ui/core/styles";
-import { InfoOutlined } from "@material-ui/icons";
+import { MenuItem, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Tooltip, Typography } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
+import { Theme } from "@mui/material/styles";
+import withStyles from "@mui/styles/withStyles";
+import { InfoOutlined } from "@mui/icons-material";
 import { getDurationByDay } from "@utilities/dateUtilities";
 import { ParentSize } from "@visx/responsive";
 import React, { useContext } from "react";
@@ -126,7 +116,6 @@ export default function Assignments() {
           label={t("report_label_class_type")}
           value={classType}
           select
-          SelectProps={{ MenuProps: { transformOrigin: { vertical: -40, horizontal: "left" } } }}
         >
           <MenuItem key="all" value="all">
             {d("All").t("report_label_all")}
@@ -144,7 +133,6 @@ export default function Assignments() {
           onChange={(e) => setDurationDay(Number(e.target.value))}
           value={durationDay}
           select
-          SelectProps={{ MenuProps: { transformOrigin: { vertical: -40, horizontal: "left" } } }}
         >
           <MenuItem key={7} value={7}>
             {t("report_label_past_7_days")}

@@ -1,5 +1,6 @@
-import { Divider, Hidden, makeStyles, Menu, MenuItem, TextField } from "@material-ui/core";
-import PersonOutlinedIcon from "@material-ui/icons/PersonOutlined";
+import { Divider, Hidden, Menu, MenuItem, TextField } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
+import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import { Item } from "@reducers/report";
 import clsx from "clsx";
 import React, { forwardRef } from "react";
@@ -48,6 +49,13 @@ const useStyles = makeStyles(({ palette, shadows, breakpoints }) => ({
   },
 }));
 
+export interface SecondSearchHeaderProps {
+  value: QueryCondition;
+  onChange: (value: string, tab: keyof QueryCondition) => any;
+  teacherList: Item[];
+  perm: ICacheData;
+}
+
 interface GetTeacherItemProps {
   list: SecondSearchHeaderProps["teacherList"];
   value: QueryCondition;
@@ -70,12 +78,6 @@ const GetTeacherItem = forwardRef<React.RefObject<HTMLElement>, GetTeacherItemPr
   );
 });
 
-export interface SecondSearchHeaderProps {
-  value: QueryCondition;
-  onChange: (value: string, tab: keyof QueryCondition) => any;
-  teacherList: Item[];
-  perm: ICacheData;
-}
 export function SecondSearchHeader(props: SecondSearchHeaderProps) {
   const { onChange, value, teacherList, perm } = props;
   const css = useStyles();
@@ -103,7 +105,6 @@ export function SecondSearchHeader(props: SecondSearchHeaderProps) {
               value={value.teacher_id || teacherList[0]?.id || ""}
               select
               disabled={teacherList.length < 2}
-              SelectProps={{ MenuProps: { transformOrigin: { vertical: -40, horizontal: "left" } } }}
             >
               {teacherList.map((item) => (
                 <MenuItem key={item.id} value={item.id}>

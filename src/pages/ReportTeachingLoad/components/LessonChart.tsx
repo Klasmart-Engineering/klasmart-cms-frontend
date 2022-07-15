@@ -1,5 +1,5 @@
-import { Box, Grid, MenuItem, OutlinedInput, Select } from "@material-ui/core";
-import { makeStyles } from "@material-ui/styles";
+import { Box, Grid, MenuItem, OutlinedInput, Select, SelectChangeEvent } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 import { getDurationByDay } from "@utilities/dateUtilities";
 import clsx from "clsx";
 import React, { useEffect, useRef, useState } from "react";
@@ -145,7 +145,7 @@ export default function LessonChart(props: Props) {
   const lang = lessonLang,
     colors = lessonColors;
   const { list, statistic } = teacherLoadLesson;
-  const filterChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>, child: React.ReactNode) => {
+  const filterChange = (event: SelectChangeEvent<number>, child: React.ReactNode) => {
     setSelectItem(event.target.value as number);
     pageRef.current = 0;
     setPage(pageRef.current);
@@ -230,19 +230,19 @@ export default function LessonChart(props: Props) {
 
   const renderHeader = () => {
     return (
-      <Grid item container justify={"space-between"} className={clsx(style.tableItem, style.tableHeaderItem)}>
-        <Grid item container justify={"center"} alignItems={"center"} className={style.tearchName}>
+      <Grid item container justifyContent={"space-between"} className={clsx(style.tableItem, style.tableHeaderItem)}>
+        <Grid item container justifyContent={"center"} alignItems={"center"} className={style.tearchName}>
           {lang.teacher}
         </Grid>
-        <Grid item container direction={"column"} justify={"center"} alignItems={"center"} className={style.headerField}>
+        <Grid item container direction={"column"} justifyContent={"center"} alignItems={"center"} className={style.headerField}>
           {lang.noOfClasses}
           <Box color={"#c2c2c2"}>({lang.current})</Box>
         </Grid>
-        <Grid item container direction={"column"} justify={"center"} alignItems={"center"} className={style.headerField}>
+        <Grid item container direction={"column"} justifyContent={"center"} alignItems={"center"} className={style.headerField}>
           {lang.noOfStudent}
           <Box color={"#c2c2c2"}>({lang.current})</Box>
         </Grid>
-        <Grid item container justify={"center"} alignItems={"center"} className={clsx(style.headerFieldBar, style.headerField)}>
+        <Grid item container justifyContent={"center"} alignItems={"center"} className={clsx(style.headerFieldBar, style.headerField)}>
           <Box display={"flex"} flex={1} width={"100%"} height={36}>
             <Box marginRight={3}></Box>
           </Box>
@@ -263,17 +263,17 @@ export default function LessonChart(props: Props) {
         <Grid
           item
           container
-          justify={"center"}
+          justifyContent={"center"}
           alignItems={"center"}
           onClick={() => clickTeacher(item.teacher_id)}
           className={clsx(style.tearchName, style.itemTearchName)}
         >
           {props.teacherIds.find((v) => v.value === item.teacher_id)?.label}
         </Grid>
-        <Grid item container justify={"center"} alignItems={"center"} className={style.chartField}>
+        <Grid item container justifyContent={"center"} alignItems={"center"} className={style.chartField}>
           {item.number_of_classes}
         </Grid>
-        <Grid item container justify={"center"} alignItems={"center"} className={style.chartField}>
+        <Grid item container justifyContent={"center"} alignItems={"center"} className={style.chartField}>
           {item.number_of_students}
         </Grid>
         <Grid item container alignItems={"center"} className={style.chartBar}>
@@ -321,7 +321,7 @@ export default function LessonChart(props: Props) {
 
   const renderFilter = () => {
     return (
-      <Grid container justify={"space-between"} className={style.filter}>
+      <Grid container justifyContent={"space-between"} className={style.filter}>
         <Grid item>
           {lang.lessonTitle}: {computeCountNumber() || 0}&ensp;({computeAmountTime()})
         </Grid>
@@ -348,7 +348,7 @@ export default function LessonChart(props: Props) {
 
   const renderTotalType = () => {
     return (
-      <Grid container wrap={"nowrap"} justify={"space-around"} className={style.totalType}>
+      <Grid container wrap={"nowrap"} justifyContent={"space-around"} className={style.totalType}>
         {renderLineFooterBlock(
           lang.liveCompleted,
           `${statistic.completed_live_lessons?.count || 0} (${formatTime(statistic.completed_live_lessons?.duration)})`,
@@ -374,7 +374,7 @@ export default function LessonChart(props: Props) {
   };
 
   return (
-    <Grid container justify={"center"}>
+    <Grid container justifyContent={"center"}>
       <Grid container direction={"column"} className={style.table}>
         {renderFilter()}
         {renderHeader()}

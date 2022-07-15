@@ -1,8 +1,10 @@
 /// <reference path="index.d.ts" />
-import { createStyles, FormControl, InputLabel, makeStyles, MenuItem, Select, Theme } from "@material-ui/core";
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Theme } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 import clsx from "clsx";
 import isEqual from "lodash/isEqual";
-import React, { ChangeEvent } from "react";
+import React from "react";
 import useTranslation from "../../pages/ReportStudentUsage/hooks/useTranslation";
 
 interface IMutiSelectProps {
@@ -50,7 +52,7 @@ export default React.memo(
     // eslint-disable-next-line react-hooks/exhaustive-deps
     React.useEffect(resetState, [id, allOptions]);
 
-    const onSelectChange = (event: ChangeEvent<{ name?: string | undefined; value: unknown }>) => {
+    const onSelectChange = (event: SelectChangeEvent<string[]>) => {
       let value = event.target.value as string[];
       if (value.length === 0) {
         return;

@@ -4,7 +4,6 @@ import {
   DialogContent,
   DialogTitle,
   IconButton,
-  makeStyles,
   SvgIcon,
   Table,
   TableBody,
@@ -12,11 +11,12 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-} from "@material-ui/core";
-import { Palette, PaletteColor } from "@material-ui/core/styles/createPalette";
-import { AddCircle, RemoveCircle } from "@material-ui/icons";
-import CloseIcon from "@material-ui/icons/Close";
-import { Pagination } from "@material-ui/lab";
+} from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
+import { Palette, PaletteColor } from "@mui/material/styles";
+import { AddCircle, RemoveCircle } from "@mui/icons-material";
+import CloseIcon from "@mui/icons-material/Close";
+import { Pagination } from "@mui/material";
 import { LinkedMockOptions, LinkedMockOptionsItem } from "@reducers/contentEdit/programsHandler";
 import clsx from "clsx";
 import { cloneDeep } from "lodash";

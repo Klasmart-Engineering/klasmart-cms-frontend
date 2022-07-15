@@ -1,6 +1,7 @@
-import { Box, Button, ButtonGroup, FormControl, InputLabel, makeStyles, Select, Typography } from "@material-ui/core";
-import { BookOutlined, DashboardOutlined } from "@material-ui/icons";
-import AddIcon from "@material-ui/icons/Add";
+import { Box, Button, ButtonGroup, FormControl, InputLabel, Select, Typography } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
+import { BookOutlined, DashboardOutlined } from "@mui/icons-material";
+import AddIcon from "@mui/icons-material/Add";
 import clsx from "clsx";
 import React, { ReactNode } from "react";
 import { NavLink } from "react-router-dom";

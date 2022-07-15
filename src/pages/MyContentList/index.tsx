@@ -1,5 +1,7 @@
 import useQueryCms from "@hooks/useQueryCms";
-import { createStyles, makeStyles, useMediaQuery, useTheme } from "@material-ui/core";
+import { useMediaQuery, useTheme } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 import {
   addFolder1,
   approveContent,

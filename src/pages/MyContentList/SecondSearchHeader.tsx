@@ -1,11 +1,11 @@
-import { Checkbox, Divider, FormControlLabel, Grid, Menu, MenuItem } from "@material-ui/core";
-import Button from "@material-ui/core/Button";
-import Hidden from "@material-ui/core/Hidden";
-import { makeStyles } from "@material-ui/core/styles";
-import TextField, { TextFieldProps } from "@material-ui/core/TextField/TextField";
-import { Search } from "@material-ui/icons";
-import ArrowDropDownOutlinedIcon from "@material-ui/icons/ArrowDropDownOutlined";
-import LocalBarOutlinedIcon from "@material-ui/icons/LocalBarOutlined";
+import { Checkbox, Divider, FormControlLabel, Grid, Menu, MenuItem } from "@mui/material";
+import Button from "@mui/material/Button";
+import Hidden from "@mui/material/Hidden";
+import makeStyles from "@mui/styles/makeStyles";
+import TextField, { TextFieldProps } from "@mui/material/TextField/TextField";
+import { Search } from "@mui/icons-material";
+import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
+import LocalBarOutlinedIcon from "@mui/icons-material/LocalBarOutlined";
 import produce from "immer";
 import React, { ChangeEvent, MouseEventHandler, useEffect, useState } from "react";
 import { Controller, UseFormMethods } from "react-hook-form";
@@ -272,7 +272,7 @@ export function SecondSearchHeaderMb(props: SecondSearchHeaderProps) {
               item
               xs={4}
               sm={4}
-              justify="flex-end"
+              justifyContent="flex-end"
               alignItems="center"
               style={{
                 fontSize: "24px",
@@ -309,14 +309,6 @@ export function SecondSearchHeaderMb(props: SecondSearchHeaderProps) {
                 size="small"
                 defaultValue={value.exect_search || ExectSearch.all}
                 select
-                SelectProps={{
-                  MenuProps: {
-                    transformOrigin: {
-                      vertical: -40,
-                      horizontal: "left",
-                    },
-                  },
-                }}
               >
                 {menuItemList(getExectSearch())}
               </Controller>
@@ -401,14 +393,6 @@ export function SecondSearchHeader(props: SecondSearchHeaderProps) {
                 size="small"
                 defaultValue={value.exect_search || ExectSearch.all}
                 select
-                SelectProps={{
-                  MenuProps: {
-                    transformOrigin: {
-                      vertical: -40,
-                      horizontal: "left",
-                    },
-                  },
-                }}
               >
                 {menuItemList(getExectSearch())}
               </Controller>
@@ -442,21 +426,13 @@ export function SecondSearchHeader(props: SecondSearchHeaderProps) {
                   label={d("Content Type").t("library_label_contentType")}
                   value={value.content_type}
                   select
-                  SelectProps={{
-                    MenuProps: {
-                      transformOrigin: {
-                        vertical: -40,
-                        horizontal: "left",
-                      },
-                    },
-                  }}
                 >
                   {menuItemList(filterOptions(value))}
                 </TextField>
               )}
           </Grid>
           <Permission value={PermissionType.view_my_published_214}>
-            <Grid container direction="row" justify="flex-end" alignItems="center" item md={2} lg={4} xl={4}>
+            <Grid container direction="row" justifyContent="flex-end" alignItems="center" item md={2} lg={4} xl={4}>
               {value.publish_status === PublishStatus.published ||
               value.content_type === SearchContentsRequestContentType.assetsandfolder ? (
                 <FormControlLabel

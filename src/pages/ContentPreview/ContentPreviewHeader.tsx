@@ -1,5 +1,6 @@
-import { Box, Chip, makeStyles, Tab, Tabs, Theme, Typography } from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
+import { Box, Chip, Tab, Tabs, Theme, Typography } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
+import CloseIcon from "@mui/icons-material/Close";
 import React, { Fragment } from "react";
 import { EntityContentInfoWithDetails } from "../../api/api.auto";
 import { ContentType } from "../../api/type";
