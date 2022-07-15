@@ -1,6 +1,5 @@
 import { ApolloProvider } from "@apollo/client";
 import { createGenerateClassName, StylesProvider, ThemeProvider } from "@material-ui/core";
-import Stm from "@pages/SimpleTeacherModule";
 import { SnackbarProvider } from "notistack";
 import { Provider } from "react-redux";
 import { HashRouter, Redirect, Route, Switch } from "react-router-dom";
@@ -84,9 +83,6 @@ function App() {
                     </Route>
                     <Route path={ReportStudentUsage.routeBasePath}>
                       <ReportStudentUsage />
-                    </Route>
-                    <Route path={Stm.routeMatchPath}>
-                      <Stm />
                     </Route>
                     <Route path="/report">
                       <Redirect to={ReportDashboard.routeBasePath} />

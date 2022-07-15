@@ -3,7 +3,7 @@ import {
   EntityCreateContentRequest,
   EntityOutcome,
   EntityTreeResponse,
-  ModelPublishedOutcomeView
+  ModelPublishedOutcomeView,
 } from "@api/api.auto";
 import { ContentFileType, ContentInputSourceType, ContentType } from "@api/type";
 import { d } from "@locale/LocaleManager";
