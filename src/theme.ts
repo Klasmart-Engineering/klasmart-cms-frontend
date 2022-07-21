@@ -1,40 +1,40 @@
-import { createTheme, adaptV4Theme } from "@mui/material";
+import { createTheme } from "@mui/material";
 
-export default createTheme(
-  adaptV4Theme({
-    palette: {
-      primary: {
-        main: "#0E78D5",
-      },
-      secondary: {
-        main: "#9C27B0",
-      },
-      error: {
-        main: "#D32F2F",
-      },
-      success: {
-        main: "#4CAF50",
-      },
-      warning: {
-        main: "#FFC107",
-      },
+export default createTheme({
+  palette: {
+    primary: {
+      main: "#0E78D5",
     },
-    typography: {
-      button: {
-        textTransform: "none",
-      },
+    secondary: {
+      main: "#9C27B0",
     },
-    props: {
-      MuiTextField: {
+    error: {
+      main: "#D32F2F",
+    },
+    success: {
+      main: "#4CAF50",
+    },
+    warning: {
+      main: "#FFC107",
+    },
+  },
+  typography: {
+    button: {
+      textTransform: "none",
+    },
+  },
+  components: {
+    MuiTextField: {
+      defaultProps: {
         variant: "outlined",
       },
     },
-    overrides: {
-      MuiFormLabel: {
+    MuiFormLabel: {
+      styleOverrides: {
         asterisk: {
           color: "#D32F2F",
         },
       },
     },
-  })
-);
+  },
+});
