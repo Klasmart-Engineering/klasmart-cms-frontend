@@ -650,6 +650,7 @@ export default function Details(props: DetailsProps) {
           options={visibility_settings}
           groupBy={(option: LinkedMockOptionsItem) => toMapGroup(option.group) as string}
           getOptionLabel={(option: LinkedMockOptionsItem) => option.name as string}
+          isOptionEqualToValue={(option: LinkedMockOptionsItem, value: LinkedMockOptionsItem) => option.id === value.id}
           onChange={(e: any, newValue) => {
             console.log(newValue);
             setValue(
