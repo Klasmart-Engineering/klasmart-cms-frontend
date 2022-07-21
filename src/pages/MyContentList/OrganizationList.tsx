@@ -74,7 +74,6 @@ const useStyles = makeStyles(() =>
     searchButon: {
       marginLeft: 10,
       minWidth: 95,
-      height: 28,
     },
     searchBar: {
       display: "flex",
